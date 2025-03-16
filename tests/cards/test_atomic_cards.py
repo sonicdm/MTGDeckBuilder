@@ -59,7 +59,7 @@ class TestAtomicCards(unittest.TestCase):
             power_op=">="
         )
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].name, "Battle Mammoth")
+        self.assertEqual(results['Battle Mammoth'].name, "Battle Mammoth")
 
     def test_filter_multi(self):
         """
@@ -75,7 +75,7 @@ class TestAtomicCards(unittest.TestCase):
             power_op="=="
         )
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].name, "Nicol Bolas, the Ravager")
+        self.assertEqual(results["Nicol Bolas, the Ravager"].name, "Nicol Bolas, the Ravager")
 
 if __name__ == "__main__":
     unittest.main()

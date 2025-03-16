@@ -1,0 +1,51 @@
+deck:
+  name: "Landfall Ramp"
+  colors: ["G", "R"]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: false
+  legalities: ["standard"]
+
+mana_base:
+  land_count: 30
+  special_lands:
+    count: 10
+    prefer:
+      - "Search your library for a basic land"
+      - "Put a land onto the battlefield"
+      - "Whenever a land enters"
+    avoid:
+      - "Enters tapped unless"
+      - "Deals damage to you"
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 18
+    preferred_keywords: ["Landfall", "Trample"]
+    priority_text: ["Whenever a land enters", "Put a +1/+1 counter"]
+  ramp:
+    target: 8
+    priority_text: ["Search your library for a land", "Put a land onto the battlefield"]
+  removal:
+    target: 6
+    priority_text: ["Destroy", "Exile", "Fight"]
+  card_draw:
+    target: 4
+    priority_text: ["Draw a card", "Whenever you play a land"]
+  landfall_spells:
+    target: 4
+    priority_text: ["Landfall —"]
+
+card_constraints:
+  rarity_boost:
+    rare: 2
+    mythic: 3
+  exclude_keywords: ["Defender"]
+  prefer_cards_with_text:
+    - "Landfall"
+    - "Search your library for a land"
+    - "Draw a card"
+  avoid_cards_with_text:
+    - "Counter target spell"

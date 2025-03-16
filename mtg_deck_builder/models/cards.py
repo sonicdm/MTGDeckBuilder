@@ -111,7 +111,16 @@ class AtomicCard(BaseModel):
         if v is None or v == []:
             return [""]
         return v
-
+    @field_validator("keywords", mode="before")
+    def parse_keywords(cls, v):
+        """
+        Ensure keywords are stored as a list of strings.
+        """
+        if v is None:
+            return []
+        if isinstance(v, str):
+            return [v]
+        return v
     # -------------- Convenience Methods --------------
     def full_type_line(self) -> str:
         if self.type:
@@ -125,6 +134,7 @@ class AtomicCard(BaseModel):
         while "  " in line:
             line = line.replace("  ", " ")
         return line
+
 
     def color_identity_str(self) -> str:
         """
@@ -468,8 +478,8 @@ class AtomicCards(BaseModel):
         """
         return self.cards.get(name)
 
-    def __getitem__(self, item):
-        return self.cards[item]
+    def __getitem__(self, item) -> Optional[AtomicCard]:
+        return self.cards.get(item,None)
 
     def __hash__(self):
         """Use a sorted JSON string of the model for a stable hash."""

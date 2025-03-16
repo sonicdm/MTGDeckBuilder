@@ -27,7 +27,7 @@ class Collection(AtomicCards):
     @classmethod
     def build_from_inventory(
             cls,
-            atomic_cards: AtomicCards,
+            cards: AtomicCards,
             inventory: Inventory
     ) -> "Collection":
         """
@@ -35,7 +35,7 @@ class Collection(AtomicCards):
         with the user's inventory. Basic lands are infinite.
         """
         # Convert the parent AtomicCards object to a dict with aliases
-        parent_data = atomic_cards.model_dump(
+        parent_data = cards.model_dump(
             by_alias=True,
             exclude_unset=True
         )
@@ -146,17 +146,24 @@ class Collection(AtomicCards):
             raise AttributeError("Collection object is missing a valid Inventory instance.")
 
         # Optimize lookups by converting inventory items list to a filtered list directly
-        filtered_inventory_items = [
-            item for item in self.inventory.items if item.quantity >= min_qty
-        ]
+        # filtered_inventory_items = [
+        #     item for item in self.inventory.items if item.quantity >= min_qty
+        # ]
 
-        # Optimize card retrieval with a dictionary lookup
-        card_lookup = {card.name: card for card in self.atomic_cards}
+        # turn this into a for loop for debugging.
+        filtered_inventory_items = []
+        for item in self.inventory.items.values():
+            if item.quantity >= min_qty:
+                filtered_inventory_items.append(item)
+
+        # create inventory items from the filtered_inventory_items
+        new_inv = Inventory.from_list(filtered_inventory_items)
+
 
         # Create a dictionary of owned AtomicCards
         cards = {}
         for item in filtered_inventory_items:
-            atomic_card = card_lookup.get(item.card_name)
+            atomic_card = self.cards.get(item.card_name)
             if atomic_card is not None:
                 atomic_card = deepcopy(atomic_card)  # Prevent unintended mutations
                 atomic_card.owned = True
@@ -164,13 +171,10 @@ class Collection(AtomicCards):
                 cards[atomic_card.name] = atomic_card
 
         # Create an AtomicCards object with the owned cards
-        atomic_cards = AtomicCards(data=cards)
-
-        # Build a new Inventory instance with only the filtered items
-        new_inv = Inventory(items=filtered_inventory_items)
+        cards = AtomicCards(data=cards)
 
         # Build a new Collection object using the new Inventory instance
-        new_obj = Collection.build_from_inventory(atomic_cards=atomic_cards, inventory=new_inv)
+        new_obj = Collection.build_from_inventory(cards=cards, inventory=new_inv)
 
         return new_obj
 

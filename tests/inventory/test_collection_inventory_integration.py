@@ -109,7 +109,7 @@ class TestCollectionInventoryIntegration(unittest.TestCase):
             InventoryItem(card_name="Scoured Barrens", quantity=4),
             InventoryItem(card_name="Swiftwater Cliffs", quantity=4),
         ]
-        cls.inventory = Inventory(items=inventory_items)
+        cls.inventory = Inventory.from_list(inventory_items)
 
         # 3) Build the Collection
         cls.collection = Collection.build_from_inventory(cls.atomic_cards, cls.inventory)

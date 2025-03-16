@@ -1,6 +1,7 @@
 # data_loader.py
 import json
 from collections import defaultdict
+from pathlib import Path
 from typing import List, Dict
 from pydantic import ValidationError
 
@@ -84,9 +85,9 @@ def load_inventory_from_txt(txt_file_path: str) -> Inventory:
     "<quantity> <card name>"
 
     - Deduplicates cards: If a card appears multiple times, the total is combined.
-    - Caps any card's total quantity at 4.
+    - Basic lands (Plains, Island, etc.) are set to infinite.
     - Skips lines that do not start with a valid integer.
-    - Skips lines where the card name is empty.
+    - Handles invalid entries gracefully.
 
     Args:
         txt_file_path (str): The path to the inventory text file.
@@ -94,44 +95,40 @@ def load_inventory_from_txt(txt_file_path: str) -> Inventory:
     Returns:
         Inventory: An instance of the Inventory class containing valid InventoryItems.
     """
-    card_counts = defaultdict(int)  # Dictionary to store card counts (name -> quantity)
+    inventory_data: Dict[str, InventoryItem] = {}
+    file = Path(txt_file_path)
 
-    try:
-        with open(txt_file_path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue  # Skip empty lines
+    if not file.exists():
+        raise FileNotFoundError(f"Inventory file not found: {txt_file_path}")
 
-                parts = line.split(" ", 1)
-                if len(parts) < 2:
-                    continue  # Skip if no card name is present
+    with file.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue  # Skip empty lines
 
-                quantity_str, card_name = parts
-                card_name = card_name.strip()
+            parts = line.split(" ", 1)
+            if len(parts) != 2:
+                continue  # Skip if format is invalid
 
-                try:
-                    quantity_int = int(quantity_str)
-                except ValueError:
-                    continue  # Skip lines that don't start with an integer
+            quantity_str, card_name = parts
+            card_name = card_name.strip()
 
-                if not card_name:
-                    continue  # Skip if card name is empty
+            try:
+                quantity = int(quantity_str)
+            except ValueError:
+                continue  # Skip lines with invalid quantities
 
-                # Add to dictionary (deduplicate), but cap at 4
-                card_counts[card_name] = min(4, card_counts[card_name] + quantity_int)
+            if not card_name:
+                continue  # Skip if card name is empty
 
-    except FileNotFoundError:
-        print(f"Error: File '{txt_file_path}' not found.")
-        return Inventory(items=[])  # Return an empty inventory
+            # Handle basic lands as infinite
+            if card_name in BASIC_LAND_NAMES:
+                inventory_data[card_name] = InventoryItem.create(card_name, None)
+            else:
+                if card_name in inventory_data:
+                    inventory_data[card_name].quantity += quantity
+                else:
+                    inventory_data[card_name] = InventoryItem.create(card_name, quantity)
 
-    # Convert dictionary to InventoryItems
-    items = []
-    for card_name, quantity in card_counts.items():
-        try:
-            item = InventoryItem(card_name=card_name, quantity=quantity)
-            items.append(item)
-        except ValidationError as e:
-            print(f"Skipping invalid card '{card_name}' due to error: {e}")
-
-    return Inventory(items=items)
+    return Inventory(items=inventory_data)

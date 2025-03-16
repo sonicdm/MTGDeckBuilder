@@ -10,6 +10,7 @@ from tests.helpers import get_sample_data_path
 # We also need these imports for the new integration tests
 from mtg_deck_builder.models.cards import AtomicCard, AtomicCards
 from mtg_deck_builder.models.collection import Collection
+from pydantic import ValidationError
 
 class TestInventory(unittest.TestCase):
     def test_basic_inventory_creation(self):
@@ -22,10 +23,10 @@ class TestInventory(unittest.TestCase):
             InventoryItem(card_name="Evolving Wilds", quantity=4),
             InventoryItem(card_name="Lightning Bolt", quantity=1),  # Duplicate card
         ]
-        inv = Inventory(items=items)
+        inv = Inventory.from_list(items)
 
-        # Check we have 3 items in the list, but 2 are duplicates
-        self.assertEqual(len(inv.items), 3)
+        # Check we have 2 items in the list, lightning bolt should be merged
+        self.assertEqual(len(inv.items), 2)
 
         inv_dict = inv.to_dict()
         # "Lightning Bolt" should total 3 copies
@@ -36,19 +37,20 @@ class TestInventory(unittest.TestCase):
     def test_negative_or_zero_quantity(self):
         """
         If we accidentally add an item with zero or negative quantity,
-        check how we handle it. Typically we expect the final dict to show 0 or skip it.
+        check how we handle it. negative values should raise a ValidationError.
         """
+
+        # Test negative quantity
+        with self.assertRaises(ValidationError):
+            InventoryItem(card_name="Lightning Bolt", quantity=-1)
         items = [
             InventoryItem(card_name="Goblin Arsonist", quantity=2),
-            InventoryItem(card_name="Goblin Arsonist", quantity=-1),  # negative
+              # negative
             InventoryItem(card_name="Goblin Arsonist", quantity=0),
         ]
-        inv = Inventory(items=items)
+        inv = Inventory.from_list(items)
         inv_dict = inv.to_dict()
-        # The total for "Goblin Arsonist" = 2 + (-1) + 0 => 1
-        # If negative is allowed, it merges. If you prefer skipping negative,
-        # you'd need to handle that logic in your model or test.
-        self.assertEqual(inv_dict["Goblin Arsonist"], 1)
+        self.assertEqual(inv_dict["Goblin Arsonist"], 2)
 
     def test_load_from_txt(self):
         """
@@ -170,11 +172,11 @@ class TestCollectionInventoryIntegration(unittest.TestCase):
             InventoryItem(card_name="Scoured Barrens", quantity=4),
             InventoryItem(card_name="Swiftwater Cliffs", quantity=4),
         ]
-        self.inventory = Inventory(items=inv_items)
+        self.inventory = Inventory.from_list(inv_items)
 
         # 3) Build the Collection
         self.collection = Collection.build_from_inventory(
-            atomic_cards=self.atomic_cards,
+            cards=self.atomic_cards,
             inventory=self.inventory
         )
 
