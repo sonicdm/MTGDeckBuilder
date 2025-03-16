@@ -1,11 +1,14 @@
 # collection.py
-
-from typing import Dict
+from copy import deepcopy
+from typing import Dict, Optional, List
 from pydantic import BaseModel, Field
+from pydantic._internal import _repr
+
 from mtg_deck_builder.models.cards import AtomicCards
-from mtg_deck_builder.models.inventory import Inventory
+from mtg_deck_builder.models.inventory import Inventory, InventoryItem
 
 BASIC_LAND_NAMES = {"Plains", "Island", "Swamp", "Mountain", "Forest"}
+
 
 class Collection(AtomicCards):
     """
@@ -15,6 +18,7 @@ class Collection(AtomicCards):
     """
 
     owned_quantities: Dict[str, int] = Field(default_factory=dict)
+    inventory: Optional[Inventory] = None
 
     class Config:
         # Pydantic v2 config to allow alias usage (AtomicCards often uses 'data' -> 'cards')
@@ -22,9 +26,9 @@ class Collection(AtomicCards):
 
     @classmethod
     def build_from_inventory(
-        cls,
-        atomic_cards: AtomicCards,
-        inventory: Inventory
+            cls,
+            atomic_cards: AtomicCards,
+            inventory: Inventory
     ) -> "Collection":
         """
         Creates a new Collection by merging the base AtomicCards data
@@ -37,7 +41,8 @@ class Collection(AtomicCards):
         )
         # Parse into a new Collection
         new_obj = cls.model_validate(parent_data)
-
+        # store inventory in new_obj
+        new_obj.inventory = inventory
         # Fill owned_quantities from the Inventory
         inv_dict = inventory.to_dict()  # e.g. {"Lightning Bolt": 4, ...}
         for card_name in new_obj.cards.keys():
@@ -53,3 +58,124 @@ class Collection(AtomicCards):
         Returns how many copies of `card_name` are owned, or 999999 if it's a basic land.
         """
         return self.owned_quantities.get(card_name, 0)
+
+    def filter_cards(
+            self,
+            name_query: Optional[str] = None,
+            text_query: Optional[str] = None,
+            type_query: Optional[str] = None,
+            color_identity: Optional[List[str]] = None,
+            color_mode: str = "exact",
+            keyword_query: Optional[str] = None,
+            power_value: Optional[float] = None,
+            power_op: str = "==",
+            toughness_value: Optional[float] = None,
+            toughness_op: str = "==",
+            mana_value: Optional[float] = None,
+            mana_op: str = "==",
+            legal_in: Optional[list] = None,
+    ) -> "Collection":
+        """
+        Filter the collection. Call super class method with the same name. return as a Collection object with inventory data.
+        :param name_query:
+        :param text_query:
+        :param type_query:
+        :param color_identity:
+        :param color_mode:
+        :param keyword_query:
+        :param power_value:
+        :param power_op:
+        :param toughness_value:
+        :param toughness_op:
+        :param mana_value:
+        :param mana_op:
+        :param legal_in:
+        :return: Collection of filtered cards
+        """
+
+        new_obj = super().filter_cards(
+            name_query=name_query,
+            text_query=text_query,
+            type_query=type_query,
+            color_identity=color_identity,
+            color_mode=color_mode,
+            keyword_query=keyword_query,
+            power_value=power_value,
+            power_op=power_op,
+            toughness_value=toughness_value,
+            toughness_op=toughness_op,
+            mana_value=mana_value,
+            mana_op=mana_op,
+            legal_in=legal_in
+        )
+        # Recombine with inventory data if self.inventory is not None
+        new_obj = Collection.build_from_inventory(new_obj, self.inventory)
+        return new_obj
+
+    @property
+    def total_owned(self):
+        """
+        Returns the total number of owned cards in the collection
+        Ignoring lands as they are infinite
+        :return:
+        """
+        # card comes from the cards field in AtomicCards
+        return sum([qty for card, qty in self.owned_quantities.items() if card not in BASIC_LAND_NAMES])
+
+    @property
+    def owned_cards(self):
+        """
+        Returns a dict of owned cards and their quantity in the collection
+        :return:
+        """
+        return {card: qty for card, qty in self.owned_quantities.items() if card not in BASIC_LAND_NAMES and qty > 0}
+
+    def get_owned_cards_collection(self, min_qty=1):
+        """
+        Returns a Collection object of owned cards including their inventory data.
+
+        Args:
+            min_qty (int): The minimum quantity required to consider a card owned.
+
+        Returns:
+            Collection: A new Collection object containing only owned cards.
+        """
+
+        # Ensure `self.inventory` is an Inventory object
+        if not isinstance(self.inventory, Inventory):
+            raise AttributeError("Collection object is missing a valid Inventory instance.")
+
+        # Optimize lookups by converting inventory items list to a filtered list directly
+        filtered_inventory_items = [
+            item for item in self.inventory.items if item.quantity >= min_qty
+        ]
+
+        # Optimize card retrieval with a dictionary lookup
+        card_lookup = {card.name: card for card in self.atomic_cards}
+
+        # Create a dictionary of owned AtomicCards
+        cards = {}
+        for item in filtered_inventory_items:
+            atomic_card = card_lookup.get(item.card_name)
+            if atomic_card is not None:
+                atomic_card = deepcopy(atomic_card)  # Prevent unintended mutations
+                atomic_card.owned = True
+                atomic_card.quantity = item.quantity
+                cards[atomic_card.name] = atomic_card
+
+        # Create an AtomicCards object with the owned cards
+        atomic_cards = AtomicCards(data=cards)
+
+        # Build a new Inventory instance with only the filtered items
+        new_inv = Inventory(items=filtered_inventory_items)
+
+        # Build a new Collection object using the new Inventory instance
+        new_obj = Collection.build_from_inventory(atomic_cards=atomic_cards, inventory=new_inv)
+
+        return new_obj
+
+    def __repr__(self):
+        # Override the default __repr__ to show the total number of cards owned and total cards in the collection
+        total_cards = self.total_cards
+        total_owned = self.total_owned
+        return f"Collection({total_owned} owned cards, {total_cards} total cards)"

@@ -29,3 +29,13 @@ class Inventory(BaseModel):
             return 999999  # effectively infinite
         # Otherwise, return the real quantity from items
         return self.to_dict().get(card_name, 0)
+
+    def filter_by_quantity(self, min_quantity: int = 1) -> "Inventory":
+        """
+        Returns a new Inventory with only the items that have at least `min_quantity`.
+        """
+        new_items = [it for it in self.items if it.quantity >= min_quantity]
+        return Inventory(items=new_items)
+
+    def __iter__(self):
+        return iter(self.items)
