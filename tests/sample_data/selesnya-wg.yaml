@@ -1,0 +1,82 @@
+deck:
+  name: "Selesnya Counters & Lifegain"
+  colors: ["W", "G"]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["standard"]
+  owned_cards_only: true
+
+  key_cards:
+    weighting_rules:
+      priority_text:
+        /put.*\+1\/\+1 counter/: 3
+        /gain.*life/: 2
+        /lifelink/: 2
+        /whenever you gain life/: 3
+        /creature.*enters the battlefield.*gain life/: 2
+        /create.*token/: 2
+        /fight target creature/: 2
+        vigilance: 1
+        trample: 1
+      rarity_bonus:
+        rare: 2
+        mythic: 3
+      mana_penalty:
+        threshold: 4
+        penalty_per_point: 1
+      min_score_to_flag: 5
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 5
+    prefer:
+      - "{T}: Add {W} or {G}"
+      - "scry"
+      - "gain life"
+    avoid:
+      - "enters the battlefield tapped"
+      - "{T}: Add {C}"
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["lifelink", "vigilance", "trample"]
+    priority_text:
+      - /put.*\+1\/\+1 counter/
+      - /gain.*life/
+      - /whenever you gain life/
+  removal:
+    target: 6
+    priority_text:
+      - /fight target creature/
+      - /exile target creature/
+      - /destroy target artifact or enchantment/
+  card_draw:
+    target: 3
+    priority_text:
+      - draw
+      - /look at the top/
+  buffs:
+    target: 4
+    priority_text:
+      - /creature you control gets/
+      - /until end of turn.*+/
+  token_generation:
+    target: 4
+    priority_text:
+      - /create.*token/
+
+card_constraints:
+  exclude_keywords: ["defender"]
+  prefer_cards_with_text:
+    - /put.*\+1\/\+1 counter/
+    - /gain.*life/
+    - /whenever you gain life/
+    - /fight target creature/
+  avoid_cards_with_text:
+    - "counter target spell"
+    - "can't block"
