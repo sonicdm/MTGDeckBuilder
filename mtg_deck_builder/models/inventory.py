@@ -31,7 +31,7 @@ class InventoryItem(BaseModel):
         return self.model_dump() == other.model_dump()
 
 class Inventory(BaseModel):
-    items: Union[Dict[str, InventoryItem],InventoryItem] = Field(default_factory=dict)
+    items: Dict[str, InventoryItem] = Field(default_factory=dict)
 
     @field_validator("items", mode="before")
     @classmethod
@@ -80,6 +80,31 @@ class Inventory(BaseModel):
             if self.items[card_name].quantity == 0:
                 del self.items[card_name]  # Remove the card entirely if quantity is 0
 
+    def owned_cards(self) -> Dict[str,InventoryItem]:
+        """
+        Returns a list of card names that are owned in the inventory.
+        """
+        owned = {}
+        for name, item in self.items.items():
+            if isinstance(item.quantity, int) and item.quantity > 0:
+                owned[name] = item
+            if item.is_infinite:
+                owned[name] = item
+        return owned
+
+    def is_owned(self, card_name: str) -> bool:
+        """
+        Returns True if the card is owned in the inventory.
+        """
+        return card_name in self.owned_cards()
+
+    def get_owned_cards_inventory(self) -> "Inventory":
+        """
+        Returns a new Inventory object containing only the cards that are owned.
+        :return:
+        """
+        return Inventory(items=self.owned_cards())
+
     @classmethod
     def from_dict(cls, card_list: Dict[str,int]) -> "Inventory":
         """
@@ -104,6 +129,18 @@ class Inventory(BaseModel):
                 items[card_name] = item
 
         return cls(items=items)
+
+    def total_card_count(self) -> int:
+        """
+        Returns the total number of cards in the inventory.
+        """
+        return len(self.items)
+
+    def total_card_copies_count(self) -> int:
+        """
+        Returns the total number of owned cards in the inventory.
+        """
+        return sum([item.quantity for item in self.items.values() if item.quantity is not None])
 
 
     def __eq__(self, other):

@@ -1,6 +1,8 @@
 # collection.py
 from copy import deepcopy
 from typing import Dict, Optional, List
+
+
 from pydantic import BaseModel, Field
 from pydantic._internal import _repr
 
@@ -17,41 +19,42 @@ class Collection(AtomicCards):
     This file omits placeholder filter/deck-building logic to keep it minimal and clear.
     """
 
-    owned_quantities: Dict[str, int] = Field(default_factory=dict)
+    # owned_quantities: Dict[str, int] = Field(default_factory=dict)
     inventory: Optional[Inventory] = None
 
     class Config:
         # Pydantic v2 config to allow alias usage (AtomicCards often uses 'data' -> 'cards')
-        allow_population_by_field_name = True
+        populate_by_name = True
 
     @classmethod
     def build_from_inventory(
             cls,
             cards: AtomicCards,
-            inventory: Inventory
+            inventory: Inventory,
+            only_owned: bool = False
     ) -> "Collection":
         """
         Creates a new Collection by merging the base AtomicCards data
         with the user's inventory. Basic lands are infinite.
+        :param cards: AtomicCards object with card data
+        :param inventory: Inventory object with owned card quantities
+        :param only_owned: If True, only include cards with a non-zero quantity
         """
-        # Convert the parent AtomicCards object to a dict with aliases
-        parent_data = cards.model_dump(
-            by_alias=True,
-            exclude_unset=True
-        )
-        # Parse into a new Collection
-        new_obj = cls.model_validate(parent_data)
-        # store inventory in new_obj
-        new_obj.inventory = inventory
-        # Fill owned_quantities from the Inventory
-        inv_dict = inventory.to_dict()  # e.g. {"Lightning Bolt": 4, ...}
-        for card_name in new_obj.cards.keys():
-            if card_name in BASIC_LAND_NAMES:
-                new_obj.owned_quantities[card_name] = 999999  # infinite
-            else:
-                new_obj.owned_quantities[card_name] = inv_dict.get(card_name, 0)
+        # compile inventory data, using existing if only_owned is False
+        if only_owned:
+            inventory = inventory.get_owned_cards_inventory()
 
-        return new_obj
+        # make a new collection with the cards and inventory with the atomic cards data using only the cards in inventory
+        new_data = {}
+        for card in cards:
+            if inventory.is_owned(card.name):
+                new_data[card.name] = card
+        new_collection = cls(
+            data=new_data,
+            inventory=inventory
+        )
+
+        return new_collection
 
     def get_owned_quantity(self, card_name: str) -> int:
         """
@@ -120,7 +123,7 @@ class Collection(AtomicCards):
         :return:
         """
         # card comes from the cards field in AtomicCards
-        return sum([qty for card, qty in self.owned_quantities.items() if card not in BASIC_LAND_NAMES])
+        return sum([qty for card, qty in self.inventory.items() if card not in BASIC_LAND_NAMES])
 
     @property
     def owned_cards(self):
@@ -159,7 +162,6 @@ class Collection(AtomicCards):
         # create inventory items from the filtered_inventory_items
         new_inv = Inventory.from_list(filtered_inventory_items)
 
-
         # Create a dictionary of owned AtomicCards
         cards = {}
         for item in filtered_inventory_items:
@@ -181,5 +183,5 @@ class Collection(AtomicCards):
     def __repr__(self):
         # Override the default __repr__ to show the total number of cards owned and total cards in the collection
         total_cards = self.total_cards
-        total_owned = self.total_owned
-        return f"Collection({total_owned} owned cards, {total_cards} total cards)"
+        total_owned = self.inventory.total_card_copies_count()
+        return f"Collection({total_cards} unique owned cards, {total_owned} total cards)"

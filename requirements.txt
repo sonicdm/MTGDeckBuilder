@@ -1,4 +1,9 @@
 requests~=2.32.3
-gradio~=5.20.1
-setuptools~=68.2.0
+gradio~=5.23.2
+setuptools~=70.0.0
 pydantic~=2.10.6
+SQLAlchemy~=2.0.41
+pytest~=8.3.5
+simplejson~=3.20.1
+tqdm~=4.67.1
+PyYAML~=6.0.2

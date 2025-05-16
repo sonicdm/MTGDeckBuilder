@@ -179,6 +179,11 @@ class AtomicCard(BaseModel):
         """Check if card type matches any/all queries based on mode."""
         if not queries:
             return True
+        if type(queries) == str:
+            queries = [queries]
+        if not len([str(t) for t in queries]) > 0:
+            return False
+
         card_type_str = (self.type or "").lower()
         if mode == "or":
             return any(q.lower() in card_type_str for q in queries)
@@ -277,7 +282,7 @@ class AtomicCards(BaseModel):
     cards: Dict[str, AtomicCard] = Field(..., alias="data")
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
     def filter_cards(
             self,
@@ -495,5 +500,6 @@ class AtomicCards(BaseModel):
     def __len__(self):
         return len(self.cards)
 
-    def __iter__(self):
+    def __iter__(self) -> List[AtomicCard]:
         return iter(self.cards.values())
+

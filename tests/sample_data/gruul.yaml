@@ -1,0 +1,51 @@
+deck:
+  name: "Gruul Aggro"
+  colors: ["R", "G"]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: false
+  legalities: ["standard"]
+
+mana_base:
+  land_count: 21
+  special_lands:
+    count: 7
+    prefer:
+      - "Add {R} or {G}"
+      - "Untapped"
+      - "Mana fixing"
+      - "Does damage"
+      - "Gain Life"
+    avoid:
+      - "Enters tapped unless"
+      - "Deals damage to you"
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 22
+    preferred_keywords: ["Haste", "Trample"]
+    priority_text: ["Aggressive", "Deals damage", "Attacks each turn"]
+  removal:
+    target: 8
+    priority_text: ["Destroy", "Exile", "Deal damage"]
+  card_draw:
+    target: 4
+    priority_text: ["Draw a card", "Impulse draw"]
+  buffs:
+    target: 4
+    priority_text: ["+X/+X until end of turn", "Give haste or trample"]
+
+card_constraints:
+  rarity_boost:
+    rare: 2
+    mythic: 3
+  exclude_keywords: ["Defender"]
+  prefer_cards_with_text:
+    - "Haste"
+    - "Aggressive"
+    - "Deal damage"
+  avoid_cards_with_text:
+    - "Counter target spell"
+    - "Cannot attack"

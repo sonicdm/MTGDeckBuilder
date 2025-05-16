@@ -1,0 +1,18 @@
+name: "Mono-Red Aggro"
+description: "Fast and aggressive red deck aiming to win quickly"
+colors: ["R"]
+format: "standard"
+strategy: "aggro"
+max_mana_cost: 4
+min_creatures: 24
+max_noncreature_spells: 20
+max_lands: 22
+prefer_keywords:
+  - "haste"
+  - "first strike"
+  - "damage"
+  - "burn"
+prefer_types:
+  - "creature"
+  - "instant"
+  - "sorcery"

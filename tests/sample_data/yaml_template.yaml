@@ -1,0 +1,75 @@
+deck:
+  name: "My Sample Deck"
+  colors: ["R", "G"]              # Allowed: "W", "U", "B", "R", "G", "C"
+  color_match_mode: "subset"     # Options: "exact", "subset", "any"
+  size: 60                          # Total number of cards in the deck
+  max_card_copies: 4               # Max copies of a single card (usually 4)
+  allow_colorless: true            # Whether truly colorless cards are allowed
+  legalities: ["standard"]        # Allowed formats, e.g., "modern", "commander"
+  mana_curve:
+    min: 1                          # Minimum mana cost for cards
+    max: 8                          # Maximum mana cost for cards
+    curve_shape: "bell"            # Shape of the mana curve, e.g., "bell", "linear"
+    curve_slope: "up"              # Slope of the curve, e.g., "up", "down", "flat"
+  owned_cards_only: true           # Only use cards present in inventory
+
+priority_cards:                    # Cards you'd strongly prefer to include
+  - name: "Lightning Bolt"
+    min_copies: 2
+  - name: "Monastery Swiftspear"
+    min_copies: 4
+
+mana_base:
+  land_count: 22                   # Total number of lands to include
+  special_lands:
+    count: 6
+    prefer:
+      - "Add {R} or {G}"
+      - "Untapped"
+      - "Mana fixing"
+      - "Gain life"
+    avoid:
+      - "Enters tapped unless"
+      - "Deals damage to you"
+  balance:
+    adjust_by_mana_symbols: true  # Use mana symbols in spell costs to balance
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["Haste", "Trample", "Menace"]
+    priority_text: ["Aggressive", "Attacks each turn", "Deals damage"]
+  removal:
+    target: 6
+    priority_text: ["Destroy", "Exile", "Deal damage", "Fight"]
+  card_draw:
+    target: 4
+    priority_text: ["Draw a card", "Impulse draw"]
+  buffs:
+    target: 4
+    priority_text: ["+X/+0", "Until end of turn", "Give haste", "Pump spell"]
+  utility:
+    target: 2
+    priority_text: ["Treasure", "Scry", "Loot", "Double strike"]
+
+card_constraints:
+  rarity_boost:
+    rare: 2                       # Allow 2 extra rares beyond owned qty
+    mythic: 1                     # Same for mythics
+  exclude_keywords: ["Defender", "Cannot attack"]
+  prefer_cards_with_text:
+    - "Haste"
+    - "Aggressive"
+    - "Burn"
+  avoid_cards_with_text:
+    - "Counter target spell"
+    - "Cannot attack"
+
+fallback_strategy:                # What to do if we can’t meet targets
+  fill_with_any: true            # Allow arbitrary owned cards to top off
+  fill_priority:                 # Order of categories to fill in preference
+    - creatures
+    - removal
+    - buffs
+  allow_less_than_target: false  # If false, must meet exact counts or skip
+

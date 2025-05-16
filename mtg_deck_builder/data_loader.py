@@ -1,14 +1,8 @@
 # data_loader.py
-import json
-from collections import defaultdict
-from pathlib import Path
-from typing import List, Dict
-from pydantic import ValidationError
 
-from mtg_deck_builder.models.cards import AtomicCards, AtomicCard
-from mtg_deck_builder.models.inventory import Inventory, InventoryItem
+from mtg_deck_builder.models import AtomicCards, AtomicCard, Inventory, InventoryItem
+from mtg_deck_builder.models import BASIC_LAND_NAMES
 
-BASIC_LAND_NAMES = {"Plains", "Island", "Swamp", "Mountain", "Forest"}
 
 
 def load_atomic_cards_from_json(json_file_path: str) -> AtomicCards:
@@ -132,3 +126,49 @@ def load_inventory_from_txt(txt_file_path: str) -> Inventory:
                     inventory_data[card_name] = InventoryItem.create(card_name, quantity)
 
     return Inventory(items=inventory_data)
+
+
+from models import CardDatabase
+
+
+def load_card_database(json_file: str) -> CardDatabase:
+    with open(json_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    all_cards = {UUID(k): Card(**v) for k, v in data.get("cards", {}).items()}
+    all_sets = {k: CardSet(**v) for k, v in data.get("sets", {}).items()}
+    return CardDatabase(cards=all_cards, sets=all_sets)
+
+
+import json
+from uuid import UUID
+from pathlib import Path
+from typing import Dict
+from models import Card, CardSet, CardDatabase
+
+
+def load_all_printings(filepath: Path) -> CardDatabase:
+    with filepath.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    cards: Dict[UUID, Card] = {}
+    sets: Dict[str, CardSet] = {}
+
+    for set_code, set_data in data.get("data", {}).items():
+        card_uids = set_data.get("cards", {})
+        meta = {k: v for k, v in set_data.items() if k != "cards"}
+
+        # Store set-level metadata with minimal info
+        sets[set_code] = CardSet(
+            set_code=set_code,
+            set_name=meta.get("name", ""),
+            release_date=meta.get("releaseDate", None),
+            block=meta.get("block", None),
+            cards={UUID(k): v for k, v in card_uids.items()}
+        )
+
+        # Cards can be defined elsewhere; otherwise populate here if needed
+        for uid, card_data in card_uids.items():
+            if uid not in cards:
+                cards[uid] = Card(**card_data)
+
+    return CardDatabase(cards=cards, sets=sets)
