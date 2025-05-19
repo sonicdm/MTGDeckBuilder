@@ -6,6 +6,7 @@ Defines SQLAlchemy ORM models for cards, printings, sets, import logs, and inven
 
 import re
 from typing import Dict, List, Optional, TYPE_CHECKING, ClassVar, Any
+from datetime import date, datetime
 
 from sqlalchemy import Column, String, Integer, Date, Text, JSON, Boolean, DateTime, Float, ForeignKey, event
 from sqlalchemy.orm import declarative_base, relationship, Mapped, mapped_column
@@ -22,7 +23,28 @@ Base = declarative_base()
 class CardPrintingDB(Base):
     """
     Represents a specific printing of a Magic: The Gathering card in a particular set.
-    Stores detailed card data as it appears in that printing.
+
+    Attributes:
+        uid (str): Unique identifier for this card printing.
+        card_name (str): Name of the card (foreign key to CardDB).
+        artist (str, optional): Artist of the card.
+        number (str, optional): Collector number in the set.
+        set_code (str): Set code (foreign key to CardSetDB).
+        card_type (str, optional): Type line of the card.
+        rarity (str, optional): Rarity of the card.
+        mana_cost (str, optional): Mana cost string.
+        power (str, optional): Power value (for creatures).
+        toughness (str, optional): Toughness value (for creatures).
+        abilities (list, optional): List of keyword abilities.
+        flavor_text (str, optional): Flavor text.
+        text (str, optional): Rules text.
+        colors (list, optional): Printed colors.
+        color_identity (list, optional): Color identity for deck-building.
+        legalities (dict, optional): Format legality info.
+        rulings (list, optional): List of rulings.
+        foreign_data (dict, optional): Foreign language data.
+        card (CardDB): Relationship to CardDB.
+        set (CardSetDB): Relationship to CardSetDB.
     """
     __tablename__ = "card_printings"
     uid: Mapped[str] = mapped_column(String, primary_key=True)
@@ -67,6 +89,12 @@ class CardDB(Base):
     """
     Represents a unique Magic: The Gathering card (by name).
     Aggregates all printings of the card and provides properties to access the latest printing's data.
+
+    Attributes:
+        name (str): Name of the card (primary key).
+        printings (list): List of CardPrintingDB objects for this card.
+        newest_printing_uid (str, optional): UID of the newest printing.
+        newest_printing_rel (CardPrintingDB, optional): Relationship to newest printing.
     """
     __tablename__ = "cards"
     __allow_unmapped__ = True  # Allow runtime-only attributes
@@ -96,23 +124,42 @@ class CardDB(Base):
         Returns the most recent printing of the card, or None if no printings exist.
         Uses the cached DB relationship if available, otherwise falls back to calculation.
         """
-        if self.newest_printing_rel is not None:
+        if self.newest_printing_rel is not None:  # Check relationship first (populated by bootstrap)
             return self.newest_printing_rel
-        # fallback for legacy/uncached cards
-        if self._newest_printing_cache is not None:
+
+        if self._newest_printing_cache is not None:  # Then manual instance cache
             return self._newest_printing_cache
+
         if not self.printings:
+            self._newest_printing_cache = None  # Ensure cache is None if no printings
             return None
+
+        def get_safe_release_date(printing_obj: CardPrintingDB) -> date:
+            set_obj = getattr(printing_obj, "set", None)
+            if set_obj:
+                release_date_val = getattr(set_obj, "release_date", None)
+                if isinstance(release_date_val, date):
+                    return release_date_val
+                # Handle cases where release_date might be a string in data, though DB should store as Date
+                if isinstance(release_date_val, str):
+                    try:
+                        return datetime.strptime(release_date_val, "%Y-%m-%d").date()
+                    except ValueError:
+                        pass  # Fall through to date.min if parsing fails
+            # Fallback for comparison if no valid date found for this printing's set
+            return date.min
+
         try:
-            np = max(
-                self.printings,
-                key=lambda p: getattr(getattr(p, "set", None), "release_date", None) or getattr(p, "release_date", None) or "",
-                default=None
-            )
-        except Exception:
-            np = self.printings[0] if self.printings else None
-        self._newest_printing_cache = np
-        return np
+            # Find the printing with the maximum (latest) release date.
+            determined_newest_printing = max(self.printings, key=get_safe_release_date)
+        except ValueError:
+            # Should ideally not be reached if `if not self.printings:` is effective and list is not empty.
+            # If self.printings is not empty but max still fails (e.g. all dates are date.min and max has issues with that),
+            # this is a fallback. A more sophisticated tie-breaker might be needed if all dates are date.min.
+            determined_newest_printing = self.printings[0] if self.printings else None
+
+        self._newest_printing_cache = determined_newest_printing
+        return determined_newest_printing
 
     @newest_printing.setter
     def newest_printing(self, value: Optional["CardPrintingDB"]):
@@ -120,32 +167,49 @@ class CardDB(Base):
 
     @property
     def type(self) -> Optional[str]:
-        """Returns the card type from the newest printing."""
+        """
+        Returns the card type from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "card_type", None) if np else None
 
     @property
     def rarity(self) -> Optional[str]:
+        """
+        Returns the rarity from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "rarity", None) if np else None
 
     @property
     def mana_cost(self) -> Optional[str]:
+        """
+        Returns the mana cost from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "mana_cost", None) if np else None
 
     @property
     def power(self) -> Optional[str]:
+        """
+        Returns the power from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "power", None) if np else None
 
     @property
     def toughness(self) -> Optional[str]:
+        """
+        Returns the toughness from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "toughness", None) if np else None
 
     @property
     def abilities(self) -> Optional[List[str]]:
+        """
+        Returns the list of abilities from the newest printing.
+        """
         np = self.newest_printing
         abilities = getattr(np, "abilities", None) if np else None
         if abilities is None:
@@ -156,16 +220,25 @@ class CardDB(Base):
 
     @property
     def flavor_text(self) -> Optional[str]:
+        """
+        Returns the flavor text from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "flavor_text", None) if np else None
 
     @property
     def text(self) -> Optional[str]:
+        """
+        Returns the rules text from the newest printing.
+        """
         np = self.newest_printing
         return getattr(np, "text", None) if np else None
 
     @property
     def colors(self) -> Optional[List[str]]:
+        """
+        Returns the color identity (preferred) or printed colors from the newest printing.
+        """
         np = self.newest_printing
         # Use color_identity for deck-building color filtering
         color_identity = getattr(np, "color_identity", None) if np else None
@@ -183,6 +256,9 @@ class CardDB(Base):
 
     @property
     def legalities(self) -> Optional[dict]:
+        """
+        Returns the legality dictionary from the newest printing.
+        """
         np = self.newest_printing
         legalities = getattr(np, "legalities", None) if np else None
         if legalities is None:
@@ -193,6 +269,9 @@ class CardDB(Base):
 
     @property
     def rulings(self) -> Optional[List[str]]:
+        """
+        Returns the list of rulings from the newest printing.
+        """
         np = self.newest_printing
         rulings = getattr(np, "rulings", None) if np else None
         if rulings is None:
@@ -203,6 +282,9 @@ class CardDB(Base):
 
     @property
     def foreign_data(self) -> Optional[Dict]:
+        """
+        Returns the foreign language data from the newest printing.
+        """
         np = self.newest_printing
         foreign_data = getattr(np, "foreign_data", None) if np else None
         if foreign_data is None:
@@ -235,6 +317,11 @@ class CardDB(Base):
     def matches_type(self, type_string: str) -> bool:
         """
         Checks if the card's type matches the given type string (case-insensitive).
+
+        Args:
+            type_string (str): Type string to match (e.g., 'creature').
+        Returns:
+            bool: True if the card's type matches, False otherwise.
         """
         t = self.type
         if not t or not type_string:
@@ -250,11 +337,12 @@ class CardDB(Base):
     def matches_color_identity(self, colors: List[str], match_mode: str = "subset") -> bool:
         """
         Checks if the card's color identity matches the given colors.
-        match_mode can be 'any', 'subset', or 'exact'.
 
-        - 'any': Card shares at least one color with the requested colors.
-        - 'subset': All of the card's colors are in the requested colors (but not vice versa).
-        - 'exact': Card's colors exactly match the requested colors.
+        Args:
+            colors (List[str]): List of color codes to match (e.g., ['W', 'U']).
+            match_mode (str): 'any', 'subset', or 'exact'.
+        Returns:
+            bool: True if the card matches the color identity criteria.
         """
         if not colors:
             return True
@@ -313,6 +401,13 @@ def _invalidate_newest_printing_cache(card, *args, **kwargs):
 class CardSetDB(Base):
     """
     Represents a Magic: The Gathering set (expansion, core set, etc.).
+
+    Attributes:
+        set_code (str): Set code (primary key).
+        set_name (str): Name of the set.
+        release_date (date, optional): Release date of the set.
+        block (str, optional): Block name.
+        set_metadata (dict): Additional metadata for the set.
     """
     __tablename__ = "sets"
     set_code: Mapped[str] = mapped_column(String, primary_key=True)
@@ -326,16 +421,26 @@ class ImportLog(Base):
     """
     Tracks import operations for card data files.
     Stores file path, import date, and modification time.
+
+    Attributes:
+        json_path (str): Path to the imported JSON file (primary key).
+        meta_date (datetime): Date from the file's meta section.
+        mtime (float): File modification time.
     """
     __tablename__ = 'import_log'
     json_path: Mapped[str] = mapped_column(String, primary_key=True)
     meta_date: Mapped[DateTime] = mapped_column(DateTime, nullable=False)
-    mtime: Mapped[float] = mapped_column(Float, nullable=False)
+    mtime: Mapped[Float] = mapped_column(Float, nullable=False)
 
 
 class InventoryItemDB(Base):
     """
     Represents an inventory item for a card, tracking quantity and infinite status.
+
+    Attributes:
+        card_name (str): Name of the card (primary key).
+        quantity (int): Number of copies owned.
+        is_infinite (bool): If True, treat as infinite copies owned.
     """
     __tablename__ = "inventory_items"
     card_name: Mapped[str] = mapped_column(String, primary_key=True)

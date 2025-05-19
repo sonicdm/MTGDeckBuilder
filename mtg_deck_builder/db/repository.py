@@ -14,7 +14,7 @@ from typing import List, Optional, Dict
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-
+from datetime import datetime, date
 from mtg_deck_builder.db.models import CardDB, CardSetDB, InventoryItemDB
 
 
@@ -91,17 +91,38 @@ class CardRepository:
         if not cards:
             return None
 
-        def get_release_date(card: CardDB) -> Optional[str]:
+        def get_release_date(card: CardDB) -> Optional[date]:
+            raw_date_val = None
             set_obj = getattr(card, "set", None)
-            if set_obj and getattr(set_obj, "release_date", None):
-                return set_obj.release_date
-            if self.session is not None and hasattr(card, "set_code"):
+
+            # Try to get release date from the card's associated set object first
+            if set_obj and hasattr(set_obj, "release_date") and set_obj.release_date is not None:
+                raw_date_val = set_obj.release_date
+
+            # If not found or None, and session is available, try querying CardSetDB
+            if raw_date_val is None and self.session is not None and hasattr(card, "set_code"):
                 set_row = self.session.query(CardSetDB).filter_by(set_code=card.set_code).first()
-                if set_row and set_row.release_date:
-                    return set_row.release_date
+                if set_row and hasattr(set_row, "release_date") and set_row.release_date is not None:
+                    raw_date_val = set_row.release_date
+
+            if isinstance(raw_date_val, date):
+                return raw_date_val
+            elif isinstance(raw_date_val, str):
+                try:
+                    # Attempt to parse YYYY-MM-DD strings
+                    return datetime.strptime(raw_date_val, "%Y-%m-%d").date()
+                except ValueError:
+                    # If parsing fails, return None
+                    # Optionally, log a warning here:
+                    # import logging
+                    # logging.warning(f"Could not parse date string '{raw_date_val}' for card {getattr(card, 'name', 'Unknown Card')}")
+                    return None
+
+            # If raw_date_val was None initially, or not a date/parsable string
             return None
 
-        return max(cards, key=lambda c: get_release_date(c) or "0000-00-00")
+        # Use date.min as a fallback for comparison if a release date is None, ensuring type consistency for max()
+        return max(cards, key=lambda c: get_release_date(c) or date.min)
 
     def get_owned_cards_by_inventory(self, inventory_items: List[InventoryItemDB]) -> 'CardRepository':
         """
@@ -146,7 +167,8 @@ class CardRepository:
             color_identity: Optional[List[str]] = None,
             color_mode: str = "subset",
             legal_in: Optional[str] = None,
-            type_query: Optional[str] = None,  # <-- Added
+            type_query: Optional[str] = None,
+            names_in: Optional[List[str]] = None,  # <-- Re-added
             force_refresh: bool = False,
             min_quantity: int = 0,
     ) -> 'CardRepository':
@@ -161,6 +183,7 @@ class CardRepository:
             color_mode (str): Mode for color identity filtering. One of {"exact", "subset", "any"}.
             legal_in (Optional[str]): Filter by legality in a specific format.
             type_query (Optional[str]): Filter by card type line (substring match).
+            names_in (Optional[List[str]]): Filter by a list of exact card names (case-insensitive).
             force_refresh (bool): If True, always query the database for cards.
             min_quantity (int): Minimum quantity of owned copies of a card to include in the result.
 
@@ -170,6 +193,10 @@ class CardRepository:
         cards = self.get_all_cards() if (self._cards is None or force_refresh) else self._cards
         filtered = []
         color_identity_skipped = 0
+
+        # Prepare a lowercased set of names_in for efficient lookup if provided
+        lower_names_in = {name.lower() for name in names_in} if names_in else None
+
         for card in cards:
             # Use getattr to support both CardDB (owned_qty) and InventoryItemDB (quantity)
             qty = getattr(card, "owned_qty", getattr(card, "quantity", 0))
@@ -189,6 +216,8 @@ class CardRepository:
                 if status.lower() != 'legal':
                     continue
             if type_query and (not card.type or type_query.lower() not in card.type.lower()):
+                continue
+            if lower_names_in and (card.name or '').lower() not in lower_names_in: # <-- Re-added logic
                 continue
             filtered.append(card)
         if color_identity and color_identity_skipped > 0:

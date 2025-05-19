@@ -1,4 +1,11 @@
+"""
+Database bootstrap utilities for Magic: The Gathering deck builder.
+
+This module provides functions to initialize and populate the card database from JSON data sources, and optionally load inventory data. It manages database setup, data import, and ensures that the database is only reloaded when necessary.
+"""
 import logging
+
+from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.setup import setup_database
 from mtg_deck_builder.db.models import CardDB, CardSetDB, CardPrintingDB, ImportLog
 from mtg_deck_builder.db.loader import is_reload_needed, update_import_time, load_inventory
@@ -22,6 +29,18 @@ def bootstrap(
     db_url: str = "sqlite:///cards.db",
     use_tqdm: bool = True
 ):
+    """
+    Initialize and populate the card database from a JSON data source.
+
+    Loads card and set data from a JSON file into the database, using multi-threading for efficiency.
+    Handles duplicate checking, sets up relationships, and updates import logs. Optionally loads inventory data.
+
+    Args:
+        json_path (str): Path to the card data JSON file.
+        inventory_path (str, optional): Path to the inventory file to load after cards. Defaults to None.
+        db_url (str, optional): SQLAlchemy database URL. Defaults to "sqlite:///cards.db".
+        use_tqdm (bool, optional): Whether to use tqdm progress bars. Defaults to True.
+    """
     logging.debug(f"Starting bootstrap with json_path={json_path}, inventory_path={inventory_path}, db_url={db_url}")
     engine = setup_database(db_url)
     Session = sessionmaker(bind=engine)
@@ -57,6 +76,17 @@ def bootstrap(
         card_name_cache_lock = Lock()
 
         def process_cards(card_entries, set_code, set_info, set_entry):
+            """
+            Process card entries for a given set, creating CardDB and CardPrintingDB objects.
+
+            Args:
+                card_entries (list): List of card data dicts.
+                set_code (str): Set code for the cards.
+                set_info (dict): Metadata for the set.
+                set_entry (CardSetDB): The CardSetDB instance for this set.
+            Returns:
+                tuple: (list of CardDB, list of CardPrintingDB, skipped count)
+            """
             local_cards = []
             local_printings = []
             local_skipped = 0
@@ -184,6 +214,43 @@ def bootstrap(
 
     logging.debug("Committing database changes...")
     session.commit()
-    session.close()
+    # session.close() # Session should be closed by the caller (e.g., the fixture)
     logging.info("Bootstrap complete.")
+    session.close() # Return the open session
+
+
+def bootstrap_inventory(
+    inventory_path: str,
+    db_url: str = "sqlite:///cards.db",
+    use_tqdm: bool = True
+):
+    """
+    Load inventory data into the database from a file.
+
+    This function creates its own session and should manage it. If it's intended to use an existing session, its signature should change.
+    Ensures tables exist, loads inventory, and commits changes.
+
+    Args:
+        inventory_path (str): Path to the inventory file.
+        db_url (str, optional): SQLAlchemy database URL. Defaults to "sqlite:///cards.db".
+        use_tqdm (bool, optional): Whether to use tqdm progress bars. Defaults to True.
+    """
+    logging.debug(f"Starting bootstrap_inventory with inventory_path={inventory_path}, db_url={db_url}")
+    # This function creates its own session and should manage it.
+    # If it's intended to use an existing session, its signature should change.
+    engine = setup_database(db_url) # Ensure tables exist if this is called independently
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    if not os.path.exists(inventory_path):
+        logging.error(f"File not found: {inventory_path}")
+        session.close()
+        return
+
+    load_inventory(session, inventory_path)
+
+    logging.debug("Committing database changes...")
+    session.commit()
+    session.close() # This session is local to bootstrap_inventory, so it closes it.
+    logging.info("Bootstrap inventory complete.")
 

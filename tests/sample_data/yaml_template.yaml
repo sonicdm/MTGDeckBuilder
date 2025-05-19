@@ -5,7 +5,7 @@ deck:
   size: 60                          # Total number of cards in the deck
   max_card_copies: 4               # Max copies of a single card (usually 4)
   allow_colorless: true            # Whether truly colorless cards are allowed
-  legalities: ["standard"]        # Allowed formats, e.g., "modern", "commander"
+  legalities: ["modern"]           # CHANGED to modern for broader card pool
   mana_curve:
     min: 1                          # Minimum mana cost for cards
     max: 8                          # Maximum mana cost for cards
@@ -54,16 +54,26 @@ categories:
 
 card_constraints:
   rarity_boost:
-    rare: 2                       # Allow 2 extra rares beyond owned qty
-    mythic: 1                     # Same for mythics
+    common: 0                      # Allow 0 extra commons beyond owned qty
+    uncommon: 0                    # Allow 0 extra uncommons beyond owned qty
+    rare: 2                        # Allow 2 extra rares beyond owned qty
+    mythic: 1                      # Allow 1 extra mythic beyond owned qty
   exclude_keywords: ["Defender", "Cannot attack"]
-  prefer_cards_with_text:
-    - "Haste"
-    - "Aggressive"
-    - "Burn"
-  avoid_cards_with_text:
-    - "Counter target spell"
-    - "Cannot attack"
+
+scoring_rules:
+  priority_text:
+    "Aggressive": 2
+    "Haste": 2
+    /deal[s]? damage/: 3
+  rarity_bonus:
+    common: 0
+    uncommon: 0
+    rare: 2
+    mythic: 1
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+  min_score_to_flag: 5
 
 fallback_strategy:                # What to do if we can’t meet targets
   fill_with_any: true            # Allow arbitrary owned cards to top off

@@ -3,7 +3,7 @@ import unittest
 import time
 import logging
 from datetime import date
-from mtg_deck_builder.yaml_deck_builder import load_yaml_template, build_deck_from_yaml
+from mtg_deck_builder.yaml_builder.yaml_deck_builder import load_yaml_template, build_deck_from_yaml
 from mtg_deck_builder.db.setup import setup_database
 from mtg_deck_builder.db.repository import CardRepository, InventoryRepository
 from mtg_deck_builder.models.deck import Deck

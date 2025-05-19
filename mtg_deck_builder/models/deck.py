@@ -5,24 +5,58 @@ from sqlalchemy.orm import Session
 
 from mtg_deck_builder.db import CardDB
 from mtg_deck_builder.db.repository import CardRepository
-
+from mtg_deck_builder.deck_config import DeckConfig
 
 class Deck(CardRepository):
     """
-    A deck is a specialized CardRepository with additional deck analysis methods.
-    The 'cards' field is a dict of cardName -> CardDB, each with an 'owned_qty' attribute
-    indicating how many copies are in this deck.
+    Represents a Magic: The Gathering deck, with analysis and utility methods.
+
+    Inherits from CardRepository for card access. Stores cards as a dictionary with quantities.
+    Provides methods for deck statistics, color analysis, mana curve, and export.
+
+    Attributes:
+        session (Optional[Session]): SQLAlchemy session for database queries.
+        name (str): Name of the deck.
+        _cards (Dict[str, CardDB]): Dictionary of card name to CardDB, each with an 'owned_qty' attribute.
+        config (Optional[DeckConfig]): Optional deck configuration.
     """
     session: Optional[Session] = None
     name: str = ""
 
     def __init__(self, cards: Optional[Dict[str, CardDB]] = None, session: Optional[Session] = None, name: str = ""):
+        """
+        Initialize a Deck instance.
+
+        Args:
+            cards (Optional[Dict[str, CardDB]]): Cards in the deck, keyed by name.
+            session (Optional[Session]): SQLAlchemy session.
+            name (str): Name of the deck.
+        """
         self.session = session
         self.name = name
         self._cards: Dict[str, CardDB] = cards if cards is not None else {}
+        self.config: Optional[DeckConfig] = None  # Placeholder for DeckConfig, if needed
+
+    def __repr__(self) -> str:
+        """
+        Returns an informative string representation of the deck.
+        """
+        num_unique_cards = len(self._cards)
+        total_cards = self.size()  # Assuming size() method correctly sums owned_qty
+        return f"<Deck(name='{self.name}', color_identity={self.deck_color_identity()}, unique_cards={num_unique_cards}, total_cards={total_cards})>"
 
     @classmethod
     def from_repo(cls, repo: CardRepository, limit: int = 60, random_cards: bool = True) -> 'Deck':
+        """
+        Create a Deck from a CardRepository, optionally limiting and shuffling cards.
+
+        Args:
+            repo (CardRepository): Source repository.
+            limit (int): Maximum number of cards to include.
+            random_cards (bool): Shuffle cards before selection.
+        Returns:
+            Deck: New Deck instance.
+        """
         all_cards = repo.get_all_cards()
         if not all_cards:
             raise ValueError("No cards found in the repository.")
@@ -38,6 +72,9 @@ class Deck(CardRepository):
     def insert_card(self, card: CardDB) -> None:
         """
         Inserts a card into the deck, incrementing owned_qty if already present.
+
+        Args:
+            card (CardDB): Card to insert.
         """
         if card.name in self._cards:
             self._cards[card.name].owned_qty += 1
@@ -48,7 +85,11 @@ class Deck(CardRepository):
     def sample_hand(self, hand_size: int = 7) -> List[CardDB]:
         """
         Draws a random selection of `hand_size` cards from the deck.
-        Returns a list of CardDB objects.
+
+        Args:
+            hand_size (int): Number of cards to draw.
+        Returns:
+            List[CardDB]: List of drawn cards.
         """
         deck_list = [card for card in self.cards.values() for _ in range(getattr(card, "owned_qty", 1))]
         if hand_size > len(deck_list):
@@ -58,6 +99,9 @@ class Deck(CardRepository):
     def average_mana_value(self) -> float:
         """
         Average mana value across all cards in the deck, weighted by owned_qty.
+
+        Returns:
+            float: Weighted average mana value.
         """
         total_mv = sum((getattr(card, "converted_mana_cost", 0) or 0) * getattr(card, "owned_qty", 1) for card in
                        self.cards.values())
@@ -67,8 +111,10 @@ class Deck(CardRepository):
     def average_power_toughness(self) -> Tuple[float, float]:
         """
         Average power/toughness among creatures only, weighted by owned_qty.
-        """
 
+        Returns:
+            Tuple[float, float]: (average power, average toughness)
+        """
         def parse_stat(value) -> float:
             try:
                 return float(value)
@@ -93,6 +139,9 @@ class Deck(CardRepository):
     def deck_color_identity(self) -> Set[str]:
         """
         Returns the overall color identity of the deck as a set of color codes.
+
+        Returns:
+            Set[str]: Set of color codes in the deck.
         """
         color_set = set()
         for card in self.cards.values():
@@ -107,8 +156,10 @@ class Deck(CardRepository):
     def color_balance(self) -> Dict[str, int]:
         """
         Returns a dict of color -> count, how many cards in that color for the deck.
-        For multi-color cards, increments multiple colors if present.
-        Weighted by owned_qty.
+        For multi-color cards, increments multiple colors if present. Weighted by owned_qty.
+
+        Returns:
+            Dict[str, int]: Mapping of color code to count.
         """
         color_counts: Dict[str, int] = {}
         for card in self.cards.values():
@@ -124,6 +175,9 @@ class Deck(CardRepository):
         """
         Count how many 'ramp' cards exist in the deck, referencing the deck's color identity.
         Checks card text for 'Add {X}' or 'search your library for a land'.
+
+        Returns:
+            int: Number of ramp cards.
         """
         ramp_count = 0
         deck_ci = self.deck_color_identity()
@@ -143,19 +197,37 @@ class Deck(CardRepository):
     def count_lands(self) -> int:
         """
         Count the number of land cards in the deck (weighted by owned_qty).
+
+        Returns:
+            int: Number of land cards.
         """
         return sum(getattr(card, "owned_qty", 1) for card in self.cards.values() if card.matches_type("land"))
 
     def land_breakdown(self) -> Dict[str, int]:
         """
         Returns a dict of land card name -> quantity in the deck.
+
+        Returns:
+            Dict[str, int]: Mapping of land card name to quantity.
         """
         return {card.name: getattr(card, "owned_qty", 1) for card in self.cards.values() if card.matches_type("land")}
+
+    def size(self) -> int:
+        """
+        Returns the total number of cards in the deck, considering quantities.
+
+        Returns:
+            int: Total number of cards in the deck.
+        """
+        return sum(getattr(card, "owned_qty", 1) for card in self._cards.values())
 
     @property
     def cards(self) -> Dict[str, CardDB]:
         """
         Returns the cards in the deck as a dictionary of card name -> CardDB.
+
+        Returns:
+            Dict[str, CardDB]: Cards in the deck.
         """
         return self._cards
 
@@ -163,6 +235,9 @@ class Deck(CardRepository):
         """
         Returns a count of cards for each basic card type in the deck (weighted by owned_qty).
         Types counted: Land, Instant, Sorcery, Enchantment, Creature, Artifact, Planeswalker
+
+        Returns:
+            Dict[str, int]: Mapping of card type to count.
         """
         type_keywords = ["Land", "Instant", "Sorcery", "Enchantment", "Creature", "Artifact", "Planeswalker"]
         type_counts: Dict[str, int] = {}
@@ -177,6 +252,9 @@ class Deck(CardRepository):
     def mtg_arena_import(self):
         """
         Returns a string formatted for MTG Arena import.
+
+        Returns:
+            str: Decklist formatted for MTG Arena import.
         """
         output = []
         for card in self.cards.values():

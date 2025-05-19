@@ -5,6 +5,7 @@ from mtg_deck_builder.db.models import Base
 from mtg_deck_builder.models.deck import Deck
 
 
+
 def main():
     print("Step 1: Connecting to the database...")
     engine = create_engine("sqlite:///cards.db")

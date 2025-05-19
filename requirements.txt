@@ -1,6 +1,6 @@
 requests~=2.32.3
-gradio~=5.23.2
-setuptools~=70.0.0
+gradio~=5.29.1
+setuptools~=80.7.1
 pydantic~=2.10.6
 SQLAlchemy~=2.0.41
 pytest~=8.3.5

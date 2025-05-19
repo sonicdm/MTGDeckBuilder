@@ -1,0 +1,27 @@
+#refresh_yaml_list {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: calc(1.1 * 100%) !important; /* Adjust multiplier as needed */
+    line-height: 1 !important;
+}
+
+/* Color pip classes for deck colors */
+.mana-pips input[value="W"] + label::before { background: white; color: black; }
+.mana-pips input[value="U"] + label::before { background: #1E90FF; }
+.mana-pips input[value="B"] + label::before { background: black; }
+.mana-pips input[value="R"] + label::before { background: red; }
+.mana-pips input[value="G"] + label::before { background: green; }
+
+.mana-pips label::before {
+    content: '●';
+    display: inline-block;
+    margin-right: 0.5em;
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+#build_deck_btn {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+}

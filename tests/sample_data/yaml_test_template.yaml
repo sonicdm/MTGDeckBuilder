@@ -1,0 +1,77 @@
+deck:
+  name: Test Deck - Full Feature Coverage
+  colors: [B, R]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  owned_cards_only: true
+  legalities: [standard]
+  color_match_mode: subset
+  mana_curve:
+    min: 1
+    max: 7
+    curve_shape: bell
+    curve_slope: up
+
+card_constraints:
+  exclude_keywords: ["Defender", "Cannot attack"]
+  rarity_boost:
+    common: 0
+    uncommon: 1
+    rare: 2
+    mythic: 3
+
+priority_cards:
+  - name: Cut Down
+    min_copies: 4
+  - name: Go for the Throat
+    min_copies: 2
+  - name: Lightning Bolt # non-standard legal card to make sure it is excluded
+    min_copies: 4
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["Haste", "Menace"]
+    priority_text: ["Aggressive", "Attacks each turn"]
+  removal:
+    target: 6
+    priority_text: ["Destroy", "Exile"]
+  card_draw:
+    target: 4
+    priority_text: ["Draw a card", "Impulse draw"]
+  buffs:
+    target: 4
+    priority_text: ["+X/+0", "Until end of turn"]
+  utility:
+    target: 2
+    priority_text: ["Treasure", "Loot"]
+
+mana_base:
+  land_count: 22
+  special_lands:
+    count: 4
+    prefer: ["Add {B} or {R}", "Mana fixing"]
+    avoid: ["Enters tapped unless", "Deals damage to you"]
+  balance:
+    adjust_by_mana_symbols: true
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "buffs"]
+  allow_less_than_target: false
+
+scoring_rules:
+  priority_text:
+    Haste: 2
+    Menace: 1
+    "/deal[s]? damage/": 3
+  rarity_bonus:
+    common: 0
+    uncommon: 1
+    rare: 2
+    mythic: 3
+  mana_penalty:
+    threshold: 6
+    penalty_per_point: 1
+  min_score_to_flag: 5
