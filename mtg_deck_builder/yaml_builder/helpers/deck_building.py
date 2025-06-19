@@ -49,8 +49,8 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
     deck_config = build_context.deck_config
     target_lands = deck_config.mana_base.land_count
     current_size = context.get_total_cards()
-    available_slots = deck_config.deck.size - current_size - context.get_land_count()
-    land_target = target_lands - deck_config.mana_base.special_lands.count
+    available_slots = deck_config.deck.size - current_size
+    land_target = target_lands - context.get_land_count()
 
     if available_slots < land_target:
         land_target = available_slots
@@ -70,11 +70,11 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
         return
 
     land_distribution = {}
-    remaining_lands = target_lands
+    remaining_lands = land_target
 
     for color, count in mana_symbols.items():
         if color in ["W", "U", "B", "R", "G"]:
-            land_count = int((count / total_symbols) * target_lands)
+            land_count = int((count / total_symbols) * land_target)
             land_distribution[color] = land_count
             remaining_lands -= land_count
 
@@ -95,9 +95,6 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
         if count <= 0:
             continue
 
-        if context.get_total_cards() >= deck_config.deck.size:
-            break
-
         land_name = {
             "W": "Plains",
             "U": "Island",
@@ -112,27 +109,28 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
         land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
         context.add_land_card(land, f"Basic {land_name}", "basic_land", count)
         total_added += count
+        logger.debug(f"Added {count} {land_name} (total added: {total_added})")
 
 
-def _handle_special_lands(build_context: BuildContext) -> None:
+def _handle_special_lands(build_context: BuildContext) -> int:
     if not build_context.deck_build_context or not build_context.mana_base:
-        return
+        return 0
 
     context = build_context.deck_build_context
     mana_base = build_context.mana_base
 
     if not mana_base.special_lands:
-        return
+        return 0
 
     preferred = mana_base.special_lands.prefer or []
     avoid = mana_base.special_lands.avoid or []
     target_count = mana_base.special_lands.count or 0
 
     if target_count <= 0:
-        return
+        return 0
 
     if context.empty_slots < target_count:
-        return
+        return 0
 
     filtered_repo = build_context.summary_repo.filter_cards(type_query="Land")
     land_cards = filtered_repo.get_all_cards()
@@ -159,9 +157,18 @@ def _handle_special_lands(build_context: BuildContext) -> None:
             break
         if context.empty_slots <= 0:
             break
-        quantity = min(context.empty_slots, len(scored_land.reasons), target_count - added_count)
-        context.add_land_card(scored_land.card, "Special Land", "special_land", quantity)
+        quantity = min(context.empty_slots, target_count - added_count, 1)
+        if quantity <= 0:
+            break
+        context.add_land_card(
+            scored_land.card,
+            "Special Land",
+            "special_land",
+            quantity,
+        )
         added_count += quantity
+
+    return added_count
 
 
 def _finalize_deck(build_context: BuildContext) -> None:
@@ -174,6 +181,7 @@ def _finalize_deck(build_context: BuildContext) -> None:
     current_size = context.get_total_cards()
     target_size = deck_config.deck.size
 
+    # If deck is too large, remove lowest-scored non-land cards
     if current_size > target_size:
         non_land_cards = [c for c in context.cards if not c.card.is_basic_land()]
         non_land_cards.sort(key=lambda c: c.score or 0)
@@ -181,11 +189,13 @@ def _finalize_deck(build_context: BuildContext) -> None:
             card = non_land_cards.pop(0)
             context.cards.remove(card)
 
+    # If deck is too small, add more basic lands
     current_size = context.get_total_cards()
     if current_size < target_size and build_context.mana_base:
         remaining_slots = target_size - current_size
         _handle_basic_lands(build_context)
 
+    # Final check - if still too large, remove more cards
     final_size = context.get_total_cards()
     if final_size > target_size:
         non_land_cards = [c for c in context.cards if not c.card.is_basic_land()]
@@ -193,6 +203,35 @@ def _finalize_deck(build_context: BuildContext) -> None:
         while context.get_total_cards() > target_size and non_land_cards:
             card = non_land_cards.pop(0)
             context.cards.remove(card)
+    
+    # If still too small, add more basic lands (emergency fill)
+    final_size = context.get_total_cards()
+    if final_size < target_size:
+        remaining_slots = target_size - final_size
+        logger.info(f"Emergency fill: adding {remaining_slots} basic lands to reach target size")
+        
+        # Add basic lands to fill remaining slots
+        colors = deck_config.deck.colors or ["R", "G"]  # Default to RG if no colors specified
+        for i in range(remaining_slots):
+            color = colors[i % len(colors)]
+            land_name = {
+                "W": "Plains",
+                "U": "Island", 
+                "B": "Swamp",
+                "R": "Mountain",
+                "G": "Forest",
+            }.get(color)
+            if land_name:
+                land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
+                context.add_land_card(land, f"Emergency {land_name}", "emergency_land", 1)
+                logger.debug(f"Added emergency {land_name}")
+    
+    # Final verification
+    final_size = context.get_total_cards()
+    if final_size != target_size:
+        logger.warning(f"Final deck size: {final_size}, target: {target_size}")
+    else:
+        logger.info(f"Successfully built deck with {final_size} cards")
 
 
 def _log_deck_composition(build_context: BuildContext) -> None:

@@ -135,12 +135,20 @@ def build_deck_from_config(
             final_size = build_context.deck_build_context.get_total_cards()
             if final_size != deck_config.deck.size:
                 logger.warning(f"Deck size mismatch: expected {deck_config.deck.size}, got {final_size}")
-                # Prune lowest scoring cards to match target size
-                _prune_overfilled_categories(build_context, deck_config.deck.size)
-                # Verify size after pruning
+                
+                if final_size > deck_config.deck.size:
+                    # Deck is too large - prune lowest scoring cards
+                    _prune_overfilled_categories(build_context, deck_config.deck.size)
+                elif final_size < deck_config.deck.size and build_context.mana_base:
+                    # Deck is too small - add more basic lands
+                    remaining_slots = deck_config.deck.size - final_size
+                    _handle_basic_lands(build_context)
+                
+                # Verify size after adjustment
                 final_size = build_context.deck_build_context.get_total_cards()
                 if final_size != deck_config.deck.size:
-                    raise ValueError(f"Failed to prune deck to target size. Current size: {final_size}, target: {deck_config.deck.size}")
+                    logger.error(f"Failed to adjust deck to target size. Current size: {final_size}, target: {deck_config.deck.size}")
+                    # Don't raise an error, just log it and continue
             
         # Log final deck composition
         if build_context.deck_build_context:

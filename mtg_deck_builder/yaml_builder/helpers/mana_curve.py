@@ -27,27 +27,55 @@ def generate_target_curve(
         min_mv: Minimum mana value
         max_mv: Maximum mana value
         total_cards: Total number of cards to distribute
-        curve_shape: Shape of the curve ("linear" or "bell")
+        curve_shape: Shape of the curve ("linear", "bell", "inverse", or "flat")
         curve_slope: Slope of the curve ("steep" or "gentle")
 
     Returns:
         Dictionary mapping mana values to target card counts
     """
-    curve = {}
+    curve: Dict[int, int] = {}
+
+    # Number of distinct mana values
+    span = max_mv - min_mv + 1
+
+    # Generate relative weights based on curve shape
+    weights = []
     if curve_shape == "linear":
-        # Linear distribution
-        for mv in range(min_mv, max_mv + 1):
-            curve[mv] = max(1, total_cards // (max_mv - min_mv + 1))
+        weights = [span - (mv - min_mv) for mv in range(min_mv, max_mv + 1)]
+    elif curve_shape == "inverse":
+        weights = [1 + (mv - min_mv) for mv in range(min_mv, max_mv + 1)]
+    elif curve_shape == "flat":
+        weights = [1 for _ in range(span)]
     elif curve_shape == "bell":
-        # Bell curve distribution
-        mid = (min_mv + max_mv) // 2
+        mid = (min_mv + max_mv) / 2
         for mv in range(min_mv, max_mv + 1):
             distance = abs(mv - mid)
-            curve[mv] = max(1, total_cards // (max_mv - min_mv + 1) - distance)
+            weights.append(span - distance)
     else:
-        # Default to linear
-        for mv in range(min_mv, max_mv + 1):
-            curve[mv] = max(1, total_cards // (max_mv - min_mv + 1))
+        # Fallback to linear distribution
+        weights = [span - (mv - min_mv) for mv in range(min_mv, max_mv + 1)]
+
+    total_weight = sum(weights)
+    allocated = 0
+    for mv, weight in zip(range(min_mv, max_mv + 1), weights):
+        count = int(round((weight / total_weight) * total_cards))
+        curve[mv] = count
+        allocated += count
+
+    # Adjust for rounding errors
+    diff = total_cards - allocated
+    idx = 0
+    values = list(range(min_mv, max_mv + 1))
+    while diff > 0:
+        curve[values[idx % span]] += 1
+        diff -= 1
+        idx += 1
+    while diff < 0:
+        mv = values[idx % span]
+        if curve[mv] > 0:
+            curve[mv] -= 1
+            diff += 1
+        idx += 1
 
     return curve
 
