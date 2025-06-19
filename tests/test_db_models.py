@@ -20,7 +20,7 @@ def test_carddb_properties_and_relationships():
     Session = setup_db()
     session = Session()
     # Create set
-    set1 = CardSetDB(set_code="SET1", set_name="Set One", release_date=date(2020,1,1))
+    set1 = CardSetDB(set_code="SET1", set_name="Set One", release_date=date(2020,1,1), set_metadata={})
     session.add(set1)
     # Create card and printings
     card = CardDB(name="Test Card")
@@ -50,8 +50,8 @@ def test_carddb_properties_and_relationships():
 def test_carddb_newest_printing_logic():
     Session = setup_db()
     session = Session()
-    set1 = CardSetDB(set_code="S1", set_name="Set1", release_date=date(2020,1,1))
-    set2 = CardSetDB(set_code="S2", set_name="Set2", release_date=date(2021,1,1))
+    set1 = CardSetDB(set_code="S1", set_name="Set1", release_date=date(2020,1,1), set_metadata={})
+    set2 = CardSetDB(set_code="S2", set_name="Set2", release_date=date(2021,1,1), set_metadata={})
     card = CardDB(name="Test Card")
     p1 = CardPrintingDB(uid="p1", card_name="Test Card", set_code="S1")
     p1.set = set1

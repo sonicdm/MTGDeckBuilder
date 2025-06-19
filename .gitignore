@@ -45,3 +45,25 @@ htmlcov/
 .pytest_cache/
 nosetests.xml
 coverage.xml
+
+# UI backups
+mtg_deckbuilder_ui/ui.bak/
+
+# MTGJSON files and databases
+*.json
+!package.json
+!pyproject.toml
+!pytest.ini
+!Meta.json
+*.db
+*.sqlite
+*.sqlite3
+MTG_json_files/
+data/
+db/
+inventory/
+inventory_files/
+generated_decks/
+logs/
+temp_test_config_dir/
+config.bak/

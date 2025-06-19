@@ -2,8 +2,9 @@ import tempfile
 import os
 from pathlib import Path
 import pytest
-from mtg_deck_builder.deck_config.deck_config import DeckConfig
+from mtg_deck_builder.models.deck_config import DeckConfig
 from .helpers import get_sample_data_path
+from mtg_deck_builder.models.deck_config import DeckMeta, DeckConfig
 
 yaml_sample = '''
 deck:
@@ -133,7 +134,7 @@ def test_to_yaml_file(tmp_path):
 
 def test_inventory_file_field():
     # Test that inventory_file can be set and accessed
-    from mtg_deck_builder.deck_config.deck_config import DeckMeta, DeckConfig
+    from mtg_deck_builder.models.deck_config import DeckMeta, DeckConfig
     deck_meta = DeckMeta(name="Test", inventory_file="card inventory.txt")
     assert deck_meta.inventory_file == "card inventory.txt"
     config = DeckConfig(deck=deck_meta)
@@ -141,7 +142,7 @@ def test_inventory_file_field():
 
 def test_inventory_file_not_in_yaml():
     # Test that inventory_file is not present in YAML output
-    from mtg_deck_builder.deck_config.deck_config import DeckMeta, DeckConfig
+    from mtg_deck_builder.models.deck_config import DeckMeta, DeckConfig
     deck_meta = DeckMeta(name="Test", inventory_file="card inventory.txt")
     config = DeckConfig(deck=deck_meta)
     yaml_str = config.to_yaml()

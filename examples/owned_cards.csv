@@ -1,0 +1,1468 @@
+name,rarity,color_identity,owned_qty,text,mana_cost
+Thieving Otter,common,['U'],3,"Whenever this creature deals damage to an opponent, draw a card.",{2}{U}
+Dead Weight,common,['B'],1,"Enchant creature
+Enchanted creature gets -2/-2.",{B}
+Skeleton Archer,common,['B'],2,"When this creature enters, it deals 1 damage to any target.",{3}{B}
+Scorching Dragonfire,common,['R'],4,"Scorching Dragonfire deals 3 damage to target creature or planeswalker. If that creature or planeswalker would die this turn, exile it instead.",{1}{R}
+Bloodfell Caves,common,"['B', 'R']",4,"This land enters tapped.
+When this land enters, you gain 1 life.
+{T}: Add {B} or {R}.",
+Dismal Backwater,common,"['B', 'U']",4,"This land enters tapped.
+When this land enters, you gain 1 life.
+{T}: Add {U} or {B}.",
+Swiftwater Cliffs,common,"['R', 'U']",4,"This land enters tapped.
+When this land enters, you gain 1 life.
+{T}: Add {U} or {R}.",
+Into the Roil,common,['U'],2,"Kicker {1}{U} (You may pay an additional {1}{U} as you cast this spell.)
+Return target nonland permanent to its owner's hand. If this spell was kicked, draw a card.",{1}{U}
+Feed the Swarm,common,['B'],1,Destroy target creature or enchantment an opponent controls. You lose life equal to that permanent's mana value.,{1}{B}
+Highborn Vampire,common,['B'],1,,{3}{B}
+Marauding Blight-Priest,common,['B'],3,"Whenever you gain life, each opponent loses 1 life.",{2}{B}
+Axgard Cavalry,common,['R'],4,{T}: Target creature gains haste until end of turn. (It can attack and {T} this turn.),{1}{R}
+Armored Whirl Turtle,common,['U'],3,,{2}{U}
+Cloudkin Seer,common,['U'],3,"Flying
+When this creature enters, draw a card.",{2}{U}
+Frilled Sea Serpent,common,['U'],1,{5}{U}{U}: This creature can't be blocked this turn.,{4}{U}{U}
+Glint,common,['U'],2,Target creature you control gets +0/+3 and gains hexproof until end of turn. (It can't be the target of spells or abilities your opponents control.),{1}{U}
+Octoprophet,common,['U'],2,"When this creature enters, scry 2. (Look at the top two cards of your library, then put any number of them on the bottom and the rest on top in any order.)",{3}{U}
+Overflowing Insight,mythic,['U'],1,Target player draws seven cards.,{4}{U}{U}{U}
+Riddlemaster Sphinx,rare,['U'],2,"Flying (This creature can't be blocked except by creatures with flying or reach.)
+When this creature enters, you may return target creature an opponent controls to its owner's hand.",{4}{U}{U}
+River's Favor,common,['U'],2,"Enchant creature
+Enchanted creature gets +1/+1.",{U}
+Sleep,uncommon,['U'],1,Tap all creatures target player controls. Those creatures don't untap during that player's next untap step.,{2}{U}{U}
+Soulblade Djinn,rare,['U'],2,"Flying
+Whenever you cast a noncreature spell, creatures you control get +1/+1 until end of turn.",{3}{U}{U}
+Sworn Guardian,common,['U'],2,,{1}{U}
+Unsummon,common,['U'],2,Return target creature to its owner's hand.,{U}
+Wall of Runes,common,['U'],2,"Defender (This creature can't attack.)
+When this creature enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)",{U}
+Warden of Evos Isle,uncommon,['U'],3,"Flying
+Creature spells with flying you cast cost {1} less to cast.",{2}{U}
+Waterkin Shaman,common,['U'],3,"Whenever a creature you control with flying enters, this creature gets +1/+1 until end of turn.",{1}{U}
+Waterknot,common,['U'],3,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.",{1}{U}{U}
+Windreader Sphinx,rare,['U'],1,"Flying
+Whenever a creature with flying attacks, you may draw a card.",{5}{U}{U}
+Windstorm Drake,uncommon,['U'],2,"Flying
+Other creatures you control with flying get +1/+0.",{4}{U}
+Winged Words,common,['U'],2,"This spell costs {1} less to cast if you control a creature with flying.
+Draw two cards.",{2}{U}
+Zephyr Gull,common,['U'],4,Flying,{U}
+Bad Deal,uncommon,['B'],1,You draw two cards and each opponent discards two cards. Each player loses 2 life.,{4}{B}{B}
+Compound Fracture,common,['B'],4,Target creature gets -1/-1 until end of turn. It gets an additional -1/-1 until end of turn for each card named Compound Fracture in your graveyard.,{B}
+Cruel Cut,common,['B'],1,Destroy target creature with power 2 or less.,{1}{B}
+Demon of Loathing,rare,['B'],2,"Flying, trample
+Whenever this creature deals combat damage to a player, that player sacrifices a creature of their choice.",{5}{B}{B}
+Eternal Thirst,common,['B'],1,"Enchant creature
+Enchanted creature has lifelink and ""Whenever a creature an opponent controls dies, put a +1/+1 counter on this creature."" (Damage dealt by a creature with lifelink also causes its controller to gain that much life.)",{1}{B}
+Krovikan Scoundrel,common,['B'],2,,{1}{B}
+Malakir Cullblade,uncommon,['B'],3,"Whenever a creature an opponent controls dies, put a +1/+1 counter on this creature.",{1}{B}
+Mardu Outrider,rare,['B'],2,"As an additional cost to cast this spell, discard a card.",{1}{B}{B}
+Murder,common,['B'],2,Destroy target creature.,{1}{B}{B}
+Sanitarium Skeleton,common,['B'],3,{2}{B}: Return this card from your graveyard to your hand.,{B}
+Savage Gorger,common,['B'],3,"Flying
+At the beginning of your end step, if an opponent lost life this turn, put a +1/+1 counter on this creature. (Damage causes loss of life.)",{1}{B}{B}
+Sengir Vampire,uncommon,['B'],3,"Flying (This creature can't be blocked except by creatures with flying or reach.)
+Whenever a creature dealt damage by this creature this turn dies, put a +1/+1 counter on this creature.",{3}{B}{B}
+Soulhunter Rakshasa,rare,['B'],1,"This creature can't block.
+When this creature enters, if you cast it from your hand, it deals 1 damage to target opponent for each Swamp you control.",{3}{B}{B}
+Typhoid Rats,common,['B'],2,Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.),{B}
+Unlikely Aid,common,['B'],3,"Target creature gets +2/+0 and gains indestructible until end of turn. (Damage and effects that say ""destroy"" don't destroy it.)",{1}{B}
+Vampire Opportunist,common,['B'],2,{6}{B}: Each opponent loses 2 life and you gain 2 life.,{1}{B}
+Burn Bright,common,['R'],2,Creatures you control get +2/+0 until end of turn.,{2}{R}
+Goblin Gang Leader,uncommon,['R'],2,"When this creature enters, create two 1/1 red Goblin creature tokens.",{2}{R}{R}
+Goblin Gathering,common,['R'],4,Create a number of 1/1 red Goblin creature tokens equal to two plus the number of cards named Goblin Gathering in your graveyard.,{2}{R}
+Goblin Trashmaster,rare,['R'],1,"Other Goblins you control get +1/+1.
+Sacrifice a Goblin: Destroy target artifact.",{2}{R}{R}
+Goblin Tunneler,common,['R'],2,{T}: Target creature with power 2 or less can't be blocked this turn.,{1}{R}
+Immortal Phoenix,rare,['R'],1,"Flying (This creature can't be blocked except by creatures with flying or reach.)
+When this creature dies, return it to its owner's hand.",{4}{R}{R}
+Inescapable Blaze,uncommon,['R'],2,"This spell can't be countered.
+Inescapable Blaze deals 6 damage to any target.",{4}{R}{R}
+Molten Ravager,common,['R'],2,{R}: This creature gets +1/+0 until end of turn.,{2}{R}
+Nest Robber,common,['R'],4,Haste,{1}{R}
+Ogre Battledriver,rare,['R'],2,"Whenever another creature you control enters, that creature gets +2/+0 and gains haste until end of turn. (It can attack and {T} this turn.)",{2}{R}{R}
+Raging Goblin,common,['R'],2,Haste (This creature can attack and {T} as soon as it comes under your control.),{R}
+Raid Bombardment,uncommon,['R'],2,"Whenever a creature you control with power 2 or less attacks, this enchantment deals 1 damage to the player or planeswalker that creature is attacking.",{2}{R}
+Reduce to Ashes,common,['R'],3,"Reduce to Ashes deals 5 damage to target creature. If that creature would die this turn, exile it instead.",{4}{R}
+Shock,common,['R'],2,Shock deals 2 damage to any target.,{R}
+Siege Dragon,rare,['R'],2,"Flying
+When this creature enters, destroy all Walls your opponents control.
+Whenever this creature attacks, if defending player controls no Walls, it deals 2 damage to each creature without flying that player controls.",{5}{R}{R}
+Storm Strike,common,['R'],2,Target creature gets +1/+0 and gains first strike until end of turn. Scry 1.,{R}
+Tin Street Cadet,common,['R'],3,"Whenever this creature becomes blocked, create a 1/1 red Goblin creature token.",{R}
+Volcanic Dragon,uncommon,['R'],2,"Flying, haste",{4}{R}{R}
+Burrog Befuddler,common,['U'],3,"Flash (You may cast this spell any time you could cast an instant.)
+When this creature enters, target creature an opponent controls gets -1/-0 until end of turn.",{1}{U}
+Teach by Example,uncommon,"['R', 'U']",1,"({U/R} can be paid with either {U} or {R}.)
+When you next cast an instant or sorcery spell this turn, copy that spell. You may choose new targets for the copy.",{U/R}{U/R}
+Vampire Spawn,common,['B'],3,"When this creature enters, each opponent loses 2 life and you gain 2 life.",{2}{B}
+Negate,common,['U'],1,Counter target noncreature spell.,{1}{U}
+Duress,common,['B'],4,"Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.",{B}
+Eaten Alive,common,['B'],4,"As an additional cost to cast this spell, sacrifice a creature or pay {3}{B}.
+Exile target creature or planeswalker.",{B}
+Hero's Downfall,uncommon,['B'],3,Destroy target creature or planeswalker.,{1}{B}{B}
+Abrade,uncommon,['R'],3,"Choose one —
+• Abrade deals 3 damage to target creature.
+• Destroy target artifact.",{1}{R}
+Spell Pierce,uncommon,['U'],1,Counter target noncreature spell unless its controller pays {2}.,{U}
+Disdainful Stroke,rare,['U'],2,Counter target spell with mana value 4 or greater.,{1}{U}
+Fake Your Own Death,common,['B'],2,"Until end of turn, target creature gets +2/+0 and gains ""When this creature dies, return it to the battlefield tapped under its owner's control and you create a Treasure token."" (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{1}{B}
+Shore Up,common,['U'],2,Target creature you control gets +1/+1 and gains hexproof until end of turn. Untap it. (It can't be the target of spells or abilities your opponents control.),{U}
+Tolarian Terror,common,['U'],4,"This spell costs {1} less to cast for each instant and sorcery card in your graveyard.
+Ward {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)",{6}{U}
+Lightning Strike,common,['R'],2,Lightning Strike deals 3 damage to any target.,{1}{R}
+Thrill of Possibility,common,['R'],4,"As an additional cost to cast this spell, discard a card.
+Draw two cards.",{1}{R}
+"Balmor, Battlemage Captain",uncommon,"['R', 'U']",4,"Flying
+Whenever you cast an instant or sorcery spell, creatures you control get +1/+0 and gain trample until end of turn.",{U}{R}
+Phyrexian Arena,rare,['B'],1,"At the beginning of your upkeep, you draw a card and you lose 1 life.",{1}{B}{B}
+Corrupted Conviction,common,['B'],3,"As an additional cost to cast this spell, sacrifice a creature.
+Draw two cards.",{B}
+Crow of Dark Tidings,common,['B'],3,"Flying
+When this creature enters or dies, mill two cards. (Put the top two cards of your library into your graveyard.)",{2}{B}
+Bitter Chill,uncommon,['U'],2,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.
+When this Aura is put into a graveyard from the battlefield, you may pay {1}. If you do, scry 1, then draw a card.",{1}{U}
+Freeze in Place,common,['U'],2,"Tap target creature an opponent controls and put three stun counters on it. Scry 2. (If a permanent with a stun counter would become untapped, remove one from it instead.)",{1}{U}
+Ice Out,common,['U'],3,"Bargain (You may sacrifice an artifact, enchantment, or token as you cast this spell.)
+This spell costs {1} less to cast if it's bargained.
+Counter target spell.",{1}{U}{U}
+Merfolk Coralsmith,common,['U'],1,"{1}: This creature gets +1/-1 until end of turn.
+When this creature dies, scry 2.",{2}{U}
+Mocking Sprite,common,['U'],2,"Flying
+Instant and sorcery spells you cast cost {1} less to cast.",{2}{U}
+Quick Study,common,['U'],2,Draw two cards.,{2}{U}
+Sleep-Cursed Faerie,rare,['U'],1,"Flying, ward {2}
+This creature enters tapped with three stun counters on it. (If it would become untapped, remove a stun counter from it instead.)
+{1}{U}: Untap this creature.",{U}
+Sleight of Hand,rare,['U'],3,Look at the top two cards of your library. Put one of them into your hand and the other on the bottom of your library.,{U}
+Snaremaster Sprite,common,['U'],2,"Flying
+When this creature enters, you may pay {2}. When you do, tap target creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)",{U}
+Spell Stutter,common,['U'],2,Counter target spell unless its controller pays {2} plus an additional {1} for each Faerie you control.,{1}{U}
+Stormkeld Prowler,common,['U'],1,"Whenever you cast a spell with mana value 5 or greater, put two +1/+1 counters on this creature.",{1}{U}
+Talion's Messenger,rare,['U'],1,"Flying
+Whenever you attack with one or more Faeries, draw a card, then discard a card. When you discard a card this way, put a +1/+1 counter on target Faerie you control.",{2}{U}
+Tenacious Tomeseeker,uncommon,['U'],1,"Bargain (You may sacrifice an artifact, enchantment, or token as you cast this spell.)
+When this creature enters, if it was bargained, return target instant or sorcery card from your graveyard to your hand.",{2}{U}
+"Ashiok, Wicked Manipulator",mythic,['B'],1,"If you would pay life while your library has at least that many cards in it, exile that many cards from the top of your library instead.
+[+1]: Look at the top two cards of your library. Exile one of them and put the other into your hand.
+[−2]: Create two 1/1 black Nightmare creature tokens with ""At the beginning of combat on your turn, if a card was put into exile this turn, put a +1/+1 counter on this token.""
+[−7]: Target player exiles the top X cards of their library, where X is the total mana value of cards you own in exile.",{3}{B}{B}
+Barrow Naughty,common,['B'],2,"Flying
+This creature has lifelink as long as you control another Faerie.
+{2}{B}: This creature gets +1/+0 until end of turn.",{1}{B}
+Eriette's Whisper,common,['B'],1,"Target opponent discards two cards. Create a Wicked Role token attached to up to one target creature you control. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1. When this token is put into a graveyard, each opponent loses 1 life.)",{3}{B}
+Faerie Dreamthief,uncommon,['B'],1,"Flying
+When this creature enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)
+{2}{B}, Exile this card from your graveyard: You draw a card and you lose 1 life.",{B}
+Faerie Fencing,uncommon,['B'],4,Target creature gets -X/-X until end of turn. That creature gets an additional -3/-3 until end of turn if you controlled a Faerie as you cast this spell.,{X}{B}
+Feed the Cauldron,common,['B'],3,"Destroy target creature with mana value 3 or less. If it's your turn, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")",{2}{B}
+Lich-Knights' Conquest,rare,['B'],1,"Sacrifice any number of artifacts, enchantments, and/or tokens. Return that many creature cards from your graveyard to the battlefield.",{4}{B}
+Mintstrosity,common,['B'],3,"When this creature dies, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")",{1}{B}
+Rankle's Prank,rare,['B'],1,"Choose one or more —
+• Each player discards two cards.
+• Each player loses 4 life.
+• Each player sacrifices two creatures of their choice.",{2}{B}{B}
+Rat Out,common,['B'],1,"Up to one target creature gets -1/-1 until end of turn. You create a 1/1 black Rat creature token with ""This token can't block.""",{B}
+Scream Puff,common,['B'],2,"Deathtouch
+Whenever this creature deals combat damage to a player, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")",{4}{B}
+Sugar Rush,common,['B'],2,"Target creature gets +3/+0 until end of turn.
+Draw a card.",{1}{B}
+Sweettooth Witch,common,['B'],3,"When this creature enters, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")
+{2}, Sacrifice a Food: Target player loses 2 life.",{2}{B}
+Taken by Nightmares,uncommon,['B'],2,"Exile target creature. If you control an enchantment, scry 2.",{2}{B}{B}
+Twisted Sewer-Witch,uncommon,['B'],1,"When this creature enters, create a 1/1 black Rat creature token with ""This creature can't block."" Then for each Rat you control, create a Wicked Role token attached to that Rat. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1. When this token is put into a graveyard, each opponent loses 1 life.)",{3}{B}{B}
+Wicked Visitor,common,['B'],1,"Whenever an enchantment you control is put into a graveyard from the battlefield, each opponent loses 1 life.",{1}{B}
+Boundary Lands Ranger,common,['R'],1,"At the beginning of combat on your turn, if you control a creature with power 4 or greater, you may discard a card. If you do, draw a card.",{1}{R}
+Charming Scoundrel,rare,['R'],1,"Haste
+When this creature enters, choose one —
+• Discard a card, then draw a card.
+• Create a Treasure token.
+• Create a Wicked Role token attached to target creature you control.",{1}{R}
+Flick a Coin,common,['R'],2,"Flick a Coin deals 1 damage to any target. You create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")
+Draw a card.",{2}{R}
+Frantic Firebolt,common,['R'],1,"Frantic Firebolt deals X damage to target creature, where X is 2 plus the number of cards in your graveyard that are instant cards, sorcery cards, and/or have an Adventure.",{2}{R}
+"Goddric, Cloaked Reveler",rare,['R'],1,"Haste
+Celebration — As long as two or more nonland permanents entered the battlefield under your control this turn, Goddric is a Dragon with base power and toughness 4/4, flying, and ""{R}: Dragons you control get +1/+0 until end of turn."" (It loses all other creature types.)",{1}{R}{R}
+Harried Spearguard,common,['R'],1,"Haste
+When this creature dies, create a 1/1 black Rat creature token with ""This token can't block.""",{R}
+Kindled Heroism,common,['R'],1,Target creature gets +1/+0 and gains first strike until end of turn. Scry 1.,{R}
+Stonesplitter Bolt,uncommon,['R'],1,"Bargain (You may sacrifice an artifact, enchantment, or token as you cast this spell.)
+Stonesplitter Bolt deals X damage to target creature or planeswalker. If this spell was bargained, it deals twice X damage to that permanent instead.",{X}{R}
+"Johann, Apprentice Sorcerer",uncommon,"['R', 'U']",3,"You may look at the top card of your library any time.
+Once each turn, you may cast an instant or sorcery spell from the top of your library. (You still pay its costs. Timing rules still apply.)",{2}{U}{R}
+"Obyra, Dreaming Duelist",uncommon,"['B', 'U']",2,"Flash
+Flying
+Whenever another Faerie you control enters, each opponent loses 1 life.",{U}{B}
+"Talion, the Kindly Lord",mythic,"['B', 'U']",1,"Flying
+As Talion enters, choose a number between 1 and 10.
+Whenever an opponent casts a spell with mana value, power, or toughness equal to the chosen number, that player loses 2 life and you draw a card.",{2}{U}{B}
+"Totentanz, Swarm Piper",uncommon,"['B', 'R']",1,"Whenever Totentanz or another nontoken creature you control dies, create a 1/1 black Rat creature token with ""This token can't block.""
+{1}{B}: Target attacking Rat you control gains deathtouch until end of turn.",{1}{B}{R}
+Faerie Slumber Party,rare,['U'],1,"Return all creatures to their owners' hands. For each opponent who controlled a creature returned this way, you create two 1/1 blue Faerie creature tokens with flying and ""This token can block only creatures with flying.""",{4}{U}{U}
+Experimental Confectioner,uncommon,['B'],2,"When this creature enters, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")
+Whenever you sacrifice a Food, create a 1/1 black Rat creature token with ""This token can't block.""",{2}{B}
+Impact Tremors,common,['R'],1,"Whenever a creature you control enters, this enchantment deals 1 damage to each opponent.",{1}{R}
+Out of Air,common,['U'],1,"This spell costs {2} less to cast if it targets a creature spell.
+Counter target spell.",{2}{U}{U}
+River Herald Scout,common,['U'],2,"When this creature enters, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)",{1}{U}
+Shipwreck Sentry,common,['U'],1,"Defender
+As long as an artifact entered the battlefield under your control this turn, this creature can attack as though it didn't have defender.",{1}{U}
+Song of Stupefaction,common,['U'],1,"Enchant creature or Vehicle
+When this Aura enters, you may mill two cards. (You may put the top two cards of your library into your graveyard.)
+Fathomless descent — Enchanted permanent gets -X/-0, where X is the number of permanent cards in your graveyard.",{1}{U}
+Spyglass Siren,uncommon,['U'],1,"Flying
+When this creature enters, create a Map token. (It's an artifact with ""{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery."")",{U}
+Waterwind Scout,common,['U'],4,"Flying
+When this creature enters, create a Map token. (It's an artifact with ""{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery."")",{2}{U}
+Another Chance,common,['B'],4,"You may mill two cards. Then return up to two creature cards from your graveyard to your hand. (To mill two cards, put the top two cards of your library into your graveyard.)",{2}{B}
+Broodrage Mycoid,common,['B'],1,"At the beginning of your end step, if you descended this turn, create a 1/1 black Fungus creature token with ""This token can't block."" (You descended if a permanent card was put into your graveyard from anywhere.)",{3}{B}
+Chupacabra Echo,uncommon,['B'],1,"Fathomless descent — When this creature enters, target creature an opponent controls gets -X/-X until end of turn, where X is the number of permanent cards in your graveyard.",{2}{B}{B}
+Deep Goblin Skulltaker,common,['B'],1,"Menace
+At the beginning of your end step, if you descended this turn, put a +1/+1 counter on this creature. (You descended if a permanent card was put into your graveyard from anywhere.)",{2}{B}
+Deep-Cavern Bat,uncommon,['B'],2,"Flying, lifelink
+When this creature enters, look at target opponent's hand. You may exile a nonland card from it until this creature leaves the battlefield.",{1}{B}
+Fanatical Offering,common,['B'],1,"As an additional cost to cast this spell, sacrifice an artifact or creature.
+Draw two cards and create a Map token. (It's an artifact with ""{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery."")",{1}{B}
+Greedy Freebooter,common,['B'],2,"When this creature dies, scry 1 and create a Treasure token. (To scry 1, look at the top card of your library. You may put that card on the bottom. A Treasure token is an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{B}
+Join the Dead,common,['B'],1,"Target creature gets -5/-5 until end of turn.
+Descend 4 — That creature gets -10/-10 until end of turn instead if there are four or more permanent cards in your graveyard.",{1}{B}{B}
+Malicious Eclipse,uncommon,['B'],2,"All creatures get -2/-2 until end of turn. If a creature an opponent controls would die this turn, exile it instead.",{1}{B}{B}
+Mephitic Draught,common,['B'],1,"When this artifact enters or is put into a graveyard from the battlefield, you draw a card and you lose 1 life.",{1}{B}
+Ray of Ruin,common,['B'],1,"Exile target creature, Vehicle, or nonbasic land. Scry 1. (Look at the top card of your library. You may put that card on the bottom.)",{4}{B}
+Screaming Phantom,common,['B'],2,"Flying
+Whenever this creature attacks, mill a card. (Put the top card of your library into your graveyard.)",{2}{B}
+Skullcap Snail,common,['B'],2,"When this creature enters, target opponent exiles a card from their hand.",{1}{B}
+Starving Revenant,rare,['B'],4,"When this creature enters, surveil 2. Then for each card you put on top of your library, you draw a card and you lose 3 life.
+Descend 8 — Whenever you draw a card, if there are eight or more permanent cards in your graveyard, target opponent loses 1 life and you gain 1 life.",{2}{B}{B}
+Terror Tide,rare,['B'],1,"Fathomless descent — All creatures get -X/-X until end of turn, where X is the number of permanent cards in your graveyard.",{2}{B}{B}
+Ancestors' Aid,common,['R'],1,"Target creature gets +2/+0 and gains first strike until end of turn.
+Create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{1}{R}
+Bonehoard Dracosaur,mythic,['R'],1,"Flying, first strike
+At the beginning of your upkeep, exile the top two cards of your library. You may play them this turn. If you exiled a land card this way, create a 3/1 red Dinosaur creature token. If you exiled a nonland card this way, create a Treasure token.",{3}{R}{R}
+Brazen Blademaster,common,['R'],2,"Whenever this creature attacks while you control two or more artifacts, it gets +2/+1 until end of turn.",{2}{R}
+Burning Sun Cavalry,common,['R'],3,"Whenever this creature attacks or blocks while you control a Dinosaur, this creature gets +1/+1 until end of turn.",{1}{R}
+Calamitous Cave-In,uncommon,['R'],1,"Calamitous Cave-In deals X damage to each creature and each planeswalker, where X is the number of Caves you control plus the number of Cave cards in your graveyard.",{3}{R}
+Curator of Sun's Creation,uncommon,['R'],2,"Whenever you discover, discover again for the same value. This ability triggers only once each turn.",{3}{R}
+Daring Discovery,common,['R'],2,"Up to three target creatures can't block this turn.
+Discover 4. (Exile cards from the top of your library until you exile a nonland card with mana value 4 or less. Cast it without paying its mana cost or put it into your hand. Put the rest on the bottom in a random order.)",{4}{R}
+Dinotomaton,common,['R'],3,"Menace (This creature can't be blocked except by two or more creatures.)
+When this creature enters, target creature you control gains menace until end of turn.",{3}{R}
+Etali's Favor,common,['R'],3,"Enchant creature you control
+When this Aura enters, discover 3. (Exile cards from the top of your library until you exile a nonland card with mana value 3 or less. Cast it without paying its mana cost or put it into your hand. Put the rest on the bottom in a random order.)
+Enchanted creature gets +1/+1 and has trample.",{2}{R}
+Hit the Mother Lode,rare,['R'],1,"Discover 10. If the discovered card's mana value is less than 10, create a number of tapped Treasure tokens equal to the difference. (To discover 10, exile cards from the top of your library until you exile a nonland card with mana value 10 or less. Cast it without paying its mana cost or put it into your hand. Put the rest on the bottom in a random order.)",{4}{R}{R}{R}
+Panicked Altisaur,common,['R'],2,"Reach
+{T}: This creature deals 2 damage to each opponent.",{4}{R}
+Plundering Pirate,common,['R'],2,"When this creature enters, create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{2}{R}
+Rampaging Ceratops,uncommon,['R'],2,This creature can't be blocked except by three or more creatures.,{4}{R}
+Rumbling Rockslide,common,['R'],2,Rumbling Rockslide deals damage to target creature equal to the number of lands you control.,{3}{R}
+Trumpeting Carnosaur,rare,['R'],1,"Trample
+When this creature enters, discover 5.
+{2}{R}, Discard this card: It deals 3 damage to target creature or planeswalker.",{4}{R}{R}
+"Saheeli, the Sun's Brilliance",mythic,"['R', 'U']",1,"{U}{R}, {T}: Create a token that's a copy of another target creature or artifact you control, except it's an artifact in addition to its other types. It gains haste. Sacrifice it at the beginning of the next end step.",{U}{R}
+Hidden Volcano,common,['R'],2,"This land enters tapped.
+{T}: Add {R}.
+{4}{R}, {T}, Sacrifice this land: Discover 4. Activate only as a sorcery. (Exile cards from the top of your library until you exile a nonland card with mana value 4 or less. Cast it without paying its mana cost or put it into your hand. Put the rest on the bottom in a random order.)",
+Agency Outfitter,uncommon,['U'],1,"Flying
+When this creature enters, you may search your graveyard, hand and/or library for a card named Magnifying Glass and/or a card named Thinking Cap and put them onto the battlefield. If you search your library this way, shuffle.",{4}{U}{U}
+Behind the Mask,common,['U'],2,"As an additional cost to cast this spell, you may collect evidence 6. (Exile cards with total mana value 6 or greater from your graveyard.)
+Until end of turn, target artifact or creature becomes an artifact creature with base power and toughness 4/3. If evidence was collected, it has base power and toughness 1/1 until end of turn instead.",{U}
+Benthic Criminologists,common,['U'],1,"Whenever this creature enters or attacks, you may sacrifice an artifact. If you do, draw a card.",{4}{U}
+Cold Case Cracker,common,['U'],4,"Flying
+When this creature dies, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{3}{U}
+Curious Inquiry,uncommon,['U'],1,"Enchant creature
+Enchanted creature gets +1/+1 and has ""Whenever this creature deals combat damage to a player, investigate."" (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{U}
+Deduce,common,['U'],2,"Draw a card. Investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{1}{U}
+Dramatic Accusation,common,['U'],1,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.
+{U}{U}: Shuffle enchanted creature into its owner's library.",{2}{U}
+Forensic Gadgeteer,rare,['U'],2,"Whenever you cast an artifact spell, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")
+Activated abilities of artifacts you control cost {1} less to activate. This effect can't reduce the mana in that cost to less than one mana.",{2}{U}
+Furtive Courier,uncommon,['U'],1,"This creature can't be blocked as long as you've sacrificed an artifact this turn.
+Whenever this creature attacks, draw a card, then discard a card.",{2}{U}
+Hotshot Investigators,common,['U'],3,"When this creature enters, return up to one other target creature to its owner's hand. If you controlled it, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{5}{U}
+Jaded Analyst,common,['U'],4,"Defender
+Whenever you draw your second card each turn, this creature loses defender and gains vigilance until end of turn.",{1}{U}
+Proft's Eidetic Memory,rare,['U'],2,"When Proft's Eidetic Memory enters, draw a card.
+You have no maximum hand size.
+At the beginning of combat on your turn, if you've drawn more than one card this turn, put X +1/+1 counters on target creature you control, where X is the number of cards you've drawn this turn minus one.",{1}{U}
+Projektor Inspector,common,['U'],2,"Whenever this creature or another Detective you control enters and whenever a Detective you control is turned face up, you may draw a card. If you do, discard a card.",{2}{U}
+Steamcore Scholar,rare,['U'],1,"Flying, vigilance
+When this creature enters, draw two cards. Then discard two cards unless you discard an instant or sorcery card or a creature card with flying.",{2}{U}
+Cerebral Confiscation,common,['B'],2,"Choose one —
+• Target opponent discards two cards.
+• Target opponent reveals their hand. You choose a nonland card from it. That player discards that card.",{2}{B}
+Festerleech,uncommon,['B'],1,"Whenever this creature deals combat damage to a player, you mill two cards.
+{1}{B}: This creature gets +2/+2 until end of turn. Activate only once each turn.",{B}
+It Doesn't Add Up,uncommon,['B'],1,Return target creature card from your graveyard to the battlefield. Suspect it. (It has menace and can't block.),{3}{B}{B}
+Macabre Reconstruction,common,['B'],1,"This spell costs {2} less to cast if a creature card was put into your graveyard from anywhere this turn.
+Return up to two target creature cards from your graveyard to your hand.",{3}{B}
+"Massacre Girl, Known Killer",mythic,['B'],1,"Menace
+Creatures you control have wither. (They deal damage to creatures in the form of -1/-1 counters.)
+Whenever a creature an opponent controls dies, if its toughness was less than 1, draw a card.",{2}{B}{B}
+Rot Farm Mortipede,common,['B'],1,"Whenever one or more creature cards leave your graveyard, this creature gets +1/+0 and gains menace and lifelink until end of turn.",{3}{B}
+Slimy Dualleech,uncommon,['B'],2,"At the beginning of combat on your turn, target creature you control with power 2 or less gets +1/+0 and gains deathtouch until end of turn.",{3}{B}
+Snarling Gorehound,common,['B'],2,"Menace
+Whenever another creature you control with power 2 or less enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{B}
+Soul Enervation,uncommon,['B'],1,"Flash
+When this enchantment enters, target creature gets -4/-4 until end of turn.
+Whenever one or more creature cards leave your graveyard, each opponent loses 1 life and you gain 1 life.",{3}{B}
+Toxin Analysis,common,['B'],1,"Target creature gains deathtouch and lifelink until end of turn. Investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{B}
+Undercity Eliminator,uncommon,['B'],1,"When this creature enters, you may sacrifice an artifact or creature. When you do, exile target creature an opponent controls.",{3}{B}{B}
+Bolrac-Clan Basher,uncommon,['R'],2,"Double strike, trample
+Disguise {3}{R}{R} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)",{4}{R}{R}
+Case of the Crimson Pulse,rare,['R'],1,"When this Case enters, discard a card, then draw two cards.
+To solve — You have no cards in hand. (If unsolved, solve at the beginning of your end step.)
+Solved — At the beginning of your upkeep, discard your hand, then draw two cards.",{2}{R}
+The Chase Is On,common,['R'],1,"Target creature gets +3/+0 and gains first strike until end of turn. Investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{2}{R}
+Concealed Weapon,uncommon,['R'],1,"Equipped creature gets +3/+0.
+Disguise {2}{R} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)
+When this Equipment is turned face up, attach it to target creature you control.
+Equip {1}{R}",{1}{R}
+Connecting the Dots,rare,['R'],1,"Whenever a creature you control attacks, exile the top card of your library face down. (You can't look at it.)
+{1}{R}, Discard your hand, Sacrifice this enchantment: Put all cards exiled with this enchantment into their owners' hands.",{1}{R}
+Demand Answers,common,['R'],4,"As an additional cost to cast this spell, sacrifice an artifact or discard a card.
+Draw two cards.",{1}{R}
+Expose the Culprit,uncommon,['R'],1,"Choose one or both —
+• Turn target face-down creature face up.
+• Exile any number of face-up creatures you control with disguise in a face-down pile, shuffle that pile, then cloak them. (To cloak a card, put it onto the battlefield face down as a 2/2 creature with ward {2}. Turn it face up any time for its mana cost if it's a creature card.)",{1}{R}
+Frantic Scapegoat,uncommon,['R'],1,"Haste
+When this creature enters, suspect it. (It has menace and can't block.)
+Whenever one or more other creatures you control enter, if this creature is suspected, you may suspect one of the other creatures. If you do, this creature is no longer suspected.",{R}
+Gearbane Orangutan,common,['R'],2,"Reach
+When this creature enters, choose one —
+• Destroy up to one target artifact.
+• Sacrifice an artifact. If you do, put two +1/+1 counters on this creature.",{2}{R}
+Goblin Maskmaker,common,['R'],2,"Whenever this creature attacks, face-down spells you cast this turn cost {1} less to cast.",{R}
+Innocent Bystander,common,['R'],2,"Whenever this creature is dealt 3 or more damage, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{1}{R}
+Offender at Large,common,['R'],2,"Disguise {4}{R} (You may cast this card face down for {3} as a 2/2 creature with ward {2}. Turn it face up any time for its disguise cost.)
+When this creature enters or is turned face up, up to one target creature gets +2/+0 until end of turn.",{4}{R}
+Blood Spatter Analysis,rare,"['B', 'R']",1,"When this enchantment enters, it deals 3 damage to target creature an opponent controls.
+Whenever one or more creatures die, mill a card and put a bloodstain counter on this enchantment. Then sacrifice it if it has five or more bloodstain counters on it. When you do, return target creature card from your graveyard to your hand.",{B}{R}
+Deadly Complication,uncommon,"['B', 'R']",1,"Choose one or both —
+• Destroy target creature.
+• Put a +1/+1 counter on target suspected creature you control. You may have it become no longer suspected.",{1}{B}{R}
+Detective's Satchel,uncommon,"['R', 'U']",2,"When this artifact enters, investigate twice. (To investigate, create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")
+{T}: Create a 1/1 colorless Thopter artifact creature token with flying. Activate only if you've sacrificed an artifact this turn.",{2}{U}{R}
+Drag the Canal,rare,"['B', 'U']",1,"Create a 2/2 white and blue Detective creature token. If a creature died this turn, you gain 2 life, surveil 2, then investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{U}{B}
+Ill-Timed Explosion,rare,"['R', 'U']",1,"Draw two cards. Then you may discard two cards. When you do, Ill-Timed Explosion deals X damage to each creature, where X is the greatest mana value among cards discarded this way.",{2}{U}{R}
+Kylox's Voltstrider,mythic,"['R', 'U']",1,"Collect evidence 6: This Vehicle becomes an artifact creature until end of turn.
+Whenever this Vehicle attacks, you may cast an instant or sorcery spell from among cards exiled with it. If that spell would be put into a graveyard, put it on the bottom of its owner's library instead.
+Crew 2",{1}{U}{R}
+Rune-Brand Juggler,uncommon,"['B', 'R']",2,"When this creature enters, suspect up to one target creature you control. (A suspected creature has menace and can't block.)
+{3}{B}{R}, Sacrifice a suspected creature: Target creature gets -5/-5 until end of turn.",{B}{R}
+Raucous Theater,rare,"['B', 'R']",1,"({T}: Add {B} or {R}.)
+This land enters tapped.
+When this land enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",
+Undercity Sewers,rare,"['B', 'U']",2,"({T}: Add {U} or {B}.)
+This land enters tapped.
+When this land enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",
+Torch the Witness,uncommon,['R'],2,"Torch the Witness deals twice X damage to target creature. If excess damage was dealt to that creature this way, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{X}{R}
+"Melek, Reforged Researcher",mythic,"['R', 'U']",1,"Melek's power and toughness are each equal to twice the number of instant and sorcery cards in your graveyard.
+The first instant or sorcery spell you cast each turn costs {3} less to cast.",{3}{U}{R}
+Paths of Tuinvale,uncommon,['U'],1,"Choose one or both —
+• Return target creature you control to its owner's hand. That card perpetually gains ""This spell costs {1} less to cast.""
+• Return target creature you don't control to its owner's hand. That card perpetually gains ""This spell costs {1} more to cast.""",{1}{U}
+Talion's Throneguard,rare,['U'],1,"Flash
+Bargain
+Flying
+When Talion's Throneguard enters, return up to one target spell or nonland permanent to its owner's hand. If Talion's Throneguard was bargained, that card perpetually gains ""This spell costs {2} more to cast.""",{2}{U}{U}
+Draconic Debut,uncommon,['R'],2,"Draconic Debut deals X damage to any target.
+The next Dragon creature spell you cast costs {X} less to cast.",{X}{R}
+Victory of the Pyrohammer,rare,['R'],1,"(As this Saga enters and after your draw step add a lore counter. Sacrifice after III.)
+I — Victory of the Pyrohammer deals 4 damage to each creature and each planeswalker. Victory of the Pyrohammer gains ""Damage isn't removed from creatures during cleanup steps.""
+II, III — Victory of the Pyrohammer deals 1 damage to each creature and each planeswalker.",{3}{R}{R}
+Outfitted Jouster,rare,"['B', 'R']",1,"When Outfitted Jouster enters, conjure a card named Steelclaw Lance and a card named Brawler's Plate onto the battlefield and attach them to Outfitted Jouster.
+If damage would be dealt to Outfitted Jouster while it's equipped, prevent that damage. When damage is prevented this way, sacrifice an Equipment attached to Outfitted Jouster.",{2}{B}{R}
+Landlore Navigator,uncommon,['U'],1,"Whenever Landlore Navigator attacks, create a Map token.
+At the beginning of your end step, if two or more artifacts entered under your control this turn, conjure a card named Thieving Magpie onto the battlefield.",{1}{U}
+Dusk's Landing,uncommon,['B'],1,"Draw a card. If an opponent lost life this turn and you gained life this turn, seek two Vampire cards instead.",{B}
+"Kamachal, Ship's Mascot",rare,['R'],1,"Menace
+{R}: Kamachal, Ship's Mascot gets +1/+0 until end of turn.
+Whenever Kamachal deals combat damage to a player, create a Treasure token. Then exile from that player's library a random card with mana value equal to the damage dealt. You may cast that card this turn.",{2}{R}
+Pirate's Landing,uncommon,['R'],2,"Draw a card. If mana from a Treasure was spent to cast this spell, seek a Pirate card instead.",{R}
+Archmage's Newt,rare,['U'],1,"Whenever this creature deals combat damage to a player, target instant or sorcery card in your graveyard gains flashback until end of turn. The flashback cost is equal to its mana cost. That card gains flashback {0} until end of turn instead if this creature is saddled. (You may cast that card from your graveyard for its flashback cost. Then exile it.)
+Saddle 3",{1}{U}
+Canyon Crab,uncommon,['U'],2,"{1}{U}: This creature gets +2/-2 until end of turn.
+At the beginning of your end step, if you haven't cast a spell from your hand this turn, draw a card, then discard a card.",{1}{U}
+Djinn of Fool's Fall,common,['U'],3,"Flying
+Plot {3}{U} (You may pay {3}{U} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",{4}{U}
+Failed Fording,common,['U'],2,"Return target nonland permanent to its owner's hand. If you control a Desert, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{1}{U}
+Geyser Drake,common,['U'],1,"Flying
+During turns other than yours, spells you cast cost {1} less to cast.",{2}{U}
+Harrier Strix,common,['U'],1,"Flying
+When this creature enters, tap target permanent.
+{2}{U}: Draw a card, then discard a card.",{U}
+The Key to the Vault,rare,['U'],1,"Whenever equipped creature deals combat damage to a player, look at that many cards from the top of your library. You may exile a nonland card from among them. Put the rest on the bottom of your library in a random order. You may cast the exiled card without paying its mana cost.
+Equip {2}{U}",{1}{U}
+Marauding Sphinx,uncommon,['U'],1,"Flying, vigilance, ward {2}
+Whenever you commit a crime, surveil 2. This ability triggers only once each turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)",{3}{U}{U}
+Nimble Brigand,uncommon,['U'],1,"This creature can't be blocked if you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+Whenever this creature deals combat damage to a player, draw a card.",{2}{U}
+Outlaw Stitcher,uncommon,['U'],1,"When this creature enters, create a 2/2 blue and black Zombie Rogue creature token, then put two +1/+1 counters on that token for each spell you've cast this turn other than the first.
+Plot {4}{U} (You may pay {4}{U} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",{3}{U}
+Peerless Ropemaster,common,['U'],1,"When this creature enters, return up to one target tapped creature to its owner's hand.",{4}{U}
+Phantom Interference,common,['U'],1,"Spree (Choose one or more additional costs.)
++ {3} — Create a 2/2 white Spirit creature token with flying.
++ {1} — Counter target spell unless its controller pays {2}.",{U}
+Razzle-Dazzler,common,['U'],2,"Whenever you cast your second spell each turn, put a +1/+1 counter on this creature. It can't be blocked this turn.",{1}{U}
+Seize the Secrets,common,['U'],4,"This spell costs {1} less to cast if you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+Draw two cards.",{2}{U}
+Spring Splasher,common,['U'],1,"Whenever this creature attacks, target creature defending player controls gets -3/-0 until end of turn.",{1}{U}
+Stop Cold,common,['U'],1,"Flash
+Enchant artifact or creature
+When this Aura enters, tap enchanted permanent.
+Enchanted permanent loses all abilities and doesn't untap during its controller's untap step.",{3}{U}
+This Town Ain't Big Enough,uncommon,['U'],1,"This spell costs {3} less to cast if it targets a permanent you control.
+Return up to two target nonland permanents to their owners' hands.",{4}{U}
+Three Steps Ahead,rare,['U'],2,"Spree (Choose one or more additional costs.)
++ {1}{U} — Counter target spell.
++ {3} — Create a token that's a copy of target artifact or creature you control.
++ {2} — Draw two cards, then discard a card.",{U}
+Blacksnag Buzzard,common,['B'],1,"Flying
+This creature enters with a +1/+1 counter on it if a creature died this turn.
+Plot {1}{B} (You may pay {1}{B} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",{2}{B}
+Boneyard Desecrator,common,['B'],3,"Menace
+{1}{B}, Sacrifice another creature: Put a +1/+1 counter on this creature. If an outlaw was sacrificed this way, create a Treasure token. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)",{3}{B}
+Consuming Ashes,common,['B'],2,"Exile target creature. If it had mana value 3 or less, surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{2}{B}{B}
+"Kaervek, the Punisher",rare,['B'],1,"Whenever you commit a crime, exile up to one target black card from your graveyard and copy it. You may cast the copy. If you do, you lose 2 life. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime. Copies of permanent spells become tokens.)",{1}{B}{B}
+Nezumi Linkbreaker,common,['B'],2,"When this creature dies, create a 1/1 red Mercenary creature token with ""{T}: Target creature you control gets +1/+0 until end of turn. Activate only as a sorcery.""",{B}
+Rakish Crew,uncommon,['B'],2,"When this enchantment enters, create a 1/1 red Mercenary creature token with ""{T}: Target creature you control gets +1/+0 until end of turn. Activate only as a sorcery.""
+Whenever an outlaw you control dies, each opponent loses 1 life and you gain 1 life. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)",{2}{B}
+Rooftop Assassin,common,['B'],1,"Flash
+Flying, lifelink
+When this creature enters, destroy target creature an opponent controls that was dealt damage this turn.",{3}{B}
+Rush of Dread,rare,['B'],1,"Spree (Choose one or more additional costs.)
++ {1} — Target opponent sacrifices half the creatures they control of their choice, rounded up.
++ {2} — Target opponent discards half the cards in their hand, rounded up.
++ {2} — Target opponent loses half their life, rounded up.",{1}{B}{B}
+Shoot the Sheriff,uncommon,['B'],2,"Destroy target non-outlaw creature. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws. Everyone else is fair game.)",{1}{B}
+"Tinybones, the Pickpocket",mythic,['B'],1,"Deathtouch
+Whenever Tinybones deals combat damage to a player, you may cast target nonland permanent card from that player's graveyard, and mana of any type can be spent to cast that spell.",{B}
+Treasure Dredger,uncommon,['B'],1,"{1}, {T}, Pay 1 life: Create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{1}{B}
+"Vadmir, New Blood",rare,['B'],2,"Whenever you commit a crime, put a +1/+1 counter on Vadmir. This ability triggers only once each turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+As long as Vadmir has four or more +1/+1 counters on it, it has menace and lifelink.",{1}{B}
+Vault Plunderer,common,['B'],3,"When this creature enters, target player draws a card and loses 1 life.",{2}{B}
+Deadeye Duelist,common,['R'],4,"Reach
+{1}, {T}: This creature deals 1 damage to target opponent.",{1}{R}
+Demonic Ruckus,uncommon,['R'],2,"Enchant creature
+Enchanted creature gets +1/+1 and has menace and trample.
+When this Aura is put into a graveyard from the battlefield, draw a card.
+Plot {R} (You may pay {R} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",{1}{R}
+Discerning Peddler,common,['R'],2,"When this creature enters, you may discard a card. If you do, draw a card.",{1}{R}
+Great Train Heist,rare,['R'],1,"Spree (Choose one or more additional costs.)
++ {2}{R} — Untap all creatures you control. If it's your combat phase, there is an additional combat phase after this phase.
++ {2} — Creatures you control get +1/+0 and gain first strike until end of turn.
++ {R} — Choose target opponent. Whenever a creature you control deals combat damage to that player this turn, create a tapped Treasure token.",{R}
+Hell to Pay,rare,['R'],2,Hell to Pay deals X damage to target creature. Create a number of tapped Treasure tokens equal to the amount of excess damage dealt to that creature this way.,{X}{R}
+Hellspur Brute,uncommon,['R'],1,"Affinity for outlaws (This spell costs {1} less to cast for each Assassin, Mercenary, Pirate, Rogue, and/or Warlock you control.)
+Trample",{4}{R}
+Hellspur Posse Boss,rare,['R'],1,"Other outlaws you control have haste. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)
+When this creature enters, create two 1/1 red Mercenary creature tokens with ""{T}: Target creature you control gets +1/+0 until end of turn. Activate only as a sorcery.""",{2}{R}{R}
+Irascible Wolverine,common,['R'],1,"When this creature enters, exile the top card of your library. Until end of turn, you may play that card.
+Plot {2}{R} (You may pay {2}{R} and exile this card from your hand. Cast it as a sorcery on a later turn without paying its mana cost. Plot only as a sorcery.)",{2}{R}
+Iron-Fist Pulverizer,common,['R'],1,"Reach
+Whenever you cast your second spell each turn, this creature deals 2 damage to target opponent. Scry 1. (Look at the top card of your library. You may put that card on the bottom.)",{4}{R}
+"Magda, the Hoardmaster",rare,['R'],1,"Whenever you commit a crime, create a tapped Treasure token. This ability triggers only once each turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+Sacrifice three Treasures: Create a 4/4 red Scorpion Dragon creature token with flying and haste. Activate only as a sorcery.",{1}{R}
+Mine Raider,common,['R'],2,"Trample
+When this creature enters, if you control another outlaw, create a Treasure token. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws. A Treasure token is an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{2}{R}
+Outlaws' Fury,common,['R'],3,"Creatures you control get +2/+0 until end of turn. If you control an outlaw, exile the top card of your library. Until the end of your next turn, you may play that card. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)",{2}{R}
+Quick Draw,common,['R'],1,Target creature you control gets +1/+1 and gains first strike until end of turn. Creatures target opponent controls lose first strike and double strike until end of turn.,{R}
+Quilled Charger,common,['R'],1,"Whenever this creature attacks while saddled, it gets +1/+2 and gains menace until end of turn. (It can't be blocked except by two or more creatures.)
+Saddle 2 (Tap any number of other creatures you control with total power 2 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)",{3}{R}
+Reckless Lackey,common,['R'],3,"First strike, haste
+{2}{R}, Sacrifice this creature: Draw a card and create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{R}
+Rodeo Pyromancers,common,['R'],3,"Whenever you cast your first spell each turn, add {R}{R}.",{3}{R}
+Scorching Shot,uncommon,['R'],2,Scorching Shot deals 5 damage to target creature.,{R}{R}
+Take for a Ride,uncommon,['R'],1,"Take for a Ride has flash as long as you've committed a crime this turn. (Targeting opponents, anything they control, and/or cards in their graveyards is a crime.)
+Gain control of target creature until end of turn. Untap that creature. It gains haste until end of turn.",{2}{R}
+Terror of the Peaks,rare,['R'],1,"Flying
+Spells your opponents cast that target this creature cost an additional 3 life to cast.
+Whenever another creature you control enters, this creature deals damage equal to that creature's power to any target.",{3}{R}{R}
+Thunder Salvo,common,['R'],3,"Thunder Salvo deals X damage to target creature, where X is 2 plus the number of other spells you've cast this turn.",{1}{R}
+Trick Shot,common,['R'],2,Trick Shot deals 6 damage to target creature and 2 damage to up to one other target creature token.,{4}{R}
+"Breeches, the Blastmaker",rare,"['R', 'U']",2,"Menace
+Whenever you cast your second spell each turn, you may sacrifice an artifact. If you do, flip a coin. When you win the flip, copy that spell. You may choose new targets for the copy. When you lose the flip, Breeches deals damage equal to that spell's mana value to any target.",{1}{U}{R}
+"Kraum, Violent Cacophony",uncommon,"['R', 'U']",1,"Flying
+Whenever you cast your second spell each turn, put a +1/+1 counter on Kraum and draw a card.",{2}{U}{R}
+Laughing Jasper Flint,rare,"['B', 'R']",1,"Creatures you control but don't own are Mercenaries in addition to their other types.
+At the beginning of your upkeep, exile the top X cards of target opponent's library, where X is the number of outlaws you control. Until end of turn, you may cast spells from among those cards, and mana of any type can be spent to cast those spells.",{1}{B}{R}
+"Malcolm, the Eyes",rare,"['R', 'U']",1,"Flying, haste
+Whenever you cast your second spell each turn, investigate. (Create a Clue token. It's an artifact with ""{2}, Sacrifice this token: Draw a card."")",{U}{R}
+Rakdos Joins Up,rare,"['B', 'R']",1,"When Rakdos Joins Up enters, return target creature card from your graveyard to the battlefield with two additional +1/+1 counters on it.
+Whenever a legendary creature you control dies, Rakdos Joins Up deals damage equal to that creature's power to target opponent.",{3}{B}{R}
+Slick Sequence,uncommon,"['R', 'U']",2,"Slick Sequence deals 2 damage to any target. If you've cast another spell this turn, draw a card.",{U}{R}
+"Vial Smasher, Gleeful Grenadier",uncommon,"['B', 'R']",1,"Whenever another outlaw you control enters, Vial Smasher deals 1 damage to target opponent. (Assassins, Mercenaries, Pirates, Rogues, and Warlocks are outlaws.)",{B}{R}
+Eroded Canyon,common,"['R', 'U']",4,"This land enters tapped.
+When this land enters, it deals 1 damage to target opponent.
+{T}: Add {U} or {R}.",
+Jagged Barrens,common,"['B', 'R']",4,"This land enters tapped.
+When this land enters, it deals 1 damage to target opponent.
+{T}: Add {B} or {R}.",
+Soured Springs,common,"['B', 'U']",4,"This land enters tapped.
+When this land enters, it deals 1 damage to target opponent.
+{T}: Add {U} or {B}.",
+Spirebluff Canal,rare,"['R', 'U']",1,"This land enters tapped unless you control two or fewer other lands.
+{T}: Add {U} or {R}.",
+Worldwalker Helm,mythic,['U'],1,"If you would create one or more artifact tokens, instead create those tokens plus an additional Map token. (It's an artifact with ""{1}, {T}, Sacrifice this token: Target creature you control explores. Activate only as a sorcery."")
+{1}{U}, {T}: Create a token that's a copy of target artifact token you control.",{2}{U}
+Lurking Spinecrawler,uncommon,['B'],1,"When Lurking Spinecrawler enters, you may choose a nonland card in your hand. If you do, that card perpetually incorporates {1}{B} and gains ""When you cast this spell, each opponent sacrifices a creature. Each opponent who can't discards a card.""
+Whenever you cast a multicolored spell, for each of that spell's colors, each opponent loses 1 life and you gain 1 life.",{3}{B}
+Case of the Market Melee,uncommon,['R'],1,"When this Case enters, it deals 1 damage to any target.
+Damage isn't removed from creatures during cleanup steps.
+To solve — Three or more creatures are damaged.
+Solved — Whenever you attack with one or more creatures, this Case deals that much damage divided as you choose among any number of targets.",{1}{R}
+Shove Aside,uncommon,['R'],1,"If you aren't the starting player, you may cast Shove Aside as though it had flash.
+Shove Aside deals 3 damage to target creature or planeswalker.",{R}
+A-Geological Appraiser,uncommon,['R'],2,"When Geological Appraiser enters, if you cast it, discover 3. (Exile cards from the top of your library until you exile a nonland card with mana value 3 or less. Cast it without paying its mana cost or put it into your hand. Put the rest on the bottom in a random order.)",{3}{R}{R}
+Intruder's Inquisition,uncommon,"['B', 'R']",1,"Target creature you control deals damage equal to its power to target creature an opponent controls. If excess damage was dealt to a creature this way, its controller discards a card with the greatest mana value among cards in their hand.",{B}{R}
+Cathartic Operation,uncommon,"['B', 'U']",2,"Return up to two target creature cards from your graveyard to your hand, then seek two noncreature, nonland cards.",{3}{U}{B}
+"Rankle, Pitiless Trickster",mythic,['B'],1,"Flying
+Rankle has lifelink and haste as long as an opponent controls no creatures.
+When Rankle enters, you may pay 1 life. When you do, each player discards a card and sacrifices a creature.
+Whenever a player discards a card, Rankle perpetually gets +1/+0.",{1}{B}{B}
+Switchgrass Grazer,uncommon,['R'],1,"Haste
+Whenever Switchgrass Grazer attacks, it deals 1 damage to any target. If Switchgrass Grazer is saddled and a creature was dealt damage this way, that creature perpetually gains ""This creature can't block"" and ""Damage isn't removed from this creature during cleanup steps.""
+Saddle 1",{2}{R}{R}
+Thieving Aven,uncommon,['U'],2,"Flying
+Whenever Thieving Aven deals combat damage to a player, heist target opponent's library.
+Whenever you cast a spell you don't own, put a +1/+1 counter on Thieving Aven.",{2}{U}
+Impetuous Lootmonger,uncommon,['R'],1,"First strike
+When Impetuous Lootmonger enters, discard a card, then heist target opponent's library.
+Whenever you cast a spell you don't own, create a tapped Treasure token.",{1}{R}
+Triumphant Getaway,rare,"['B', 'R', 'U']",1,"Flash
+When Triumphant Getaway enters, heist target opponent's library twice.
+Whenever you cast a spell you don't own, each opponent loses 2 life and you gain 2 life.",{1}{U}{B}{R}
+Bellowing Crier,common,['U'],3,"When this creature enters, draw a card, then discard a card.",{1}{U}
+Calamitous Tide,uncommon,['U'],1,"Return up to two target creatures to their owners' hands. Draw two cards, then discard a card.",{4}{U}{U}
+Daring Waverider,uncommon,['U'],1,"When this creature enters, you may cast target instant or sorcery card with mana value 4 or less from your graveyard without paying its mana cost. If that spell would be put into your graveyard, exile it instead.",{4}{U}{U}
+Dazzling Denial,common,['U'],2,"Counter target spell unless its controller pays {2}. If you control a Bird, counter that spell unless its controller pays {4} instead.",{1}{U}
+Eddymurk Crab,uncommon,['U'],1,"Flash
+This spell costs {1} less to cast for each instant and sorcery card in your graveyard.
+This creature enters tapped if it's not your turn.
+When this creature enters, tap up to two target creatures.",{5}{U}{U}
+"Eluge, the Shoreless Sea",mythic,['U'],1,"Eluge's power and toughness are each equal to the number of Islands you control.
+Whenever Eluge enters or attacks, put a flood counter on target land. It's an Island in addition to its other types for as long as it has a flood counter on it.
+The first instant or sorcery spell you cast each turn costs {U} (or {1}) less to cast for each land you control with a flood counter on it.",{1}{U}{U}{U}
+Finch Formation,common,['U'],2,"Offspring {3} (You may pay an additional {3} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+Flying
+When this creature enters, target creature you control gains flying until end of turn.",{2}{U}
+Gossip's Talent,uncommon,['U'],1,"(Gain the next level as a sorcery to add its ability.)
+Whenever a creature you control enters, surveil 1.
+{1}{U}: Level 2
+Whenever you attack, target attacking creature with power 3 or less can't be blocked this turn.
+{3}{U}: Level 3
+Whenever a creature you control deals combat damage to a player, you may exile it, then return it to the battlefield under its owner's control.",{1}{U}
+Lightshell Duo,common,['U'],2,"Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+When this creature enters, surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{3}{U}
+Mind Spiral,common,['U'],2,"Gift a tapped Fish (You may promise an opponent a gift as you cast this spell. If you do, they create a tapped 1/1 blue Fish creature token before its other effects.)
+Target player draws three cards. If the gift was promised, tap target creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)",{4}{U}
+Mockingbird,rare,['U'],1,"Flying
+You may have this creature enter as a copy of any creature on the battlefield with mana value less than or equal to the amount of mana spent to cast this creature, except it's a Bird in addition to its other types and it has flying.",{X}{U}
+Nightwhorl Hermit,common,['U'],1,"Vigilance
+Threshold — As long as seven or more cards are in your graveyard, this creature gets +1/+0 and can't be blocked.",{2}{U}
+Otterball Antics,uncommon,['U'],2,"Create a 1/1 blue and red Otter creature token with prowess. If this spell was cast from anywhere other than your hand, put a +1/+1 counter on that creature. (Whenever you cast a noncreature spell, a creature with prowess gets +1/+1 until end of turn.)
+Flashback {3}{U} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{1}{U}
+Pearl of Wisdom,common,['U'],4,"This spell costs {1} less to cast if you control an Otter.
+Draw two cards.",{2}{U}
+Portent of Calamity,rare,['U'],1,"Reveal the top X cards of your library. For each card type, you may exile a card of that type from among them. Put the rest into your graveyard. You may cast a spell from among the exiled cards without paying its mana cost if you exiled four or more cards this way. Then put the rest of the exiled cards into your hand.",{X}{U}
+Run Away Together,common,['U'],4,Choose two target creatures controlled by different players. Return those creatures to their owners' hands.,{1}{U}
+Shoreline Looter,uncommon,['U'],4,"This creature can't be blocked.
+Threshold — Whenever this creature deals combat damage to a player, draw a card. Then discard a card unless seven or more cards are in your graveyard.",{1}{U}
+Skyskipper Duo,common,['U'],1,"Flying
+When this creature enters, exile up to one other target creature you control. Return it to the battlefield under its owner's control at the beginning of the next end step.",{4}{U}
+Stormchaser's Talent,rare,['U'],1,"(Gain the next level as a sorcery to add its ability.)
+When this Class enters, create a 1/1 blue and red Otter creature token with prowess.
+{3}{U}: Level 2
+When this Class becomes level 2, return target instant or sorcery card from your graveyard to your hand.
+{5}{U}: Level 3
+Whenever you cast an instant or sorcery spell, create a 1/1 blue and red Otter creature token with prowess.",{U}
+Thought Shucker,common,['U'],1,Threshold — {1}{U}: Put a +1/+1 counter on this creature and draw a card. Activate only if seven or more cards are in your graveyard and only once.,{1}{U}
+Waterspout Warden,common,['U'],3,"Whenever this creature attacks, if another creature entered the battlefield under your control this turn, this creature gains flying until end of turn.",{2}{U}
+Agate-Blade Assassin,common,['B'],3,"Whenever this creature attacks, defending player loses 1 life and you gain 1 life.",{1}{B}
+Bandit's Talent,uncommon,['B'],1,"(Gain the next level as a sorcery to add its ability.)
+When this Class enters, each opponent discards two cards unless they discard a nonland card.
+{B}: Level 2
+At the beginning of each opponent's upkeep, if that player has one or fewer cards in hand, they lose 2 life.
+{3}{B}: Level 3
+At the beginning of your draw step, draw an additional card for each opponent who has one or fewer cards in hand.",{1}{B}
+Bonebind Orator,common,['B'],1,"{3}{B}, Exile this card from your graveyard: Return another target creature card from your graveyard to your hand.",{1}{B}
+Daggerfang Duo,common,['B'],3,"Deathtouch
+When this creature enters, you may mill two cards. (You may put the top two cards of your library into your graveyard.)",{2}{B}
+Early Winter,common,['B'],2,"Choose one —
+• Exile target creature.
+• Target opponent exiles an enchantment they control.",{4}{B}
+Feed the Cycle,uncommon,['B'],1,"As an additional cost to cast this spell, forage or pay {B}. (To forage, exile three cards from your graveyard or sacrifice a Food.)
+Destroy target creature or planeswalker.",{1}{B}
+Glidedive Duo,common,['B'],1,"Flying
+When this creature enters, each opponent loses 2 life and you gain 2 life.",{4}{B}
+Hazel's Nocturne,uncommon,['B'],1,Return up to two target creature cards from your graveyard to your hand. Each opponent loses 2 life and you gain 2 life.,{3}{B}
+Iridescent Vinelasher,rare,['B'],1,"Offspring {2} (You may pay an additional {2} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+Landfall — Whenever a land you control enters, this creature deals 1 damage to target opponent.",{B}
+Nocturnal Hunger,common,['B'],4,"Gift a Food (You may promise an opponent a gift as you cast this spell. If you do, they create a Food token before its other effects. It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")
+Destroy target creature. If the gift wasn't promised, you lose 2 life.",{2}{B}
+Persistent Marshstalker,uncommon,['B'],1,"This creature gets +1/+0 for each other Rat you control.
+Threshold — Whenever you attack with one or more Rats, if seven or more cards are in your graveyard, you may pay {2}{B}. If you do, return this card from your graveyard to the battlefield tapped and attacking.",{1}{B}
+Psychic Whorl,common,['B'],3,"Target opponent discards two cards. Then if you control a Rat, surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{2}{B}
+Ruthless Negotiation,uncommon,['B'],1,"Target opponent exiles a card from their hand. If this spell was cast from a graveyard, draw a card.
+Flashback {4}{B} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{B}
+Savor,common,['B'],3,"Target creature gets -2/-2 until end of turn. Create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")",{1}{B}
+Scavenger's Talent,rare,['B'],2,"(Gain the next level as a sorcery to add its ability.)
+Whenever one or more creatures you control die, create a Food token. This ability triggers only once each turn.
+{1}{B}: Level 2
+Whenever you sacrifice a permanent, target player mills two cards.
+{2}{B}: Level 3
+At the beginning of your end step, you may sacrifice three other nonland permanents. If you do, return a creature card from your graveyard to the battlefield with a finality counter on it.",{B}
+Starlit Soothsayer,common,['B'],1,"Flying
+At the beginning of your end step, if you gained or lost life this turn, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{2}{B}
+Starscape Cleric,uncommon,['B'],2,"Offspring {2}{B} (You may pay an additional {2}{B} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+Flying
+This creature can't block.
+Whenever you gain life, each opponent loses 1 life.",{1}{B}
+Thornplate Intimidator,common,['B'],2,"Offspring {3} (You may pay an additional {3} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+When this creature enters, target opponent loses 3 life unless they sacrifice a nonland permanent of their choice or discard a card.",{3}{B}
+Thought-Stalker Warlock,uncommon,['B'],1,"Menace (This creature can't be blocked except by two or more creatures.)
+When this creature enters, choose target opponent. If they lost life this turn, they reveal their hand, you choose a nonland card from it, and they discard that card. Otherwise, they discard a card.",{2}{B}
+Valley Rotcaller,rare,['B'],1,"Menace
+Whenever this creature attacks, each opponent loses X life and you gain X life, where X is the number of other Squirrels, Bats, Lizards, and Rats you control.",{1}{B}
+Alania's Pathmaker,common,['R'],4,"When this creature enters, exile the top card of your library. Until the end of your next turn, you may play that card.",{3}{R}
+Blooming Blast,uncommon,['R'],1,"Gift a Treasure (You may promise an opponent a gift as you cast this spell. If you do, they create a Treasure token before its other effects. It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")
+Blooming Blast deals 2 damage to target creature. If the gift was promised, Blooming Blast also deals 3 damage to that creature's controller.",{1}{R}
+Brambleguard Captain,uncommon,['R'],2,"At the beginning of combat on your turn, target creature you control gets +X/+0 until end of turn, where X is this creature's power.",{3}{R}
+Coruscation Mage,uncommon,['R'],2,"Offspring {2} (You may pay an additional {2} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.",{1}{R}
+Conduct Electricity,common,['R'],2,Conduct Electricity deals 6 damage to target creature and 2 damage to up to one target creature token.,{4}{R}
+Flamecache Gecko,uncommon,"['B', 'R']",1,"When this creature enters, if an opponent lost life this turn, add {B}{R}.
+{1}{R}, Discard a card: Draw a card.",{1}{R}
+Frilled Sparkshooter,common,['R'],3,"Menace, reach
+This creature enters with a +1/+1 counter on it if an opponent lost life this turn.",{3}{R}
+Harnesser of Storms,uncommon,['R'],1,"Whenever you cast a noncreature or Otter spell, you may exile the top card of your library. Until end of turn, you may play that card. This ability triggers only once each turn.",{2}{R}
+Hearthborn Battler,rare,['R'],1,"Haste
+Whenever a player casts their second spell each turn, this creature deals 2 damage to target opponent.",{2}{R}
+Hoarder's Overflow,uncommon,['R'],1,"When this enchantment enters and whenever you expend 4, put a stash counter on it. (You expend 4 as you spend your fourth total mana to cast spells during a turn.)
+{1}{R}, Sacrifice this enchantment: Discard your hand, then draw cards equal to the number of stash counters on this enchantment.",{1}{R}
+Kindlespark Duo,common,['R'],2,"{T}: This creature deals 1 damage to target opponent.
+Whenever you cast a noncreature spell, untap this creature.",{2}{R}
+Might of the Meek,common,['R'],3,"Target creature gains trample until end of turn. It also gets +1/+0 until end of turn if you control a Mouse.
+Draw a card.",{R}
+Playful Shove,uncommon,['R'],2,"Playful Shove deals 1 damage to any target.
+Draw a card.",{1}{R}
+Quaketusk Boar,uncommon,['R'],3,"Reach, trample, haste",{3}{R}{R}
+Rabid Gnaw,uncommon,['R'],3,Target creature you control gets +1/+0 until end of turn. Then it deals damage equal to its power to target creature you don't control.,{1}{R}
+Raccoon Rallier,common,['R'],1,{T}: Target creature you control gains haste until end of turn. Activate only as a sorcery.,{1}{R}
+Reptilian Recruiter,uncommon,['R'],2,"Trample
+When this creature enters, choose target creature. If that creature's power is 2 or less or if you control another Lizard, gain control of that creature until end of turn, untap it, and it gains haste until end of turn.",{3}{R}{R}
+Roughshod Duo,common,['R'],1,"Trample
+Whenever you expend 4, target creature you control gets +1/+1 and gains trample until end of turn. (You expend 4 as you spend your fourth total mana to cast spells during a turn.)",{2}{R}
+Sazacap's Brew,common,['R'],2,"Gift a tapped Fish (You may promise an opponent a gift as you cast this spell. If you do, they create a tapped 1/1 blue Fish creature token before its other effects.)
+As an additional cost to cast this spell, discard a card.
+Target player draws two cards. If the gift was promised, target creature you control gets +2/+0 until end of turn.",{1}{R}
+Steampath Charger,common,['R'],2,"Offspring {2} (You may pay an additional {2} as you cast this spell. If you do, when this creature enters, create a 1/1 token copy of it.)
+When this creature dies, it deals 1 damage to target player.",{1}{R}
+War Squeak,common,['R'],3,"Enchant creature
+When this Aura enters, target creature an opponent controls can't block this turn.
+Enchanted creature gets +1/+1 and has haste.",{R}
+Whiskerquill Scribe,common,['R'],2,"Valiant — Whenever this creature becomes the target of a spell or ability you control for the first time each turn, you may discard a card. If you do, draw a card.",{1}{R}
+Wildfire Howl,uncommon,['R'],1,"Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)
+Wildfire Howl deals 2 damage to each creature. If the gift was promised, instead Wildfire Howl deals 1 damage to any target and 2 damage to each creature.",{1}{R}{R}
+Valley Rally,uncommon,['R'],1,"Gift a Food (You may promise an opponent a gift as you cast this spell. If you do, they create a Food token before its other effects. It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")
+Creatures you control get +2/+0 until end of turn. If the gift was promised, target creature you control gains first strike until end of turn.",{2}{R}
+"Alania, Divergent Storm",rare,"['R', 'U']",2,"Whenever you cast a spell, if it's the first instant spell, the first sorcery spell, or the first Otter spell other than Alania you've cast this turn, you may have target opponent draw a card. If you do, copy that spell. You may choose new targets for the copy.",{3}{U}{R}
+Mind Drill Assailant,common,"['B', 'U']",1,"Threshold — As long as seven or more cards are in your graveyard, this creature gets +3/+0.
+{2}{U/B}: Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{2}{U/B}{U/B}
+"Ral, Crackling Wit",mythic,"['R', 'U']",1,"Whenever you cast a noncreature spell, put a loyalty counter on Ral.
+[+1]: Create a 1/1 blue and red Otter creature token with prowess.
+[−3]: Draw three cards, then discard two cards.
+[−10]: Draw three cards. You get an emblem with ""Instant and sorcery spells you cast have storm."" (Whenever you cast an instant or sorcery spell, copy it for each spell cast before it this turn.)",{2}{U}{R}
+Stormcatch Mentor,uncommon,"['R', 'U']",3,"Haste
+Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+Instant and sorcery spells you cast cost {1} less to cast.",{U}{R}
+Tempest Angler,common,"['R', 'U']",1,"Whenever you cast a noncreature spell, put a +1/+1 counter on this creature.",{1}{U/R}{U/R}
+Mudflat Village,uncommon,['B'],2,"{T}: Add {C}.
+{T}: Add {B}. Spend this mana only to cast a creature spell.
+{1}{B}, {T}, Sacrifice this land: Return target Bat, Lizard, Rat, or Squirrel card from your graveyard to your hand.",
+"Bria, Riptide Rogue",mythic,"['R', 'U']",1,"Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+Other creatures you control have prowess. (If a creature has multiple instances of prowess, each triggers separately.)
+Whenever you cast a noncreature spell, target creature you control can't be blocked this turn.",{2}{U}{R}
+Charmed Sleep,common,['U'],2,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.",{1}{U}{U}
+Mind Spring,rare,['U'],1,Draw X cards.,{X}{U}{U}
+Flame Lash,common,['R'],3,Flame Lash deals 4 damage to any target.,{3}{R}
+Abhorrent Oculus,mythic,['U'],2,"As an additional cost to cast this spell, exile six cards from your graveyard.
+Flying
+At the beginning of each opponent's upkeep, manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",{2}{U}
+Bottomless Pool // Locker Room,uncommon,['U'],1,"When you unlock this door, return up to one target creature to its owner's hand.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{U}
+Clammy Prowler,common,['U'],2,"Whenever this creature attacks, another target attacking creature can't be blocked this turn.",{3}{U}
+Enduring Curiosity,rare,['U'],1,"Flash
+Whenever a creature you control deals combat damage to a player, draw a card.
+When Enduring Curiosity dies, if it was a creature, return it to the battlefield under its owner's control. It's an enchantment. (It's not a creature.)",{2}{U}{U}
+Enter the Enigma,common,['U'],2,"Target creature can't be blocked this turn.
+Draw a card.",{U}
+Erratic Apparition,common,['U'],1,"Flying, vigilance
+Eerie — Whenever an enchantment you control enters and whenever you fully unlock a Room, this creature gets +1/+1 until end of turn.",{2}{U}
+Floodpits Drowner,uncommon,['U'],1,"Flash
+Vigilance
+When this creature enters, tap target creature an opponent controls and put a stun counter on it.
+{1}{U}, {T}: Shuffle this creature and target creature with a stun counter on it into their owners' libraries.",{1}{U}
+Meat Locker // Drowned Diner,common,['U'],1,"When you unlock this door, tap up to one target creature and put two stun counters on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{2}{U}
+The Mindskinner,rare,['U'],1,"The Mindskinner can't be blocked.
+If a source you control would deal damage to an opponent, prevent that damage and each opponent mills that many cards.",{U}{U}{U}
+Piranha Fly,common,['U'],3,"Flying
+This creature enters tapped.",{1}{U}
+Scrabbling Skullcrab,uncommon,['U'],1,"Eerie — Whenever an enchantment you control enters and whenever you fully unlock a Room, target player mills two cards. (They put the top two cards of their library into their graveyard.)",{U}
+"Stay Hidden, Stay Silent",uncommon,['U'],3,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.
+{4}{U}{U}: Shuffle enchanted creature into its owner's library, then manifest dread. Activate only as a sorcery.",{1}{U}
+Twist Reality,common,['U'],2,"Choose one —
+• Counter target spell.
+• Manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",{1}{U}{U}
+Unable to Scream,common,['U'],1,"Enchant creature
+Enchanted creature loses all abilities and is a Toy artifact creature with base power and toughness 0/2 in addition to its other types.
+As long as enchanted creature is face down, it can't be turned face up.",{U}
+Vanish from Sight,common,['U'],1,Target nonland permanent's owner puts it on their choice of the top or bottom of their library. Surveil 1. (Look at the top card of your library. You may put it into your graveyard.),{3}{U}
+Appendage Amalgam,common,['B'],2,"Flash
+Whenever this creature attacks, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{2}{B}
+Balemurk Leech,common,['B'],1,"Eerie — Whenever an enchantment you control enters and whenever you fully unlock a Room, each opponent loses 1 life.",{1}{B}
+Cackling Slasher,common,['B'],1,"Deathtouch
+This creature enters with a +1/+1 counter on it if a creature died this turn.",{3}{B}
+Cracked Skull,common,['B'],2,"Enchant creature
+When this Aura enters, look at target player's hand. You may choose a nonland card from it. That player discards that card.
+When enchanted creature is dealt damage, destroy it.",{2}{B}
+Enduring Tenacity,rare,['B'],1,"Whenever you gain life, target opponent loses that much life.
+When Enduring Tenacity dies, if it was a creature, return it to the battlefield under its owner's control. It's an enchantment. (It's not a creature.)",{2}{B}{B}
+Fanatic of the Harrowing,common,['B'],1,"When this creature enters, each player discards a card. If you discarded a card this way, draw a card.",{3}{B}
+Fear of Lost Teeth,common,['B'],1,"When this creature dies, it deals 1 damage to any target and you gain 1 life.",{B}
+Final Vengeance,common,['B'],1,"As an additional cost to cast this spell, sacrifice a creature or enchantment.
+Exile target creature.",{B}
+Funeral Room // Awakening Hall,mythic,['B'],1,"Whenever a creature you control dies, each opponent loses 1 life and you gain 1 life.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{2}{B}
+Give In to Violence,common,['B'],2,Target creature gets +2/+2 and gains lifelink until end of turn.,{1}{B}
+Innocuous Rat,common,['B'],2,"When this creature dies, manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",{1}{B}
+Let's Play a Game,uncommon,['B'],1,"Delirium — Choose one. If there are four or more card types among cards in your graveyard, choose one or more instead.
+• Creatures your opponents control get -1/-1 until end of turn.
+• Each opponent discards two cards.
+• Each opponent loses 3 life and you gain 3 life.",{3}{B}
+Live or Die,uncommon,['B'],1,"Choose one —
+• Return target creature card from your graveyard to the battlefield.
+• Destroy target creature.",{3}{B}{B}
+Miasma Demon,uncommon,['B'],2,"Flying
+When this creature enters, you may discard any number of cards. When you do, up to that many target creatures each get -2/-2 until end of turn.",{4}{B}{B}
+Overlord of the Balemurk,mythic,['B'],1,"Impending 5—{1}{B} (If you cast this spell for its impending cost, it enters with five time counters and isn't a creature until the last is removed. At the beginning of your end step, remove a time counter from it.)
+Whenever this permanent enters or attacks, mill four cards, then you may return a non-Avatar creature card or a planeswalker card from your graveyard to your hand.",{3}{B}{B}
+Unholy Annex // Ritual Chamber,rare,['B'],1,"At the beginning of your end step, draw a card. If you control a Demon, each opponent loses 2 life and you gain 2 life. Otherwise, you lose 2 life.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{2}{B}
+"Valgavoth, Terror Eater",mythic,['B'],1,"Flying, lifelink
+Ward—Sacrifice three nonland permanents.
+If a card you didn't control would be put into an opponent's graveyard from anywhere, exile it instead.
+During your turn, you may play cards exiled with Valgavoth. If you cast a spell this way, pay life equal to its mana value rather than pay its mana cost.",{6}{B}{B}{B}
+Vile Mutilator,uncommon,['B'],1,"As an additional cost to cast this spell, sacrifice a creature or enchantment.
+Flying, trample
+When this creature enters, each opponent sacrifices a nontoken enchantment of their choice, then sacrifices a nontoken creature of their choice.",{5}{B}{B}
+Winter's Intervention,common,['B'],2,Winter's Intervention deals 2 damage to target creature. You gain 2 life.,{1}{B}
+Betrayer's Bargain,uncommon,['R'],1,"As an additional cost to cast this spell, sacrifice a creature or enchantment or pay {2}.
+Betrayer's Bargain deals 5 damage to target creature. If that creature would die this turn, exile it instead.",{1}{R}
+Charred Foyer // Warped Space,mythic,['R'],1,"At the beginning of your upkeep, exile the top card of your library. You may play it this turn.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{3}{R}
+Clockwork Percussionist,common,['R'],3,"Haste
+When this creature dies, exile the top card of your library. You may play it until the end of your next turn.",{R}
+Glassworks // Shattered Yard,common,['R'],1,"When you unlock this door, this Room deals 4 damage to target creature an opponent controls.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{2}{R}
+Grab the Prize,common,['R'],2,"As an additional cost to cast this spell, discard a card.
+Draw two cards. If the discarded card wasn't a land card, Grab the Prize deals 2 damage to each opponent.",{1}{R}
+Irreverent Gremlin,uncommon,['R'],2,"Menace (This creature can't be blocked except by two or more creatures.)
+Whenever another creature you control with power 2 or less enters, you may discard a card. If you do, draw a card. Do this only once each turn.",{1}{R}
+"Norin, Swift Survivalist",uncommon,['R'],1,"Norin can't block.
+Whenever a creature you control becomes blocked, you may exile it. You may play that card from exile this turn.",{R}
+Overlord of the Boilerbilges,mythic,['R'],1,"Impending 4—{2}{R}{R} (If you cast this spell for its impending cost, it enters with four time counters and isn't a creature until the last is removed. At the beginning of your end step, remove a time counter from it.)
+Whenever this permanent enters or attacks, it deals 4 damage to any target.",{4}{R}{R}
+Pyroclasm,uncommon,['R'],1,Pyroclasm deals 2 damage to each creature.,{1}{R}
+Ragged Playmate,common,['R'],1,"{1}, {T}: Target creature with power 2 or less can't be blocked this turn.",{1}{R}
+Rampaging Soulrager,common,['R'],3,This creature gets +3/+0 as long as there are two or more unlocked doors among Rooms you control.,{2}{R}
+Razorkin Needlehead,rare,['R'],1,"This creature has first strike during your turn.
+Whenever an opponent draws a card, this creature deals 1 damage to them.",{R}{R}
+Ticket Booth // Tunnel of Hate,common,['R'],2,"When you unlock this door, manifest dread.
+(You may cast either half. That door unlocks on the battlefield. As a sorcery, you may pay the mana cost of a locked door to unlock it.)",{2}{R}
+Vicious Clown,common,['R'],1,"Whenever another creature you control with power 2 or less enters, this creature gets +2/+0 until end of turn.",{2}{R}
+Violent Urge,uncommon,['R'],1,"Target creature gets +1/+0 and gains first strike until end of turn.
+Delirium — If there are four or more card types among cards in your graveyard, that creature gains double strike until end of turn.",{R}
+Disturbing Mirth,uncommon,"['B', 'R']",1,"When this enchantment enters, you may sacrifice another enchantment or creature. If you do, draw two cards.
+When you sacrifice this enchantment, manifest dread. (Look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)",{B}{R}
+Intruding Soulrager,uncommon,"['R', 'U']",1,"Vigilance
+{T}, Sacrifice a Room: This creature deals 2 damage to each opponent. Draw a card.",{U}{R}
+Murky Sewer,common,"['B', 'U']",2,"This land enters tapped unless a player has 13 or less life.
+{T}: Add {U} or {B}.",
+Exclusion Mage,uncommon,['U'],3,"When this creature enters, return target creature an opponent controls to its owner's hand.",{2}{U}
+Kitesail Corsair,common,['U'],2,This creature has flying as long as it's attacking.,{1}{U}
+Opt,common,['U'],4,"Scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+Draw a card.",{U}
+Starlight Snare,common,['U'],2,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.",{2}{U}
+Cemetery Recruitment,common,['B'],2,"Return target creature card from your graveyard to your hand. If it's a Zombie card, draw a card.",{1}{B}
+Deadly Plot,uncommon,['B'],2,"Choose one —
+• Destroy target creature or planeswalker.
+• Return target Zombie creature card from your graveyard to the battlefield tapped.",{3}{B}
+Death Baron,rare,['B'],1,Skeletons you control and other Zombies you control get +1/+1 and have deathtouch. (Any amount of damage they deal to a creature is enough to destroy it.),{1}{B}{B}
+Moment of Craving,common,['B'],4,Target creature gets -2/-2 until end of turn. You gain 2 life.,{1}{B}
+Offer Immortality,common,['B'],1,"Target creature gains deathtouch and indestructible until end of turn. (Damage and effects that say ""destroy"" don't destroy it.)",{1}{B}
+Undying Malice,common,['B'],4,"Until end of turn, target creature gains ""When this creature dies, return it to the battlefield tapped under its owner's control with a +1/+1 counter on it.""",{B}
+Vampire Interloper,common,['B'],3,"Flying
+This creature can't block.",{1}{B}
+Dragon Fodder,common,['R'],4,Create two 1/1 red Goblin creature tokens.,{1}{R}
+Goblin Oriflamme,uncommon,['R'],1,Attacking creatures you control get +1/+0.,{1}{R}
+Skyraker Giant,common,['R'],2,Reach (This creature can block creatures with flying.),{2}{R}{R}
+Arcane Epiphany,uncommon,['U'],2,"This spell costs {1} less to cast if you control a Wizard.
+Draw three cards.",{3}{U}{U}
+Archmage of Runes,rare,['U'],1,"Instant and sorcery spells you cast cost {1} less to cast.
+Whenever you cast an instant or sorcery spell, draw a card.",{3}{U}{U}
+Bigfin Bouncer,common,['U'],2,"When this creature enters, return target creature an opponent controls to its owner's hand.",{3}{U}
+Cephalid Inkmage,uncommon,['U'],1,"When this creature enters, surveil 3. (Look at the top three cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+Threshold — This creature can't be blocked as long as there are seven or more cards in your graveyard.",{2}{U}
+Curator of Destinies,rare,['U'],1,"This spell can't be countered.
+Flying
+When this creature enters, look at the top five cards of your library and separate them into a face-down pile and a face-up pile. An opponent chooses one of those piles. Put that pile into your hand and the other into your graveyard.",{4}{U}{U}
+Drake Hatcher,rare,['U'],1,"Vigilance, prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+Whenever this creature deals combat damage to a player, put that many incubation counters on it.
+Remove three incubation counters from this creature: Create a 2/2 blue Drake creature token with flying.",{1}{U}
+Elementalist Adept,common,['U'],1,"Flash (You may cast this spell any time you could cast an instant.)
+Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)",{1}{U}
+Erudite Wizard,common,['U'],3,"Whenever you draw your second card each turn, put a +1/+1 counter on this creature.",{2}{U}
+Faebloom Trick,uncommon,['U'],3,"Create two 1/1 blue Faerie creature tokens with flying. When you do, tap target creature an opponent controls.",{2}{U}
+Grappling Kraken,uncommon,['U'],1,"Landfall — Whenever a land you control enters, tap target creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)",{4}{U}{U}
+High Fae Trickster,rare,['U'],1,"Flash (You may cast this spell any time you could cast an instant.)
+Flying
+You may cast spells as though they had flash.",{3}{U}
+Homunculus Horde,rare,['U'],1,"Whenever you draw your second card each turn, create a token that's a copy of this creature.",{3}{U}
+Icewind Elemental,common,['U'],1,"Flying
+When this creature enters, draw a card, then discard a card.",{4}{U}
+Inspiration from Beyond,uncommon,['U'],4,"Mill three cards, then return an instant or sorcery card from your graveyard to your hand.
+Flashback {5}{U}{U} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{2}{U}
+"Kaito, Cunning Infiltrator",mythic,['U'],1,"Whenever a creature you control deals combat damage to a player, put a loyalty counter on Kaito.
+[+1]: Up to one target creature you control can't be blocked this turn. Draw a card, then discard a card.
+[−2]: Create a 2/1 blue Ninja creature token.
+[−9]: You get an emblem with ""Whenever a player casts a spell, you create a 2/1 blue Ninja creature token.""",{1}{U}{U}
+"Kiora, the Rising Tide",rare,['U'],1,"When Kiora enters, draw two cards, then discard two cards.
+Threshold — Whenever Kiora attacks, if there are seven or more cards in your graveyard, you may create Scion of the Deep, a legendary 8/8 blue Octopus creature token.",{2}{U}
+Lunar Insight,rare,['U'],1,Draw a card for each different mana value among nonland permanents you control.,{2}{U}
+Mischievous Mystic,uncommon,['U'],3,"Flying
+Whenever you draw your second card each turn, create a 1/1 blue Faerie creature token with flying.",{1}{U}
+Refute,common,['U'],1,"Counter target spell. Draw a card, then discard a card.",{1}{U}{U}
+Skyship Buccaneer,uncommon,['U'],2,"Flying
+Raid — When this creature enters, if you attacked this turn, draw a card.",{3}{U}{U}
+Strix Lookout,common,['U'],2,"Flying, vigilance (Attacking doesn't cause this creature to tap.)
+{1}{U}, {T}: Draw a card, then discard a card.",{1}{U}
+Uncharted Voyage,common,['U'],2,"Target creature's owner puts it on their choice of the top or bottom of their library.
+Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{3}{U}
+Abyssal Harvester,rare,['B'],1,"{T}: Exile target creature card from a graveyard that was put there this turn. Create a token that's a copy of it, except it's a Nightmare in addition to its other types. Then exile all other Nightmare tokens you control.",{1}{B}{B}
+Arbiter of Woe,uncommon,['B'],3,"As an additional cost to cast this spell, sacrifice a creature.
+Flying
+When this creature enters, each opponent discards a card and loses 2 life. You draw a card and gain 2 life.",{4}{B}{B}
+Billowing Shriekmass,uncommon,['B'],2,"Flying
+When this creature enters, mill three cards. (Put the top three cards of your library into your graveyard.)
+Threshold — This creature gets +2/+1 as long as there are seven or more cards in your graveyard.",{3}{B}
+Bloodthirsty Conqueror,mythic,['B'],4,"Flying, deathtouch
+Whenever an opponent loses life, you gain that much life. (Damage causes loss of life.)",{3}{B}{B}
+Crypt Feaster,common,['B'],4,"Menace (This creature can't be blocked except by two or more creatures.)
+Threshold — Whenever this creature attacks, if there are seven or more cards in your graveyard, this creature gets +2/+0 until end of turn.",{3}{B}
+Gutless Plunderer,common,['B'],3,"Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
+Raid — When this creature enters, if you attacked this turn, look at the top three cards of your library. You may put one of those cards back on top of your library. Put the rest into your graveyard.",{2}{B}
+High-Society Hunter,rare,['B'],2,"Flying
+Whenever this creature attacks, you may sacrifice another creature. If you do, put a +1/+1 counter on this creature.
+Whenever another nontoken creature dies, draw a card.",{3}{B}{B}
+Hungry Ghoul,common,['B'],3,"{1}, Sacrifice another creature: Put a +1/+1 counter on this creature.",{1}{B}
+Infernal Vessel,uncommon,['B'],3,"When this creature dies, if it wasn't a Demon, return it to the battlefield under its owner's control with two +1/+1 counters on it. It's a Demon in addition to its other types.",{2}{B}
+Infestation Sage,common,['B'],4,"When this creature dies, create a 1/1 black and green Insect creature token with flying.",{B}
+Midnight Snack,uncommon,['B'],1,"Raid — At the beginning of your end step, if you attacked this turn, create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")
+{2}{B}, Sacrifice this enchantment: Target opponent loses X life, where X is the amount of life you gained this turn.",{2}{B}
+Nine-Lives Familiar,rare,['B'],1,"This creature enters with eight revival counters on it if you cast it.
+When this creature dies, if it had a revival counter on it, return it to the battlefield with one fewer revival counter on it at the beginning of the next end step.",{1}{B}{B}
+Revenge of the Rats,uncommon,['B'],1,"Create a tapped 1/1 black Rat creature token for each creature card in your graveyard.
+Flashback {2}{B}{B} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{2}{B}{B}
+Sanguine Syphoner,common,['B'],4,"Whenever this creature attacks, each opponent loses 1 life and you gain 1 life.",{1}{B}
+Soul-Shackled Zombie,common,['B'],3,"When this creature enters, exile up to two target cards from a single graveyard. If at least one creature card was exiled this way, each opponent loses 2 life and you gain 2 life.",{3}{B}
+Stab,common,['B'],4,Target creature gets -2/-2 until end of turn.,{B}
+"Tinybones, Bauble Burglar",rare,['B'],1,"Whenever an opponent discards a card, exile it from their graveyard with a stash counter on it.
+During your turn, you may play cards you don't own with stash counters on them from exile, and mana of any type can be spent to cast those spells.
+{3}{B}, {T}: Each opponent discards a card. Activate only as a sorcery.",{1}{B}
+Tragic Banshee,uncommon,['B'],4,"Morbid — When this creature enters, target creature an opponent controls gets -1/-1 until end of turn. If a creature died this turn, that creature gets -13/-13 until end of turn instead.",{4}{B}
+Vampire Gourmand,uncommon,['B'],3,"Whenever this creature attacks, you may sacrifice another creature. If you do, draw a card and this creature can't be blocked this turn.",{1}{B}
+Vampire Soulcaller,common,['B'],1,"Flying
+This creature can't block.
+When this creature enters, return target creature card from your graveyard to your hand.",{4}{B}
+Vengeful Bloodwitch,uncommon,['B'],3,"Whenever this creature or another creature you control dies, target opponent loses 1 life and you gain 1 life.",{1}{B}
+"Zul Ashur, Lich Lord",rare,['B'],1,"Ward—Pay 2 life. (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays 2 life.)
+{T}: You may cast target Zombie creature card from your graveyard this turn.",{1}{B}
+Battlesong Berserker,uncommon,['R'],2,"Whenever you attack, target creature you control gets +1/+0 and gains menace until end of turn. (It can't be blocked except by two or more creatures.)",{3}{R}
+Bulk Up,uncommon,['R'],2,"Double target creature's power until end of turn.
+Flashback {4}{R}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{1}{R}
+"Chandra, Flameshaper",mythic,['R'],2,"[+2]: Add {R}{R}{R}. Exile the top three cards of your library. Choose one. You may play that card this turn.
+[+1]: Create a token that's a copy of target creature you control, except it has haste and ""At the beginning of the end step, sacrifice this token.""
+[−4]: Chandra deals 8 damage divided as you choose among any number of target creatures and/or planeswalkers.",{5}{R}{R}
+Courageous Goblin,common,['R'],4,"Whenever this creature attacks while you control a creature with power 4 or greater, this creature gets +1/+0 and gains menace until end of turn. (It can't be blocked except by two or more creatures.)",{1}{R}
+Crackling Cyclops,common,['R'],3,"Whenever you cast a noncreature spell, this creature gets +3/+0 until end of turn.",{2}{R}
+Dragon Trainer,uncommon,['R'],1,"When this creature enters, create a 4/4 red Dragon creature token with flying.",{3}{R}{R}
+Fiery Annihilation,uncommon,['R'],4,"Fiery Annihilation deals 5 damage to target creature. Exile up to one target Equipment attached to that creature. If that creature would die this turn, exile it instead.",{2}{R}
+Goblin Boarders,common,['R'],4,Raid — This creature enters with a +1/+1 counter on it if you attacked this turn.,{2}{R}
+Goblin Negotiation,uncommon,['R'],1,Goblin Negotiation deals X damage to target creature. Create a number of 1/1 red Goblin creature tokens equal to the amount of excess damage dealt to that creature this way.,{X}{R}{R}
+Gorehorn Raider,common,['R'],4,"Raid — When this creature enters, if you attacked this turn, this creature deals 2 damage to any target.",{4}{R}
+Incinerating Blast,common,['R'],3,"Incinerating Blast deals 6 damage to target creature.
+You may discard a card. If you do, draw a card.",{4}{R}
+"Kellan, Planar Trailblazer",rare,['R'],2,"{1}{R}: If Kellan is a Scout, it becomes a Human Faerie Detective and gains ""Whenever Kellan deals combat damage to a player, exile the top card of your library. You may play that card this turn.""
+{2}{R}: If Kellan is a Detective, it becomes a 3/2 Human Faerie Rogue and gains double strike.",{R}
+Rite of the Dragoncaller,mythic,['R'],1,"Whenever you cast an instant or sorcery spell, create a 5/5 red Dragon creature token with flying.",{4}{R}{R}
+Searslicer Goblin,rare,['R'],2,"Raid — At the beginning of your end step, if you attacked this turn, create a 1/1 red Goblin creature token.",{1}{R}
+Slumbering Cerberus,uncommon,['R'],4,"This creature doesn't untap during your untap step.
+Morbid — At the beginning of each end step, if a creature died this turn, untap this creature.",{1}{R}
+Sower of Chaos,common,['R'],4,{2}{R}: Target creature can't block this turn.,{3}{R}
+Strongbox Raider,uncommon,['R'],3,"Raid — When this creature enters, if you attacked this turn, exile the top two cards of your library. Choose one of them. Until the end of your next turn, you may play that card.",{2}{R}{R}
+"Alesha, Who Laughs at Fate",rare,"['B', 'R']",1,"First strike
+Whenever Alesha attacks, put a +1/+1 counter on it.
+Raid — At the beginning of your end step, if you attacked this turn, return target creature card with mana value less than or equal to Alesha's power from your graveyard to the battlefield.",{1}{B}{R}
+Dreadwing Scavenger,uncommon,"['B', 'U']",4,"Flying
+Whenever this creature enters or attacks, draw a card, then discard a card.
+Threshold — This creature gets +1/+1 and has deathtouch as long as there are seven or more cards in your graveyard.",{1}{U}{B}
+"Niv-Mizzet, Visionary",mythic,"['R', 'U']",3,"Flying
+You have no maximum hand size.
+Whenever a source you control deals noncombat damage to an opponent, you draw that many cards.",{4}{U}{R}
+Perforating Artist,uncommon,"['B', 'R']",4,"Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
+Raid — At the beginning of your end step, if you attacked this turn, each opponent loses 3 life unless that player sacrifices a nonland permanent of their choice or discards a card.",{1}{B}{R}
+Aegis Turtle,common,['U'],3,,{U}
+Aetherize,uncommon,['U'],2,Return all attacking creatures to their owner's hand.,{3}{U}
+Brineborn Cutthroat,uncommon,['U'],2,"Flash (You may cast this spell any time you could cast an instant.)
+Whenever you cast a spell during an opponent's turn, put a +1/+1 counter on this creature.",{1}{U}
+Essence Scatter,common,['U'],2,Counter target creature spell.,{1}{U}
+Extravagant Replication,rare,['U'],2,"At the beginning of your upkeep, create a token that's a copy of another target nonland permanent you control.",{4}{U}{U}
+Fleeting Distraction,common,['U'],4,"Target creature gets -1/-0 until end of turn.
+Draw a card.",{U}
+Imprisoned in the Moon,common,['U'],2,"Enchant creature, land, or planeswalker
+Enchanted permanent is a colorless land with ""{T}: Add {C}"" and loses all other card types and abilities.",{2}{U}
+Micromancer,uncommon,['U'],1,"When this creature enters, you may search your library for an instant or sorcery card with mana value 1, reveal it, put it into your hand, then shuffle.",{3}{U}
+Self-Reflection,uncommon,['U'],1,"Create a token that's a copy of target creature you control.
+Flashback {3}{U} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{4}{U}{U}
+Spectral Sailor,uncommon,['U'],2,"Flash (You may cast this spell any time you could cast an instant.)
+Flying
+{3}{U}: Draw a card.",{U}
+Think Twice,common,['U'],4,"Draw a card.
+Flashback {2}{U} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",{1}{U}
+Witness Protection,common,['U'],2,"Enchant creature
+Enchanted creature loses all abilities and is a green and white Citizen creature with base power and toughness 1/1 named Legitimate Businessperson. (It loses all other colors, card types, creature types, and names.)",{U}
+Bake into a Pie,common,['B'],3,"Destroy target creature. Create a Food token. (It's an artifact with ""{2}, {T}, Sacrifice this token: You gain 3 life."")",{2}{B}{B}
+Burglar Rat,common,['B'],4,"When this creature enters, each opponent discards a card.",{1}{B}
+Diregraf Ghoul,uncommon,['B'],4,This creature enters tapped.,{B}
+Exsanguinate,uncommon,['B'],2,Each opponent loses X life. You gain life equal to the life lost this way.,{X}{B}{B}
+"Liliana, Dreadhorde General",mythic,['B'],1,"Whenever a creature you control dies, draw a card.
+[+1]: Create a 2/2 black Zombie creature token.
+[−4]: Each player sacrifices two creatures of their choice.
+[−9]: Each opponent chooses a permanent they control of each permanent type and sacrifices the rest.",{4}{B}{B}
+Macabre Waltz,common,['B'],3,"Return up to two target creature cards from your graveyard to your hand, then discard a card.",{1}{B}
+Painful Quandary,rare,['B'],3,"Whenever an opponent casts a spell, that player loses 5 life unless they discard a card.",{3}{B}{B}
+Pilfer,common,['B'],3,Target opponent reveals their hand. You choose a nonland card from it. That player discards that card.,{1}{B}
+Reassembling Skeleton,uncommon,['B'],4,{1}{B}: Return this card from your graveyard to the battlefield tapped.,{1}{B}
+Rise of the Dark Realms,mythic,['B'],1,Put all creature cards from all graveyards onto the battlefield under your control.,{7}{B}{B}
+Rune-Scarred Demon,rare,['B'],2,"Flying
+When this creature enters, search your library for a card, put it into your hand, then shuffle.",{5}{B}{B}
+Stromkirk Bloodthief,uncommon,['B'],3,"At the beginning of your end step, if an opponent lost life this turn, put a +1/+1 counter on target Vampire you control.",{2}{B}
+Vampire Nighthawk,uncommon,['B'],4,"Flying
+Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
+Lifelink (Damage dealt by this creature also causes you to gain that much life.)",{1}{B}{B}
+Zombify,uncommon,['B'],4,Return target creature card from your graveyard to the battlefield.,{3}{B}
+Brazen Scourge,uncommon,['R'],1,Haste (This creature can attack and {T} as soon as it comes under your control.),{1}{R}{R}
+Burst Lightning,common,['R'],4,"Kicker {4} (You may pay an additional {4} as you cast this spell.)
+Burst Lightning deals 2 damage to any target. If this spell was kicked, it deals 4 damage instead.",{R}
+"Etali, Primal Storm",rare,['R'],1,"Whenever Etali attacks, exile the top card of each player's library, then you may cast any number of spells from among those cards without paying their mana costs.",{4}{R}{R}
+Fanatical Firebrand,common,['R'],4,"Haste (This creature can attack and {T} as soon as it comes under your control.)
+{T}, Sacrifice this creature: It deals 1 damage to any target.",{R}
+Firebrand Archer,common,['R'],4,"Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.",{1}{R}
+Firespitter Whelp,uncommon,['R'],3,"Flying
+Whenever you cast a noncreature or Dragon spell, this creature deals 1 damage to each opponent.",{2}{R}
+Flamewake Phoenix,rare,['R'],1,"Flying, haste
+This creature attacks each combat if able.
+Ferocious — At the beginning of combat on your turn, if you control a creature with power 4 or greater, you may pay {R}. If you do, return this card from your graveyard to the battlefield.",{1}{R}{R}
+Frenzied Goblin,uncommon,['R'],2,"Whenever this creature attacks, you may pay {R}. If you do, target creature can't block this turn.",{R}
+Goblin Surprise,common,['R'],3,"Choose one —
+• Creatures you control get +2/+0 until end of turn.
+• Create two 1/1 red Goblin creature tokens.",{2}{R}
+Heartfire Immolator,uncommon,['R'],3,"Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+{R}, Sacrifice this creature: It deals damage equal to its power to target creature or planeswalker.",{1}{R}
+Involuntary Employment,common,['R'],2,"Gain control of target creature until end of turn. Untap that creature. It gains haste until end of turn. Create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{3}{R}
+"Krenko, Mob Boss",rare,['R'],2,"{T}: Create X 1/1 red Goblin creature tokens, where X is the number of Goblins you control.",{2}{R}{R}
+Seismic Rupture,uncommon,['R'],3,Seismic Rupture deals 2 damage to each creature without flying.,{2}{R}
+Shivan Dragon,uncommon,['R'],1,"Flying
+{R}: This creature gets +1/+0 until end of turn.",{4}{R}{R}
+Slagstorm,rare,['R'],1,"Choose one —
+• Slagstorm deals 3 damage to each creature.
+• Slagstorm deals 3 damage to each player.",{1}{R}{R}
+Spitfire Lagac,common,['R'],2,"Landfall — Whenever a land you control enters, this creature deals 1 damage to each opponent.",{3}{R}
+Sure Strike,common,['R'],2,Target creature gets +3/+0 and gains first strike until end of turn. (It deals combat damage before creatures without first strike.),{1}{R}
+Thousand-Year Storm,rare,"['R', 'U']",1,"Whenever you cast an instant or sorcery spell, copy it for each other instant and sorcery spell you've cast before it this turn. You may choose new targets for the copies.",{4}{U}{R}
+Arcanis the Omnipotent,rare,['U'],1,"{T}: Draw three cards.
+{2}{U}{U}: Return Arcanis to its owner's hand.",{3}{U}{U}{U}
+Chart a Course,uncommon,['U'],3,Draw two cards. Then discard a card unless you attacked this turn.,{1}{U}
+Dive Down,common,['U'],3,Target creature you control gets +0/+3 and gains hexproof until end of turn. (It can't be the target of spells or abilities your opponents control.),{U}
+Fog Bank,uncommon,['U'],2,"Defender (This creature can't attack.)
+Flying
+Prevent all combat damage that would be dealt to and dealt by this creature.",{1}{U}
+Desecration Demon,rare,['B'],1,"Flying
+At the beginning of each combat, any opponent may sacrifice a creature of their choice. If a player does, tap this creature and put a +1/+1 counter on it.",{2}{B}{B}
+Midnight Reaper,rare,['B'],1,"Whenever a nontoken creature you control dies, this creature deals 1 damage to you and you draw a card.",{2}{B}
+Nullpriest of Oblivion,rare,['B'],1,"Kicker {3}{B} (You may pay an additional {3}{B} as you cast this spell.)
+Lifelink
+Menace (This creature can't be blocked except by two or more creatures.)
+When this creature enters, if it was kicked, return target creature card from your graveyard to the battlefield.",{1}{B}
+Sanguine Indulgence,common,['B'],1,"This spell costs {3} less to cast if you've gained 3 or more life this turn.
+Return up to two target creature cards from your graveyard to your hand.",{3}{B}
+Tribute to Hunger,uncommon,['B'],2,Target opponent sacrifices a creature of their choice. You gain life equal to that creature's toughness.,{2}{B}
+Vampiric Rites,uncommon,['B'],2,"{1}{B}, Sacrifice a creature: You gain 1 life and draw a card.",{B}
+Crash Through,common,['R'],3,"Creatures you control gain trample until end of turn. (Each of those creature can deal excess combat damage to the player or planeswalker it's attacking.)
+Draw a card.",{R}
+Ghitu Lavarunner,common,['R'],4,"As long as there are two or more instant and/or sorcery cards in your graveyard, this creature gets +1/+0 and has haste. (It can attack and {T} as soon as it comes under your control.)",{R}
+Giant Cindermaw,uncommon,['R'],2,"Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)
+Players can't gain life.",{2}{R}
+Enigma Drake,uncommon,"['R', 'U']",2,"Flying
+Enigma Drake's power is equal to the number of instant and sorcery cards in your graveyard.",{1}{U}{R}
+"Garna, Bloodfist of Keld",uncommon,"['B', 'R']",2,"Whenever another creature you control dies, draw a card if it was attacking. Otherwise, Garna deals 1 damage to each opponent.",{1}{B}{R}{R}
+Immersturm Predator,rare,"['B', 'R']",1,"Flying
+Whenever this creature becomes tapped, exile up to one target card from a graveyard and put a +1/+1 counter on this creature.
+Sacrifice another creature: This creature gains indestructible until end of turn. Tap it.",{2}{B}{R}
+"Ovika, Enigma Goliath",rare,"['R', 'U']",1,"Flying
+Ward—{3}, Pay 3 life.
+Whenever you cast a noncreature spell, create X 1/1 red Phyrexian Goblin creature tokens, where X is the mana value of that spell. They gain haste until end of turn.",{5}{U}{R}
+Dimir Guildgate,common,"['B', 'U']",4,"This land enters tapped.
+{T}: Add {U} or {B}.",
+Izzet Guildgate,common,"['R', 'U']",4,"This land enters tapped.
+{T}: Add {U} or {R}.",
+Rakdos Guildgate,common,"['B', 'R']",1,"This land enters tapped.
+{T}: Add {B} or {R}.",
+Temple of Deceit,rare,"['B', 'U']",1,"This land enters tapped.
+When this land enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+{T}: Add {U} or {B}.",
+Temple of Epiphany,rare,"['R', 'U']",1,"This land enters tapped.
+When this land enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+{T}: Add {U} or {R}.",
+Temple of Malice,rare,"['B', 'R']",1,"This land enters tapped.
+When this land enters, scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+{T}: Add {B} or {R}.",
+Rite of Replication,rare,['U'],2,"Kicker {5} (You may pay an additional {5} as you cast this spell.)
+Create a token that's a copy of target creature. If this spell was kicked, create five of those tokens instead.",{2}{U}{U}
+Massacre Wurm,mythic,['B'],1,"When this creature enters, creatures your opponents control get -2/-2 until end of turn.
+Whenever a creature an opponent controls dies, that player loses 2 life.",{3}{B}{B}{B}
+Pool Resources,uncommon,['U'],1,"Gift a tapped Fish
+Draw two cards. If the gift was promised, seek two nonland cards instead.",{2}{U}
+Tasteful Offering,uncommon,['B'],1,"You get a two-time boon with ""Whenever you sacrifice one or more permanents, seek a nonland card."" Create a Food token.",{1}{B}
+Cindercone Smite,uncommon,['R'],1,Cindercone Smite deals 2 damage to target creature. Then create a Treasure token if you weren't the starting player.,{R}
+Sanguine Soothsayer,rare,['B'],1,"Flying, lifelink
+Whenever Sanguine Soothsayer attacks, conjure a card named Sanguine Bond into the top fifteen cards of your library at random. It perpetually gains ""You may pay {0} rather than pay this spell's mana cost"" and ""When this permanent enters, draw a card.""",{1}{B}
+Aether Syphon,uncommon,['U'],1,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+{2}, {T}: Draw a card.
+Max speed — Whenever you draw a card, each opponent mills two cards. (Each opponent puts the top two cards of their library into their graveyard.)",{1}{U}{U}
+Bounce Off,common,['U'],2,Return target creature or Vehicle to its owner's hand.,{U}
+"Caelorna, Coral Tyrant",uncommon,['U'],1,,{1}{U}
+Diversion Unit,uncommon,['U'],1,"Flying
+{U}, Sacrifice this creature: Counter target instant or sorcery spell unless its controller pays {3}.",{1}{U}
+Flood the Engine,common,['U'],4,"Enchant creature or Vehicle
+When this Aura enters, tap enchanted permanent.
+Enchanted permanent loses all abilities and doesn't untap during its controller's untap step.",{2}{U}
+Gearseeker Serpent,common,['U'],2,"Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)
+{5}{U}: This creature can't be blocked this turn.",{5}{U}{U}
+Glitch Ghost Surveyor,common,['U'],2,"Flying
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+Max speed — {3}, Exile this card from your graveyard: Draw a card.",{2}{U}
+Guidelight Optimizer,common,['U'],4,{T}: Add {U}. Spend this mana only to cast an artifact spell or activate an ability.,{1}{U}
+Howler's Heavy,common,['U'],2,"Cycling {1}{U} ({1}{U}, Discard this card: Draw a card.)
+When you cycle this card, target creature or Vehicle an opponent controls gets -3/-0 until end of turn.",{3}{U}
+Hulldrifter,common,['U'],3,"Flying
+When this Vehicle enters, draw two cards.
+Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)",{3}{U}{U}
+Keen Buccaneer,common,['U'],4,"Vigilance
+Exhaust — {1}{U}: Draw a card, then discard a card. Put a +1/+1 counter on this creature. (Activate each exhaust ability only once.)",{2}{U}
+Memory Guardian,uncommon,['U'],1,"Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)
+Flying",{4}{U}
+Midnight Mangler,common,['U'],2,"During turns other than yours, this Vehicle is an artifact creature.
+Crew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)",{1}{U}
+Mindspring Merfolk,rare,['U'],1,"Exhaust — {X}{U}{U}, {T}: Draw X cards. Put a +1/+1 counter on each Merfolk creature you control. (Activate each exhaust ability only once.)",{U}
+"Mu Yanling, Wind Rider",mythic,['U'],4,"When this creature enters, create a 3/2 colorless Vehicle artifact token with crew 1.
+Vehicles you control have flying.
+Whenever one or more creatures you control with flying deal combat damage to a player, draw a card.",{2}{U}{U}
+Nimble Thopterist,common,['U'],4,"When this creature enters, create a 1/1 colorless Thopter artifact creature token with flying.",{3}{U}
+Rangers' Refueler,uncommon,['U'],1,"Whenever you activate an exhaust ability, draw a card.
+Exhaust — {4}: This Vehicle becomes an artifact creature. Put a +1/+1 counter on it. (Activate each exhaust ability only once.)
+Crew 2",{1}{U}
+Repurposing Bay,rare,['U'],1,"{2}, {T}, Sacrifice another artifact: Search your library for an artifact card with mana value equal to 1 plus the sacrificed artifact's mana value, put that card onto the battlefield, then shuffle. Activate only as a sorcery.",{2}{U}
+Scrounging Skyray,uncommon,['U'],2,"Flying
+Whenever you discard one or more cards, put that many +1/+1 counters on this creature.
+Cycling {2} ({2}, Discard this card: Draw a card.)",{1}{U}
+Skystreak Engineer,common,['U'],4,"Flying
+Exhaust — {4}{U}: Put two +1/+1 counters on this creature. (Activate each exhaust ability only once.)",{1}{U}
+Spectral Interference,common,['U'],1,Counter target artifact or creature spell unless its controller pays {4}.,{1}{U}
+Spikeshell Harrier,uncommon,['U'],1,"When this creature enters, return target creature or Vehicle an opponent controls to its owner's hand. If that opponent's speed is greater than each other player's speed, reduce that opponent's speed by 1. This effect can't reduce their speed below 1.",{4}{U}
+Stall Out,common,['U'],3,"Tap target creature or Vehicle, then put three stun counters on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+Cycling {2} ({2}, Discard this card: Draw a card.)",{1}{U}
+Stock Up,uncommon,['U'],2,Look at the top five cards of your library. Put two of them into your hand and the rest on the bottom of your library in any order.,{2}{U}
+Thopter Fabricator,rare,['U'],1,"Flying
+Whenever you draw your second card each turn, create a 1/1 colorless Thopter artifact creature token with flying.
+Crew 2",{2}{U}
+Trade the Helm,uncommon,['U'],1,"Exchange control of target artifact or creature you control and target artifact or creature an opponent controls.
+Cycling {2} ({2}, Discard this card: Draw a card.)",{4}{U}
+Unstoppable Plan,rare,['U'],1,"At the beginning of your end step, untap all nonland permanents you control.",{2}{U}
+Back on Track,uncommon,['B'],2,"Return target creature or Vehicle card from your graveyard to the battlefield. Create a 1/1 colorless Pilot creature token with ""This token saddles Mounts and crews Vehicles as though its power were 2 greater.""",{4}{B}
+Chitin Gravestalker,common,['B'],4,"This spell costs {1} less to cast for each artifact and/or creature card in your graveyard.
+Cycling {2} ({2}, Discard this card: Draw a card.)",{5}{B}
+Cryptcaller Chariot,rare,['B'],1,"Menace
+Whenever you discard one or more cards, create that many tapped 2/2 black Zombie creature tokens.
+Crew 2",{3}{B}
+Deathless Pilot,common,['B'],1,"This creature saddles Mounts and crews Vehicles as though its power were 2 greater.
+{3}{B}: Return this card from your graveyard to your hand.",{1}{B}
+Demonic Junker,rare,['B'],2,"Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)
+When this Vehicle enters, for each player, destroy up to one target creature that player controls. If a creature you controlled was destroyed this way, put two +1/+1 counters on this Vehicle.
+Crew 2",{6}{B}
+Engine Rat,common,['B'],4,"Deathtouch
+{5}{B}: Each opponent loses 2 life.",{B}
+Gas Guzzler,rare,['B'],1,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+This creature enters tapped.
+Max speed — {B}, Sacrifice another creature or Vehicle: Draw a card.",{B}
+Gastal Raider,uncommon,['B'],3,"Start your engines!
+When this creature enters, target opponent reveals their hand. You choose an instant or sorcery card from it. That player discards that card.
+Max speed — This creature gets +1/+1 and has menace.",{2}{B}
+Grim Bauble,common,['B'],2,"When this artifact enters, target creature an opponent controls gets -2/-2 until end of turn.
+{2}{B}, {T}, Sacrifice this artifact: Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{B}
+Grim Javelineer,common,['B'],4,"Whenever you attack, target attacking creature gets +1/+0 until end of turn. When that creature dies this turn, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)",{2}{B}
+The Last Ride,mythic,['B'],1,"The Last Ride gets -X/-X, where X is your life total.
+{2}{B}, Pay 2 life: Draw a card.
+Crew 2",{B}
+Locust Spray,uncommon,['B'],1,"Target creature gets -1/-1 until end of turn.
+Cycling {B} ({B}, Discard this card: Draw a card.)",{B}
+Maximum Overdrive,common,['B'],3,Put a +1/+1 counter on target creature. It gains deathtouch and indestructible until end of turn.,{1}{B}
+Momentum Breaker,uncommon,['B'],1,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+When this enchantment enters, each opponent sacrifices a creature or Vehicle of their choice. Each opponent who can't discards a card.
+{2}, Sacrifice this enchantment: You gain life equal to your speed.",{1}{B}
+Mutant Surveyor,common,['B'],2,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+{2}: This creature gets +1/+1 until end of turn.
+Max speed — {3}, Exile this card from your graveyard: Draw a card.",{2}{B}
+Pactdoll Terror,common,['B'],4,"Whenever this creature or another artifact you control enters, each opponent loses 1 life and you gain 1 life.",{3}{B}
+Quag Feast,rare,['B'],1,"Choose target creature, planeswalker, or Vehicle. Mill two cards, then destroy the chosen permanent if its mana value is less than or equal to the number of cards in your graveyard.",{1}{B}
+Ripclaw Wrangler,common,['B'],2,"When this Vehicle enters, each opponent discards a card.
+Crew 2 (Tap any number of creatures you control with total power 2 or more: This Vehicle becomes an artifact creature until end of turn.)",{3}{B}
+Risky Shortcut,common,['B'],4,Draw two cards. Each player loses 2 life.,{2}{B}
+The Speed Demon,mythic,['B'],1,"Flying, trample
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+At the beginning of your end step, you draw X cards and lose X life, where X is your speed.",{3}{B}{B}
+Spin Out,common,['B'],4,Destroy target creature or Vehicle.,{1}{B}{B}
+Streaking Oilgorger,common,['B'],3,"Flying, haste
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+Max speed — This creature has lifelink.",{4}{B}
+Syphon Fuel,common,['B'],4,Target creature gets -6/-6 until end of turn. You gain 2 life.,{4}{B}
+Wickerfolk Indomitable,uncommon,['B'],1,You may cast this card from your graveyard by paying 2 life and sacrificing an artifact or creature in addition to paying its other costs.,{3}{B}
+Wreckage Wickerfolk,common,['B'],4,"Flying
+When this creature enters, surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{1}{B}
+Wretched Doll,uncommon,['B'],2,"{B}, {T}: Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)",{1}{B}
+Adrenaline Jockey,uncommon,['R'],1,"Whenever a player casts a spell, if it's not their turn, this creature deals 4 damage to them.
+Whenever you activate an exhaust ability, put a +1/+1 counter on this creature.",{2}{R}
+Burner Rocket,common,['R'],3,"Flash
+When this Vehicle enters, target creature you control gets +2/+0 and gains trample until end of turn.
+Crew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)",{1}{R}
+Burnout Bashtronaut,rare,['R'],1,"Menace
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+{2}: This creature gets +1/+0 until end of turn.
+Max speed — This creature has double strike.",{R}
+"Chandra, Spark Hunter",mythic,['R'],1,"At the beginning of combat on your turn, choose up to one target Vehicle you control. Until end of turn, it becomes an artifact creature and gains haste.
+[+2]: You may sacrifice an artifact or discard a card. If you do, draw a card.
+[0]: Create a 3/2 colorless Vehicle artifact token with crew 1.
+[−7]: You get an emblem with ""Whenever an artifact you control enters, this emblem deals 3 damage to any target.""",{3}{R}
+Clamorous Ironclad,common,['R'],3,"Menace (This creature can't be blocked except by two or more creatures.)
+Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)
+Cycling {R} ({R}, Discard this card: Draw a card.)",{3}{R}
+Crash and Burn,common,['R'],2,"Choose one —
+• Destroy target Vehicle.
+• Crash and Burn deals 6 damage to target creature or planeswalker.",{3}{R}
+"Daretti, Rocketeer Engineer",rare,['R'],1,"Daretti's power is equal to the greatest mana value among artifacts you control.
+Whenever Daretti enters or attacks, choose target artifact card in your graveyard. You may sacrifice an artifact. If you do, return the chosen card to the battlefield.",{4}{R}
+Dracosaur Auxiliary,uncommon,['R'],4,"Flying, haste
+Whenever this creature attacks while saddled, it deals 2 damage to any target.
+Saddle 3 (Tap any number of other creatures you control with total power 3 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)",{4}{R}{R}
+Dynamite Diver,common,['R'],2,"This creature saddles Mounts and crews Vehicles as though its power were 2 greater.
+When this creature dies, it deals 1 damage to any target.",{R}
+Endrider Catalyzer,common,['R'],4,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+Max speed — {T}: Add {R}{R}.",{1}{R}
+Full Throttle,rare,['R'],2,"After this main phase, there are two additional combat phases.
+At the beginning of each combat this turn, untap all creatures that attacked this turn.",{4}{R}{R}
+Gastal Blockbuster,common,['R'],4,"When this creature enters, you may sacrifice a creature or Vehicle. When you do, destroy target artifact an opponent controls.",{2}{R}
+Gilded Ghoda,common,['R'],4,"Whenever this creature attacks while saddled, create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")
+Saddle 1 (Tap any number of other creatures you control with total power 1 or more: This Mount becomes saddled until end of turn. Saddle only as a sorcery.)",{1}{R}
+Goblin Surveyor,common,['R'],1,"Trample
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+Max speed — {3}, Exile this card from your graveyard: Draw a card.",{2}{R}
+"Hazoret, Godseeker",mythic,['R'],1,"Indestructible, haste
+Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+{1}, {T}: Target creature with power 2 or less can't be blocked this turn.
+Hazoret can't attack or block unless you have max speed.",{1}{R}
+Kickoff Celebrations,common,['R'],1,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+When this enchantment enters, you may discard a card. If you do, draw two cards.
+Max speed — Sacrifice this enchantment: Creatures and Vehicles you control gain haste until end of turn.",{1}{R}
+Magmakin Artillerist,common,['R'],1,"Whenever you discard one or more cards, this creature deals that much damage to each opponent.
+Cycling {1}{R} ({1}{R}, Discard this card: Draw a card.)
+When you cycle this card, it deals 1 damage to each opponent.",{2}{R}
+Marauding Mako,uncommon,['R'],3,"Whenever you discard one or more cards, put that many +1/+1 counters on this creature.
+Cycling {2} ({2}, Discard this card: Draw a card.)",{R}
+Outpace Oblivion,uncommon,['R'],2,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+When this enchantment enters, it deals 5 damage to up to one target creature or planeswalker.
+{2}, Sacrifice this enchantment: It deals 2 damage to each player who doesn't have max speed.",{2}{R}
+Pacesetter Paragon,uncommon,['R'],2,Exhaust — {2}{R}: Put a +1/+1 counter on this creature. It gains double strike until end of turn. (Activate each exhaust ability only once.),{2}{R}
+Pedal to the Metal,common,['R'],4,Target creature gets +X/+0 and gains first strike until end of turn.,{X}{R}
+Prowcatcher Specialist,common,['R'],2,"Haste
+Exhaust — {3}{R}: Put two +1/+1 counters on this creature. (Activate each exhaust ability only once.)",{1}{R}
+Push the Limit,uncommon,['R'],1,"Return all Mount and Vehicle cards from your graveyard to the battlefield. Sacrifice them at the beginning of the next end step.
+Vehicles you control become artifact creatures until end of turn. Creatures you control gain haste until end of turn.",{5}{R}{R}
+Reckless Velocitaur,uncommon,['R'],1,"Whenever this creature saddles a Mount or crews a Vehicle during your main phase, that Mount or Vehicle gets +2/+0 and gains trample until end of turn.",{3}{R}
+Skycrash,uncommon,['R'],1,"Destroy target artifact.
+Cycling {R} ({R}, Discard this card: Draw a card.)",{1}{R}
+Spire Mechcycle,uncommon,['R'],1,"Haste
+Exhaust — Tap another untapped Mount or Vehicle you control: This Vehicle becomes an artifact creature. Put a +1/+1 counter on it for each Mount and/or Vehicle you control other than this Vehicle. (Activate each exhaust ability only once.)
+Crew 2",{4}{R}
+Thunderhead Gunner,common,['R'],3,"Reach
+Discard a card: Draw a card. Activate only as a sorcery and only once each turn.",{4}{R}
+Apocalypse Runner,uncommon,"['B', 'R']",2,"{T}: Target creature you control with power 2 or less gains lifelink until end of turn and can't be blocked this turn.
+Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)",{2}{B}{R}
+Boosted Sloop,uncommon,"['R', 'U']",2,"Menace
+Whenever you attack, draw a card, then discard a card.
+Crew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)",{1}{U}{R}
+Broadside Barrage,uncommon,"['R', 'U']",1,"Broadside Barrage deals 5 damage to target creature or planeswalker. Draw a card, then discard a card.",{1}{U}{R}
+"Captain Howler, Sea Scourge",rare,"['R', 'U']",1,"Ward—{2}, Pay 2 life.
+Whenever you discard one or more cards, target creature gets +2/+0 until end of turn for each card discarded this way. Whenever that creature deals combat damage to a player this turn, you draw a card.",{2}{U}{R}
+Coalstoke Gearhulk,mythic,"['B', 'R']",4,"Menace, deathtouch
+When this creature enters, put target creature card with mana value 4 or less from a graveyard onto the battlefield under your control with a finality counter on it. That creature gains menace, deathtouch, and haste. At the beginning of your next end step, exile that creature.",{1}{B}{B}{R}{R}
+"Far Fortune, End Boss",rare,"['B', 'R']",1,"Start your engines! (If you have no speed, it starts at 1. It increases once on each of your turns when an opponent loses life. Max speed is 4.)
+Whenever you attack, Far Fortune deals 1 damage to each opponent.
+Max speed — If a source you control would deal damage to an opponent or a permanent an opponent controls, it deals that much damage plus 1 instead.",{2}{B}{R}
+Fearless Swashbuckler,rare,"['R', 'U']",2,"Haste
+Vehicles you control have haste.
+Whenever you attack, if a Pirate and a Vehicle attacked this combat, draw three cards, then discard two cards.",{1}{U}{R}
+Haunt the Network,uncommon,"['B', 'U']",1,"Choose target opponent. Create two 1/1 colorless Thopter artifact creature tokens with flying. Then the chosen player loses X life and you gain X life, where X is the number of artifacts you control.",{3}{U}{B}
+Haunted Hellride,uncommon,"['B', 'U']",1,"Whenever you attack, target creature you control gets +1/+0 and gains deathtouch until end of turn. Untap it.
+Crew 1 (Tap any number of creatures you control with total power 1 or more: This Vehicle becomes an artifact creature until end of turn.)",{1}{U}{B}
+Foul Roads,uncommon,['B'],4,"This land enters tapped unless you control a Mount or Vehicle.
+{T}: Add {B}.
+{1}{B}, {T}, Sacrifice this land: Create a 1/1 colorless Pilot creature token with ""This token saddles Mounts and crews Vehicles as though its power were 2 greater."" Activate only as a sorcery.",
+Reef Roads,uncommon,['U'],3,"This land enters tapped unless you control a Mount or Vehicle.
+{T}: Add {U}.
+{1}{U}, {T}, Sacrifice this land: Create a 1/1 colorless Pilot creature token with ""This token saddles Mounts and crews Vehicles as though its power were 2 greater."" Activate only as a sorcery.",
+Riverpyre Verge,rare,"['R', 'U']",2,"{T}: Add {R}.
+{T}: Add {U}. Activate only if you control an Island or a Mountain.",
+Rocky Roads,uncommon,['R'],3,"This land enters tapped unless you control a Mount or Vehicle.
+{T}: Add {R}.
+{1}{R}, {T}, Sacrifice this land: Create a 1/1 colorless Pilot creature token with ""This token saddles Mounts and crews Vehicles as though its power were 2 greater."" Activate only as a sorcery.",
+Housemeld,uncommon,['U'],1,Exile target creature. The exiled card perpetually becomes an enchantment. Then put it onto the battlefield under your control. (It loses all other card types.),{2}{U}{U}
+Replicating Terror,uncommon,['B'],1,"Each opponent sacrifices a nontoken creature. For each creature sacrificed this way, conjure a duplicate of it into your graveyard.",{1}{B}
+Eager Flameguide,uncommon,['R'],2,"When Eager Flameguide enters, add {C}{C}{C}. Spend this mana only to cast creature spells.
+When Eager Flameguide dies, exile the top two cards of your library. Until the end of your next turn, you may cast creature spells from among the exiled cards.",{2}{R}
+Enduring Friendship,rare,"['R', 'U']",1,"Double team
+Whenever you cast an instant or sorcery spell, creatures you control that are Otters and/or enchantments get +1/+1 until end of turn.
+When Enduring Friendship dies, if it was a creature, return it to the battlefield under its owner's control. It's an enchantment. (It's not a creature.)",{U}{R}
+Gilded Ambusher,rare,"['B', 'R']",1,"Whenever Gilded Ambusher attacks, you may sacrifice another nonland permanent. When you do, each opponent exiles a nonland, nontoken permanent they control and a random nonland card from their library, then Gilded Ambusher deals damage to them equal to the total mana value of the cards exiled this way.",{1}{B}{R}
+Agent of Kotis,common,['U'],2,"Renew — {3}{U}, Exile this card from your graveyard: Put two +1/+1 counters on target creature. Activate only as a sorcery.",{1}{U}
+Ambling Stormshell,rare,['U'],2,"Ward {2}
+Whenever this creature attacks, put three stun counters on it and draw three cards. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+Whenever you cast a Turtle spell, untap this creature.",{3}{U}{U}
+Constrictor Sage,uncommon,['U'],2,"When this creature enters, tap target creature an opponent controls and put a stun counter on it. (If a permanent with a stun counter would become untapped, remove one from it instead.)
+Renew — {2}{U}, Exile this card from your graveyard: Tap target creature an opponent controls and put a stun counter on it. Activate only as a sorcery.",{4}{U}
+Dispelling Exhale,common,['U'],2,"As an additional cost to cast this spell, you may behold a Dragon. (You may choose a Dragon you control or reveal a Dragon card from your hand.)
+Counter target spell unless its controller pays {2}. If a Dragon was beheld, counter that spell unless its controller pays {4} instead.",{1}{U}
+Dragonstorm Forecaster,uncommon,['U'],2,"{2}, {T}: Search your library for a card named Dragonstorm Globe or Boulderborn Dragon, reveal it, put it into your hand, then shuffle.",{U}
+Essence Anchor,uncommon,['U'],1,"At the beginning of your upkeep, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)
+{T}: Create a 2/2 black Zombie Druid creature token. Activate only during your turn and only if a card left your graveyard this turn.",{2}{U}
+Focus the Mind,common,['U'],3,"This spell costs {2} less to cast if you've cast another spell this turn.
+Draw three cards, then discard a card.",{4}{U}
+Fresh Start,uncommon,['U'],2,"Flash
+Enchant creature
+Enchanted creature gets -5/-0 and loses all abilities.",{1}{U}
+Highspire Bell-Ringer,common,['U'],1,"Flying
+The second spell you cast each turn costs {1} less to cast.",{2}{U}
+Humbling Elder,common,['U'],3,"Flash
+When this creature enters, target creature an opponent controls gets -2/-0 until end of turn.",{U}
+Iceridge Serpent,common,['U'],2,"When this creature enters, return target creature an opponent controls to its owner's hand.",{4}{U}
+Kishla Trawlers,uncommon,['U'],2,"When this creature enters, you may exile a creature card from your graveyard. When you do, return target instant or sorcery card from your graveyard to your hand.",{2}{U}
+Naga Fleshcrafter,rare,['U'],2,"You may have this creature enter as a copy of any creature on the battlefield.
+Renew — {2}{U}, Exile this card from your graveyard: Put a +1/+1 counter on target nonlegendary creature you control. Each other creature you control becomes a copy of that creature until end of turn. Activate only as a sorcery.",{3}{U}
+Ringing Strike Mastery,common,['U'],4,"Enchant creature
+When this Aura enters, tap enchanted creature.
+Enchanted creature doesn't untap during its controller's untap step.
+Enchanted creature has ""{5}: Untap this creature.""",{U}
+Riverwalk Technique,common,['U'],2,"Choose one —
+• The owner of target nonland permanent puts it on their choice of the top or bottom of their library.
+• Counter target noncreature spell.",{3}{U}
+Roiling Dragonstorm,uncommon,['U'],1,"When this enchantment enters, draw two cards, then discard a card.
+When a Dragon you control enters, return this enchantment to its owner's hand.",{1}{U}
+Sibsig Appraiser,common,['U'],4,"When this creature enters, look at the top two cards of your library. Put one of them into your hand and the other into your graveyard.",{2}{U}
+Snowmelt Stag,common,['U'],4,"Vigilance
+During your turn, this creature has base power and toughness 5/2.
+{5}{U}{U}: This creature can't be blocked this turn.",{3}{U}
+Spectral Denial,uncommon,['U'],2,"This spell costs {1} less to cast for each creature you control with power 4 or greater.
+Counter target spell unless its controller pays {X}.",{X}{U}
+Stillness in Motion,rare,['U'],1,"At the beginning of your upkeep, mill three cards. Then if your library has no cards in it, exile this enchantment and put five cards from your graveyard on top of your library in any order.",{1}{U}
+"Taigam, Master Opportunist",mythic,['U'],2,"Flurry — Whenever you cast your second spell each turn, copy it, then exile the spell you cast with four time counters on it. If it doesn't have suspend, it gains suspend. (At the beginning of its owner's upkeep, they remove a time counter. When the last is removed, they may play it without paying its mana cost. If it's a creature, it has haste.)",{1}{U}
+Unending Whisper,common,['U'],4,"Draw a card.
+Harmonize {5}{U} (You may cast this card from your graveyard for its harmonize cost. You may tap a creature you control to reduce that cost by {X}, where X is its power. Then exile this spell.)",{U}
+Veteran Ice Climber,uncommon,['U'],2,"Vigilance
+This creature can't be blocked.
+Whenever this creature attacks, up to one target player mills cards equal to this creature's power. (They put that many cards from the top of their library into their graveyard.)",{1}{U}
+Wingblade Disciple,uncommon,['U'],1,"Flying
+Flurry — Whenever you cast your second spell each turn, create a 1/1 white Bird creature token with flying.",{2}{U}
+Wingspan Stride,common,['U'],4,"Enchant creature
+Enchanted creature gets +1/+1 and has flying.
+{2}{U}: Return this Aura to its owner's hand.",{U}
+Adorned Crocodile,common,['B'],1,"When this creature dies, create a 2/2 black Zombie Druid creature token.
+Renew — {B}, Exile this card from your graveyard: Put a +1/+1 counter on target creature. Activate only as a sorcery.",{4}{B}
+Aggressive Negotiations,common,['B'],3,Target opponent reveals their hand. You choose a nonland card from it and exile that card. Put a +1/+1 counter on up to one target creature you control.,{2}{B}
+Alchemist's Assistant,uncommon,['B'],1,"Lifelink
+Renew — {1}{B}, Exile this card from your graveyard: Put a lifelink counter on target creature. Activate only as a sorcery.",{1}{B}
+Alesha's Legacy,common,['B'],4,"Target creature you control gains deathtouch and indestructible until end of turn. (Damage and effects that say ""destroy"" don't destroy it.)",{1}{B}
+Avenger of the Fallen,rare,['B'],2,"Deathtouch
+Mobilize X, where X is the number of creature cards in your graveyard. (Whenever this creature attacks, create X tapped and attacking 1/1 red Warrior creature tokens. Sacrifice them at the beginning of the next end step.)",{2}{B}
+Caustic Exhale,common,['B'],4,"As an additional cost to cast this spell, behold a Dragon or pay {1}. (To behold a Dragon, choose a Dragon you control or reveal a Dragon card from your hand.)
+Target creature gets -3/-3 until end of turn.",{B}
+Corroding Dragonstorm,uncommon,['B'],1,"When this enchantment enters, each opponent loses 2 life and you gain 2 life. Surveil 2. (Look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)
+When a Dragon you control enters, return this enchantment to its owner's hand.",{1}{B}
+Cruel Truths,common,['B'],4,"Surveil 2, then draw two cards. You lose 2 life. (To surveil 2, look at the top two cards of your library, then put any number of them into your graveyard and the rest on top of your library in any order.)",{3}{B}
+Delta Bloodflies,common,['B'],3,"Flying
+Whenever this creature attacks, if you control a creature with a counter on it, each opponent loses 1 life.",{1}{B}
+Desperate Measures,uncommon,['B'],1,"Target creature gets +1/-1 until end of turn. When it dies under your control this turn, draw two cards.",{B}
+Dragon's Prey,common,['B'],4,"This spell costs {2} more to cast if it targets a Dragon.
+Destroy target creature.",{2}{B}
+Kin-Tree Nurturer,common,['B'],2,"Lifelink
+When this creature enters, it endures 1. (Put a +1/+1 counter on it or create a 1/1 white Spirit creature token.)",{2}{B}
+Nightblade Brigade,common,['B'],4,"Deathtouch
+Mobilize 1 (Whenever this creature attacks, create a tapped and attacking 1/1 red Warrior creature token. Sacrifice it at the beginning of the next end step.)
+When this creature enters, surveil 1. (Look at the top card of your library. You may put it into your graveyard.)",{2}{B}
+Salt Road Skirmish,uncommon,['B'],1,Destroy target creature. Create two 1/1 red Warrior creature tokens. They gain haste until end of turn. Sacrifice them at the beginning of the next end step.,{3}{B}
+Sandskitter Outrider,common,['B'],4,"Menace (This creature can't be blocked except by two or more creatures.)
+When this creature enters, it endures 2. (Put two +1/+1 counters on it or create a 2/2 white Spirit creature token.)",{3}{B}
+The Sibsig Ceremony,rare,['B'],1,"Creature spells you cast cost {2} less to cast.
+Whenever a creature you control enters, if you cast it, destroy that creature, then create a 2/2 black Zombie Druid creature token.",{B}{B}{B}
+Strategic Betrayal,uncommon,['B'],4,Target opponent exiles a creature they control and their graveyard.,{1}{B}
+Unburied Earthcarver,common,['B'],3,"{2}, Sacrifice another creature: Put a +1/+1 counter on this creature.",{1}{B}
+Unrooted Ancestor,uncommon,['B'],1,"Flash
+{1}, Sacrifice another creature: This creature gains indestructible until end of turn. Tap it. (Damage and effects that say ""destroy"" don't destroy it.)",{2}{B}
+Venerated Stormsinger,uncommon,['B'],1,"Mobilize 1 (Whenever this creature attacks, create a tapped and attacking 1/1 red Warrior creature token. Sacrifice it at the beginning of the next end step.)
+Whenever this creature or another creature you control dies, each opponent loses 1 life and you gain 1 life.",{3}{B}
+Worthy Cost,common,['B'],4,"As an additional cost to cast this spell, sacrifice a creature.
+Exile target creature or planeswalker.",{B}
+Yathan Tombguard,uncommon,['B'],1,"Menace (This creature can't be blocked except by two or more creatures.)
+Whenever a creature you control with a counter on it deals combat damage to a player, you draw a card and you lose 1 life.",{2}{B}
+Breaching Dragonstorm,uncommon,['R'],2,"When this enchantment enters, exile cards from the top of your library until you exile a nonland card. You may cast it without paying its mana cost if that spell's mana value is 8 or less. If you don't, put that card into your hand.
+When a Dragon you control enters, return this enchantment to its owner's hand.",{4}{R}
+Cori-Steel Cutter,rare,['R'],1,"Equipped creature gets +1/+1 and has trample and haste.
+Flurry — Whenever you cast your second spell each turn, create a 1/1 white Monk creature token with prowess. You may attach this Equipment to it. (Whenever you cast a noncreature spell, the token gets +1/+1 until end of turn.)
+Equip {1}{R}",{1}{R}
+Devoted Duelist,common,['R'],4,"Haste
+Flurry — Whenever you cast your second spell each turn, this creature deals 1 damage to each opponent.",{1}{R}
+Dracogenesis,mythic,['R'],2,You may cast Dragon spells without paying their mana costs.,{6}{R}{R}
+Fire-Rim Form,common,['R'],4,"Flash
+Enchant creature
+When this Aura enters, enchanted creature gains first strike until end of turn.
+Enchanted creature gets +2/+0.",{1}{R}
+Fleeting Effigy,uncommon,['R'],4,"Haste
+At the beginning of your end step, return this creature to its owner's hand. (Return it only if it's on the battlefield.)
+{2}{R}: This creature gets +2/+0 until end of turn.",{R}
+Magmatic Hellkite,rare,['R'],2,"Flying
+When this creature enters, destroy target nonbasic land an opponent controls. Its controller searches their library for a basic land card, puts it onto the battlefield tapped with a stun counter on it, then shuffles. (If a permanent with a stun counter would become untapped, remove one from it instead.)",{2}{R}{R}
+Meticulous Artisan,common,['R'],4,"Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)
+When this creature enters, create a Treasure token. (It's an artifact with ""{T}, Sacrifice this token: Add one mana of any color."")",{3}{R}
+Molten Exhale,common,['R'],2,"You may cast this spell as though it had flash if you behold a Dragon as an additional cost to cast it. (To behold a Dragon, choose a Dragon you control or reveal a Dragon card from your hand.)
+Molten Exhale deals 4 damage to target creature or planeswalker.",{1}{R}
+Overwhelming Surge,uncommon,['R'],1,"Choose one or both —
+• Overwhelming Surge deals 3 damage to target creature.
+• Destroy target noncreature artifact.",{2}{R}
+Rescue Leopard,common,['R'],3,"Whenever this creature becomes tapped, you may discard a card. If you do, draw a card.",{2}{R}
+Reverberating Summons,uncommon,['R'],1,"At the beginning of each combat, if you've cast two or more spells this turn, this enchantment becomes a 3/3 Monk creature with haste in addition to its other types until end of turn.
+{1}{R}, Discard your hand, Sacrifice this enchantment: Draw two cards.",{1}{R}
+Seize Opportunity,common,['R'],4,"Choose one —
+• Exile the top two cards of your library. Until the end of your next turn, you may play those cards.
+• Up to two target creatures each get +2/+1 until end of turn.",{2}{R}
+Stadium Headliner,rare,['R'],3,"Mobilize 1 (Whenever this creature attacks, create a tapped and attacking 1/1 red Warrior creature token. Sacrifice it at the beginning of the next end step.)
+{1}{R}, Sacrifice this creature: It deals damage equal to the number of creatures you control to target creature.",{R}
+Summit Intimidator,common,['R'],2,"Reach
+When this creature enters, target creature can't block this turn.",{3}{R}
+Twin Bolt,common,['R'],4,Twin Bolt deals 2 damage divided as you choose among one or two targets.,{1}{R}
+Underfoot Underdogs,common,['R'],4,"When this creature enters, create a 1/1 red Goblin creature token.
+{1}, {T}: Target creature you control with power 2 or less can't be blocked this turn.",{2}{R}
+Unsparing Boltcaster,uncommon,['R'],1,"When this creature enters, it deals 5 damage to target creature an opponent controls that was dealt damage this turn.",{2}{R}
+War Effort,uncommon,['R'],2,"Creatures you control get +1/+0.
+Whenever you attack, create a 1/1 red Warrior creature token that's tapped and attacking. Sacrifice it at the beginning of the next end step.",{3}{R}
+Wild Ride,common,['R'],3,"Target creature gets +3/+0 and gains haste until end of turn.
+Harmonize {4}{R} (You may cast this card from your graveyard for its harmonize cost. You may tap a creature you control to reduce that cost by {X}, where X is its power. Then exile this spell.)",{R}
+Zurgo's Vanguard,uncommon,['R'],1,"Mobilize 1 (Whenever this creature attacks, create a tapped and attacking 1/1 red Warrior creature token. Sacrifice it at the beginning of the next end step.)
+This creature's power is equal to the number of creatures you control.",{2}{R}
+Effortless Master,uncommon,"['R', 'U']",2,"Vigilance
+Menace (This creature can't be blocked except by two or more creatures.)
+This creature enters with two +1/+1 counters on it if you've cast two or more spells this turn.",{2}{U}{R}
+Frostcliff Siege,rare,"['R', 'U']",1,"As this enchantment enters, choose Jeskai or Temur.
+• Jeskai — Whenever one or more creatures you control deal combat damage to a player, draw a card.
+• Temur — Creatures you control get +1/+0 and have trample and haste.",{1}{U}{R}
+Glacial Dragonhunt,uncommon,"['R', 'U']",1,"Draw a card, then you may discard a card. When you discard a nonland card this way, Glacial Dragonhunt deals 3 damage to target creature.
+Harmonize {4}{U}{R} (You may cast this card from your graveyard for its harmonize cost. You may tap a creature you control to reduce that cost by {X}, where X is its power. Then exile this spell.)",{U}{R}
+Deviant Skytech,uncommon,['U'],1,"Start your engines!
+When this enchantment enters, create two 1/1 colorless Thopter artifact creature tokens with flying.
+Max speed — {1}{U}, Sacrifice this enchantment: Create two 1/1 colorless Thopter artifact creature tokens with flying.",{2}{U}
+Trackhand Trainer,rare,['U'],1,"{4}{U}: Draw a card.
+Exhaust — {U}: Conjure a card named Training Grounds onto the battlefield.",{U}
+Bail Out,uncommon,['B'],2,"Until end of turn, target creature you control gains ""When this creature dies, return it to the battlefield tapped under its owner's control. It deals 1 damage to each opponent.""
+Overload {2}{B}{B}",{B}
+Speedbrood Stalker,mythic,['B'],1,"Flying
+When this creature enters, choose target opponent. Secretly choose a creature or planeswalker that player controls. That player sacrifices a creature or planeswalker of their choice, then sacrifices the chosen permanent.",{3}{B}{B}
+Unforgiving Overtake,uncommon,['B'],1,"If you weren't the starting player, this spell costs {1} less to cast.
+Destroy target creature or Vehicle. Its controller loses 2 life.",{2}{B}
+Ureni's Counsel,uncommon,['U'],1,"This spell costs {1} less to cast for each Dragon card in your library.
+Seek a Dragon card.
+Harmonize {8}{R}{R}",{6}{U}
+Runeblade Raiser,uncommon,['B'],2,"This creature enters tapped.
+When this creature dies, return it to the battlefield under its owner's control. It perpetually loses this ability.",{B}
+Dragonblood Twins,uncommon,['R'],1,"Double team
+Flurry — Whenever you cast your second spell each turn, until end of turn, this creature has base power and toughness 4/4 and gains flying.",{1}{R}
+Illuminating Lash,uncommon,"['R', 'U']",1,"Illuminating Lash deals 3 damage to any target.
+You get a one-time boon with ""When you cast a noncreature spell, draw a card.""",{U}{R}
+Stormforged Armor,rare,['R'],1,"Equipped creature has ""Whenever this creature attacks, conjure a card named Ball Lightning onto the battlefield tapped and attacking.""
+Equip—Pay 3 life.",{1}{R}{R}
+Dalkovan Outrider,rare,"['B', 'R']",1,"Mobilize 2
+Whenever you sacrifice a permanent, the topmost creature card in your library perpetually gets +1/+1.",{1}{B}{R}
+Living Lectern,common,['U'],1,"{1}, Sacrifice this creature: Draw a card. Create a Sorcerer Role token attached to up to one other target creature you control. Activate only as a sorcery. (If you control another Role on it, put that one into the graveyard. Enchanted creature gets +1/+1 and has ""Whenever this creature attacks, scry 1."")",{1}{U}
+Misleading Motes,common,['U'],1,Target creature's owner puts it on their choice of the top or bottom of their library.,{3}{U}
+Long River's Pull,uncommon,['U'],1,"Gift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)
+Counter target creature spell. If the gift was promised, instead counter target spell.",{U}{U}
+Ravine Raider,common,['B'],1,"Menace (This creature can't be blocked except by two or more creatures.)
+{1}{B}: This creature gets +1/+1 until end of turn.",{B}
+Teapot Slinger,uncommon,['R'],1,"Menace
+Whenever you expend 4, this creature deals 2 damage to each opponent. (You expend 4 as you spend your fourth total mana to cast spells during a turn.)",{3}{R}
+Fear of Falling,uncommon,['U'],1,"Flying
+Whenever this creature attacks, target creature defending player controls gets -2/-0 and loses flying until your next turn.",{3}{U}{U}
+The Tale of Tamiyo,rare,['U'],1,"(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)
+I, II, III — Mill two cards. If two cards that share a card type were milled this way, draw a card and repeat this process.
+IV — Exile any number of target instant, sorcery, and/or Tamiyo planeswalker cards from your graveyard. Copy them. You may cast any number of the copies.",{2}{U}
+Fear of the Dark,common,['B'],1,"Whenever this creature attacks, if defending player controls no Glimmer creatures, it gains menace and deathtouch until end of turn. (A creature with menace can't be blocked except by two or more creatures.)",{4}{B}
+Enduring Courage,rare,['R'],1,"Whenever another creature you control enters, it gets +2/+0 and gains haste until end of turn.
+When Enduring Courage dies, if it was a creature, return it to the battlefield under its owner's control. It's an enchantment. (It's not a creature.)",{2}{R}{R}
+Hand That Feeds,common,['R'],1,"Delirium — Whenever this creature attacks while there are four or more card types among cards in your graveyard, it gets +2/+0 and gains menace until end of turn. (It can't be blocked except by two or more creatures.)",{1}{R}
+Trial of Agony,uncommon,['R'],1,"Choose two target creatures controlled by the same opponent. That player chooses one of those creatures. Trial of Agony deals 5 damage to that creature, and the other can't block this turn.",{R}
+Pulse Tracker,common,['B'],4,"Whenever this creature attacks, each opponent loses 1 life.",{B}
+Winternight Stories,rare,['U'],1,"Draw three cards. Then discard two cards unless you discard a creature card.
+Harmonize {4}{U} (You may cast this card from your graveyard for its harmonize cost. You may tap a creature you control to reduce that cost by {X}, where X is its power. Then exile this spell.)",{2}{U}
+Rot-Curse Rakshasa,mythic,['B'],1,"Trample
+Decayed (This creature can't block. When it attacks, sacrifice it at end of combat.)
+Renew — {X}{B}{B}, Exile this card from your graveyard: Put a decayed counter on each of X target creatures. Activate only as a sorcery.",{1}{B}
+Wail of War,uncommon,['B'],1,"Choose one —
+• Creatures target opponent controls get -1/-1 until end of turn.
+• Return up to two target creature cards from your graveyard to your hand.",{2}{B}
+Shock Brigade,common,['R'],4,"Menace (This creature can't be blocked except by two or more creatures.)
+Mobilize 1 (Whenever this creature attacks, create a tapped and attacking 1/1 red Warrior creature token. Sacrifice it at the beginning of the next end step.)",{1}{R}
+Draconic Fealty,uncommon,['B'],1,"As an additional cost to cast this spell, you may behold a Dragon.
+Target player discards a card with the greatest mana value among cards in their hand. If a Dragon was beheld, exile that player's graveyard.",{B}
+Dragonsoul Prodigy,rare,['R'],1,"Whenever you cast your first Omen spell each turn, conjure a duplicate of that card onto the battlefield. It gains haste. At the beginning of the next end step, shuffle it into its owner's library.",{2}{R}

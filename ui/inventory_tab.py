@@ -1,7 +1,7 @@
 # ui/inventory_tab.py
 
 import gradio as gr
-from logic.inventory_logic import build_inventory_list, add_card_to_deck
+from mtg_deckbuilder_ui.logic.inventory_logic import build_inventory_list, add_card_to_deck
 
 def inventory_tab(session_state):
     with gr.Tab("Inventory"):

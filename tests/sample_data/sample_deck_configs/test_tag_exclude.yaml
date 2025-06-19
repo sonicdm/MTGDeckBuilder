@@ -1,0 +1,27 @@
+deck:
+  name: "Tag Exclusion Test"
+  colors: ["R"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  legalities: ["modern"]
+
+categories:
+  creatures:
+    target: 20
+    priority_text: ["creature"]
+    exclude_keywords: ["defender", "lifelink"]
+    must_not_include_tags: ["pacifist", "defensive"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "damage"]
+    exclude_keywords: ["gain life"]
+    must_not_include_tags: ["healing"]
+
+card_constraints:
+  exclude_keywords: ["defender", "lifelink", "pacifist"]
+  must_not_include_tags: ["defensive", "healing"]
+
+mana_base:
+  land_count: 20 

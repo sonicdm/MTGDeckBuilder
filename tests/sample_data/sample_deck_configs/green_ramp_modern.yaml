@@ -1,0 +1,98 @@
+deck:
+  name: "Green Ramp"
+  colors: ["G"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["modern"]
+  owned_cards_only: false
+  mana_curve:
+    min: 1
+    max: 8
+    curve_shape: "bell"
+    curve_slope: "gentle"
+
+priority_cards:
+  - name: "Arbor Elf"
+    min_copies: 4
+  - name: "Utopia Sprawl"
+    min_copies: 4
+  - name: "Primeval Titan"
+    min_copies: 2
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 4
+    prefer: ["add {g}", "add one mana of any color", "enters untapped"]
+    avoid: ["enters tapped unless"]
+
+categories:
+  ramp:
+    target: 12
+    priority_text: ["add {g}", "add one mana", "search your library for a land"]
+
+  threats:
+    target: 12
+    preferred_keywords: ["trample", "hexproof"]
+    priority_text: ["when this creature enters", "when this creature attacks"]
+
+  removal:
+    target: 4
+    priority_text: ["destroy target", "fight target", "damage"]
+
+  card_draw:
+    target: 4
+    priority_text: ["draw a card", "look at the top", "reveal cards"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["defender"]
+
+scoring_rules:
+  keyword_abilities:
+    trample: 3
+    hexproof: 2
+    reach: 1
+    vigilance: 1
+
+  keyword_actions:
+    fight: 2
+    search: 2
+    exile: 1
+
+  text_matches:
+    "add {g}": 3
+    "add one mana": 2
+    "search your library for a land": 2
+    "when this creature enters": 1
+    "when this creature attacks": 1
+
+  type_bonus:
+    basic_types:
+      creature: 2
+      enchantment: 1
+    sub_types:
+      elf: 2
+      druid: 2
+      beast: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 6
+    penalty_per_point: 1
+
+  min_score_to_flag: 4
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["ramp", "threats", "removal"]
+  allow_less_than_target: false

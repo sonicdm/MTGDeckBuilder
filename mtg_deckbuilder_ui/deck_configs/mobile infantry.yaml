@@ -1,0 +1,106 @@
+deck:
+  name: "Mardu Mobilize \u2013 First In, Last Out"
+  colors:
+  - W
+  - B
+  - R
+  color_match_mode: subset
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities:
+  - alchemy
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: linear
+    curve_slope: down
+priority_cards:
+- name: Alesha's Legacy
+  min_copies: 4
+- name: Shock Brigade
+  min_copies: 4
+- name: Nightblade Brigade
+  min_copies: 4
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer:
+    - Add {R}
+    - Add {W}
+    - Add {B}
+    - fixing
+    avoid:
+    - Enters tapped unless
+  balance:
+    adjust_by_mana_symbols: true
+categories:
+  creatures:
+    target: 26
+    preferred_keywords:
+    - Mobilize
+    - Warrior
+    - Menace
+    priority_text:
+    - create a 1/1
+    - when this creature attacks
+    - /mobilize/i
+  removal:
+    target: 6
+    priority_text:
+    - destroy
+    - damage
+    - exile
+  card_draw:
+    target: 2
+    preferred_keywords:
+    - draw
+    - discard
+    priority_text:
+    - draw a card
+    - loot
+  buffs:
+    target: 4
+    priority_text:
+    - +X/+0
+    - until end of turn
+    - creatures you control get
+  utility:
+    target: 2
+    priority_text:
+    - treasure
+    - scry
+    - indestructible
+card_constraints:
+  rarity_boost:
+    common: 0
+    uncommon: 1
+    rare: 2
+    mythic: 1
+  exclude_keywords:
+  - defender
+  - hexproof
+scoring_rules:
+  priority_text:
+    Mobilize: 3
+    create a 1/1: 2
+    haste: 1
+    whenever this creature attacks: 2
+    indestructible: 1
+    /warrior/i: 2
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+  min_score_to_flag: 6
+fallback_strategy:
+  fill_with_any: true
+  fill_priority:
+  - creatures
+  - removal
+  - buffs
+  allow_less_than_target: false

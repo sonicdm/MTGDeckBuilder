@@ -1,5 +1,15 @@
+# mtg_deckbuilder_ui/tabs/settings_tab.py
+
+"""
+settings_tab.py
+
+Provides the settings tab interface for the MTG Deckbuilder application.
+This module defines the UI components and layout for application settings.
+"""
+
 import gradio as gr
 from mtg_deckbuilder_ui.app_config import app_config
+
 
 def settings_tab():
     with gr.Blocks() as tab:
@@ -9,10 +19,11 @@ def settings_tab():
         # --- UI Section: Add auto_load_collection toggle ---
         if not config.has_section("UI"):
             config.add_section("UI")
-        auto_load_collection_val = config.get("UI", "auto_load_collection", fallback="False").lower() == "true"
+        auto_load_collection_val = (
+            config.get("UI", "auto_load_collection", fallback="False").lower() == "true"
+        )
         auto_load_collection = gr.Checkbox(
-            label="Auto-load Collection on Tab Open",
-            value=auto_load_collection_val
+            label="Auto-load Collection on Tab Open", value=auto_load_collection_val
         )
         input_widgets[("UI", "auto_load_collection")] = auto_load_collection
         # --- Render all other config fields ---
@@ -25,13 +36,11 @@ def settings_tab():
                     val_lower = value.lower()
                     if val_lower in ["true", "false"]:
                         input_widgets[(section, key)] = gr.Checkbox(
-                            label=key,
-                            value=val_lower == "true"
+                            label=key, value=val_lower == "true"
                         )
                     else:
                         input_widgets[(section, key)] = gr.Textbox(
-                            label=key,
-                            value=value
+                            label=key, value=value
                         )
         save_btn = gr.Button("Save Settings")
         status = gr.Markdown("")
@@ -47,6 +56,7 @@ def settings_tab():
                 idx += 1
             return "Settings saved!"
 
-        save_btn.click(save_settings, inputs=list(input_widgets.values()), outputs=status)
+        save_btn.click(
+            save_settings, inputs=list(input_widgets.values()), outputs=status
+        )
     return tab
-

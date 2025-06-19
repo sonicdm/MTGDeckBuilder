@@ -63,3 +63,39 @@ def test_from_repo():
     with pytest.raises(ValueError):
         Deck.from_repo(DummyRepo([]))
 
+def test_deck_json_serialization(basic_deck):
+    # Test serialization
+    deck_json = basic_deck.as_json()
+    
+    # Verify basic deck properties
+    assert deck_json["name"] == "Test Deck"
+    assert len(deck_json["cards"]) == 3
+    
+    # Verify card data is preserved
+    bolt = deck_json["cards"]["Bolt"]
+    assert bolt["colors"] == ["R"]
+    assert bolt["converted_mana_cost"] == 1
+    assert bolt["type"] == "Instant"
+    
+    bear = deck_json["cards"]["Bear"]
+    assert bear["colors"] == ["G"]
+    assert bear["converted_mana_cost"] == 2
+    assert bear["power"] == "2"
+    assert bear["toughness"] == "2"
+    assert bear["type"] == "Creature"
+    
+    angel = deck_json["cards"]["Angel"]
+    assert angel["colors"] == ["W"]
+    assert angel["converted_mana_cost"] == 5
+    assert angel["power"] == "4"
+    assert angel["toughness"] == "4"
+    assert angel["type"] == "Creature"
+    
+    # Verify deck stats are included
+    assert "stats" in deck_json
+    stats = deck_json["stats"]
+    assert "average_mana_value" in stats
+    assert "average_power" in stats
+    assert "average_toughness" in stats
+    assert "color_identity" in stats
+

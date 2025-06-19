@@ -1,311 +1,666 @@
-import os
-from typing import Dict, Any, Generator
-from unittest.mock import MagicMock
 import pytest
+import logging
+from unittest.mock import MagicMock, patch
+from mtg_deck_builder.yaml_builder import yaml_deckbuilder
+from mtg_deck_builder.yaml_builder.helpers import (
+    _select_priority_cards,
+    _select_special_lands,
+    _distribute_basic_lands,
+    _fill_categories,
+    _fill_with_any,
+    _prune_lowest_scoring,
+    score_card,
+    generate_target_curve
+)
+from mtg_deck_builder.deck_config.deck_config import DeckConfig, DeckMeta
+from tests.fixtures import DummyCard, DummyInventoryRepo
+import os
 
-from mtg_deck_builder.db.bootstrap import bootstrap, bootstrap_inventory
-from mtg_deck_builder.db.repository import CardRepository, InventoryRepository, InventoryItemDB
-from mtg_deck_builder.db import get_session
-from mtg_deck_builder.deck_config.deck_config import DeckConfig
-from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_config
-from .helpers import get_sample_data_path
+# Mapping of test names to sample YAML file paths
+SAMPLE_YAML_PATHS = {
+    "test_schema_validation_missing_fields": "tests/sample_data/sample_deck_configs/test_missing_fields.yaml",
+    "test_tag_exclusion": "tests/sample_data/sample_deck_configs/test_tag_exclude.yaml",
+    "test_prefer_exclude_conflict": "tests/sample_data/sample_deck_configs/test_prefer_and_exclude.yaml",
+    "test_ramp_curve_interaction": "tests/sample_data/sample_deck_configs/test_ramp_curve.yaml",
+    "test_budget_constraints": "tests/sample_data/sample_deck_configs/test_budget_low.yaml",
+}
 
-ALL_PRINTINGS_PATH = get_sample_data_path('AllPrintings.json')
-SAMPLE_YAML_PATH = get_sample_data_path('yaml_test_template.yaml')
-SAMPLE_INVENTORY_PATH = get_sample_data_path('sample_inventory.txt')
-TEST_DB_FILENAME = 'test_deckbuilder_cards.db'
-SAMPLE_DB_URL = f"sqlite:///{get_sample_data_path(TEST_DB_FILENAME)}"
-
-
-@pytest.fixture(scope="module")
-def card_repo_fixture() -> Generator[CardRepository, Any, None]:
-    """Fixture to set up a CardRepository with a module-scoped database session."""
-    if not os.path.exists(ALL_PRINTINGS_PATH):
-        pytest.skip(f"Skipping tests that require AllPrintings.json, not found at {ALL_PRINTINGS_PATH}")
-
-    bootstrap(json_path=ALL_PRINTINGS_PATH, inventory_path=None, db_url=SAMPLE_DB_URL, use_tqdm=False)
-    session = get_session(db_url=SAMPLE_DB_URL)
-    card_repo = CardRepository(session)
-    yield card_repo
-
-    session.close()
-    db_file_path = get_sample_data_path(TEST_DB_FILENAME)
-    if os.path.exists(db_file_path):
-        try:
-            os.remove(db_file_path)
-        except OSError as e:
-            print(f"Warning: Could not remove test DB {db_file_path}: {e}")
-
-
-@pytest.fixture
-def inventory_repo_fixture(card_repo_fixture: CardRepository) -> InventoryRepository:
-    """Fixture to set up an InventoryRepository with a function-scoped clean inventory."""
-    session = card_repo_fixture.session
-
-    # Explicitly check for table existence using SQLAlchemy's inspector
-    from sqlalchemy import inspect
-    inspector = inspect(session.get_bind())  # Get engine from session
-    table_names = inspector.get_table_names()
-    if 'inventory_items' not in table_names:
-        pytest.fail("FAILURE: 'inventory_items' table does not exist at the start of inventory_repo_fixture! Check bootstrap and model registration.")
-
-    # Clear previous inventory for test isolation
-    try:
-        session.query(InventoryItemDB).delete()
-        session.commit()
-    except Exception as e:
-        session.rollback()  # Rollback on error during delete
-        pytest.fail(f"Error clearing InventoryItemDB: {e}")
-    bootstrap_inventory(SAMPLE_INVENTORY_PATH, SAMPLE_DB_URL)
-    inv_repo = InventoryRepository(session)
-    # Load sample inventory for convenience in tests that need it
-    if os.path.exists(SAMPLE_INVENTORY_PATH):
-        with open(SAMPLE_INVENTORY_PATH, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                parts = line.split(' ', 1)
-                if len(parts) < 2:
-                    continue
-                try:
-                    qty = int(parts[0])
-                    name = parts[1]
-                    card_db_entry = card_repo_fixture.find_by_name(name)
-                    if card_db_entry:
-                        # Check if item exists before merging, or use merge directly
-                        item = inv_repo.find_by_card_name(name)
-                        if item:
-                            item.quantity = qty
-                            item.is_infinite = (name in {"Plains", "Island", "Swamp", "Mountain", "Forest"})
-                            session.merge(item)
-                        else:
-                            session.add(InventoryItemDB(card_name=name, quantity=qty, is_infinite=(name in {"Plains", "Island", "Swamp", "Mountain", "Forest"})))
-                except ValueError:
-                    print(f"Skipping malformed inventory line: {line}")
-        try:
-            session.commit()
-        except Exception as e:
-            session.rollback()
-            pytest.fail(f"Error committing inventory load: {e}")
-    return inv_repo
-
+# List of main sample deck YAMLs to test
+MAIN_SAMPLE_YAMLS = [
+    "tests/sample_data/sample_deck_configs/cobra-kai.yaml",
+    "tests/sample_data/sample_deck_configs/test_control_uw.yaml",
+    "tests/sample_data/sample_deck_configs/black_white_midrange.yaml",
+    "tests/sample_data/sample_deck_configs/blue_white_control.yaml",
+    "tests/sample_data/sample_deck_configs/green_ramp_modern.yaml",
+    "tests/sample_data/sample_deck_configs/mono_red_burn.yaml",
+    "tests/sample_data/sample_deck_configs/test-aggro-red.yaml",
+]
 
 @pytest.fixture
-def sample_deck_config() -> DeckConfig:
-    """Loads the sample YAML deck configuration for tests."""
-    if not os.path.exists(SAMPLE_YAML_PATH):
-        pytest.fail(f"Sample YAML config not found at {SAMPLE_YAML_PATH}")
-    return DeckConfig.from_yaml(SAMPLE_YAML_PATH)
+def minimal_deck_config_fixture():
+    return DeckConfig(
+        deck=DeckMeta(name="Test Deck", colors=["R"], size=3, max_card_copies=4, legalities=["modern"], owned_cards_only=False),
+        categories={},
+        priority_cards=[],
+        mana_base={"land_count": 1},
+        card_constraints=None,
+        scoring_rules=None,
+        fallback_strategy=None,
+    )
+
+# Helper for test_yaml_deckbuilder.py tests (Red Deck)
+def setup_mock_repos_for_r_deck(mock_card_repo, mock_inventory_repo, test_specific_cards=None):
+    test_specific_cards = test_specific_cards or []
+
+    # Define all 5 basic lands, REMOVING type kwarg
+    plains = DummyCard("Plains", text="Basic Land - Plains", rarity="common")
+    island = DummyCard("Island", text="Basic Land - Island", rarity="common")
+    swamp = DummyCard("Swamp", text="Basic Land - Swamp", rarity="common")
+    mountain = DummyCard("Mountain", text="Basic Land - Mountain", rarity="common", colors=['R']) # R deck
+    forest = DummyCard("Forest", text="Basic Land - Forest", rarity="common")
+
+    basic_lands_for_general_pool = [mountain]
+    all_available_cards = test_specific_cards + basic_lands_for_general_pool
+
+    def find_by_name_side_effect(name_arg):
+        if name_arg == "Plains": return plains
+        if name_arg == "Island": return island
+        if name_arg == "Swamp": return swamp
+        if name_arg == "Mountain": return mountain
+        if name_arg == "Forest": return forest
+        return next((c for c in test_specific_cards if c.name == name_arg), None)
+
+    mock_card_repo.filter_cards.return_value = mock_card_repo
+    mock_card_repo.get_all_cards.return_value = all_available_cards
+    mock_card_repo.__iter__.return_value = iter(all_available_cards)
+    mock_card_repo.find_by_name.side_effect = find_by_name_side_effect
+
+    # Inventory mock (less critical here as owned_cards_only=False, but good for consistency)
+    if mock_inventory_repo:
+        def inventory_side_effect(card_name_arg):
+            if card_name_arg == "Mountain":
+                return (100, True) # Basic land for the deck is available
+            # For other basic lands, not strictly needed by R deck but can be (100,True)
+            if card_name_arg in ["Plains", "Island", "Swamp", "Forest"]:
+                return (100, True)
+
+            card_in_test_specific = next((c for c in test_specific_cards if c.name == card_name_arg), None)
+            if card_in_test_specific:
+                return (card_in_test_specific.owned_qty, False)
+            return (1, False) # Default for other cards if queried
+        mock_inventory_repo.get_inventory_for_card.side_effect = inventory_side_effect
 
 
-class TestYamlDeckBuilderWithCallbacks:
+def test_build_deck_from_config_basic():
+    """Test basic deck building from config."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
 
-    def test_build_deck_with_mocked_callbacks(
-            self,
-            sample_deck_config: DeckConfig,
-            card_repo_fixture: CardRepository,
-            inventory_repo_fixture: InventoryRepository
-    ):
-        """Tests a basic deck build using mocks for callbacks."""
-        config_copy = sample_deck_config.model_copy(deep=True)
-        config_copy.deck.owned_cards_only = True
+    # Create test cards
+    test_cards = [
+        DummyCard("Card1", colors=["R"], owned_qty=4),
+        DummyCard("Card2", colors=["R"], owned_qty=4),
+        DummyCard("Card3", colors=["R"], owned_qty=4)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
 
-        # Capture the state of flags from config_copy BEFORE calling build_deck_from_config
-        # These are the conditions under which the deck was supposed to be built.
-        is_owned_only_build_setting = config_copy.deck.owned_cards_only
-        is_allow_less_than_target_setting = config_copy.fallback_strategy.allow_less_than_target
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Test Deck",
+            colors=["R"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        )
+    )
 
-        assert is_owned_only_build_setting is True  # Verify our captured flag
-        assert config_copy.deck.legalities == ["standard"]
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo
+    )
 
-        mock_callbacks: Dict[str, Any] = {
-            "after_inventory_load": MagicMock(name="after_inventory_load"),
-            "before_initial_repo_filter": MagicMock(name="before_initial_repo_filter"),
-            "after_initial_repo_filter": MagicMock(name="after_initial_repo_filter"),
-            "after_priority_cards": MagicMock(name="after_priority_cards"),
-            "after_land_selection": MagicMock(name="after_land_selection"),
-            "after_categories": MagicMock(name="after_categories"),
-            "before_fallback_fill": MagicMock(name="before_fallback_fill"),
-            "after_fallback_fill": MagicMock(name="after_fallback_fill"),
-            "before_finalize": MagicMock(name="before_finalize"),
+    assert deck is not None
+    assert len(deck.cards) == 3
+    assert all(card.name in ["Card1", "Card2", "Card3"] for card in deck.cards.values())
+
+
+def test_build_deck_from_config_with_callbacks():
+    """Test deck building with callbacks."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards
+    test_cards = [
+        DummyCard("Bolt", colors=["R"], owned_qty=4),
+        DummyCard("Card2", colors=["R"], owned_qty=4)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Test Deck",
+            colors=["R"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        ),
+        priority_cards=[{"name": "Bolt", "min_copies": 4}]
+    )
+
+    callbacks = {
+        "on_priority_cards_selected": lambda cards: None,
+        "on_categories_filled": lambda cards: None,
+        "on_deck_complete": lambda deck: None
+    }
+
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo,
+        callbacks=callbacks
+    )
+
+    assert deck is not None
+    assert "Bolt" in deck.cards
+
+
+def test_build_deck_from_config_callback_error(minimal_deck_config_fixture, caplog):
+    mock_card_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Corrected: DummyCard takes name as first positional argument
+    error_mock_cards = [DummyCard("Bolt", colors=["R"])]
+    setup_mock_repos_for_r_deck(mock_card_repo, mock_inventory_repo, error_mock_cards)
+
+    def bad_cb(**kwargs):
+        raise ValueError("fail")
+
+    with caplog.at_level(logging.WARNING):
+        yaml_deckbuilder.build_deck_from_config(minimal_deck_config_fixture, mock_card_repo, mock_inventory_repo, callbacks={"after_priority_card_select": bad_cb})
+    assert any("Callback 'after_priority_card_select' raised an error" in r.getMessage() for r in caplog.records)
+
+
+def test_score_card():
+    """Test the card scoring function with various rules."""
+    card = DummyCard("Test Card", text="Flying, Haste\nDraw a card\nDestroy target creature")
+    scoring_rules = MagicMock()
+    scoring_rules.keyword_abilities = {"flying": 2, "haste": 1}
+    scoring_rules.keyword_actions = {"draw": 2, "destroy": 3}
+    scoring_rules.text_matches = {"draw a card": 2, "destroy target": 3}
+    scoring_rules.rarity_bonus = {"rare": 2}
+    scoring_rules.mana_penalty = {"threshold": 3, "penalty_per_point": 1}
+    
+    # Test basic scoring
+    score = score_card(card, scoring_rules)
+    assert score > 0, "Card should have a positive score"
+    
+    # Test with deck context
+    deck_context = {
+        "cards": [],
+        "role_counts": {"removal": 0},
+        "role_targets": {"removal": 4}
+    }
+    score_with_context = score_card(card, scoring_rules, deck_context)
+    assert score_with_context > score, "Score should be higher with role bonus"
+
+def test_generate_target_curve():
+    """Test the mana curve generation function."""
+    # Test linear steep curve
+    curve = generate_target_curve(1, 4, 20, "linear", "steep")
+    assert len(curve) == 4, "Should generate curve for all mana values"
+    assert curve[1] > curve[4], "Steep curve should favor lower mana values"
+    
+    # Test bell curve
+    curve = generate_target_curve(1, 5, 20, "bell", "gentle")
+    assert curve[3] > curve[1], "Bell curve should peak in the middle"
+    assert curve[3] > curve[5], "Bell curve should peak in the middle"
+
+def test_prune_lowest_scoring():
+    """Test the card pruning function."""
+    mock_repo = MagicMock()
+    selected_cards = {
+        "Card1": DummyCard("Card1", text="Flying"),
+        "Card2": DummyCard("Card2", text="Haste"),
+        "Card3": DummyCard("Card3", text="Draw a card")
+    }
+    
+    # Mock scoring rules
+    scoring_rules = MagicMock()
+    scoring_rules.keyword_abilities = {"flying": 3, "haste": 1}
+    scoring_rules.text_matches = {"draw a card": 2}
+    scoring_rules.mana_penalty = {"threshold": 3, "penalty_per_point": 1}
+    scoring_rules.keyword_actions = {}
+    scoring_rules.ability_words = {}
+    scoring_rules.type_bonus = {}
+    scoring_rules.rarity_bonus = {}
+    
+    # Mock better candidates
+    better_cards = [
+        DummyCard("Better1", text="Flying, Haste"),
+        DummyCard("Better2", text="Flying, Draw a card")
+    ]
+    mock_repo.get_all_cards.return_value = better_cards
+    
+    _prune_lowest_scoring(selected_cards, mock_repo, 60, scoring_rules)
+    assert len(selected_cards) == 3, "Should maintain deck size"
+    assert any("Better" in card.name for card in selected_cards.values()), "Should include better cards"
+
+def test_fill_categories_with_curve():
+    """Test filling categories while respecting mana curve."""
+    mock_repo = MagicMock()
+    selected_cards = {}
+
+    # Create test cards with various CMCs
+    test_cards = [
+        DummyCard("OneDrop", converted_mana_cost=1, type="Creature"),
+        DummyCard("TwoDrop", converted_mana_cost=2, type="Creature"),
+        DummyCard("ThreeDrop", converted_mana_cost=3, type="Creature")
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    categories = {
+        "creatures": {
+            "target": 12,
+            "priority_text": ["creature"]
         }
-        for cat_name in config_copy.categories.keys():
-            mock_callbacks[f"before_category_fill:{cat_name}"] = MagicMock(name=f"before_category_fill:{cat_name}")
-            mock_callbacks[f"after_category_fill:{cat_name}"] = MagicMock(name=f"after_category_fill:{cat_name}")
+    }
 
-        deck = build_deck_from_config(
-            deck_config=config_copy,
-            card_repo=card_repo_fixture,
-            inventory_repo=inventory_repo_fixture,
-            callbacks=mock_callbacks
+    _fill_categories_with_curve(
+        mock_repo,
+        selected_cards,
+        categories,
+        mana_min=1,
+        mana_max=3,
+        max_copies=4
+    )
+
+    assert len(selected_cards) > 0
+    assert all(card.converted_mana_cost >= 1 and card.converted_mana_cost <= 3 
+              for card in selected_cards.values())
+
+def test_fill_with_any_with_pruning():
+    """Test fill_with_any with pruning of low-scoring cards."""
+    mock_repo = MagicMock()
+    selected_cards = {}
+
+    # Create test cards with varying scores
+    test_cards = [
+        DummyCard("GoodCard", text="Flying, Draw a card", converted_mana_cost=2),
+        DummyCard("BadCard", text="Defender", converted_mana_cost=2),
+        DummyCard("WorseCard", text="Defender, Pacifist", converted_mana_cost=2)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    # Mock scoring rules
+    scoring_rules = MagicMock()
+    scoring_rules.keyword_abilities = {"flying": 2}
+    scoring_rules.text_matches = {"draw a card": 2}
+    scoring_rules.min_score_to_flag = 3
+    scoring_rules.mana_penalty = {"threshold": 3, "penalty_per_point": 1}
+    scoring_rules.keyword_actions = {}
+    scoring_rules.ability_words = {}
+    scoring_rules.type_bonus = {}
+    scoring_rules.rarity_bonus = {}
+
+    _fill_with_any(
+        mock_repo,
+        selected_cards,
+        deck_size=60,
+        mana_min=1,
+        mana_max=4,
+        max_copies=4,
+        scoring_rules=scoring_rules
+    )
+
+    assert len(selected_cards) > 0
+    assert "GoodCard" in selected_cards
+    assert "BadCard" not in selected_cards
+    assert "WorseCard" not in selected_cards
+
+def test_build_deck_with_theme():
+    """Test building a deck with a theme."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards
+    test_cards = [
+        DummyCard("ThemeCard1", text="Flying, Draw a card", colors=["U"]),
+        DummyCard("ThemeCard2", text="Flying, Scry", colors=["U"]),
+        DummyCard("NonThemeCard", text="Defender", colors=["U"])
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Theme Test",
+            colors=["U"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        ),
+        theme_keywords=["flying", "draw"]
+    )
+
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo
+    )
+
+    assert deck is not None
+    assert "ThemeCard1" in deck.cards
+    assert "ThemeCard2" in deck.cards
+
+def test_build_deck_with_curve():
+    """Test building a deck with mana curve constraints."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards with various CMCs, enough to fill the deck
+    test_cards = [
+        DummyCard(f"OneDrop{i}", converted_mana_cost=1) for i in range(20)
+    ] + [
+        DummyCard(f"TwoDrop{i}", converted_mana_cost=2) for i in range(20)
+    ] + [
+        DummyCard(f"ThreeDrop{i}", converted_mana_cost=3) for i in range(20)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Curve Test",
+            colors=["R"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        ),
+        mana_curve={
+            "min": 1,
+            "max": 3,
+            "shape": "linear",
+            "slope": "up"
+        }
+    )
+
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo
+    )
+
+    assert deck is not None
+    curve = deck.mana_curve()
+    assert len(curve) > 0
+    assert all(cmc >= 1 and cmc <= 3 for cmc in curve.keys())
+
+def test_schema_validation():
+    """Test YAML schema validation."""
+    # Test missing required fields
+    with pytest.raises(ValueError):
+        yaml_deckbuilder.build_deck_from_yaml(
+            SAMPLE_YAML_PATHS["test_schema_validation_missing_fields"],
+            MagicMock(),
+            MagicMock()
         )
 
-        assert deck is not None, "Deck building failed, returned None"
-        assert len(deck.cards) > 0, "Deck was built with no cards"
+    # Test invalid field types
+    with pytest.raises(ValueError):
+        config = DeckConfig(
+            deck=DeckMeta(
+                name="Invalid Test",
+                colors="R",  # Should be a list
+                size=60,
+                max_card_copies=4,
+                legalities=["modern"]
+            )
+        )
+        yaml_deckbuilder.build_deck_from_config(
+            config,
+            MagicMock(),
+            MagicMock()
+        )
 
-        mock_callbacks["after_priority_cards"].assert_called_once()
-        after_priority_cards_args = mock_callbacks["after_priority_cards"].call_args
-        selected_priority_cards = after_priority_cards_args.kwargs.get('selected', {})
+def test_tag_exclusion():
+    """Test tag and keyword exclusion logic."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+    
+    # Create test cards with various tags
+    test_cards = [
+        DummyCard("Aggro1", text="Haste, First Strike"),
+        DummyCard("Defender1", text="Defender, Lifelink"),
+        DummyCard("Pacifist1", text="Defender, Pacifist"),
+        DummyCard("Healing1", text="Gain life, Healing")
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+    
+    deck = yaml_deckbuilder.build_deck_from_yaml(
+        SAMPLE_YAML_PATHS["test_tag_exclusion"],
+        mock_repo,
+        mock_inventory_repo
+    )
+    
+    assert deck is not None
+    assert all("Defender" not in card.name for card in deck.cards.values())
+    assert all("Pacifist" not in card.name for card in deck.cards.values())
+    assert all("Healing" not in card.name for card in deck.cards.values())
 
-        assert "Lightning Bolt" not in selected_priority_cards, "Lightning Bolt should be excluded due to standard legality"
-        if any(pc.name == "Cut Down" for pc in config_copy.priority_cards):
-            assert "Cut Down" in selected_priority_cards, "Standard legal priority card 'Cut Down' should be selected"
+def test_prefer_exclude_conflict():
+    """Test that exclude rules take precedence over prefer rules."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+    
+    # Create test cards that match both prefer and exclude
+    test_cards = [
+        DummyCard("FastDefender", text="Haste, Defender"),
+        DummyCard("AggroPacifist", text="First Strike, Pacifist"),
+        DummyCard("DirectHealing", text="Instant, Healing")
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+    
+    deck = yaml_deckbuilder.build_deck_from_yaml(
+        SAMPLE_YAML_PATHS["test_prefer_exclude_conflict"],
+        mock_repo,
+        mock_inventory_repo
+    )
+    
+    assert deck is not None
+    assert all("Defender" not in card.name for card in deck.cards.values())
+    assert all("Pacifist" not in card.name for card in deck.cards.values())
+    assert all("Healing" not in card.name for card in deck.cards.values())
 
-        # Land selection assertions
-        mock_callbacks["after_land_selection"].assert_called_once()
-        after_land_selection_args = mock_callbacks["after_land_selection"].call_args
-        selected_cards_after_lands = after_land_selection_args.kwargs.get('selected', {})
+def test_ramp_curve_interaction():
+    """Test interaction between ramp spells and mana curve."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
 
-        total_land_count = sum(c.owned_qty for c in selected_cards_after_lands.values() if c.matches_type("Land"))
-        expected_land_count = config_copy.mana_base.land_count
-        assert total_land_count == expected_land_count, f"Expected {expected_land_count} lands, but got {total_land_count}"
+    # Create test cards with various CMCs, enough to fill the deck
+    test_cards = [
+        DummyCard(f"Ramp1_{i}", text="Add {G}", converted_mana_cost=1) for i in range(10)
+    ] + [
+        DummyCard(f"Ramp2_{i}", text="Search your library for a land", converted_mana_cost=2) for i in range(10)
+    ] + [
+        DummyCard(f"Threat3_{i}", text="Trample", converted_mana_cost=3) for i in range(10)
+    ] + [
+        DummyCard(f"Threat4_{i}", text="Hexproof", converted_mana_cost=4) for i in range(10)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
 
-        special_land_names_in_deck = {
-            c.name for c in selected_cards_after_lands.values()
-            if c.matches_type("Land") and not c.is_basic_land()
-        }
-        max_special_lands = config_copy.mana_base.special_lands.count
-        assert len(special_land_names_in_deck) <= max_special_lands, \
-            f"Selected {len(special_land_names_in_deck)} special lands, but max was {max_special_lands}"
+    deck = yaml_deckbuilder.build_deck_from_yaml(
+        SAMPLE_YAML_PATHS["test_ramp_curve_interaction"],
+        mock_repo,
+        mock_inventory_repo
+    )
 
-        # Basic land color assertions
-        expected_basic_land_colors = set(config_copy.deck.colors)
-        basic_lands_in_deck = [
-            c for c in selected_cards_after_lands.values()
-            if c.is_basic_land()
+    assert deck is not None
+    curve = deck.mana_curve()
+    assert len(curve) > 0
+    assert all(cmc >= 1 and cmc <= 4 for cmc in curve.keys())
+
+def test_budget_constraints():
+    """Test budget constraints on card selection."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards with various rarities
+    test_cards = [
+        DummyCard("Common1", rarity="common", type="Creature"),
+        DummyCard("Uncommon1", rarity="uncommon", type="Creature"),
+        DummyCard("Rare1", rarity="rare", type="Creature"),
+        DummyCard("Mythic1", rarity="mythic", type="Creature"),
+        DummyCard("Mountain", type="Basic Land")
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    deck = yaml_deckbuilder.build_deck_from_yaml(
+        SAMPLE_YAML_PATHS["test_budget_constraints"],
+        mock_repo,
+        mock_inventory_repo
+    )
+
+    assert deck is not None
+    # Only check rarity for non-land cards
+    non_land_cards = [card for card in deck.cards.values() if not (hasattr(card, 'is_basic_land') and card.is_basic_land()) and not (hasattr(card, 'type') and 'land' in card.type.lower())]
+    assert all(card.rarity in ["common", "uncommon"] for card in non_land_cards)
+
+def test_priority_card_truncation():
+    """Test that priority cards are truncated when exceeding max copies."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards
+    test_cards = [
+        DummyCard("Card1", owned_qty=4),
+        DummyCard("Card2", owned_qty=4),
+        DummyCard("Card3", owned_qty=4)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+    def find_by_name_side_effect(name):
+        for c in test_cards:
+            if c.name == name:
+                return c
+        return None
+    mock_repo.find_by_name.side_effect = find_by_name_side_effect
+
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Priority Test",
+            colors=["R"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        ),
+        priority_cards=[
+            {"name": "Card1", "min_copies": 5},  # Exceeds max_copies
+            {"name": "Card2", "min_copies": 4},
+            {"name": "Card3", "min_copies": 4}
         ]
-        # Define the standard color identity for basic land names
-        basic_land_name_to_color = {
-            "Plains": "W",
-            "Island": "U",
-            "Swamp": "B",
-            "Mountain": "R",
-            "Forest": "G"
+    )
+
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo
+    )
+
+    assert deck is not None
+    assert deck.cards["Card1"].owned_qty == 4  # Should be truncated to max_copies
+    assert deck.cards["Card2"].owned_qty == 4
+    assert deck.cards["Card3"].owned_qty == 4
+
+def test_fill_with_any_threshold():
+    """Test that _fill_with_any respects minimum score threshold."""
+    mock_repo = MagicMock()
+    selected_cards = {}
+
+    # Create test cards with varying scores
+    test_cards = [
+        DummyCard("GoodCard", text="Flying, Draw a card", converted_mana_cost=2),
+        DummyCard("BadCard", text="Defender", converted_mana_cost=2),
+        DummyCard("WorseCard", text="Defender, Pacifist", converted_mana_cost=2)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    # Mock scoring rules with high threshold
+    scoring_rules = MagicMock()
+    scoring_rules.keyword_abilities = {"flying": 2}
+    scoring_rules.text_matches = {"draw a card": 2}
+    scoring_rules.min_score_to_flag = 4
+    scoring_rules.mana_penalty = {"threshold": 3, "penalty_per_point": 1}
+    scoring_rules.keyword_actions = {}
+    scoring_rules.ability_words = {}
+    scoring_rules.type_bonus = {}
+    scoring_rules.rarity_bonus = {}
+
+    _fill_with_any(
+        mock_repo,
+        selected_cards,
+        deck_size=60,
+        mana_min=1,
+        mana_max=4,
+        max_copies=4,
+        scoring_rules=scoring_rules
+    )
+
+    assert len(selected_cards) > 0
+    assert "GoodCard" in selected_cards
+    assert "BadCard" not in selected_cards
+    assert "WorseCard" not in selected_cards
+
+def test_sample_hand_validity():
+    """Test that sample hands are valid and representative."""
+    mock_repo = MagicMock()
+    mock_inventory_repo = MagicMock()
+
+    # Create test cards, enough to fill the deck
+    test_cards = [
+        DummyCard(f"OneDrop{i}", converted_mana_cost=1, owned_qty=4) for i in range(5)
+    ] + [
+        DummyCard(f"TwoDrop{i}", converted_mana_cost=2, owned_qty=4) for i in range(5)
+    ] + [
+        DummyCard(f"ThreeDrop{i}", converted_mana_cost=3, owned_qty=4) for i in range(5)
+    ]
+    mock_repo.get_all_cards.return_value = test_cards
+
+    config = DeckConfig(
+        deck=DeckMeta(
+            name="Sample Hand Test",
+            colors=["R"],
+            size=60,
+            max_card_copies=4,
+            legalities=["modern"]
+        ),
+        categories={
+            "creatures": {
+                "target": 20,
+                "priority_text": ["creature"]
+            }
         }
-        for land_card in basic_lands_in_deck:
-            # Assert that the land name is a known basic land type
-            assert land_card.name in basic_land_name_to_color, f"Unknown basic land name: {land_card.name} encountered in deck."
+    )
 
-            land_color_identity = basic_land_name_to_color[land_card.name]
+    deck = yaml_deckbuilder.build_deck_from_config(
+        config,
+        mock_repo,
+        mock_inventory_repo
+    )
 
-            # Check if the inferred color identity is one of the allowed deck colors
-            assert land_color_identity in expected_basic_land_colors, \
-                f"Basic land {land_card.name} with inferred color {land_color_identity} is not in allowed deck colors {expected_basic_land_colors}"
+    # Test multiple sample hands
+    for _ in range(10):
+        hand = deck.sample_hand(7)
+        assert len(hand) == 7
+        assert all(card.converted_mana_cost >= 1 and card.converted_mana_cost <= 3 
+                  for card in hand)
 
-        # Assertions for category filling callbacks
-        for cat_name in config_copy.categories.keys():
-            mock_callbacks[f"before_category_fill:{cat_name}"].assert_called_once()
-            mock_callbacks[f"after_category_fill:{cat_name}"].assert_called_once()
-        mock_callbacks["after_categories"].assert_called_once()
-
-        # Assertions for fallback and finalize callbacks
-        mock_callbacks["before_fallback_fill"].assert_called_once()
-        # after_fallback_fill might not be called if deck is full, so it's not asserted here robustly without more logic
-        mock_callbacks["before_finalize"].assert_called_once()
-
-        # Final deck assertions
-        actual_deck_size = deck.size()
-        expected_deck_size = config_copy.deck.size  # Expected size from the config passed to build
-
-        # Use the captured flags for the assertion logic
-        if is_owned_only_build_setting and not is_allow_less_than_target_setting:
-            assert actual_deck_size <= expected_deck_size, \
-                f"Deck size {actual_deck_size} should be <= {expected_deck_size} for an owned-only build where less than target is not allowed. " \
-                f"(Build settings: owned_only={is_owned_only_build_setting}, allow_less_than_target={is_allow_less_than_target_setting})"
-        elif not is_allow_less_than_target_setting:
-            assert actual_deck_size == expected_deck_size, \
-                f"Expected deck size {expected_deck_size}, but got {actual_deck_size}. " \
-                f"(Build settings: owned_only={is_owned_only_build_setting}, allow_less_than_target={is_allow_less_than_target_setting})"
-        else:  # is_allow_less_than_target_setting is true
-            assert actual_deck_size <= expected_deck_size, \
-                f"Deck size {actual_deck_size} should be <= {expected_deck_size} when allow_less_than_target is true. " \
-                f"(Build settings: owned_only={is_owned_only_build_setting}, allow_less_than_target={is_allow_less_than_target_setting})"
-
-        for card_name, card_obj in deck.cards.items():
-            # Basic lands are exempt from the max_card_copies rule.
-            if not card_obj.is_basic_land():
-                assert card_obj.owned_qty <= config_copy.deck.max_card_copies, \
-                    f"Card {card_name} has {card_obj.owned_qty} copies, exceeding max of {config_copy.deck.max_card_copies}"
-
-            # Check card legalities
-            if config_copy.deck.legalities:
-                is_legal = False
-                for legality_format in config_copy.deck.legalities:
-                    if card_obj.legalities.get(legality_format, "not_legal").lower() == "legal":
-                        is_legal = True
-                        break
-                # Priority cards like Lightning Bolt might be in selected_priority_cards but not in the final deck
-                # if they are filtered out by later steps (e.g. legality for the deck itself).
-                # The check for Lightning Bolt exclusion from selected_priority_cards already handles its specific case.
-                # Here we check cards that *made it* into the final deck.
-                if card_name != "Lightning Bolt":  # Exclude known non-standard card if it was a priority for testing that stage
-                    assert is_legal, f"Card {card_name} is not legal in {config_copy.deck.legalities}"
-
-            # Check color identity
-            card_actual_colors = card_obj.colors  # Use the .colors property
-            if not card_obj.matches_color_identity(list(config_copy.deck.colors), match_mode=config_copy.deck.color_match_mode):
-                # If matches_color_identity is false, we then check if it's an allowed colorless card.
-                # A card is considered colorless if its .colors property returns an empty list.
-                is_card_genuinely_colorless = not card_actual_colors
-                if not (config_copy.deck.allow_colorless and is_card_genuinely_colorless):
-                    assert False, f"Card {card_name} (actual colors: {card_actual_colors}) failed color check (deck colors: {config_copy.deck.colors}, match_mode: {config_copy.deck.color_match_mode}) and is not an allowed colorless card."
-
-
-    def test_deck_respects_owned_cards_only(
-        self,
-        sample_deck_config: DeckConfig,
-        card_repo_fixture: CardRepository,
-        inventory_repo_fixture: InventoryRepository
-    ):
-        """Tests that the deck builder respects the owned_cards_only flag."""
-        config_copy = sample_deck_config.model_copy(deep=True)
-        config_copy.deck.owned_cards_only = True
-        config_copy.priority_cards = [] # Clear priority cards to simplify inventory check
-        config_copy.categories = {} # Clear categories for the same reason
-        config_copy.mana_base.land_count = 0 # No lands to simplify
-        config_copy.deck.size = 5 # Small deck size
-
-        # Ensure inventory has specific cards with limited quantities
-        # For this test, let's assume 'Cut Down' is in inventory with 2 copies
-        # and 'Play with Fire' is in inventory with 1 copy.
-        # Other cards needed to fill the deck should exist in AllPrintings but not necessarily in inventory.
-
-        # Modify inventory for the test
-        session = inventory_repo_fixture.session
-        session.query(InventoryItemDB).delete() # Clear existing inventory
-        session.add(InventoryItemDB(card_name="Cut Down", quantity=2, is_infinite=False))
-        session.add(InventoryItemDB(card_name="Play with Fire", quantity=1, is_infinite=False))
-        # Add a basic land to inventory to avoid issues if lands are attempted to be added by some logic
-        session.add(InventoryItemDB(card_name="Swamp", quantity=10, is_infinite=True))
-        session.commit()
-
-        deck = build_deck_from_config(
-            deck_config=config_copy,
-            card_repo=card_repo_fixture,
-            inventory_repo=inventory_repo_fixture
-        )
-
-        assert deck is not None, "Deck building failed"
-        # Check that cards in deck do not exceed owned quantities
-        if "Cut Down" in deck.cards:
-            assert deck.cards["Cut Down"].owned_qty <= 2, "Exceeded owned quantity of Cut Down"
-        if "Play with Fire" in deck.cards:
-            assert deck.cards["Play with Fire"].owned_qty <= 1, "Exceeded owned quantity of Play with Fire"
-
-        # Check that cards not in inventory (unless infinite like basic lands) are not in the deck
-        # This requires knowing a card that is in AllPrintings but we didn't add to inventory.
-        # For example, if 'Lightning Bolt' is not in our test inventory for this case:
-        assert "Lightning Bolt" not in deck.cards, "Lightning Bolt should not be in deck as it's not in inventory (for this test setup)"
-
-        # Verify that the total number of cards respects inventory limits
-        # This is harder to assert precisely without running the full deck builder logic
-        # but the individual card checks above are the primary goal.
-
-    # TODO: Add more tests for specific scenarios:
-    # - Different color_match_mode behaviors (exact, any)
-    # - Card constraints (exclude_keywords, rarity_boost)
-    # - Mana curve adherence if more sophisticated checks are needed beyond min/max in categories
-    # - Fallback strategy variations (fill_priority, allow_less_than_target)
-    # - Scoring rules impact (if testable via callbacks or specific card choices)
+@pytest.mark.parametrize("yaml_path", MAIN_SAMPLE_YAMLS)
+def test_sample_deck_configs_smoke(yaml_path, create_dummy_db):
+    """Test that each main sample YAML config can build a deck without error using full database integration."""
+    session = create_dummy_db
+    # Use the real session for the smoke test
+    deck = yaml_deckbuilder.build_deck_from_yaml(yaml_path, session, None)
+    assert deck is not None, f"Deck should be built for {os.path.basename(yaml_path)}"
+    assert deck.size() > 0, f"Deck should not be empty for {os.path.basename(yaml_path)}"
+    # Optionally, check the deck size matches the config if possible
+    if hasattr(deck, 'config') and deck.config and hasattr(deck.config, 'deck') and hasattr(deck.config.deck, 'size'):
+        assert deck.size() == deck.config.deck.size, f"Deck size mismatch for {os.path.basename(yaml_path)}"
 

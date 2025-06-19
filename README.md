@@ -166,6 +166,7 @@ Tests are located in the `/tests/` directory and utilize sample data from `/test
     -   `Gradio` (for the web UI)
     -   `pandas` (used in UI for dataframes)
     -   `numpy` (dependency for pandas)
+    -   `Pydantic V2` (for data validation)
 
 ---
 

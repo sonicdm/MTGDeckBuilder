@@ -24,6 +24,7 @@ Usage:
         progress_callback=..., done_callback=...
     )
 """
+
 import os
 import json
 import threading
@@ -34,12 +35,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from mtg_deck_builder.db.models import ImportLog, CardDB, CardPrintingDB, CardSetDB
 
+
 def import_allprintings_json(
     json_path: str,
     db_path: str,
     meta_date: str,
     progress_callback: Optional[Callable[[float, str], None]] = None,
-    done_callback: Optional[Callable[[bool, str], None]] = None
+    done_callback: Optional[Callable[[bool, str], None]] = None,
 ):
     """
     Imports AllPrintings.json into the database in a separate thread.
@@ -49,6 +51,7 @@ def import_allprintings_json(
     Calls done_callback(success, message) when finished.
     Also prints progress and shows tqdm progress bars in the console.
     """
+
     def run():
         print("[mtgjson_importer] Starting import of AllPrintings.json...")
         try:
@@ -62,7 +65,9 @@ def import_allprintings_json(
             sets = all_data.get("data", {})
 
             # Clear existing data
-            print("[mtgjson_importer] Clearing existing CardPrintingDB, CardDB, CardSetDB data...")
+            print(
+                "[mtgjson_importer] Clearing existing CardPrintingDB, CardDB, CardSetDB data..."
+            )
             session.query(CardPrintingDB).delete()
             session.query(CardDB).delete()
             session.query(CardSetDB).delete()
@@ -73,17 +78,25 @@ def import_allprintings_json(
             set_objs = {}
             set_items = list(sets.items())
             card_objs = {}
-            total_cards = sum(len(set_data.get("cards", [])) for _, set_data in set_items)
-            print(f"[mtgjson_importer] Found {len(set_items)} sets and {total_cards} cards.")
+            total_cards = sum(
+                len(set_data.get("cards", [])) for _, set_data in set_items
+            )
+            print(
+                f"[mtgjson_importer] Found {len(set_items)} sets and {total_cards} cards."
+            )
 
             # Batch insert sets
             set_db_objs = []
             print("[mtgjson_importer] Inserting sets...")
-            for idx, (set_code, set_data) in enumerate(tqdm(set_items, desc="Sets", unit="set")):
+            for idx, (set_code, set_data) in enumerate(
+                tqdm(set_items, desc="Sets", unit="set")
+            ):
                 release_date = set_data.get("releaseDate")
                 if isinstance(release_date, str):
                     try:
-                        release_date = datetime.strptime(release_date, "%Y-%m-%d").date()
+                        release_date = datetime.strptime(
+                            release_date, "%Y-%m-%d"
+                        ).date()
                     except Exception:
                         release_date = None
                 set_obj = CardSetDB(
@@ -91,12 +104,15 @@ def import_allprintings_json(
                     set_name=set_data.get("name"),
                     release_date=release_date,
                     block=set_data.get("block"),
-                    set_metadata=set_data
+                    set_metadata=set_data,
                 )
                 set_objs[set_code] = set_obj
                 set_db_objs.append(set_obj)
                 if progress_callback and len(set_items) > 0 and idx % 10 == 0:
-                    progress_callback(0.05 + 0.10 * (idx / len(set_items)), f"Inserted {idx+1}/{len(set_items)} sets...")
+                    progress_callback(
+                        0.05 + 0.10 * (idx / len(set_items)),
+                        f"Inserted {idx+1}/{len(set_items)} sets...",
+                    )
             session.bulk_save_objects(set_db_objs)
             session.commit()
             if progress_callback:
@@ -108,7 +124,9 @@ def import_allprintings_json(
             printing_db_objs = []
             card_count = 0
             print("[mtgjson_importer] Inserting cards and printings...")
-            for set_idx, (set_code, set_data) in enumerate(tqdm(set_items, desc="Cards", unit="set")):
+            for set_idx, (set_code, set_data) in enumerate(
+                tqdm(set_items, desc="Cards", unit="set")
+            ):
                 cards = set_data.get("cards", [])
                 set_obj = set_objs[set_code]
                 for card in cards:
@@ -138,38 +156,46 @@ def import_allprintings_json(
                         rulings=card.get("rulings"),
                         foreign_data=card.get("foreignData"),
                         card=card_db,
-                        set=set_obj
+                        set=set_obj,
                     )
                     printing_db_objs.append(printing)
                     card_count += 1
                     if progress_callback and total_cards > 0 and card_count % 1000 == 0:
-                        progress_callback(0.15 + 0.75 * (card_count / total_cards), f"Inserted {card_count} cards...")
+                        progress_callback(
+                            0.15 + 0.75 * (card_count / total_cards),
+                            f"Inserted {card_count} cards...",
+                        )
             session.bulk_save_objects(card_db_objs.values())
             session.bulk_save_objects(printing_db_objs)
             session.commit()
             if progress_callback:
                 progress_callback(0.95, "All cards and printings inserted.")
-            print(f"[mtgjson_importer] Inserted {len(card_db_objs)} unique cards and {len(printing_db_objs)} printings.")
+            print(
+                f"[mtgjson_importer] Inserted {len(card_db_objs)} unique cards and {len(printing_db_objs)} printings."
+            )
 
             # Set newest_printing_uid for each card (batch)
             print("[mtgjson_importer] Setting newest_printing_uid for each card...")
-            for card_db in tqdm(card_db_objs.values(), desc="Newest Printing", unit="card"):
+            for card_db in tqdm(
+                card_db_objs.values(), desc="Newest Printing", unit="card"
+            ):
                 printings = [p for p in printing_db_objs if p.card_name == card_db.name]
                 if printings:
                     newest = max(
                         printings,
-                        key=lambda p: getattr(getattr(p, "set", None), "release_date", None) or ""
+                        key=lambda p: getattr(
+                            getattr(p, "set", None), "release_date", None
+                        )
+                        or "",
                     )
-                    card_db.newest_printing_uid = newest.uid
+                    card_db.newest_printing_uid = newest.uuid
             session.bulk_save_objects(card_db_objs.values())
             session.commit()
 
             # Log the import
             mtime = os.path.getmtime(json_path)
             import_log = ImportLog(
-                json_path=json_path,
-                meta_date=meta_date,
-                mtime=mtime
+                json_path=json_path, meta_date=meta_date, mtime=mtime
             )
             session.merge(import_log)
             session.commit()
@@ -191,4 +217,3 @@ def import_allprintings_json(
     thread = threading.Thread(target=run, daemon=True)
     thread.start()
     return thread
-

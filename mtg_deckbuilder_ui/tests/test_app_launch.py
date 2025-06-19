@@ -4,9 +4,11 @@ import time
 import socket
 import os
 
+
 def is_port_open(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(('localhost', port)) == 0
+        return s.connect_ex(("localhost", port)) == 0
+
 
 def test_app_launch():
     """Test that the Gradio app launches and binds to port 42069."""
@@ -15,7 +17,9 @@ def test_app_launch():
     port = 42069
 
     # Start the app in a subprocess
-    proc = subprocess.Popen([sys.executable, app_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(
+        [sys.executable, app_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
     try:
         # Wait a few seconds for the server to start
         for _ in range(20):

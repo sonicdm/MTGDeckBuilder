@@ -1,0 +1,99 @@
+deck:
+  name: "Black-White Midrange"
+  colors: ["W", "B"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["modern"]
+  owned_cards_only: false
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: "bell"
+    curve_slope: "gentle"
+
+priority_cards:
+  - name: "Thoughtseize"
+    min_copies: 4
+  - name: "Lingering Souls"
+    min_copies: 4
+  - name: "Liliana of the Veil"
+    min_copies: 2
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 4
+    prefer: ["add {w}", "add {b}", "enters untapped"]
+    avoid: ["enters tapped unless"]
+
+categories:
+  disruption:
+    target: 8
+    priority_text: ["target player discards", "exile target", "destroy target"]
+
+  creatures:
+    target: 16
+    preferred_keywords: ["lifelink", "deathtouch", "flying"]
+    priority_text: ["when this creature enters", "when this creature attacks"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "exile target", "damage"]
+
+  card_advantage:
+    target: 4
+    priority_text: ["draw a card", "return target", "create a token"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["defender"]
+
+scoring_rules:
+  keyword_abilities:
+    lifelink: 2
+    deathtouch: 2
+    flying: 2
+    vigilance: 1
+    first_strike: 1
+
+  keyword_actions:
+    exile: 2
+    discard: 2
+    sacrifice: 1
+
+  text_matches:
+    "target player discards": 3
+    "destroy target": 2
+    "exile target": 2
+    "create a token": 2
+    "when this creature enters": 1
+
+  type_bonus:
+    basic_types:
+      creature: 2
+      planeswalker: 2
+    sub_types:
+      knight: 1
+      spirit: 1
+      zombie: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 4
+    penalty_per_point: 1
+
+  min_score_to_flag: 5
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["disruption", "creatures", "removal"]
+  allow_less_than_target: false

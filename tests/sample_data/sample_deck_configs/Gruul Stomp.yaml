@@ -1,0 +1,113 @@
+deck:
+  name: "Gruul Stomp"
+  colors: ["R", "G"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["alchemy"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Kessig Naturalist"
+    min_copies: 2
+  - name: "Town-razer Tyrant"
+    min_copies: 1
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer: ["add {r}", "add {g}"]
+    avoid: ["enters tapped unless", "enters tapped if", "if you control a vehicle", "unless you control"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 28
+    preferred_keywords: ["haste", "trample", "fight", "landfall"]
+    priority_text: ["when this creature attacks", "power is", "enters the battlefield"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 6
+    priority_text: ["damage", "fight", "destroy target"]
+    preferred_basic_type_priority: ["instant", "sorcery", "creature"]
+
+  card_draw:
+    target: 3
+    priority_text: ["draw a card", "when this dies", "exile the top card", "play that card"]
+    preferred_basic_type_priority: ["creature", "instant", "enchantment"]
+
+  buffs:
+    target: 4
+    priority_text: ["+x/+0", "until end of turn", "trample", "double strike"]
+    preferred_basic_type_priority: ["instant", "sorcery", "creature"]
+
+  utility:
+    target: 2
+    priority_text: ["treasure", "create a token", "scry"]
+    preferred_basic_type_priority: ["instant", "creature", "enchantment"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+
+  exclude_keywords: ["defender", "hexproof", "lifelink"]
+
+scoring_rules:
+  keyword_abilities:
+    haste: 3
+    trample: 2
+    hexproof: -5
+    deathtouch: 1
+    flying: 1
+
+  keyword_actions:
+    fight: 3
+    exile: 2
+    create: 1
+
+  ability_words:
+    landfall: 2
+    pack tactics: 2
+
+  text_matches:
+    "when this creature attacks": 2
+    "create a 1/1": 2
+    "fight target creature": 3
+    "/warrior/": 1
+    "/beast/": 1
+
+  type_bonus:
+    basic_types:
+      creature: 2
+    sub_types:
+      beast: 2
+      druid: 1
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+
+  min_score_to_flag: 6
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "buffs"]
+  allow_less_than_target: false

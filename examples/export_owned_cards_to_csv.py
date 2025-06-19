@@ -1,26 +1,41 @@
 import csv
 import os
+
+from mtg_deck_builder.db.bootstrap import bootstrap
+from mtg_deck_builder.db.repository import InventoryRepository, CardRepository
 from mtg_deck_builder.db.setup import setup_database
-from mtg_deck_builder.db.repository import InventoryRepository
+
 
 def export_owned_cards_to_csv(db_url, output_csv):
     from sqlalchemy.orm import sessionmaker
+    inventory_file = r"Z:\Scripts\MTGDecks\inventory_files\card inventory.txt"
+    all_printings_path = r"Z:\Scripts\MTGDecks\MTG_json_files\AllPrintings.json"
+    bootstrap(all_printings_path, inventory_file, db_url, use_tqdm=True)
     engine = setup_database(db_url)
     Session = sessionmaker(bind=engine)
     session = Session()
-
+    card_repo = CardRepository(session=session)
     inventory_repo = InventoryRepository(session)
     owned_cards = inventory_repo.get_owned_cards()
+    owned_repo = card_repo.get_owned_cards_by_inventory(inventory_repo.get_owned_cards())
+    # filter by color identity
+    ub_repo = owned_repo.filter_cards(color_identity=["U", "B", "R"], color_mode="subset", legal_in="alchemy")
+    # export repo to csv
 
-    with open(output_csv, "w", newline='', encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Card Name", "Quantity"])
-        for item in owned_cards:
-            writer.writerow([item.card_name, item.quantity])
+    with open(output_csv, mode='w', newline='', encoding='utf-8') as csvfile:
+        fieldnames = ['name', 'rarity', 'color_identity', 'owned_qty', 'text', 'mana_cost']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for card in ub_repo.get_all_cards():
+            writer.writerow({
+                'name': card.name,
+                'rarity': card.rarity,
+                'color_identity': card.colors,
+                'owned_qty': card.owned_qty,
+                'text': card.text,
+                'mana_cost': card.mana_cost,
+            })
 
-    session.close()
-    engine.dispose()
-    print(f"Exported {len(owned_cards)} owned cards to {output_csv}")
 
 if __name__ == "__main__":
     # Adjust these paths as needed

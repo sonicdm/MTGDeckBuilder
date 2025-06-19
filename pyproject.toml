@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mtg_deckbuilder_ui"
+version = "0.1.0"
+description = "MTG Deck Builder UI"
+requires-python = ">=3.8"
+dependencies = [
+    "pydantic",
+    "pandas",
+    "gradio",
+    "matplotlib",
+    "pyperclip",
+    "sqlalchemy",
+    "fastapi",
+    "uvicorn"
+]
+
+[tool.setuptools]
+packages = ["mtg_deckbuilder_ui", "mtg_deck_builder"] 

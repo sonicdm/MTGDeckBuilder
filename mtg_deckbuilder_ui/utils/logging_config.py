@@ -1,3 +1,5 @@
+# mtg_deckbuilder_ui/utils/logging_config.py
+
 """
 logging_config.py
 
@@ -13,21 +15,23 @@ from pathlib import Path
 
 # Default configuration
 DEFAULT_LOG_LEVEL = logging.INFO
-DEFAULT_LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-LOG_DIRECTORY = 'logs'
+DEFAULT_LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+LOG_DIRECTORY = "logs"
 
 # Dictionary mapping string log level names to their numeric values
 LOG_LEVELS = {
-    'DEBUG': logging.DEBUG,
-    'INFO': logging.INFO,
-    'WARNING': logging.WARNING,
-    'ERROR': logging.ERROR,
-    'CRITICAL': logging.CRITICAL
+    "DEBUG": logging.DEBUG,
+    "INFO": logging.INFO,
+    "WARNING": logging.WARNING,
+    "ERROR": logging.ERROR,
+    "CRITICAL": logging.CRITICAL,
 }
+
 
 def get_log_level(level_name):
     """Convert string log level to numeric log level"""
     return LOG_LEVELS.get(level_name.upper(), DEFAULT_LOG_LEVEL)
+
 
 def setup_logging(app_config=None, log_to_file=True, log_to_console=True):
     """
@@ -50,7 +54,7 @@ def setup_logging(app_config=None, log_to_file=True, log_to_console=True):
     log_level = DEFAULT_LOG_LEVEL
     if app_config:
         try:
-            log_level_name = app_config.get_setting('log_level', 'Logging', 'INFO')
+            log_level_name = app_config.get("Logging", "log_level", "INFO")
             log_level = get_log_level(log_level_name)
         except Exception as e:
             print(f"Error getting log level from config: {e}")
@@ -74,16 +78,15 @@ def setup_logging(app_config=None, log_to_file=True, log_to_console=True):
 
     # Add file handler if requested
     if log_to_file:
-        log_file = os.path.join(LOG_DIRECTORY, 'mtg_deckbuilder.log')
+        log_file = os.path.join(LOG_DIRECTORY, "mtg_deckbuilder.log")
         file_handler = RotatingFileHandler(
-            log_file,
-            maxBytes=10_485_760,  # 10 MB
-            backupCount=5
+            log_file, maxBytes=10_485_760, backupCount=5  # 10 MB
         )
         file_handler.setFormatter(formatter)
         root_logger.addHandler(file_handler)
 
     return root_logger
+
 
 def get_logger(name):
     """

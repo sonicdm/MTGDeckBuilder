@@ -25,3 +25,9 @@
     font-weight: bold;
     padding: 12px 24px;
 }
+
+#deck-info-md, #deck-analytics-md {
+    min-height: 180px;
+    max-height: 400px;
+    overflow-y: auto;
+}

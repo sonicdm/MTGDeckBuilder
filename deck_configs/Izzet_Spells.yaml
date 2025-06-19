@@ -1,0 +1,115 @@
+deck:
+  name: "Thunder of the Mind"
+  colors: ["U", "R"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["alchemy"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 4
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Play with Fire"
+    min_copies: 4
+  - name: "Lightning Strike"
+    min_copies: 4
+  - name: "Consider"
+    min_copies: 2
+  - name: "Shivan Reef"
+    min_copies: 4
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 8
+    prefer: ["add {u}", "add {r}", "fixing"]
+    avoid: ["vehicle", "mount", "pilot","/damage.*you/"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 16
+    preferred_keywords: ["flying", "haste", "prowess"]
+    priority_text: ["whenever you cast", "when you cast", "/spells you cast/", "/damage/"]
+    preferred_basic_type_priority: ["creature"]
+
+  removal:
+    target: 12
+    priority_text: ["damage", "destroy", "/-x/-x/", "exile", "/deal.*damage/"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  card_draw:
+    target: 4
+    priority_text: ["draw a card", "scry", "look at"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  utility:
+    target: 4
+    priority_text: ["counter target", "return target", "copy target"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["defender", "lifelink"]
+
+scoring_rules:
+  keyword_abilities:
+    prowess: 3
+    flying: 2
+    haste: 2
+    flash: 1
+    hexproof: -2
+
+  keyword_actions:
+    scry: 1
+    exile: 2
+    copy: 3
+    damage: 3
+
+  ability_words:
+    spellcraft: 3
+    magecraft: 3
+
+  text_matches:
+    "whenever you cast": 3
+    "when you cast": 3
+    "/deal.*damage/": 3
+    "/damage/": 2
+    "/draw a card/": 1
+    "/scry/": 1
+    "/copy target/": 2
+
+  type_bonus:
+    basic_types:
+      instant: 2
+      sorcery: 2
+    sub_types:
+      wizard: 2
+      drake: 1
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 4
+    penalty_per_point: 1
+
+  min_score_to_flag: 5
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["removal", "creatures", "utility", "card_draw"]
+  allow_less_than_target: false 

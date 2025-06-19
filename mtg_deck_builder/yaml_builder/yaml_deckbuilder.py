@@ -1,139 +1,224 @@
+"""YAML Deck Builder Module.
+
+This module provides the main entry points for constructing a Deck object from a YAML file or
+configuration dictionary, using the provided card and inventory repositories. It supports deck
+building with category targets, priority cards, mana base configuration, and fallback strategies,
+and allows for callback hooks at various stages of the build process.
+
+Functions:
+    build_deck_from_config: Build a Deck from a DeckConfig object.
+    build_deck_from_yaml: Build a Deck from a YAML file or dictionary.
+    load_yaml_config: Load a YAML configuration file into a DeckConfig object.
+"""
+
 import logging
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Set, Union, Callable, TypeVar, cast
+import os
+import traceback
 
 import yaml
 
-from mtg_deck_builder.db.repository import CardRepository, InventoryRepository
+from mtg_deck_builder.db import get_session
+from mtg_deck_builder.db.repository import SummaryCardRepository, CardRepository
 from mtg_deck_builder.models.deck import Deck
+from mtg_deck_builder.models.deck_config import DeckConfig
+from mtg_deck_builder.yaml_builder.deck_build_classes import BuildContext, DeckBuildContext
+from mtg_deck_builder.yaml_builder.types import CallbackDict
 from mtg_deck_builder.yaml_builder.helpers import (
-    _select_priority_cards,
-    _select_special_lands,
-    _distribute_basic_lands,
+    _handle_priority_cards,
+    _handle_basic_lands,
     _fill_categories,
-    _fill_with_any,
+    _prune_overfilled_categories,
+    _log_deck_composition,
+    _filter_summary_repository,
+    _handle_special_lands,
+    _handle_fallback_strategy,
     _finalize_deck,
+    _apply_card_constraints
 )
-from mtg_deck_builder.deck_config.deck_config import DeckConfig
+from mtg_deck_builder.yaml_builder.helpers.card_scoring import score_card
+from mtg_deck_builder.yaml_builder.helpers.mana_curve import _compute_mana_symbols
 
 logger = logging.getLogger(__name__)
 
-def _run_callback(callbacks, hook_name, **kwargs):
-    if callbacks and hook_name in callbacks:
-        kwargs["hook_name"] = hook_name
-        try:
-            callbacks[hook_name](**kwargs)
-        except Exception as e:
-            logger.warning(f"Callback '{hook_name}' raised an error: {e}")
+# Type variables for better type hinting
+T = TypeVar('T')
 
 def build_deck_from_config(
     deck_config: DeckConfig,
-    card_repo: CardRepository,
-    inventory_repo: Optional[InventoryRepository] = None,
-    callbacks: Optional[Dict[str, Any]] = None
-) -> Deck:
-    logger.debug(f"[DEBUG] Entering build_deck_from_config")
-
-    deck_meta = deck_config.deck
-    categories = deck_config.categories or {}
-    priority_cards = deck_config.priority_cards or []
-    mana_base = deck_config.mana_base or {}
-    card_constraints = deck_config.card_constraints or None
-    scoring_rules = deck_config.scoring_rules or None
-    fallback = deck_config.fallback_strategy or None
-    mana_curve = deck_meta.mana_curve or {}
-    owned_cards_only = deck_meta.owned_cards_only
-
-    deck_size = deck_meta.size
-    max_copies = deck_meta.max_card_copies
-    allowed_colors = set(deck_meta.colors)
-    legalities = deck_meta.legalities
-    color_match_mode = deck_meta.color_match_mode
-    mana_min = mana_curve.get("min", None)
-    mana_max = mana_curve.get("max", None)
-    _run_callback(callbacks, "after_deck_config_load", config=deck_config)
-    # Inventory handling
-    inventory_items = None
-    if owned_cards_only and inventory_repo:
-        inventory_items = inventory_repo.get_owned_cards()
-        repo = card_repo.get_owned_cards_by_inventory(inventory_items)
-        _run_callback(callbacks, "after_inventory_load", inventory_items=inventory_items, repo=repo, config=deck_config) # New callback
-    else:
-        repo = card_repo
-
-    _run_callback(callbacks, "before_initial_repo_filter", repo=repo, config=deck_config) # New callback (before filtering)
-    repo = repo.filter_cards(
-        color_identity=list(allowed_colors),
-        color_mode=color_match_mode,
-        legal_in=legalities[0] if legalities else None
+    summary_repo: SummaryCardRepository,
+    callbacks: Optional[CallbackDict] = None,
+    verbose: bool = False,
+) -> Optional[Deck]:
+    """Build a deck from a configuration object."""
+    logger.info(f"Starting deck build for {deck_config.name}")
+    logger.info(f"Deck configuration: colors={deck_config.colors}, size={deck_config.deck.size}, max_copies={deck_config.deck.max_card_copies}")
+    
+    # Initialize build context
+    deck = Deck(name=deck_config.name)
+    deck_build_context = DeckBuildContext(
+        config=deck_config,
+        summary_repo=summary_repo,
+        deck=deck
     )
-    _run_callback(callbacks, "after_initial_repo_filter", repo=repo, config=deck_config) # New callback (after filtering)
-
-    # Fetch basic lands using the new names_in parameter for precision and robustness.
-    # Uses the original card_repo to ensure all basic land types are available.
-    basic_land_names = ["Plains", "Island", "Swamp", "Mountain", "Forest"]
-    basic_lands_repo = card_repo.filter_cards(names_in=basic_land_names, type_query="Basic Land")
-    basic_lands = basic_lands_repo.get_all_cards()
-
-    # Priority cards
-    selected_cards = _select_priority_cards(priority_cards, card_repo, allowed_colors, color_match_mode, legalities, max_copies)
-    _run_callback(callbacks, "after_priority_cards", selected=selected_cards, config=deck_config, repo=card_repo)
-
-    # Mana base
-    land_count = getattr(mana_base, "land_count", 22)
-    special_lands_meta = getattr(mana_base, "special_lands", None)
-    special_land_limit = getattr(special_lands_meta, "count", 0) if special_lands_meta else 0
-    special_land_prefer = getattr(special_lands_meta, "prefer", []) if special_lands_meta else []
-    special_land_avoid = getattr(special_lands_meta, "avoid", []) if special_lands_meta else []
-
-    all_lands = [card for card in repo.get_all_cards() if card.matches_type("land")]
-    non_basic_lands = [card for card in all_lands if not card.is_basic_land()]
-    special_lands = _select_special_lands(
-        non_basic_lands, special_land_prefer, special_land_avoid, special_land_limit, allowed_colors
+    build_context = BuildContext(
+        deck_config=deck_config,
+        summary_repo=summary_repo,
+        callbacks=callbacks,
+        deck_build_context=deck_build_context
     )
-    for land in special_lands:
-        land.owned_qty = 1
-        selected_cards[land.name] = land
+    
+    try:
+        # Step 1: Apply deck-wide filters
+        logger.info("[BuildPhase] Step 1: Applying deck-wide filters")
+        _filter_summary_repository(build_context)
+        
+        # Step 2: Add priority cards
+        logger.info("[BuildPhase] Step 2: Adding priority cards")
+        _handle_priority_cards(build_context)
+        
+        # Step 3: Apply card constraints
+        logger.info("[BuildPhase] Step 3: Applying card constraints")
+        _apply_card_constraints(build_context)
+        
+        # Step 4: Compute mana symbol distribution
+        logger.info("[BuildPhase] Step 4: Computing mana symbol distribution")
+        _compute_mana_symbols(build_context)
+        
+        # Step 5: Calculate available slots for non-land cards
+        if build_context.mana_base and hasattr(build_context.mana_base, 'land_count'):
+            target_lands = build_context.mana_base.land_count
+            available_slots = deck_config.deck.size - target_lands
+        else:
+            target_lands = 0
+            available_slots = deck_config.deck.size
+            
+        # Step 6: Fill category roles with available slots
+        logger.info("[BuildPhase] Step 6: Filling category roles")
+        if build_context.deck_build_context:
+            logger.info(f"Before categories: {build_context.deck_build_context.get_total_cards()} cards")
+        _fill_categories(build_context, available_slots)
+        if build_context.deck_build_context:
+            logger.info(f"After categories: {build_context.deck_build_context.get_total_cards()} cards")
 
-    num_special = len(special_lands)
-    num_basic_needed = max(0, land_count - num_special)
-    _distribute_basic_lands(selected_cards, basic_lands, allowed_colors, num_basic_needed, legalities, max_copies=max_copies)
-    _run_callback(callbacks, "after_land_selection", selected=selected_cards, config=deck_config, repo=card_repo)
+        # Step 7: Add special lands
+        logger.info("[BuildPhase] Step 7: Adding special lands")
+        if build_context.deck_build_context:
+            logger.info(f"Before special lands: {build_context.deck_build_context.get_total_cards()} cards")
+        if build_context.mana_base and build_context.mana_base.special_lands:
+            _handle_special_lands(build_context)
+        if build_context.deck_build_context:
+            logger.info(f"After special lands: {build_context.deck_build_context.get_total_cards()} cards")
+            
+        # Step 8: Add basic lands
+        logger.info("[BuildPhase] Step 8: Adding basic lands")
+        if build_context.deck_build_context:
+            logger.info(f"Before basic lands: {build_context.deck_build_context.get_total_cards()} cards")
+        if build_context.mana_base:
+            _handle_basic_lands(build_context)
+        if build_context.deck_build_context:
+            logger.info(f"After basic lands: {build_context.deck_build_context.get_total_cards()} cards")
+        logger.info("[BuildPhase] Step 9: Applying fallback strategy")
+        if build_context.deck_build_context:
+            logger.info(f"Before fallback: {build_context.deck_build_context.get_total_cards()} cards")
+        _handle_fallback_strategy(build_context)
+        if build_context.deck_build_context:
+            logger.info(f"After fallback: {build_context.deck_build_context.get_total_cards()} cards")
+        # Step 10: Finalize deck
+        logger.info("[BuildPhase] Step 10: Finalizing deck")
+        _finalize_deck(build_context)
+        
+        # Validate final deck size
+        if build_context.deck_build_context:
+            final_size = build_context.deck_build_context.get_total_cards()
+            if final_size != deck_config.deck.size:
+                logger.warning(f"Deck size mismatch: expected {deck_config.deck.size}, got {final_size}")
+                # Prune lowest scoring cards to match target size
+                _prune_overfilled_categories(build_context, deck_config.deck.size)
+                # Verify size after pruning
+                final_size = build_context.deck_build_context.get_total_cards()
+                if final_size != deck_config.deck.size:
+                    raise ValueError(f"Failed to prune deck to target size. Current size: {final_size}, target: {deck_config.deck.size}")
+            
+        # Log final deck composition
+        if build_context.deck_build_context:
+            _log_deck_composition(build_context)
+            
+        return build_context.deck_build_context.deck if build_context.deck_build_context else None
+        
+    except Exception as e:
+        logger.error(f"Error building deck: {str(e)}")
+        logger.error(traceback.format_exc())
+        return None
 
-    # Fill categories
-    _fill_categories(
-        categories, repo, selected_cards, mana_min, mana_max, max_copies, deck_size,
-        scoring_rules=scoring_rules, card_constraints=card_constraints, inventory_items=inventory_items,
-        callbacks=callbacks  # Pass callbacks to _fill_categories
-    )
-    _run_callback(callbacks, "after_categories", selected=selected_cards, config=deck_config, repo=card_repo)
-
-    # Fallback
-    _run_callback(callbacks, "before_fallback_fill", selected_cards=selected_cards, deck_size=deck_size, current_card_count=sum(c.owned_qty for c in selected_cards.values()), config=deck_config) # New callback
-    if fallback and getattr(fallback, "fill_with_any", True):
-        _fill_with_any(
-            repo, selected_cards, deck_size, mana_min, mana_max, max_copies,
-            scoring_rules=scoring_rules, card_constraints=card_constraints, inventory_items=inventory_items, callbacks=callbacks # Pass callbacks
-        )
-
-    _run_callback(callbacks, "before_finalize", selected=selected_cards, config=deck_config, repo=card_repo)
-
-    deck = _finalize_deck(selected_cards, max_copies, deck_size)
-    deck.session = card_repo.session
-    deck.config = deck_config
-    return deck
 
 def build_deck_from_yaml(
-    yaml_data: Union[Dict[str, Any],str],
-    card_repo: CardRepository,
-    inventory_repo: Optional[InventoryRepository] = None,
-    callbacks: Optional[Dict[str, Any]] = None
-) -> Deck:
-    if isinstance(yaml_data, str):
-        yaml_path = Path(yaml_data)
-        if not yaml_path.exists():
-            raise FileNotFoundError(f"YAML file not found: {yaml_path}")
-        with open(yaml_path, 'r') as file:
-            yaml_data = yaml.safe_load(file)
-    deck_config = DeckConfig.model_validate(yaml_data) if not isinstance(yaml_data, DeckConfig) else yaml_data
-    return build_deck_from_config(deck_config, card_repo, inventory_repo, callbacks=callbacks)
+    yaml_data: Union[Dict[str, Any], str],
+    summary_repo: SummaryCardRepository,
+    callbacks: Optional[CallbackDict] = None,
+    verbose: bool = False,
+) -> Optional[Deck]:
+    """Build a deck from YAML data.
+    
+    Args:
+        yaml_data: YAML data or path
+        summary_repo: Summary card repository
+        callbacks: Optional callbacks for build stages
+        verbose: Whether to enable detailed logging
+        
+    Returns:
+        Deck object if successful, None otherwise
+    """
+    try:
+        # Load configuration
+        config_dict: Dict[str, Any]
+        if isinstance(yaml_data, str):
+            if os.path.exists(yaml_data):
+                with open(yaml_data, 'r') as f:
+                    config_dict = yaml.safe_load(f)
+            else:
+                config_dict = yaml.safe_load(yaml_data)
+        else:
+            config_dict = yaml_data
+                
+        # Create deck config
+        deck_config = DeckConfig.from_dict(config_dict)
+        
+        # Build deck
+        return build_deck_from_config(deck_config, summary_repo, callbacks, verbose)
+        
+    except Exception as e:
+        logger.error(f"Error building deck from YAML: {e}", exc_info=True)
+        return None
+
+
+def load_yaml_config(yaml_path: Union[str, Path]) -> DeckConfig:
+    """Load a YAML configuration file into a DeckConfig object.
+    
+    Args:
+        yaml_path: Path to the YAML configuration file
+        
+    Returns:
+        DeckConfig object initialized with the YAML data
+        
+    Raises:
+        FileNotFoundError: If the YAML file doesn't exist
+        yaml.YAMLError: If the YAML file is invalid
+        ValueError: If the YAML data is invalid for deck configuration
+    """
+    yaml_path = Path(yaml_path)
+    if not yaml_path.exists():
+        raise FileNotFoundError(f"YAML configuration file not found: {yaml_path}")
+        
+    with open(yaml_path, 'r', encoding='utf-8') as f:
+        try:
+            yaml_data = yaml.safe_load(f)
+        except yaml.YAMLError as e:
+            raise yaml.YAMLError(f"Invalid YAML in {yaml_path}: {e}")
+            
+    if not isinstance(yaml_data, dict):
+        raise ValueError(f"Invalid YAML data in {yaml_path}: root must be a dictionary")
+        
+    return DeckConfig.model_validate(yaml_data)

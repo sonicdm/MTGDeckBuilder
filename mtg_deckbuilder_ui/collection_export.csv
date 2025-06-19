@@ -1,0 +1,2879 @@
+Name,Colors,Set,Rarity,Type,Owned Qty
+Pacifism,W,,common,Enchantment — Aura,3
+Pariah,W,,rare,Enchantment — Aura,1
+Serra Angel,W,,rare,Creature — Angel,4
+Arcanis the Omnipotent,U,,rare,Legendary Creature — Wizard,1
+Unsummon,U,,common,Instant,2
+Nightmare,B,,rare,Creature — Nightmare Horse,1
+Scathe Zombies,B,,common,Creature — Zombie,4
+Sengir Vampire,B,,rare,Creature — Vampire,3
+Pyroclasm,R,,uncommon,Sorcery,1
+Raging Goblin,R,,common,Creature — Goblin Berserker,2
+Shivan Dragon,R,,rare,Creature — Dragon,1
+Shock,R,,common,Instant,2
+Commune with Nature,G,,common,Sorcery,2
+Giant Growth,G,,common,Instant,2
+Llanowar Elves,G,,common,Creature — Elf Druid,4
+Overrun,G,,uncommon,Sorcery,1
+Rampant Growth,G,,common,Sorcery,1
+Juggernaut,,,uncommon,Artifact Creature — Juggernaut,1
+Ornithopter,,,uncommon,Artifact Creature — Thopter,1
+Battlefield Forge,"R,W",,rare,Land,1
+Caves of Koilos,"B,W",,rare,Land,1
+Llanowar Wastes,"B,G",,rare,Land,1
+Shivan Reef,"R,U",,rare,Land,1
+Sulfurous Springs,"B,R",,rare,Land,1
+Terramorphic Expanse,,,common,Land,3
+Yavimaya Coast,"G,U",,rare,Land,1
+Disenchant,W,,common,Instant,1
+Savannah Lions,W,,rare,Creature — Cat,4
+Raise Dead,B,,common,Sorcery,3
+Dragon Whelp,R,,uncommon,Creature — Dragon,2
+Hurloon Minotaur,R,,common,Creature — Minotaur,4
+Shatter,R,,common,Instant,2
+Doomed Traveler,W,,common,Creature — Human Soldier,1
+Smothering Tithe,W,,rare,Enchantment,1
+Ingenious Skaab,U,,common,Creature — Zombie Horror,1
+Spell Pierce,U,,common,Instant,1
+Bitterblossom,B,,mythic,Kindred Enchantment — Faerie,1
+Blood Artist,B,,uncommon,Creature — Vampire,1
+Disfigure,B,,common,Instant,1
+Go for the Throat,B,,uncommon,Instant,4
+Skeleton Archer,B,,common,Creature — Skeleton Archer,2
+Unearth,B,,common,Sorcery,1
+Vampiric Rites,B,,uncommon,Enchantment,2
+Biogenic Upgrade,G,,uncommon,Sorcery,1
+Experiment One,G,,common,Creature — Human Ooze,1
+Hardened Scales,G,,rare,Enchantment,1
+Assassin's Trophy,"B,G",,rare,Instant,1
+"Aurelia, the Warleader","R,W",,mythic,Legendary Creature — Angel,1
+Conclave Mentor,"G,W",,uncommon,Creature — Centaur Cleric,1
+Heroic Reinforcements,"R,W",,uncommon,Sorcery,2
+Lightning Helix,"R,W",,uncommon,Instant,2
+"Muldrotha, the Gravetide","B,G,U",,mythic,Legendary Creature — Elemental Avatar,2
+Sultai Soothsayer,"B,G,U",,uncommon,Creature — Snake Shaman,1
+Thousand-Year Storm,"R,U",,rare,Enchantment,1
+Archangel of Thune,W,,mythic,Creature — Angel,1
+Crusader of Odric,W,,common,Creature — Human Soldier,3
+Fencing Ace,W,,uncommon,Creature — Human Soldier,2
+Strength of Arms,W,,common,Instant,1
+Valorous Stance,W,,uncommon,Instant,2
+Abrade,R,,common,Instant,3
+Champion of Lambholt,G,,rare,Creature — Human Warrior,1
+Doubling Season,G,,mythic,Enchantment,4
+Reclamation Sage,G,,uncommon,Creature — Elf Shaman,1
+Ulvenwald Mysteries,G,,uncommon,Enchantment,1
+"Breya, Etherium Shaper","B,R,U,W",,mythic,Legendary Artifact Creature — Human,1
+Hidden Stockpile,"B,W",,uncommon,Enchantment,1
+Maelstrom Pulse,"B,G",,rare,Sorcery,1
+Gleaming Barrier,,,common,Artifact Creature — Wall,4
+Magnifying Glass,,,common,Artifact,4
+Wurmcoil Engine,,,mythic,Artifact Creature — Phyrexian Wurm,1
+Ivory Tower,,,rare,Artifact,2
+Aetherize,U,,uncommon,Instant,2
+Reconnaissance Mission,U,,uncommon,Enchantment,1
+Cultivate,G,,common,Sorcery,1
+Explore,G,,common,Sorcery,1
+Harrow,G,,common,Instant,1
+Inspiring Call,G,,uncommon,Instant,4
+Mortify,"B,W",,uncommon,Instant,2
+Arcane Signet,,,common,Artifact,4
+Gilded Lotus,,,rare,Artifact,1
+Command Tower,,,common,Land,4
+Dismal Backwater,"B,U",,common,Land,4
+Evolving Wilds,,,common,Land,1
+Port Town,"U,W",,rare,Land,1
+Rugged Highlands,"G,R",,common,Land,1
+Scoured Barrens,"B,W",,common,Land,2
+Swiftwater Cliffs,"R,U",,common,Land,4
+Temple of Abandon,"G,R",,rare,Land,1
+Temple of Epiphany,"R,U",,rare,Land,1
+Temple of Mystery,"G,U",,rare,Land,1
+Thornwood Falls,"G,U",,common,Land,2
+Tranquil Cove,"U,W",,common,Land,1
+Jalum Tome,,,rare,Artifact,2
+Volcanic Dragon,R,,rare,Creature — Dragon,2
+Volcanic Geyser,R,,uncommon,Instant,1
+Sleight of Hand,U,,common,Sorcery,3
+Duress,B,,common,Sorcery,4
+Curiosity,U,,uncommon,Enchantment — Aura,1
+Phyrexian Arena,B,,rare,Enchantment,1
+Zombify,B,,uncommon,Sorcery,4
+Phyrexian Gargantua,B,,uncommon,Creature — Phyrexian Horror,2
+Murder,B,,common,Instant,2
+Zulaport Cutthroat,B,,uncommon,Creature — Human Rogue Ally,1
+Frenzied Goblin,R,,common,Creature — Goblin Berserker,2
+Humble Defector,R,,uncommon,Creature — Human Rogue,1
+"Azusa, Lost but Seeking",G,,rare,Legendary Creature — Human Monk,1
+Colossal Dreadmaw,G,,common,Creature — Dinosaur,1
+Epic Confrontation,G,,common,Sorcery,3
+Plummet,G,,common,Instant,1
+Utopia Sprawl,G,,uncommon,Enchantment — Aura,2
+Cloudblazer,"U,W",,uncommon,Creature — Human Scout,2
+Prophetic Prism,,,common,Artifact,1
+Self-Assembler,,,common,Artifact Creature — Assembly-Worker,1
+Swiftfoot Boots,,,uncommon,Artifact — Equipment,1
+Negate,U,,common,Instant,1
+Druid of the Cowl,G,,common,Creature — Elf Druid,4
+Heroic Intervention,G,,rare,Instant,1
+Belt of Giant Strength,G,,rare,Artifact — Equipment,1
+Angel of Finality,W,,rare,Creature — Angel,2
+Imprisoned in the Moon,U,,rare,Enchantment — Aura,2
+Reassembling Skeleton,B,,uncommon,Creature — Skeleton Warrior,4
+Victimize,B,,uncommon,Sorcery,1
+"Etali, Primal Storm",R,,rare,Legendary Creature — Elder Dinosaur,1
+Colossal Majesty,G,,uncommon,Enchantment,2
+Garruk's Uprising,G,,uncommon,Enchantment,2
+Kenrith's Transformation,G,,uncommon,Enchantment — Aura,1
+Return of the Wildspeaker,G,,rare,Instant,1
+Return to Nature,G,,common,Instant,1
+Burnished Hart,,,uncommon,Artifact Creature — Elk,2
+Lumbering Falls,"G,U",,rare,Land,1
+The Book of Exalted Deeds,W,,mythic,Legendary Artifact,1
+Cleric Class,W,,uncommon,Enchantment — Class,1
+Dawnbringer Cleric,W,,common,Creature — Human Cleric,1
+A-Dawnbringer Cleric,W,,common,Creature — Human Cleric,1
+Paladin Class,W,,rare,Enchantment — Class,1
+Potion of Healing,W,,common,Artifact,1
+Steadfast Paladin,W,,common,Creature — Dwarf Knight,1
+You're Ambushed on the Road,W,,common,Instant,1
+Charmed Sleep,U,,common,Enchantment — Aura,2
+Mind Flayer,U,,rare,Creature — Horror,1
+Secret Door,U,,common,Artifact Creature — Wall,1
+Shocking Grasp,U,,common,Instant,1
+Silver Raven,U,,common,Artifact Creature — Bird,1
+Soulknife Spy,U,,common,Creature — Elf Rogue,1
+Sudden Insight,U,,uncommon,Instant,1
+Asmodeus the Archfiend,B,,rare,Legendary Creature — Devil God,1
+Black Dragon,B,,uncommon,Creature — Dragon,3
+Deadly Dispute,B,,common,Instant,1
+Herald of Hadar,B,,common,Creature — Human Warlock,1
+Skullport Merchant,B,,uncommon,Creature — Dwarf Citizen,1
+Vampire Spawn,B,,common,Creature — Vampire,3
+Dueling Rapier,R,,common,Artifact — Equipment,2
+Flameskull,R,,mythic,Creature — Skeleton,1
+Goblin Javelineer,R,,common,Creature — Goblin Warrior,1
+Hoarding Ogre,R,,common,Creature — Ogre,1
+Red Dragon,R,,uncommon,Creature — Dragon,4
+Unexpected Windfall,R,,common,Instant,1
+Valor Singer,R,,common,Creature — Tiefling Bard,2
+Choose Your Weapon,G,,uncommon,Instant,1
+Circle of the Moon Druid,G,,common,Creature — Human Elf Druid,1
+Gnoll Hunter,G,,common,Creature — Gnoll,2
+Inspiring Bard,G,,common,Creature — Elf Bard,1
+Wild Shape,G,,uncommon,Instant,1
+Greataxe,,,common,Artifact — Equipment,1
+Iron Golem,,,uncommon,Artifact Creature — Golem,1
+Banishing Light,W,,uncommon,Enchantment,2
+Goblin Oriflamme,R,,uncommon,Enchantment,1
+Scorching Dragonfire,R,,common,Instant,4
+Lightning Strike,R,,uncommon,Instant,2
+Regal Caracal,W,,rare,Creature — Cat,1
+Essence Scatter,U,,common,Instant,2
+Slither Blade,U,,common,Creature — Snake Rogue,1
+Doomed Dissenter,B,,common,Creature — Human,4
+Fling,R,,common,Instant,1
+Vizier of the Menagerie,G,,mythic,Creature — Snake Cleric,1
+Enigma Drake,"R,U",,uncommon,Creature — Drake,2
+Highland Lake,"R,U",,common,Land,1
+Woodland Stream,"G,U",,common,Land,1
+Crash Through,R,,common,Sorcery,3
+Firebrand Archer,R,,common,Creature — Human Archer,4
+Life Goes On,G,,common,Instant,2
+Bone Splinters,B,,common,Sorcery,1
+Death Baron,B,,rare,Creature — Zombie Wizard,1
+Dragon Fodder,R,,common,Sorcery,4
+Angel of Vitality,W,,uncommon,Creature — Angel,2
+Angelic Guardian,W,,rare,Creature — Angel,1
+Angelic Reward,W,,uncommon,Enchantment — Aura,1
+Bond of Discipline,W,,uncommon,Sorcery,1
+Charmed Stray,W,,common,Creature — Cat,4
+Confront the Assault,W,,uncommon,Instant,1
+Goring Ceratops,W,,rare,Creature — Dinosaur,1
+Hallowed Priest,W,,uncommon,Creature — Human Cleric,4
+Impassioned Orator,W,,common,Creature — Human Cleric,3
+Inspiring Commander,W,,rare,Creature — Human Soldier,2
+Knight's Pledge,W,,common,Enchantment — Aura,3
+Leonin Warleader,W,,rare,Creature — Cat Soldier,2
+Moorland Inquisitor,W,,common,Creature — Human Soldier,2
+Sanctuary Cat,W,,common,Creature — Cat,2
+Shrine Keeper,W,,common,Creature — Human Cleric,4
+Spiritual Guardian,W,,common,Creature — Spirit,1
+Tactical Advantage,W,,common,Instant,4
+Armored Whirl Turtle,U,,common,Creature — Turtle,3
+Cloudkin Seer,U,,common,Creature — Elemental Wizard,3
+Frilled Sea Serpent,U,,common,Creature — Serpent,1
+Glint,U,,common,Instant,2
+Octoprophet,U,,common,Creature — Octopus,2
+Overflowing Insight,U,,rare,Sorcery,1
+Riddlemaster Sphinx,U,,rare,Creature — Sphinx,2
+River's Favor,U,,common,Enchantment — Aura,2
+Sleep,U,,uncommon,Sorcery,1
+Soulblade Djinn,U,,rare,Creature — Djinn,2
+Sworn Guardian,U,,common,Creature — Merfolk Warrior,2
+Wall of Runes,U,,common,Creature — Wall,2
+Warden of Evos Isle,U,,uncommon,Creature — Bird Wizard,3
+Waterkin Shaman,U,,common,Creature — Elemental Shaman,3
+Waterknot,U,,common,Enchantment — Aura,3
+Windreader Sphinx,U,,rare,Creature — Sphinx,1
+Windstorm Drake,U,,uncommon,Creature — Drake,2
+Winged Words,U,,common,Sorcery,2
+Zephyr Gull,U,,common,Creature — Bird,4
+Bad Deal,B,,uncommon,Sorcery,1
+Compound Fracture,B,,common,Instant,4
+Cruel Cut,B,,common,Instant,1
+Demon of Loathing,B,,rare,Creature — Demon,2
+Eternal Thirst,B,,uncommon,Enchantment — Aura,1
+Krovikan Scoundrel,B,,common,Creature — Human Rogue,2
+Malakir Cullblade,B,,uncommon,Creature — Vampire Warrior,3
+Mardu Outrider,B,,rare,Creature — Orc Warrior,2
+Sanitarium Skeleton,B,,common,Creature — Skeleton,3
+Savage Gorger,B,,common,Creature — Vampire,3
+Soulhunter Rakshasa,B,,rare,Creature — Demon,1
+Typhoid Rats,B,,common,Creature — Rat,2
+Unlikely Aid,B,,common,Instant,3
+Vampire Opportunist,B,,common,Creature — Vampire,2
+Burn Bright,R,,common,Instant,2
+Goblin Gang Leader,R,,uncommon,Creature — Goblin Warrior,2
+Goblin Gathering,R,,common,Sorcery,4
+Goblin Trashmaster,R,,rare,Creature — Goblin Warrior,1
+Goblin Tunneler,R,,common,Creature — Goblin Rogue,2
+Immortal Phoenix,R,,rare,Creature — Phoenix,1
+Inescapable Blaze,R,,uncommon,Instant,2
+Molten Ravager,R,,common,Creature — Elemental,2
+Nest Robber,R,,common,Creature — Dinosaur,4
+Ogre Battledriver,R,,rare,Creature — Ogre Warrior,2
+Raid Bombardment,R,,uncommon,Enchantment,2
+Reduce to Ashes,R,,common,Sorcery,3
+Siege Dragon,R,,rare,Creature — Dragon,2
+Storm Strike,R,,common,Instant,2
+Tin Street Cadet,R,,common,Creature — Goblin,3
+Affectionate Indrik,G,,uncommon,Creature — Beast,2
+Baloth Packhunter,G,,common,Creature — Beast,4
+Epic Proportions,G,,rare,Enchantment — Aura,1
+Feral Roar,G,,common,Sorcery,2
+Generous Stray,G,,common,Creature — Cat,3
+Gigantosaurus,G,,rare,Creature — Dinosaur,2
+Ilysian Caryatid,G,,common,Creature — Plant,4
+Jungle Delver,G,,common,Creature — Merfolk Warrior,3
+Prized Unicorn,G,,uncommon,Creature — Unicorn,1
+Rabid Bite,G,,common,Sorcery,2
+Rampaging Brontodon,G,,rare,Creature — Dinosaur,2
+Rumbling Baloth,G,,common,Creature — Beast,2
+Sentinel Spider,G,,uncommon,Creature — Spider,2
+Stony Strength,G,,common,Instant,2
+Titanic Growth,G,,common,Instant,3
+Treetop Warden,G,,common,Creature — Elf Warrior,4
+Wildwood Patrol,G,,common,Creature — Centaur Scout,2
+Woodland Mystic,G,,common,Creature — Elf Druid,2
+World Shaper,G,,rare,Creature — Merfolk Shaman,1
+Fertilid,G,,common,Creature — Elemental,1
+Forgotten Ancient,G,,rare,Creature — Elemental,1
+Fleeting Distraction,U,,common,Instant,4
+Craterhoof Behemoth,G,,mythic,Creature — Beast,3
+Timberland Guide,G,,common,Creature — Human Scout,4
+Fog Bank,U,,uncommon,Creature — Wall,2
+Kitesail Corsair,U,,common,Creature — Human Pirate,2
+Wrap in Flames,R,,common,Sorcery,1
+Aim High,G,,uncommon,Instant,1
+Unflinching Courage,"G,W",,uncommon,Enchantment — Aura,1
+Stasis Snare,W,,uncommon,Enchantment,3
+Dutiful Return,B,,common,Sorcery,1
+Ob Nixilis Reignited,B,,mythic,Legendary Planeswalker — Nixilis,1
+Sure Strike,R,,common,Instant,2
+Worldwalker Helm,U,,mythic,Artifact,1
+Bristlebud Farmer,G,,mythic,Creature — Plant Druid,1
+Nexus of Becoming,,,mythic,Artifact,1
+Brave-Kin Duo,W,,common,Creature — Rabbit Mouse,1
+Brightblade Stoat,W,,uncommon,Creature — Weasel Soldier,1
+Builder's Talent,W,,uncommon,Enchantment — Class,2
+Caretaker's Talent,W,,rare,Enchantment — Class,1
+Carrot Cake,W,,common,Artifact — Food,2
+Crumb and Get It,W,,common,Instant,1
+Flowerfoot Swordmaster,W,,uncommon,Creature — Mouse Soldier,1
+Hop to It,W,,uncommon,Sorcery,2
+Intrepid Rabbit,W,,common,Creature — Rabbit Soldier,2
+Lifecreed Duo,W,,common,Creature — Bat Bird,2
+Mabel's Mettle,W,,uncommon,Instant,1
+Mouse Trapper,W,,uncommon,Creature — Mouse Soldier,2
+Pileated Provisioner,W,,common,Creature — Bird Scout,4
+Rabbit Response,W,,common,Instant,2
+Repel Calamity,W,,uncommon,Instant,2
+Season of the Burrow,W,,mythic,Sorcery,1
+Seasoned Warrenguard,W,,uncommon,Creature — Rabbit Warrior,1
+Sonar Strike,W,,common,Instant,1
+Star Charter,W,,uncommon,Creature — Bat Cleric,2
+Valley Questcaller,W,,rare,Creature — Rabbit Warrior,1
+Warren Elder,W,,common,Creature — Rabbit Cleric,3
+Wax-Wane Witness,W,,common,Creature — Bat Cleric,1
+Whiskervale Forerunner,W,,rare,Creature — Mouse Bard,1
+Bellowing Crier,U,,common,Creature — Frog Advisor,3
+Calamitous Tide,U,,uncommon,Sorcery,1
+Daring Waverider,U,,uncommon,Creature — Otter Wizard,1
+Dazzling Denial,U,,common,Instant,2
+Eddymurk Crab,U,,uncommon,Creature — Elemental Crab,1
+"Eluge, the Shoreless Sea",U,,mythic,Legendary Creature — Elemental Fish,1
+Finch Formation,U,,common,Creature — Bird Scout,2
+Gossip's Talent,U,,uncommon,Enchantment — Class,1
+Lightshell Duo,U,,common,Creature — Rat Otter,2
+Long River's Pull,U,,uncommon,Instant,1
+Mind Spiral,U,,common,Sorcery,2
+Mockingbird,U,,rare,Creature — Bird Bard,1
+Nightwhorl Hermit,U,,common,Creature — Rat Rogue,1
+Otterball Antics,U,,uncommon,Sorcery,2
+Pearl of Wisdom,U,,common,Sorcery,4
+Portent of Calamity,U,,rare,Sorcery,1
+Run Away Together,U,,common,Instant,4
+Shore Up,U,,common,Instant,2
+Shoreline Looter,U,,uncommon,Creature — Rat Rogue,4
+Skyskipper Duo,U,,common,Creature — Bird Frog,1
+Stormchaser's Talent,U,,rare,Enchantment — Class,1
+Thought Shucker,U,,common,Creature — Rat Rogue,1
+Waterspout Warden,U,,common,Creature — Frog Soldier,3
+Agate-Blade Assassin,B,,common,Creature — Lizard Assassin,3
+Bandit's Talent,B,,uncommon,Enchantment — Class,1
+Bonebind Orator,B,,common,Creature — Squirrel Warlock Bard,1
+Daggerfang Duo,B,,common,Creature — Rat Squirrel,3
+Early Winter,B,,common,Instant,2
+Feed the Cycle,B,,uncommon,Instant,1
+Glidedive Duo,B,,common,Creature — Bat Lizard,1
+Hazel's Nocturne,B,,uncommon,Instant,1
+Iridescent Vinelasher,B,,rare,Creature — Lizard Assassin,1
+Nocturnal Hunger,B,,common,Instant,4
+Persistent Marshstalker,B,,uncommon,Creature — Rat Berserker,1
+Psychic Whorl,B,,common,Sorcery,3
+Ravine Raider,B,,common,Creature — Lizard Rogue,1
+Ruthless Negotiation,B,,uncommon,Sorcery,1
+Savor,B,,common,Instant,3
+Scavenger's Talent,B,,rare,Enchantment — Class,2
+Starlit Soothsayer,B,,common,Creature — Bat Cleric,1
+Starscape Cleric,B,,uncommon,Creature — Bat Cleric,2
+Thornplate Intimidator,B,,common,Creature — Rat Rogue,2
+Thought-Stalker Warlock,B,,uncommon,Creature — Lizard Warlock,1
+Valley Rotcaller,B,,rare,Creature — Squirrel Warlock,1
+Alania's Pathmaker,R,,common,Creature — Otter Wizard,4
+Blooming Blast,R,,uncommon,Instant,1
+Brambleguard Captain,R,,uncommon,Creature — Mouse Soldier,2
+Conduct Electricity,R,,common,Instant,2
+Coruscation Mage,R,,uncommon,Creature — Otter Wizard,2
+Flamecache Gecko,"B,R",,uncommon,Creature — Lizard Warlock,1
+Frilled Sparkshooter,R,,common,Creature — Lizard Archer,3
+Harnesser of Storms,R,,uncommon,Creature — Otter Wizard,1
+Hearthborn Battler,R,,rare,Creature — Lizard Warlock,1
+Hoarder's Overflow,R,,uncommon,Enchantment,1
+Kindlespark Duo,R,,common,Creature — Lizard Otter,2
+Might of the Meek,R,,common,Instant,3
+Playful Shove,R,,uncommon,Sorcery,2
+Quaketusk Boar,R,,uncommon,Creature — Elemental Boar,3
+Rabid Gnaw,R,,uncommon,Instant,3
+Raccoon Rallier,R,,common,Creature — Raccoon Bard,1
+Reptilian Recruiter,R,,uncommon,Creature — Lizard Warrior,2
+Roughshod Duo,R,,common,Creature — Mouse Raccoon,1
+Sazacap's Brew,R,,common,Instant,2
+Steampath Charger,R,,common,Creature — Lizard Warlock,2
+Teapot Slinger,R,,uncommon,Creature — Raccoon Warrior,1
+Valley Rally,R,,uncommon,Instant,1
+War Squeak,R,,common,Enchantment — Aura,3
+Whiskerquill Scribe,R,,common,Creature — Mouse Citizen,2
+Wildfire Howl,R,,uncommon,Sorcery,1
+Bakersbane Duo,G,,common,Creature — Squirrel Raccoon,3
+Bark-Knuckle Boxer,G,,uncommon,Creature — Raccoon Berserker,1
+Cache Grab,G,,common,Instant,1
+Clifftop Lookout,G,,uncommon,Creature — Frog Scout,2
+Druid of the Spade,G,,common,Creature — Rabbit Druid,4
+Fecund Greenshell,G,,rare,Creature — Elemental Turtle,1
+Heaped Harvest,G,,common,Artifact — Food,1
+High Stride,G,,common,Instant,2
+Hunter's Talent,G,,uncommon,Enchantment — Class,3
+Innkeeper's Talent,G,,rare,Enchantment — Class,2
+Pawpatch Recruit,G,,rare,Creature — Rabbit Warrior,3
+Peerless Recycling,G,,uncommon,Instant,1
+Rust-Shield Rampager,G,,common,Creature — Raccoon Warrior,2
+Stickytongue Sentinel,G,,common,Creature — Frog Warrior,1
+Stocking the Pantry,G,,uncommon,Enchantment,4
+Sunshower Druid,G,,common,Creature — Frog Druid,1
+Thornvault Forager,G,,rare,Creature — Squirrel Ranger,1
+Three Tree Rootweaver,G,,common,Creature — Mole Druid,1
+Three Tree Scribe,G,,uncommon,Creature — Frog Druid,1
+Treeguard Duo,G,,common,Creature — Frog Rabbit,4
+Treetop Sentries,G,,common,Creature — Squirrel Archer,1
+"Alania, Divergent Storm","R,U",,rare,Legendary Creature — Otter Wizard,2
+"Baylen, the Haymaker","G,R,W",,rare,Legendary Creature — Rabbit Warrior,1
+Burrowguard Mentor,"G,W",,uncommon,Creature — Rabbit Soldier,2
+Corpseberry Cultivator,"B,G",,common,Creature — Squirrel Warlock,1
+"Finneas, Ace Archer","G,W",,rare,Legendary Creature — Rabbit Archer,3
+Head of the Homestead,"G,W",,common,Creature — Rabbit Citizen,1
+"Helga, Skittish Seer","G,U,W",,mythic,Legendary Creature — Frog Druid,1
+Mind Drill Assailant,"B,U",,common,Creature — Rat Warlock,1
+Moonrise Cleric,"B,W",,common,Creature — Bat Cleric,1
+Pond Prophet,"G,U",,common,Creature — Frog Advisor,2
+"Ral, Crackling Wit","R,U",,mythic,Legendary Planeswalker — Ral,1
+Seedglaive Mentor,"R,W",,uncommon,Creature — Mouse Soldier,1
+Seedpod Squire,"U,W",,common,Creature — Bird Scout,2
+Starseer Mentor,"B,W",,uncommon,Creature — Bat Warlock,2
+Stormcatch Mentor,"R,U",,uncommon,Creature — Otter Wizard,3
+Tempest Angler,"R,U",,common,Creature — Otter Wizard,1
+Veteran Guardmouse,"R,W",,common,Creature — Mouse Soldier,3
+Wandertale Mentor,"G,R",,uncommon,Creature — Raccoon Bard,3
+"Ygra, Eater of All","B,G",,mythic,Legendary Creature — Elemental Cat,1
+"Zoraline, Cosmos Caller","B,W",,rare,Legendary Creature — Bat Cleric,1
+Barkform Harvester,,,common,Artifact Creature — Shapeshifter,3
+Bumbleflower's Sharepot,,,common,Artifact,2
+Fountainport Bell,,,common,Artifact,2
+Starforged Sword,,,uncommon,Artifact — Equipment,1
+Tangle Tumbler,,,uncommon,Artifact — Vehicle,1
+Three Tree Mascot,,,common,Artifact Creature — Shapeshifter,1
+Fountainport,,,rare,Land,2
+Hidden Grotto,,,common,Land,1
+Lupinflower Village,W,,uncommon,Land,1
+Mudflat Village,B,,uncommon,Land,2
+Uncharted Haven,,,common,Land,3
+"Bria, Riptide Rogue","R,U",,mythic,Legendary Creature — Otter Rogue,1
+"Byrke, Long Ear of the Law","G,W",,mythic,Legendary Creature — Rabbit Soldier,1
+Serra Redeemer,W,,rare,Creature — Angel Soldier,1
+Mind Spring,U,,rare,Sorcery,1
+Thieving Otter,U,,common,Creature — Otter,3
+Flame Lash,R,,common,Instant,3
+Colossification,G,,rare,Enchantment — Aura,1
+Sword of Vengeance,,,rare,Artifact — Equipment,1
+Blossoming Sands,"G,W",,common,Land,4
+Chart a Course,U,,uncommon,Sorcery,3
+Inspiring Overseer,W,,common,Creature — Angel Cleric,4
+Spirited Companion,W,,common,Enchantment Creature — Dog,4
+Triskaidekaphile,U,,rare,Creature — Human Wizard,2
+Bastion of Remembrance,B,,uncommon,Enchantment,1
+Morbid Opportunist,B,,uncommon,Creature — Human Rogue,4
+Big Score,R,,common,Instant,4
+Broken Wings,G,,common,Instant,4
+"Ghalta, Primal Hunger",G,,rare,Legendary Creature — Elder Dinosaur,1
+Llanowar Loamspeaker,G,,rare,Creature — Elf Druid,1
+Lotus Cobra,G,,rare,Creature — Snake,1
+Primeval Bounty,G,,mythic,Enchantment,1
+Rampaging Baloths,G,,mythic,Creature — Beast,1
+Tear Asunder,"B,G",,uncommon,Instant,4
+Tireless Provisioner,G,,uncommon,Creature — Elf Scout,1
+Skyfisher Spider,"B,G",,uncommon,Creature — Spider,2
+Circuit Mender,,,uncommon,Artifact Creature — Insect,4
+Haywire Mite,G,,uncommon,Artifact Creature — Insect,4
+Psychosis Crawler,,,rare,Artifact Creature — Phyrexian Horror,1
+Copperline Gorge,"G,R",,rare,Land,1
+Hinterland Harbor,"G,U",,rare,Land,1
+Jungle Hollow,"B,G",,common,Land,1
+Mystic Monastery,"R,U,W",,uncommon,Land,4
+Razorverge Thicket,"G,W",,rare,Land,1
+Temple of Enlightenment,"U,W",,rare,Land,1
+Temple of Malady,"B,G",,rare,Land,1
+Temple of Plenty,"G,W",,rare,Land,1
+Temple of Triumph,"R,W",,rare,Land,1
+Hero of Iroas,W,,rare,Creature — Human Soldier,1
+Hero of Leina Tower,G,,rare,Creature — Human Warrior,1
+Temple of Malice,"B,R",,rare,Land,1
+Ninja of the Deep Hours,U,,common,Creature — Human Ninja,1
+Feed the Swarm,B,,common,Sorcery,1
+Oni-Cult Anvil,"B,R",,uncommon,Artifact,4
+Temple of Deceit,"B,U",,rare,Land,1
+Temple of Silence,"B,W",,rare,Land,1
+Aeronaut Cavalry,W,,common,Creature — Human Soldier,2
+Ambush Paratrooper,W,,common,Creature — Human Soldier,3
+Deadly Riposte,W,,common,Instant,3
+Lay Down Arms,W,,uncommon,Sorcery,2
+"Loran, Disciple of History",W,,uncommon,Legendary Creature — Human Artificer,1
+Mass Production,W,,uncommon,Sorcery,1
+"Myrel, Shield of Argive",W,,mythic,Legendary Creature — Human Soldier,1
+Prison Sentence,W,,common,Enchantment — Aura,3
+Recruitment Officer,W,,uncommon,Creature — Human Soldier,2
+Siege Veteran,W,,rare,Creature — Human Soldier,1
+Survivor of Korlis,W,,common,Creature — Human Soldier,3
+Tocasia's Welcome,W,,rare,Enchantment,1
+Scrapwork Cohort,W,,common,Artifact Creature — Soldier,2
+Veteran's Powerblade,W,,common,Artifact — Equipment,1
+Air Marshal,U,,common,Creature — Human Soldier,3
+Curate,U,,common,Instant,1
+Desynchronize,U,,common,Instant,2
+Fallaji Archaeologist,U,,common,Creature — Human Scout,3
+Flow of Knowledge,U,,uncommon,Instant,1
+"Hurkyl, Master Wizard",U,,rare,Legendary Creature — Human Wizard Advisor,1
+Keeper of the Cadence,U,,uncommon,Creature — Human Wizard,1
+Lat-Nam Adept,U,,common,Creature — Human Wizard,1
+Mightstone's Animation,U,,common,Enchantment — Aura,1
+A-Mightstone's Animation,U,,common,Enchantment — Aura,1
+Skystrike Officer,U,,rare,Creature — Human Soldier,1
+Splitting the Powerstone,U,,uncommon,Sorcery,1
+A-Splitting the Powerstone,U,,uncommon,Instant,1
+"Teferi, Temporal Pilgrim",U,,mythic,Legendary Planeswalker — Teferi,1
+"Urza, Powerstone Prodigy",U,,uncommon,Legendary Creature — Human Artificer,1
+"A-Urza, Powerstone Prodigy",U,,uncommon,Legendary Creature — Human Artificer,1
+Weakstone's Subjugation,U,,common,Enchantment — Aura,2
+Zephyr Sentinel,U,,uncommon,Creature — Human Soldier,2
+Coastal Bulwark,,,common,Artifact Creature — Wall,1
+Combat Courier,U,,common,Artifact Creature — Construct,1
+Depth Charge Colossus,U,,common,Artifact Creature — Dreadnought,1
+Surge Engine,U,,mythic,Artifact Creature — Construct,1
+Terisian Mindbreaker,U,,rare,Artifact Creature — Juggernaut,1
+"Ashnod, Flesh Mechanist",B,,rare,Legendary Creature — Human Artificer,1
+Ashnod's Intervention,B,,common,Instant,2
+Battlefield Butcher,B,,uncommon,Creature — Human Soldier,1
+Dreams of Steel and Oil,B,,uncommon,Sorcery,1
+"Gix, Yawgmoth Praetor",B,,mythic,Legendary Creature — Phyrexian Praetor,1
+Gix's Command,B,,rare,Sorcery,1
+Gixian Infiltrator,B,,common,Creature — Phyrexian Human,3
+Gixian Skullflayer,B,,common,Creature — Phyrexian Human Assassin,1
+Gurgling Anointer,B,,uncommon,Creature — Phyrexian Horror,1
+Kill-Zone Acrobat,B,,common,Creature — Human Soldier,1
+Overwhelming Remorse,B,,common,Instant,2
+Painful Quandary,B,,rare,Enchantment,3
+Powerstone Fracture,B,,common,Sorcery,3
+Ravenous Gigamole,B,,common,Creature — Mole Horror,3
+Trench Stalker,B,,common,Creature — Beast Horror,2
+Ashnod's Harvester,B,,uncommon,Artifact Creature — Construct,1
+Dredging Claw,B,,common,Artifact — Equipment,1
+Goring Warplow,B,,common,Artifact Creature — Construct,1
+Scrapwork Rager,B,,common,Artifact Creature — Phyrexian Horror,1
+Excavation Explosion,R,,common,Sorcery,2
+A-Excavation Explosion,R,,common,Instant,2
+"Feldon, Ronom Excavator",R,,rare,Legendary Creature — Human Artificer,1
+Giant Cindermaw,R,,uncommon,Creature — Dinosaur Beast,2
+Penregon Strongbull,R,,common,Creature — Minotaur,1
+Raze to the Ground,R,,common,Sorcery,2
+Sardian Cliffstomper,R,,uncommon,Creature — Minotaur Barbarian,2
+Heavyweight Demolisher,R,,uncommon,Artifact Creature — Construct,1
+Mishra's Juggernaut,R,,common,Artifact Creature — Juggernaut,3
+Argothian Opportunist,G,,common,Creature — Human Scout,1
+Audacity,G,,uncommon,Enchantment — Aura,1
+Blanchwood Prowler,G,,common,Creature — Elemental,3
+Burrowing Razormaw,G,,common,Creature — Beast,2
+Bushwhack,G,,uncommon,Sorcery,4
+Citanul Stalwart,G,,common,Creature — Elf Druid Soldier,3
+Fog of War,G,,common,Instant,3
+Gaea's Gift,G,,common,Instant,1
+Perimeter Patrol,G,,common,Creature — Human Soldier,1
+Sarinth Steelseeker,G,,uncommon,Creature — Human Artificer Scout,1
+Shoot Down,G,,common,Sorcery,1
+Tawnos's Tinkering,G,,common,Instant,1
+Titania's Command,G,,rare,Sorcery,1
+Tomakul Honor Guard,G,,common,Creature — Human Soldier,2
+Wasteful Harvest,G,,common,Instant,1
+Boulderbranch Golem,G,,common,Artifact Creature — Golem,3
+A-Haywire Mite,G,,uncommon,Artifact Creature — Insect,4
+Deathbloom Ritualist,"B,G",,rare,Creature — Elf Warlock,2
+"Harbin, Vanguard Aviator","U,W",,rare,Legendary Creature — Human Soldier,1
+Hero of the Dunes,"B,W",,uncommon,Creature — Human Soldier,1
+Legions to Ashes,"B,W",,rare,Sorcery,1
+Queen Kayla bin-Kroog,"R,W",,rare,Legendary Creature — Human Noble,1
+Sarinth Greatwurm,"G,R",,mythic,Creature — Wurm,1
+Third Path Iconoclast,"R,U",,uncommon,Creature — Human Monk,2
+"Tocasia, Dig Site Mentor","G,U,W",,rare,Legendary Creature — Human Artificer,1
+Yotian Tactician,"U,W",,uncommon,Creature — Human Soldier,2
+Clay Champion,"G,W",,mythic,Artifact Creature — Construct,1
+Argivian Avenger,,,uncommon,Artifact Creature — Shapeshifter,1
+Goblin Firebomb,,,common,Artifact,1
+Power Plant Worker,,,common,Artifact Creature — Assembly-Worker,1
+Supply Drop,,,common,Artifact,1
+Swiftgear Drake,,,common,Artifact Creature — Drake,1
+Symmetry Matrix,,,uncommon,Artifact,1
+Fortified Beachhead,"U,W",,rare,Land,1
+Rescue Retriever,W,,rare,Creature — Dog Soldier,1
+Aetherflux Reservoir,,,mythic,Artifact,1
+Goblin Charbelcher,,,rare,Artifact,1
+Mazemind Tome,,,rare,Artifact,1
+Pristine Talisman,,,uncommon,Artifact,3
+Semblance Anvil,,,rare,Artifact,1
+Soul-Guide Lantern,,,uncommon,Artifact,1
+Unwinding Clock,,,rare,Artifact,1
+Ajani's Pridemate,W,,uncommon,Creature — Cat Soldier,3
+Vampire Nighthawk,B,,uncommon,Creature — Vampire Shaman,4
+Azorius Guildgate,"U,W",,common,Land — Gate,1
+Boros Guildgate,"R,W",,common,Land — Gate,1
+Dimir Guildgate,"B,U",,common,Land — Gate,4
+Golgari Guildgate,"B,G",,common,Land — Gate,1
+Gruul Guildgate,"G,R",,common,Land — Gate,4
+Izzet Guildgate,"R,U",,common,Land — Gate,4
+Orzhov Guildgate,"B,W",,common,Land — Gate,4
+Rakdos Guildgate,"B,R",,common,Land — Gate,1
+Selesnya Guildgate,"G,W",,common,Land — Gate,4
+Simic Guildgate,"G,U",,common,Land — Gate,4
+Into the Roil,U,,common,Instant,2
+Rite of Replication,U,,rare,Sorcery,2
+Gray Merchant of Asphodel,B,,common,Creature — Zombie,1
+Elvish Archdruid,G,,rare,Creature — Elf Druid,1
+Elvish Mystic,G,,common,Creature — Elf Druid,1
+Priest of Titania,G,,common,Creature — Elf Druid,1
+Thornweald Archer,G,,common,Creature — Elf Archer,3
+Emerald Medallion,,,rare,Artifact,1
+Jet Medallion,,,rare,Artifact,1
+Grasp of Fate,W,,rare,Enchantment,1
+Mulch,G,,common,Sorcery,2
+Prime Speaker Zegana,"G,U",,mythic,Legendary Creature — Merfolk Wizard,1
+Trygon Predator,"G,U",,uncommon,Creature — Beast,2
+Rogue's Passage,,,uncommon,Land,1
+Wind-Scarred Crag,"R,W",,common,Land,4
+Blind Obedience,W,,rare,Enchantment,1
+Disdainful Stroke,U,,common,Instant,2
+Treasure Cruise,U,,common,Sorcery,1
+Scavenging Ooze,G,,rare,Creature — Ooze,1
+Nomad Outpost,"B,R,W",,uncommon,Land,4
+Sandsteppe Citadel,"B,G,W",,uncommon,Land,1
+Nissa's Pilgrimage,G,,common,Sorcery,1
+Bloodfell Caves,"B,R",,common,Land,4
+Intangible Virtue,W,,uncommon,Enchantment,1
+Think Twice,U,,common,Instant,4
+Sagu Mauler,"G,U",,rare,Creature — Beast,1
+Secret Plans,"G,U",,uncommon,Enchantment,1
+Murmuring Mystic,U,,uncommon,Creature — Human Wizard,1
+Heroes' Bane,G,,uncommon,Creature — Hydra,1
+Incubation Druid,G,,rare,Creature — Elf Druid,1
+Gingerbread Cabin,G,,common,Land — Forest,1
+Radiant Fountain,,,common,Land,1
+Indomitable Will,W,,common,Enchantment — Aura,1
+Blur,U,,common,Instant,1
+Sigil of Myrkul,B,,uncommon,Enchantment,1
+Earthquake Dragon,G,,rare,Creature — Elemental Dragon,1
+Poison the Blade,G,,common,Instant,1
+"Korlessa, Scale Singer","G,U",,uncommon,Legendary Creature — Dragon Bard,1
+Rumor Gatherer,W,,uncommon,Creature — Elf Wizard,4
+Hullbreaker Horror,U,,rare,Creature — Kraken Horror,2
+Sludge Monster,U,,rare,Creature — Horror,2
+Changeling Outcast,B,,common,Creature — Shapeshifter,1
+Sprite Dragon,"R,U",,uncommon,Creature — Faerie Dragon,1
+Consider,U,,common,Instant,4
+Masked Blackguard,B,,common,Creature — Human Rogue,1
+Duskshell Crawler,G,,common,Creature — Insect,1
+Rhystic Study,U,,common,Enchantment,1
+Pick Your Poison,"B,G",,rare,Sorcery,2
+"Thryx, the Sudden Storm",U,,uncommon,Legendary Creature — Elemental Giant,1
+Exsanguinate,B,,uncommon,Sorcery,2
+Imp's Mischief,B,,rare,Instant,1
+Rune-Scarred Demon,B,,rare,Creature — Demon,2
+"Krenko, Mob Boss",R,,rare,Legendary Creature — Goblin Warrior,2
+"Valduk, Keeper of the Flame",R,,uncommon,Legendary Creature — Human Shaman,1
+Crawling Infestation,G,,common,Enchantment,2
+The Great Henge,G,,mythic,Legendary Artifact,1
+Ram Through,G,,common,Instant,1
+Snakeskin Veil,G,,common,Instant,3
+Wildwood Scourge,G,,uncommon,Creature — Hydra,4
+"Tatyova, Benthic Druid","G,U",,uncommon,Legendary Creature — Merfolk Druid,4
+Felidar Retreat,W,,rare,Enchantment,2
+Battle for Bretagard,"G,W",,rare,Enchantment — Saga,1
+Fireshrieker,,,uncommon,Artifact — Equipment,1
+Investigator's Journal,,,rare,Artifact — Clue,1
+Secluded Courtyard,,,uncommon,Land,1
+Wastes,,,common,Basic Land,2
+Make a Stand,W,,uncommon,Instant,1
+Crow of Dark Tidings,B,,common,Creature — Zombie Bird,3
+Skyraker Giant,R,,common,Creature — Giant,2
+"Juri, Master of the Revue","B,R",,uncommon,Legendary Creature — Human Shaman,1
+"Reyav, Master Smith","R,W",,uncommon,Legendary Creature — Dwarf Artificer,1
+Kill Shot,W,,common,Instant,3
+Twin Bolt,R,,common,Instant,4
+Fade into Antiquity,G,,common,Sorcery,1
+Hero's Downfall,B,,rare,Instant,3
+"Adeline, Resplendent Cathar",W,,rare,Legendary Creature — Human Knight,2
+Borrowed Time,W,,uncommon,Enchantment,4
+Cathar Commando,W,,common,Creature — Human Soldier,3
+Celestus Sanctifier,W,,common,Creature — Human Cleric,1
+Clarion Cathars,W,,common,Creature — Human Knight,1
+Hedgewitch's Mask,W,,common,Artifact — Equipment,1
+Homestead Courage,W,,common,Sorcery,4
+Unruly Mob,W,,common,Creature — Human,1
+Fading Hope,U,,uncommon,Instant,4
+"Lier, Disciple of the Drowned",U,,mythic,Legendary Creature — Human Wizard,2
+Memory Deluge,U,,rare,Instant,2
+Organ Hoarder,U,,common,Creature — Zombie,4
+Revenge of the Drowned,U,,common,Instant,2
+Spectral Adversary,U,,mythic,Creature — Spirit,1
+Stormrider Spirit,U,,common,Creature — Spirit,1
+Defenestrate,B,,common,Instant,1
+Dreadhound,B,,uncommon,Creature — Demon Dog,2
+Eaten Alive,B,,common,Sorcery,4
+Infernal Grasp,B,,uncommon,Instant,4
+The Meathook Massacre,B,,mythic,Legendary Enchantment,1
+No Way Out,B,,common,Sorcery,1
+Stromkirk Bloodthief,B,,uncommon,Creature — Vampire Rogue,3
+Vampire Interloper,B,,common,Creature — Vampire Scout,3
+Brimstone Vandal,R,,common,Creature — Devil,2
+Burn Down the House,R,,rare,Sorcery,2
+Burn the Accursed,R,,common,Instant,2
+Cathartic Pyre,R,,uncommon,Instant,1
+Electric Revelation,R,,common,Instant,2
+Famished Foragers,R,,common,Creature — Vampire,1
+Festival Crasher,R,,common,Creature — Devil,3
+Geistflame Reservoir,R,,rare,Artifact,2
+Lambholt Harrier,R,,common,Creature — Wolf,3
+Lunar Frenzy,R,,uncommon,Instant,2
+Moonrager's Slash,R,,common,Instant,4
+Mounted Dreadknight,R,,common,Creature — Vampire Knight,3
+Play with Fire,R,,uncommon,Instant,4
+Raze the Effigy,R,,common,Instant,1
+Seize the Storm,R,,uncommon,Sorcery,3
+Voldaren Stinger,R,,common,Creature — Vampire Warrior,2
+Augur of Autumn,G,,rare,Creature — Human Druid,1
+Consuming Blob,G,,mythic,Creature — Ooze,2
+Defend the Celestus,G,,uncommon,Instant,1
+Howl of the Hunt,G,,common,Enchantment — Aura,1
+Snarling Wolf,G,,common,Creature — Wolf,4
+Wrenn and Seven,G,,mythic,Legendary Planeswalker — Wrenn,1
+Arcane Infusion,"R,U",,uncommon,Instant,4
+Croaking Counterpart,"G,U",,rare,Sorcery,2
+Fleshtaker,"B,W",,uncommon,Creature — Human Assassin,1
+Ghoulcaller's Harvest,"B,G",,rare,Sorcery,2
+Join the Dance,"G,W",,uncommon,Sorcery,4
+"Liesa, Forgotten Archangel","B,W",,rare,Legendary Creature — Angel,2
+Old Stickfingers,"B,G",,rare,Legendary Creature — Horror,2
+Rite of Oblivion,"B,W",,uncommon,Sorcery,1
+Sacred Fire,"R,W",,uncommon,Instant,4
+Siphon Insight,"B,U",,rare,Instant,1
+Storm Skreelix,"R,U",,uncommon,Creature — Drake Horror,4
+Unnatural Moonrise,"G,R",,uncommon,Sorcery,4
+"Vadrik, Astral Archmage","R,U",,rare,Legendary Creature — Human Wizard,2
+Vampire Socialite,"B,R",,uncommon,Creature — Vampire Noble,1
+Deserted Beach,"U,W",,rare,Land,2
+Haunted Ridge,"B,R",,rare,Land,2
+Overgrown Farmland,"G,W",,rare,Land,2
+Rockfall Vale,"G,R",,rare,Land,2
+Shipwreck Marsh,"B,U",,rare,Land,2
+Adamant Will,W,,common,Instant,1
+Angelic Quartermaster,W,,uncommon,Creature — Angel Soldier,4
+Fierce Retribution,W,,common,Instant,1
+Hopeful Initiate,W,,rare,Creature — Human Warlock,2
+Nebelgast Beguiler,W,,common,Creature — Spirit,3
+Parish-Blade Trainee,W,,common,Creature — Human Soldier,4
+Sigarda's Summons,W,,rare,Enchantment,2
+Unholy Officiant,W,,common,Creature — Vampire Cleric,4
+Welcoming Vampire,W,,rare,Creature — Vampire,1
+Chill of the Grave,U,,common,Instant,2
+Consuming Tide,U,,rare,Sorcery,1
+Cradle of Safety,U,,common,Enchantment — Aura,1
+Diver Skaab,U,,uncommon,Creature — Zombie,1
+Dreamshackle Geist,U,,rare,Creature — Spirit,1
+Selhoff Entomber,U,,common,Creature — Zombie,1
+Serpentine Ambush,U,,common,Instant,3
+Thirst for Discovery,U,,uncommon,Instant,4
+Wanderlight Spirit,U,,common,Creature — Spirit,1
+Wretched Throng,U,,common,Creature — Zombie Horror,4
+Blood Fountain,B,,common,Artifact,3
+Dread Fugue,B,,uncommon,Sorcery,1
+Falkenrath Forebear,B,,rare,Creature — Vampire,2
+Fell Stinger,B,,uncommon,Creature — Zombie Scorpion,4
+Rot-Tide Gargantua,B,,common,Creature — Zombie Kraken,1
+Undead Butler,B,,uncommon,Creature — Zombie,4
+Undying Malice,B,,common,Instant,4
+Alchemist's Gambit,"R,U",,rare,Sorcery,1
+Bloody Betrayal,R,,common,Sorcery,1
+Creepy Puppeteer,R,,rare,Creature — Human Rogue,1
+Hungry Ridgewolf,R,,common,Creature — Wolf,4
+Reckless Impulse,R,,common,Sorcery,4
+Sanguine Statuette,R,,uncommon,Artifact,1
+Ascendant Packleader,G,,rare,Creature — Wolf,1
+Dig Up,"B,G",,rare,Sorcery,1
+Flourishing Hunter,G,,common,Creature — Wolf Spirit,2
+Glorious Sunrise,G,,rare,Enchantment,2
+Howling Moon,G,,rare,Enchantment,2
+Packsong Pup,G,,uncommon,Creature — Wolf,4
+Reclusive Taxidermist,G,,uncommon,Creature — Human Druid,3
+Rural Recruit,G,,common,Creature — Human Peasant,1
+Spiked Ripsaw,G,,uncommon,Artifact — Equipment,1
+Spore Crawler,G,,common,Creature — Fungus,3
+Witch's Web,G,,common,Instant,3
+Wolf Strike,G,,common,Instant,4
+Bloodtithe Harvester,"B,R",,uncommon,Creature — Vampire,4
+"Halana and Alena, Partners","G,R",,rare,Legendary Creature — Human Ranger,1
+Old Rutstein,"B,G",,rare,Legendary Creature — Human Peasant,2
+Skull Skaab,"B,U",,uncommon,Creature — Zombie,1
+"Torens, Fist of the Angels","G,W",,rare,Legendary Creature — Human Cleric,2
+Wandering Mind,"R,U",,uncommon,Creature — Horror,4
+Ceremonial Knife,,,common,Artifact — Equipment,2
+Dollhouse of Horrors,,,rare,Artifact,2
+Deathcap Glade,"B,G",,rare,Land,2
+Dreamroot Cascade,"G,U",,rare,Land,2
+Shattered Sanctum,"B,W",,rare,Land,2
+Stormcarved Coast,"R,U",,rare,Land,2
+Sundown Pass,"R,W",,rare,Land,2
+Voldaren Estate,,,rare,Land,1
+Goblin Arsonist,R,,common,Creature — Goblin Shaman,1
+Bonds of Faith,W,,common,Enchantment — Aura,1
+Pulse Tracker,B,,common,Creature — Vampire Rogue,4
+Stab Wound,B,,common,Enchantment — Aura,1
+Mardu Heart-Piercer,R,,uncommon,Creature — Human Archer,1
+Topplegeist,W,,uncommon,Creature — Spirit,1
+Diregraf Ghoul,B,,uncommon,Creature — Zombie,4
+Tribute to Hunger,B,,uncommon,Instant,2
+Desecration Demon,B,,rare,Creature — Demon,1
+Tidebinder Mage,U,,rare,Creature — Merfolk Wizard,1
+Dwynen's Elite,G,,uncommon,Creature — Elf Warrior,2
+Ghirapur Gearcrafter,R,,common,Creature — Human Artificer,3
+Air Response Unit,W,,uncommon,Artifact — Vehicle,1
+Alacrian Armory,W,,uncommon,Artifact,1
+Brightfield Glider,W,,common,Creature — Possum Mount,2
+Brightfield Mustang,W,,common,Creature — Horse Mount,3
+Broadcast Rambler,W,,common,Artifact — Vehicle,4
+Bulwark Ox,W,,rare,Creature — Ox Mount,1
+Canyon Vaulter,W,,uncommon,Creature — Kor Pilot,1
+Cloudspire Captain,W,,uncommon,Creature — Human Pilot,1
+Collision Course,W,,common,Sorcery,4
+Detention Chariot,W,,uncommon,Artifact — Vehicle,2
+Guardian Sunmare,W,,rare,Creature — Horse Mount,1
+Guidelight Synergist,W,,uncommon,Artifact Creature — Robot Artificer,1
+Interface Ace,W,,common,Artifact Creature — Robot Pilot,4
+Leonin Surveyor,W,,common,Creature — Cat Scout,3
+Lightshield Parry,W,,common,Instant,1
+Lightwheel Enhancements,W,,common,Enchantment — Aura,2
+Lotusguard Disciple,W,,common,Creature — Bird Cleric,2
+Pride of the Road,W,,uncommon,Creature — Zombie Cat Warrior,2
+Ride's End,W,,common,Instant,4
+Skyseer's Chariot,W,,rare,Artifact — Vehicle,1
+Spectacular Pileup,W,,rare,Sorcery,1
+Spotcycle Scouter,W,,common,Artifact — Vehicle,2
+"Sundial, Dawn Tyrant",W,,uncommon,Legendary Artifact Creature — Construct,1
+Swiftwing Assailant,W,,common,Creature — Bird Warrior,4
+Unswerving Sloth,W,,uncommon,Creature — Sloth Mount,2
+Valor's Flagship,W,,mythic,Legendary Artifact — Vehicle,1
+Voyager Glidecar,W,,rare,Artifact — Vehicle,2
+Voyager Quickwelder,W,,common,Artifact Creature — Robot Artificer,4
+Aether Syphon,U,,uncommon,Artifact,1
+Bounce Off,U,,common,Instant,2
+"Caelorna, Coral Tyrant",U,,uncommon,Legendary Creature — Octopus,1
+Diversion Unit,U,,uncommon,Artifact Creature — Robot,1
+Flood the Engine,U,,common,Enchantment — Aura,4
+Gearseeker Serpent,U,,common,Creature — Serpent,2
+Glitch Ghost Surveyor,U,,common,Creature — Spirit Scout,2
+Guidelight Optimizer,U,,common,Artifact Creature — Robot,4
+Howler's Heavy,U,,common,Creature — Seal Pirate,2
+Hulldrifter,U,,common,Artifact — Vehicle,3
+Keen Buccaneer,U,,common,Creature — Octopus Pirate,4
+Memory Guardian,U,,uncommon,Artifact Creature — Robot Artificer,1
+Midnight Mangler,U,,common,Artifact — Vehicle,2
+Mindspring Merfolk,U,,rare,Creature — Merfolk Wizard,1
+"Mu Yanling, Wind Rider",U,,mythic,Legendary Creature — Human Wizard Pilot,4
+Nimble Thopterist,U,,common,Creature — Vedalken Artificer,4
+Rangers' Refueler,U,,uncommon,Artifact — Vehicle,1
+Repurposing Bay,U,,rare,Artifact,1
+Scrounging Skyray,U,,uncommon,Creature — Fish Pirate,2
+Skystreak Engineer,U,,common,Creature — Human Pilot,4
+Spectral Interference,U,,common,Instant,1
+Spikeshell Harrier,U,,uncommon,Artifact Creature — Robot Turtle,1
+Stall Out,U,,common,Sorcery,3
+Stock Up,U,,uncommon,Sorcery,2
+Thopter Fabricator,U,,rare,Artifact — Vehicle,1
+Trade the Helm,U,,uncommon,Sorcery,1
+Unstoppable Plan,U,,rare,Enchantment,1
+Back on Track,B,,uncommon,Sorcery,2
+Chitin Gravestalker,B,,common,Creature — Insect Warrior,4
+Cryptcaller Chariot,B,,rare,Artifact — Vehicle,1
+Deathless Pilot,B,,common,Creature — Zombie Pilot,1
+Demonic Junker,B,,rare,Artifact — Vehicle,2
+Engine Rat,B,,common,Creature — Zombie Rat,4
+Gas Guzzler,B,,rare,Creature — Vampire Rogue,1
+Gastal Raider,B,,uncommon,Creature — Vampire Rogue,3
+Grim Bauble,B,,common,Artifact,2
+Grim Javelineer,B,,common,Creature — Human Warrior,4
+The Last Ride,B,,mythic,Legendary Artifact — Vehicle,1
+Locust Spray,B,,uncommon,Instant,1
+Maximum Overdrive,B,,common,Instant,3
+Momentum Breaker,B,,uncommon,Enchantment,1
+Mutant Surveyor,B,,common,Creature — Mutant Scout,2
+Pactdoll Terror,B,,common,Artifact Creature — Toy,4
+Quag Feast,B,,rare,Sorcery,1
+Ripclaw Wrangler,B,,common,Artifact — Vehicle,2
+Risky Shortcut,B,,common,Sorcery,4
+The Speed Demon,B,,mythic,Legendary Creature — Demon,1
+Spin Out,B,,common,Instant,4
+Streaking Oilgorger,B,,common,Creature — Vampire,3
+Syphon Fuel,B,,common,Instant,4
+Wickerfolk Indomitable,B,,uncommon,Artifact Creature — Scarecrow,1
+Wreckage Wickerfolk,B,,common,Artifact Creature — Scarecrow,4
+Wretched Doll,B,,uncommon,Artifact Creature — Toy,2
+Adrenaline Jockey,R,,uncommon,Creature — Minotaur Pilot,1
+Burner Rocket,R,,common,Artifact — Vehicle,3
+Burnout Bashtronaut,R,,rare,Creature — Goblin Warrior,1
+"Chandra, Spark Hunter",R,,mythic,Legendary Planeswalker — Chandra,1
+Clamorous Ironclad,R,,common,Artifact — Vehicle,3
+Crash and Burn,R,,common,Instant,2
+"Daretti, Rocketeer Engineer",R,,rare,Legendary Creature — Goblin Artificer,1
+Dracosaur Auxiliary,R,,uncommon,Creature — Dinosaur Dragon Mount,4
+Dynamite Diver,R,,common,Creature — Goblin Pilot,2
+Endrider Catalyzer,R,,common,Creature — Human Warrior,4
+Full Throttle,R,,rare,Sorcery,2
+Gastal Blockbuster,R,,common,Creature — Human Berserker,4
+Gilded Ghoda,R,,common,Creature — Horse Mount,4
+Goblin Surveyor,R,,common,Creature — Goblin Scout,1
+"Hazoret, Godseeker",R,,mythic,Legendary Creature — God,1
+Kickoff Celebrations,R,,common,Enchantment,1
+Magmakin Artillerist,R,,common,Creature — Elemental Pirate,1
+Marauding Mako,R,,uncommon,Creature — Shark Pirate,3
+Outpace Oblivion,R,,uncommon,Enchantment,2
+Pacesetter Paragon,R,,uncommon,Creature — Human Pilot,2
+Pedal to the Metal,R,,common,Instant,4
+Prowcatcher Specialist,R,,common,Creature — Goblin Warrior,2
+Push the Limit,R,,uncommon,Sorcery,1
+Reckless Velocitaur,R,,uncommon,Creature — Minotaur Pilot,1
+Skycrash,R,,uncommon,Instant,1
+Spire Mechcycle,R,,uncommon,Artifact — Vehicle,1
+Thunderhead Gunner,R,,common,Creature — Shark Pirate,3
+Afterburner Expert,G,,rare,Creature — Goblin Artificer,1
+Alacrian Jaguar,G,,common,Creature — Cat Mount,4
+Autarch Mammoth,G,,uncommon,Creature — Elephant Mount,1
+Beastrider Vanguard,G,,common,Creature — Human Knight,3
+Bestow Greatness,G,,common,Instant,4
+Defend the Rider,G,,uncommon,Instant,3
+District Mascot,G,,rare,Creature — Dog Mount,1
+Dredger's Insight,G,,uncommon,Enchantment,3
+Earthrumbler,G,,uncommon,Artifact — Vehicle,2
+Elvish Refueler,G,,uncommon,Creature — Elf Druid,2
+Fang Guardian,G,,uncommon,Creature — Ape Druid,2
+Fang-Druid Summoner,G,,uncommon,Creature — Ape Druid,2
+Greenbelt Guardian,G,,uncommon,Creature — Elf Ranger,2
+Hazard of the Dunes,G,,common,Creature — Wurm,4
+Jibbirik Omnivore,G,,common,Creature — Beast,1
+Loxodon Surveyor,G,,common,Creature — Elephant Scout,3
+March of the World Ooze,G,,mythic,Enchantment,2
+Migrating Ketradon,G,,common,Creature — Dinosaur,3
+Molt Tender,G,,uncommon,Creature — Insect Druid,4
+Ooze Patrol,G,,uncommon,Creature — Ooze,1
+Point the Way,G,,uncommon,Enchantment,1
+Pothole Mole,G,,common,Creature — Mole,4
+Rise from the Wreck,G,,uncommon,Sorcery,1
+Run Over,G,,common,Instant,2
+Silken Strength,G,,common,Enchantment — Aura,4
+Stampeding Scurryfoot,G,,common,Creature — Mouse,3
+Thunderous Velocipede,G,,mythic,Artifact — Vehicle,1
+Veloheart Bike,G,,common,Artifact — Vehicle,3
+Venomsac Lagac,G,,common,Creature — Lizard Mount,2
+Webstrike Elite,G,,rare,Creature — Insect Archer,3
+"Aatchik, Emerald Radian","B,G",,rare,Legendary Creature — Insect Druid,1
+Apocalypse Runner,"B,R",,uncommon,Artifact — Vehicle,2
+Boom Scholar,"G,R",,uncommon,Creature — Goblin Advisor,1
+Boosted Sloop,"R,U",,uncommon,Artifact — Vehicle,2
+Brightglass Gearhulk,"G,W",,mythic,Artifact Creature — Construct,4
+Broadside Barrage,"R,U",,uncommon,Instant,1
+Broodheart Engine,"B,G",,uncommon,Artifact,2
+"Captain Howler, Sea Scourge","R,U",,rare,Legendary Creature — Shark Pirate,1
+Cloudspire Coordinator,"R,W",,uncommon,Creature — Human Pilot,4
+Coalstoke Gearhulk,"B,R",,mythic,Artifact Creature — Construct,4
+Dune Drifter,"B,W",,uncommon,Artifact — Vehicle,2
+Explosive Getaway,"R,W",,rare,Sorcery,1
+"Far Fortune, End Boss","B,R",,rare,Legendary Creature — Human Mercenary,1
+Fearless Swashbuckler,"R,U",,rare,Creature — Fish Pirate,2
+Guidelight Pathmaker,"U,W",,uncommon,Artifact — Vehicle,1
+Haunt the Network,"B,U",,uncommon,Sorcery,1
+Haunted Hellride,"B,U",,uncommon,Artifact — Vehicle,1
+"Ketramose, the New Dawn","B,W",,mythic,Legendary Creature — God,2
+"Kolodin, Triumph Caster","R,W",,rare,Legendary Creature — Human Pilot,1
+"Lagorin, Soul of Alacria","G,W",,uncommon,Legendary Creature — Beast Mount,3
+"Loot, the Pathfinder","G,R,U",,mythic,Legendary Creature — Beast Noble,2
+"Mendicant Core, Guidelight","U,W",,rare,Legendary Artifact Creature — Robot,2
+"Mimeoplasm, Revered One","B,G,U",,mythic,Legendary Creature — Ooze,4
+"Redshift, Rocketeer Chief","G,R",,rare,Legendary Creature — Goblin Pilot,2
+Riptide Gearhulk,"U,W",,mythic,Artifact Creature — Construct,2
+Rocketeer Boostbuggy,"G,R",,uncommon,Artifact — Vehicle,1
+"Sab-Sunen, Luxa Embodied","G,U",,mythic,Legendary Creature — God,1
+"Samut, the Driving Force","G,R,W",,rare,Legendary Creature — Human Warrior Cleric,2
+Thundering Broodwagon,"B,G",,uncommon,Artifact — Vehicle,2
+Veteran Beastrider,"G,W",,uncommon,Creature — Human Knight,1
+Voyage Home,"U,W",,uncommon,Sorcery,4
+Aetherjacket,,,common,Artifact Creature — Thopter,4
+The Aetherspark,,,mythic,Legendary Artifact Planeswalker — Equipment,3
+Camera Launcher,,,common,Artifact Creature — Construct,3
+Guidelight Matrix,,,common,Artifact,2
+Lifecraft Engine,,,rare,Artifact — Vehicle,1
+Monument to Endurance,,,rare,Artifact,1
+Pit Automaton,,,uncommon,Artifact Creature — Construct,3
+Racers' Scoreboard,,,uncommon,Artifact,1
+Radiant Lotus,,,mythic,Artifact,1
+Rover Blades,,,uncommon,Artifact — Equipment Vehicle,2
+Scrap Compactor,,,common,Artifact,3
+Skybox Ferry,,,common,Artifact — Vehicle,4
+Starting Column,,,common,Artifact,2
+Ticket Tortoise,,,common,Artifact Creature — Turtle,4
+Walking Sarcophagus,,,common,Artifact Creature — Zombie Cat,4
+Wreck Remover,,,common,Artifact Creature — Construct,2
+Avishkar Raceway,,,common,Land,1
+Country Roads,W,,uncommon,Land,1
+Foul Roads,B,,uncommon,Land,4
+Muraganda Raceway,,,rare,Land,1
+Reef Roads,U,,uncommon,Land,3
+Riverpyre Verge,"R,U",,rare,Land,2
+Rocky Roads,R,,uncommon,Land,3
+Sunbillow Verge,"R,W",,rare,Land,1
+Wild Roads,G,,uncommon,Land,2
+Ubul Sar Gatekeepers,B,,common,Creature — Zombie Soldier,1
+Macabre Waltz,B,,common,Sorcery,3
+Young Wolf,G,,common,Creature — Wolf,1
+"Krenko, Tin Street Kingpin",R,,rare,Legendary Creature — Goblin,1
+Thrill of Possibility,R,,common,Instant,4
+Path to the World Tree,"B,G,R,U,W",,uncommon,Enchantment,1
+Lyra Dawnbringer,W,,mythic,Legendary Creature — Angel,1
+Benalish Faithbonder,W,,common,Creature — Human Cleric,1
+Benalish Sleeper,"B,W",,common,Creature — Phyrexian Human Soldier,3
+Citizen's Arrest,W,,common,Enchantment,3
+Cleaving Skyrider,"R,W",,uncommon,Creature — Human Warrior,2
+"Danitha, Benalia's Hope",W,,rare,Legendary Creature — Human Knight,1
+Heroic Charge,"R,W",,common,Instant,1
+Juniper Order Rootweaver,"G,W",,common,Creature — Human Druid,3
+Phyrexian Missionary,"B,W",,uncommon,Creature — Phyrexian Human Cleric,2
+Resolute Reinforcements,W,,uncommon,Creature — Human Soldier,4
+Samite Herbalist,W,,common,Creature — Human Cleric,1
+Take Up the Shield,W,,common,Instant,1
+Valiant Veteran,W,,rare,Creature — Kor Soldier,1
+Academy Wall,U,,common,Creature — Wall,3
+Battlewing Mystic,"R,U",,uncommon,Creature — Bird Wizard,1
+Haughty Djinn,U,,rare,Creature — Djinn,1
+Impede Momentum,U,,common,Sorcery,2
+Joint Exploration,"G,U",,uncommon,Instant,1
+Micromancer,U,,uncommon,Creature — Human Wizard,1
+Phyrexian Espionage,"B,U",,common,Sorcery,2
+Rona's Vortex,"B,U",,uncommon,Instant,2
+Tolarian Terror,U,,common,Creature — Serpent,4
+Volshe Tideturner,U,,common,Creature — Merfolk Wizard,2
+Battlefly Swarm,B,,common,Creature — Phyrexian Insect,2
+Braids's Frightful Return,B,,uncommon,Enchantment — Saga,2
+Cult Conscript,B,,uncommon,Creature — Skeleton Warrior,4
+Cut Down,B,,uncommon,Instant,1
+Eerie Soultender,B,,common,Creature — Spirit Cleric,1
+Gibbering Barricade,B,,common,Creature — Nightmare Wall,2
+Monstrous War-Leech,"B,U",,uncommon,Creature — Leech Horror,1
+Phyrexian Vivisector,B,,common,Creature — Phyrexian Human,2
+Pilfer,B,,uncommon,Sorcery,3
+The Raven Man,B,,rare,Legendary Creature — Human Wizard,1
+Sengir Connoisseur,B,,uncommon,Creature — Vampire,2
+Shadow Prophecy,B,,common,Instant,1
+"Sheoldred, the Apocalypse",B,,mythic,Legendary Creature — Phyrexian Praetor,1
+Stronghold Arena,"B,G,W",,rare,Enchantment,1
+Tribute to Urborg,"B,U",,common,Instant,2
+Urborg Repossession,"B,G",,common,Sorcery,3
+Electrostatic Infantry,R,,uncommon,Creature — Dwarf Wizard,4
+Flowstone Infusion,R,,common,Instant,1
+Ghitu Amplifier,"R,U",,common,Creature — Human Wizard,2
+Goblin Picker,R,,common,Creature — Goblin,1
+Hurloon Battle Hymn,"R,W",,uncommon,Instant,2
+Jaya's Firenado,R,,common,Sorcery,2
+Meria's Outrider,R,,common,Creature — Elf Archer,1
+A-Meria's Outrider,R,,common,Creature — Elf Archer,1
+Molten Monstrosity,R,,common,Creature — Hellion,1
+Phoenix Chick,R,,uncommon,Creature — Phoenix,4
+Smash to Dust,R,,common,Sorcery,2
+Sprouting Goblin,"G,R",,uncommon,Creature — Goblin Druid,2
+A-Sprouting Goblin,"G,R",,uncommon,Creature — Goblin Druid,2
+Twinferno,R,,uncommon,Instant,2
+Viashino Branchrider,"G,R",,common,Creature — Lizard Warrior,3
+Warhost's Frenzy,"B,R",,uncommon,Instant,2
+Yavimaya Steelcrusher,R,,common,Creature — Ape Warrior,2
+Yotia Declares War,R,,uncommon,Enchantment — Saga,4
+Bite Down,G,,common,Instant,3
+Colossal Growth,"G,R",,common,Instant,2
+Defiler of Vigor,G,,rare,Creature — Phyrexian Wurm,1
+Linebreaker Baloth,G,,uncommon,Creature — Beast,1
+A-Llanowar Loamspeaker,G,,rare,Creature — Elf Druid,1
+Magnigoth Sentry,G,,common,Creature — Treefolk,2
+Quirion Beastcaller,G,,rare,Creature — Dryad Warrior,1
+Strength of the Coalition,"G,W",,uncommon,Instant,2
+Threats Undetected,G,,rare,Sorcery,1
+"Astor, Bearer of Blades","R,W",,rare,Legendary Creature — Human Warrior,1
+"Baird, Argivian Recruiter","R,W",,uncommon,Legendary Creature — Human Soldier,2
+"Balmor, Battlemage Captain","R,U",,uncommon,Legendary Creature — Bird Wizard,4
+"Elas il-Kor, Sadistic Pilgrim","B,W",,uncommon,Legendary Creature — Phyrexian Kor Cleric,1
+"Garna, Bloodfist of Keld","B,R",,uncommon,Legendary Creature — Human Berserker,2
+"Ivy, Gleeful Spellthief","G,U",,rare,Legendary Creature — Faerie Rogue,1
+"Najal, the Storm Runner","R,U",,uncommon,Legendary Creature — Efreet Wizard,1
+"Raff, Weatherlight Stalwart","U,W",,uncommon,Legendary Creature — Human Wizard,1
+"Rona, Sheoldred's Faithful","B,U",,uncommon,Legendary Creature — Human Wizard,2
+"Vohar, Vodalian Desecrator","B,U",,uncommon,Legendary Creature — Phyrexian Merfolk Wizard,2
+Crystal Grotto,,,common,Land,2
+Opt,U,,common,Instant,4
+Vodalian Arcanist,U,,common,Creature — Merfolk Wizard,1
+Rat Colony,B,,common,Creature — Rat,1
+Ghitu Lavarunner,R,,common,Creature — Human Wizard,4
+Run Amok,R,,common,Instant,4
+Grow from the Ashes,G,,common,Sorcery,3
+Skittering Surveyor,,,common,Artifact Creature — Construct,2
+Midnight Reaper,B,,rare,Creature — Zombie Knight,1
+Corpse Knight,"B,W",,uncommon,Creature — Zombie Knight,1
+Extravagant Replication,U,,rare,Enchantment,2
+Thirst for Meaning,U,,common,Instant,1
+Massacre Wurm,B,,mythic,Creature — Phyrexian Wurm,1
+"Syr Konrad, the Grim",B,,uncommon,Legendary Creature — Human Knight,1
+Scute Swarm,G,,rare,Creature — Insect,1
+"Shigeki, Jukai Visionary",G,,rare,Legendary Enchantment Creature — Snake Druid,2
+Spirit-Sister's Call,"B,W",,mythic,Enchantment,2
+Blackcleave Cliffs,"B,R",,rare,Land,1
+Acrobatic Cheerleader,W,,common,Creature — Human Survivor,1
+Cult Healer,W,,common,Creature — Human Doctor,1
+Emerge from the Cocoon,W,,common,Sorcery,1
+Enduring Innocence,W,,rare,Enchantment Creature — Sheep Glimmer,2
+Ethereal Armor,W,,uncommon,Enchantment — Aura,1
+Fear of Abduction,W,,uncommon,Enchantment Creature — Nightmare,2
+Fear of Surveillance,W,,common,Enchantment Creature — Nightmare,2
+Friendly Ghost,W,,common,Creature — Spirit,1
+Grand Entryway // Elegant Rotunda,W,,common,Enchantment — Room,3
+Leyline of Hope,W,,rare,Enchantment,1
+Living Phone,W,,common,Artifact Creature — Toy,2
+Overlord of the Mistmoors,W,,mythic,Enchantment Creature — Avatar Horror,1
+Possessed Goat,W,,common,Creature — Goat,1
+Sheltered by Ghosts,W,,uncommon,Enchantment — Aura,1
+Shepherding Spirits,W,,common,Creature — Spirit,1
+Unsettling Twins,W,,common,Creature — Human,1
+The Wandering Rescuer,W,,mythic,Legendary Creature — Human Samurai Noble,1
+Abhorrent Oculus,U,,mythic,Creature — Eye,2
+Bottomless Pool // Locker Room,U,,uncommon,Enchantment — Room,1
+Clammy Prowler,U,,common,Enchantment Creature — Horror,2
+Enduring Curiosity,U,,rare,Enchantment Creature — Cat Glimmer,1
+Enter the Enigma,U,,common,Sorcery,2
+Erratic Apparition,U,,common,Creature — Spirit,1
+Fear of Falling,U,,uncommon,Enchantment Creature — Nightmare,1
+Floodpits Drowner,U,,uncommon,Creature — Merfolk,1
+Meat Locker // Drowned Diner,U,,common,Enchantment — Room,1
+The Mindskinner,U,,rare,Legendary Enchantment Creature — Nightmare,1
+Piranha Fly,U,,common,Creature — Fish Insect,3
+Scrabbling Skullcrab,U,,uncommon,Creature — Crab Skeleton,1
+"Stay Hidden, Stay Silent",U,,uncommon,Enchantment — Aura,3
+The Tale of Tamiyo,U,,rare,Legendary Enchantment — Saga,1
+Twist Reality,U,,common,Instant,2
+Unable to Scream,U,,common,Enchantment — Aura,1
+Vanish from Sight,U,,common,Instant,1
+Appendage Amalgam,B,,common,Enchantment Creature — Horror,2
+Balemurk Leech,B,,common,Creature — Leech,1
+Cackling Slasher,B,,common,Creature — Human Assassin,1
+Cracked Skull,B,,common,Enchantment — Aura,2
+Enduring Tenacity,B,,rare,Enchantment Creature — Snake Glimmer,1
+Fanatic of the Harrowing,B,,common,Creature — Human Cleric,1
+Fear of Lost Teeth,B,,common,Enchantment Creature — Nightmare,1
+Fear of the Dark,B,,common,Enchantment Creature — Nightmare,1
+Final Vengeance,B,,common,Sorcery,1
+Funeral Room // Awakening Hall,B,,mythic,Enchantment — Room,1
+Give In to Violence,B,,common,Instant,2
+Innocuous Rat,B,,common,Creature — Rat,2
+Let's Play a Game,B,,uncommon,Sorcery,1
+Live or Die,B,,uncommon,Instant,1
+Miasma Demon,B,,uncommon,Creature — Demon,2
+Overlord of the Balemurk,B,,mythic,Enchantment Creature — Avatar Horror,1
+Unholy Annex // Ritual Chamber,B,,rare,Enchantment — Room,1
+"Valgavoth, Terror Eater",B,,mythic,Legendary Creature — Elder Demon,1
+Vile Mutilator,B,,uncommon,Creature — Demon,1
+Winter's Intervention,B,,common,Instant,2
+Betrayer's Bargain,R,,uncommon,Instant,1
+Charred Foyer // Warped Space,R,,mythic,Enchantment — Room,1
+Clockwork Percussionist,R,,common,Artifact Creature — Monkey Toy,3
+Enduring Courage,R,,rare,Enchantment Creature — Dog Glimmer,1
+Glassworks // Shattered Yard,R,,common,Enchantment — Room,1
+Grab the Prize,R,,common,Sorcery,2
+Hand That Feeds,R,,common,Creature — Mutant,1
+Irreverent Gremlin,R,,uncommon,Creature — Gremlin,2
+"Norin, Swift Survivalist",R,,uncommon,Legendary Creature — Human Coward,1
+Overlord of the Boilerbilges,R,,mythic,Enchantment Creature — Avatar Horror,1
+Ragged Playmate,R,,common,Artifact Creature — Toy,1
+Rampaging Soulrager,R,,common,Creature — Spirit,3
+Razorkin Needlehead,R,,rare,Creature — Human Assassin,1
+Ticket Booth // Tunnel of Hate,R,,common,Enchantment — Room,2
+Trial of Agony,R,,uncommon,Sorcery,1
+Vicious Clown,R,,common,Creature — Human Clown,1
+Violent Urge,R,,uncommon,Instant,1
+"Altanak, the Thrice-Called",G,,uncommon,Legendary Creature — Insect Beast,3
+Anthropede,G,,common,Creature — Insect,1
+Balustrade Wurm,G,,rare,Creature — Wurm,1
+Enduring Vitality,G,,rare,Enchantment Creature — Elk Glimmer,2
+Grasping Longneck,G,,common,Enchantment Creature — Horror,1
+Hauntwoods Shrieker,G,,mythic,Creature — Beast Mutant,1
+Horrid Vigor,G,,common,Instant,1
+Insidious Fungus,G,,uncommon,Creature — Fungus,4
+Manifest Dread,G,,common,Sorcery,2
+Moldering Gym // Weight Room,G,,common,Enchantment — Room,4
+Overgrown Zealot,G,,uncommon,Creature — Elf Druid,1
+Patchwork Beastie,G,,uncommon,Artifact Creature — Beast,1
+Rootwise Survivor,G,,uncommon,Creature — Human Survivor,1
+Say Its Name,G,,common,Sorcery,1
+Slavering Branchsnapper,G,,common,Creature — Lizard,1
+Spineseeker Centipede,G,,common,Creature — Insect,1
+"Arabella, Abandoned Doll","R,W",,uncommon,Legendary Artifact Creature — Toy,1
+Baseball Bat,"G,W",,uncommon,Artifact — Equipment,3
+Broodspinner,"B,G",,uncommon,Creature — Spider,2
+Disturbing Mirth,"B,R",,uncommon,Enchantment,1
+Drag to the Roots,"B,G",,uncommon,Instant,2
+Gremlin Tamer,"U,W",,uncommon,Creature — Human Scout,1
+Intruding Soulrager,"R,U",,uncommon,Creature — Spirit,1
+The Jolly Balloon Man,"R,W",,rare,Legendary Creature — Human Clown,1
+Shrewd Storyteller,"G,W",,uncommon,Creature — Human Survivor,1
+The Swarmweaver,"B,G",,rare,Legendary Artifact Creature — Scarecrow,1
+"Zimone, All-Questioning","G,U",,rare,Legendary Creature — Human Wizard,1
+Bear Trap,,,common,Artifact,1
+Conductive Machete,,,uncommon,Artifact — Equipment,1
+Found Footage,,,common,Artifact — Clue,2
+Friendly Teddy,,,common,Artifact Creature — Bear Toy,1
+Haunted Screen,"B,G,R,U,W",,uncommon,Artifact,1
+Malevolent Chandelier,,,common,Artifact Creature — Construct,2
+Abandoned Campground,"U,W",,common,Land,1
+Bleeding Woods,"G,R",,common,Land,1
+Etched Cornfield,"G,W",,common,Land,2
+Hushwood Verge,"G,W",,rare,Land,1
+Lakeside Shack,"G,U",,common,Land,3
+Murky Sewer,"B,U",,common,Land,2
+Neglected Manor,"B,W",,common,Land,2
+Raucous Carnival,"R,W",,common,Land,1
+Strangled Cemetery,"B,G",,common,Land,1
+Artful Maneuver,W,,common,Instant,1
+Impact Tremors,R,,common,Enchantment,1
+Magmatic Chasm,R,,common,Sorcery,1
+Seismic Rupture,R,,uncommon,Sorcery,3
+Aggravated Assault,R,,rare,Enchantment,1
+Charming Prince,W,,rare,Creature — Human Noble,1
+Glass Casket,W,,uncommon,Artifact,1
+"Syr Alin, the Lion's Claw",W,,uncommon,Legendary Creature — Human Knight,1
+Bake into a Pie,B,,common,Instant,3
+Wildborn Preserver,G,,rare,Creature — Elf Archer,1
+Wildwood Tracker,G,,common,Creature — Elf Warrior,1
+Gingerbrute,,,common,Artifact Creature — Food Golem,4
+Heraldic Banner,,,uncommon,Artifact,1
+Castle Garenbrig,G,,rare,Land,1
+"Kenrith, the Returned King","B,G,R,U,W",,mythic,Legendary Creature — Human Noble,1
+Borrowed Grace,W,,common,Instant,1
+Thalia's Lancers,W,,rare,Creature — Human Knight,1
+Cemetery Recruitment,B,,common,Sorcery,2
+Weirded Vampire,B,,common,Creature — Vampire Horror,1
+Smash to Smithereens,R,,rare,Instant,1
+Stroke of Midnight,W,,uncommon,Instant,2
+Sire of Seven Deaths,,,mythic,Creature — Eldrazi,2
+"Arahbo, the First Fang",W,,rare,Legendary Creature — Cat Avatar,1
+Armasaur Guide,W,,common,Creature — Dinosaur,4
+Cat Collector,W,,uncommon,Creature — Human Citizen,2
+Celestial Armor,W,,rare,Artifact — Equipment,1
+Claws Out,W,,uncommon,Instant,4
+Crystal Barricade,W,,rare,Artifact Creature — Wall,1
+Dauntless Veteran,W,,uncommon,Creature — Human Soldier,3
+Dazzling Angel,W,,common,Creature — Angel,4
+Divine Resilience,W,,uncommon,Instant,3
+Exemplar of Light,W,,rare,Creature — Angel,1
+Felidar Savior,W,,common,Creature — Cat Beast,4
+Fleeting Flight,W,,common,Instant,4
+Hare Apparent,W,,common,Creature — Rabbit Noble,4
+Helpful Hunter,W,,common,Creature — Cat,4
+Herald of Eternal Dawn,W,,mythic,Creature — Angel,2
+Inspiring Paladin,W,,common,Creature — Human Knight,3
+Joust Through,W,,uncommon,Instant,2
+Luminous Rebuke,W,,common,Instant,4
+Prideful Parent,W,,common,Creature — Cat,2
+Raise the Past,W,,rare,Sorcery,1
+Skyknight Squire,W,,rare,Creature — Cat Scout,2
+Squad Rallier,W,,common,Creature — Human Scout,1
+Sun-Blessed Healer,W,,uncommon,Creature — Human Cleric,3
+Twinblade Blessing,W,,uncommon,Enchantment — Aura,2
+Valkyrie's Call,W,,mythic,Enchantment,2
+Vanguard Seraph,W,,common,Creature — Angel Warrior,4
+Arcane Epiphany,U,,uncommon,Instant,2
+Archmage of Runes,U,,rare,Creature — Giant Wizard,1
+Bigfin Bouncer,U,,common,Creature — Shark Pirate,2
+Cephalid Inkmage,U,,uncommon,Creature — Octopus Wizard,1
+Curator of Destinies,U,,rare,Creature — Sphinx,1
+Drake Hatcher,U,,rare,Creature — Human Wizard,1
+Elementalist Adept,U,,common,Creature — Human Wizard,1
+Erudite Wizard,U,,common,Creature — Human Wizard,3
+Faebloom Trick,U,,uncommon,Instant,3
+Grappling Kraken,U,,uncommon,Creature — Kraken,1
+High Fae Trickster,U,,rare,Creature — Faerie Wizard,1
+Homunculus Horde,U,,rare,Creature — Homunculus,1
+Icewind Elemental,U,,common,Creature — Elemental,1
+Inspiration from Beyond,U,,uncommon,Sorcery,4
+"Kaito, Cunning Infiltrator",U,,mythic,Legendary Planeswalker — Kaito,1
+"Kiora, the Rising Tide",U,,rare,Legendary Creature — Merfolk Noble,1
+Lunar Insight,U,,rare,Sorcery,1
+Mischievous Mystic,U,,uncommon,Creature — Human Wizard,3
+Refute,U,,common,Instant,1
+Skyship Buccaneer,U,,uncommon,Creature — Human Pirate,2
+Strix Lookout,U,,common,Creature — Bird,2
+Uncharted Voyage,U,,common,Instant,2
+Abyssal Harvester,B,,rare,Creature — Demon Warlock,1
+Arbiter of Woe,B,,uncommon,Creature — Demon,3
+Billowing Shriekmass,B,,uncommon,Creature — Spirit,2
+Bloodthirsty Conqueror,B,,mythic,Creature — Vampire Knight,4
+Crypt Feaster,B,,common,Creature — Zombie,4
+Gutless Plunderer,B,,common,Creature — Skeleton Pirate,3
+High-Society Hunter,B,,rare,Creature — Vampire Noble,2
+Hungry Ghoul,B,,common,Creature — Zombie,3
+Infernal Vessel,B,,uncommon,Creature — Human Cleric,3
+Infestation Sage,B,,common,Creature — Elf Warlock,4
+Midnight Snack,B,,uncommon,Enchantment,1
+Nine-Lives Familiar,B,,rare,Creature — Cat,1
+Revenge of the Rats,B,,uncommon,Sorcery,1
+Sanguine Syphoner,B,,common,Creature — Vampire Warlock,4
+Soul-Shackled Zombie,B,,common,Creature — Zombie,3
+Stab,B,,common,Instant,4
+"Tinybones, Bauble Burglar",B,,rare,Legendary Creature — Skeleton Rogue,1
+Tragic Banshee,B,,uncommon,Creature — Spirit,4
+Vampire Gourmand,B,,uncommon,Creature — Vampire,3
+Vampire Soulcaller,B,,common,Creature — Vampire Warlock,1
+Vengeful Bloodwitch,B,,uncommon,Creature — Vampire Warlock,3
+"Zul Ashur, Lich Lord",B,,rare,Legendary Creature — Zombie Warlock,1
+Battlesong Berserker,R,,uncommon,Creature — Human Berserker,2
+Bulk Up,R,,uncommon,Instant,2
+"Chandra, Flameshaper",R,,mythic,Legendary Planeswalker — Chandra,2
+Courageous Goblin,R,,common,Creature — Goblin,4
+Crackling Cyclops,R,,common,Creature — Cyclops Wizard,3
+Dragon Trainer,R,,uncommon,Creature — Human,1
+Fiery Annihilation,R,,uncommon,Instant,4
+Goblin Boarders,R,,common,Creature — Goblin Pirate,4
+Goblin Negotiation,R,,uncommon,Sorcery,1
+Gorehorn Raider,R,,common,Creature — Minotaur Pirate,4
+Incinerating Blast,R,,common,Sorcery,3
+"Kellan, Planar Trailblazer",R,,rare,Legendary Creature — Human Faerie Scout,2
+Rite of the Dragoncaller,R,,mythic,Enchantment,1
+Searslicer Goblin,R,,rare,Creature — Goblin Warrior,2
+Slumbering Cerberus,R,,uncommon,Creature — Dog,4
+Sower of Chaos,R,,common,Creature — Devil,4
+Strongbox Raider,R,,uncommon,Creature — Orc Pirate,3
+Ambush Wolf,G,,common,Creature — Wolf,4
+Apothecary Stomper,G,,common,Creature — Elephant,2
+Beast-Kin Ranger,G,,common,Creature — Elf Ranger,4
+Cackling Prowler,G,,common,Creature — Hyena Rogue,3
+Eager Trufflesnout,G,,uncommon,Creature — Boar,2
+Elfsworn Giant,G,,common,Creature — Giant,4
+Elvish Regrower,G,,uncommon,Creature — Elf Druid,1
+Felling Blow,G,,uncommon,Sorcery,4
+"Loot, Exuberant Explorer",G,,rare,Legendary Creature — Beast Noble,2
+Mossborn Hydra,G,,rare,Creature — Elemental Hydra,4
+Needletooth Pack,G,,uncommon,Creature — Dinosaur,2
+Quilled Greatwurm,G,,mythic,Creature — Wurm,2
+Spinner of Souls,G,,rare,Creature — Spider Spirit,3
+Sylvan Scavenging,G,,rare,Enchantment,1
+Treetop Snarespinner,G,,common,Creature — Spider,3
+"Alesha, Who Laughs at Fate","B,R",,rare,Legendary Creature — Human Warrior,1
+Anthem of Champions,"G,W",,rare,Enchantment,1
+Ashroot Animist,"G,R",,rare,Creature — Lizard Druid,1
+Dreadwing Scavenger,"B,U",,uncommon,Creature — Nightmare Bird,4
+"Elenda, Saint of Dusk","B,W",,rare,Legendary Creature — Vampire Knight,1
+Fiendish Panda,"B,W",,uncommon,Creature — Bear Demon,2
+"Koma, World-Eater","G,U",,rare,Legendary Creature — Serpent,2
+"Niv-Mizzet, Visionary","R,U",,mythic,Legendary Creature — Dragon Wizard,3
+Perforating Artist,"B,R",,uncommon,Creature — Devil,4
+Wardens of the Cycle,"B,G",,uncommon,Creature — Elf Warlock,4
+"Zimone, Paradox Sculptor","G,U",,mythic,Legendary Creature — Human Wizard,1
+Leyline Axe,,,rare,Artifact — Equipment,2
+Quick-Draw Katana,,,common,Artifact — Equipment,4
+Ravenous Amulet,,,uncommon,Artifact,2
+Soulstone Sanctuary,,,rare,Land,1
+Authority of the Consuls,W,,rare,Enchantment,2
+"Giada, Font of Hope",W,,rare,Legendary Creature — Angel,1
+Healer's Hawk,W,,common,Creature — Bird,4
+Make Your Move,W,,common,Instant,4
+Youthful Valkyrie,W,,uncommon,Creature — Angel,2
+Aegis Turtle,U,,common,Creature — Turtle,3
+Brineborn Cutthroat,U,,uncommon,Creature — Merfolk Pirate,2
+Mocking Sprite,U,,common,Creature — Faerie Rogue,2
+Self-Reflection,U,,uncommon,Sorcery,1
+Spectral Sailor,U,,uncommon,Creature — Spirit Pirate,2
+Witness Protection,U,,common,Enchantment — Aura,2
+Burglar Rat,B,,common,Creature — Rat,4
+Fake Your Own Death,B,,common,Instant,2
+"Liliana, Dreadhorde General",B,,mythic,Legendary Planeswalker — Liliana,1
+Marauding Blight-Priest,B,,common,Creature — Vampire Cleric,3
+Rise of the Dark Realms,B,,mythic,Sorcery,1
+Axgard Cavalry,R,,common,Creature — Dwarf Berserker,4
+Brazen Scourge,R,,uncommon,Creature — Gremlin,1
+Burst Lightning,R,,common,Instant,4
+Fanatical Firebrand,R,,common,Creature — Goblin Pirate,4
+Firespitter Whelp,R,,uncommon,Creature — Dragon,3
+Flamewake Phoenix,R,,rare,Creature — Phoenix,1
+Goblin Surprise,R,,common,Instant,3
+Heartfire Immolator,R,,uncommon,Creature — Human Wizard,3
+Involuntary Employment,R,,common,Sorcery,2
+Slagstorm,R,,rare,Sorcery,1
+Spitfire Lagac,R,,common,Creature — Lizard,2
+Gnarlid Colony,G,,common,Creature — Beast,4
+Mild-Mannered Librarian,G,,uncommon,Creature — Human,4
+Nessian Hornbeetle,G,,uncommon,Creature — Insect,4
+Vivien Reid,G,,mythic,Legendary Planeswalker — Vivien,1
+Wary Thespian,G,,common,Creature — Cat Druid,4
+Empyrean Eagle,"U,W",,uncommon,Creature — Bird Spirit,3
+Good-Fortune Unicorn,"G,W",,uncommon,Creature — Unicorn,4
+"Lathril, Blade of the Elves","B,G",,rare,Legendary Creature — Elf Noble,2
+"Ruby, Daring Tracker","G,R",,uncommon,Legendary Creature — Human Scout,2
+Adventuring Gear,,,uncommon,Artifact — Equipment,2
+Campus Guide,,,common,Artifact Creature — Golem,4
+Goldvein Pick,,,common,Artifact — Equipment,3
+Elspeth's Smite,W,,uncommon,Instant,2
+Ingenious Leonin,W,,uncommon,Creature — Cat Soldier,1
+Leonin Vanguard,W,,uncommon,Creature — Cat Soldier,3
+Moment of Triumph,W,,common,Instant,2
+Twinblade Paladin,W,,uncommon,Creature — Human Knight,2
+Burrog Befuddler,U,,common,Creature — Frog Wizard,3
+Exclusion Mage,U,,uncommon,Creature — Human Wizard,3
+Quick Study,U,,common,Instant,2
+Starlight Snare,U,,common,Enchantment — Aura,2
+Deadly Plot,B,,uncommon,Instant,2
+Highborn Vampire,B,,common,Creature — Vampire Warrior,1
+Moment of Craving,B,,common,Instant,4
+Offer Immortality,B,,common,Instant,1
+Bear Cub,G,,common,Creature — Bear,2
+Thrashing Brontodon,G,,uncommon,Creature — Dinosaur,1
+Angelic Destiny,W,,mythic,Enchantment — Aura,1
+Dawnwing Marshal,W,,uncommon,Creature — Cat Soldier,3
+Release the Dogs,W,,uncommon,Sorcery,2
+Dive Down,U,,common,Instant,3
+Nullpriest of Oblivion,B,,rare,Creature — Vampire Cleric,1
+Sanguine Indulgence,B,,common,Sorcery,1
+Circuitous Route,G,,uncommon,Sorcery,2
+Springbloom Druid,G,,common,Creature — Elf Druid,1
+Venom Connoisseur,G,,uncommon,Creature — Human Druid,4
+"Ayli, Eternal Pilgrim","B,W",,rare,Legendary Creature — Kor Cleric,1
+Immersturm Predator,"B,R",,rare,Creature — Vampire Dragon,1
+"Ovika, Enigma Goliath","R,U",,rare,Legendary Creature — Phyrexian Nightmare,1
+Teach by Example,"R,U",,uncommon,Instant,1
+Crawling Barrens,,,rare,Land,1
+Hinterland Sanctifier,W,,common,Creature — Rabbit Cleric,2
+Archmage Emeritus,U,,rare,Creature — Human Wizard,1
+Professional Face-Breaker,R,,rare,Creature — Human Warrior,2
+Pressure Point,W,,common,Instant,1
+Gurmag Angler,B,,common,Creature — Zombie Fish,1
+Touch the Spirit Realm,W,,rare,Enchantment,4
+Legion Loyalist,R,,rare,Creature — Goblin Soldier,1
+Grasp of Darkness,B,,uncommon,Instant,1
+Village Rites,B,,common,Instant,1
+Hunted Witness,W,,common,Creature — Human,1
+Dead Weight,B,,common,Enchantment — Aura,1
+"Ambergris, Citadel Agent",R,,uncommon,Legendary Creature — Dwarf Cleric,1
+Flaming Fist Duskguard,W,,common,Creature — Dwarf Soldier,1
+Sune's Intervention,W,,rare,Instant,1
+Valiant Farewell,W,,common,Instant,1
+Hypnotic Pattern,U,,common,Instant,1
+Incessant Provocation,R,,common,Sorcery,2
+A-Sigil of Myrkul,B,,uncommon,Enchantment,1
+A-Earthquake Dragon,G,,rare,Creature — Elemental Dragon,1
+Valiant Rescuer,W,,uncommon,Creature — Human Soldier,1
+Will of the All-Hunter,W,,uncommon,Instant,1
+Glimmerbell,U,,common,Creature — Elemental Jellyfish,1
+Startling Development,U,,common,Instant,1
+Blitz Leech,B,,common,Creature — Leech,1
+Gloom Pangolin,B,,common,Creature — Nightmare Pangolin,1
+Mythos of Nethroi,"B,G,W",,rare,Instant,1
+Unbreakable Bond,B,,uncommon,Sorcery,1
+Blisterspit Gremlin,R,,common,Creature — Gremlin,1
+Drannith Stinger,R,,common,Creature — Human Wizard,1
+Everquill Phoenix,R,,rare,Creature — Phoenix,1
+Forbidden Friendship,R,,common,Sorcery,1
+Rumbling Rockslide,R,,common,Sorcery,2
+Fully Grown,G,,common,Instant,1
+Mosscoat Goriak,G,,common,Creature — Beast,1
+Sudden Spinnerets,G,,common,Instant,1
+Thwart the Enemy,G,,common,Instant,1
+Wilt,G,,common,Instant,1
+Back for More,"B,G",,uncommon,Instant,1
+Genesis Ultimatum,"G,R,U",,rare,Sorcery,1
+"Lutri, the Spellchaser","R,U",,rare,Legendary Creature — Elemental Otter,1
+Sonorous Howlbonder,"B,R",,uncommon,Creature — Human Warrior,1
+"Yorion, Sky Nomad","U,W",,rare,Legendary Creature — Bird Serpent,1
+The Ozolith,,,rare,Legendary Artifact,1
+Invisible Stalker,U,,uncommon,Creature — Human Rogue,1
+Traitorous Blood,R,,common,Sorcery,1
+Temporal Manipulation,U,,rare,Sorcery,1
+Reckless Ringleader,R,,common,Creature — Goblin Rogue,2
+Etherium Spinner,U,,common,Artifact Creature — Human Wizard,2
+Manic Scribe,U,,uncommon,Creature — Human Wizard,1
+Moonblade Shinobi,U,,common,Creature — Human Ninja,1
+Azra Smokeshaper,B,,common,Creature — Azra Ninja,1
+Insolent Neonate,R,,common,Creature — Vampire,1
+Goblin Anarchomancer,"G,R",,common,Creature — Goblin Shaman,1
+Creeping Bloodsucker,B,,common,Creature — Vampire,1
+Hydra's Growth,G,,uncommon,Enchantment — Aura,2
+Imperial Recovery Unit,W,,uncommon,Artifact — Vehicle,2
+Kitsune Ace,W,,common,Creature — Fox Pilot,1
+Spectral Steel,W,,uncommon,Enchantment — Aura,1
+Elite Instructor,U,,common,Creature — Human Wizard,1
+Frostpeak Yeti,U,,common,Snow Creature — Yeti,1
+Library Larcenist,U,,common,Creature — Merfolk Rogue,1
+Littjara Kinseekers,U,,common,Creature — Shapeshifter,1
+Undersea Invader,U,,common,Creature — Giant Rogue,1
+Wavebreak Hippocamp,U,,rare,Enchantment Creature — Horse Fish,1
+Karfell Kennel-Master,B,,common,Creature — Zombie Berserker,2
+Goldhound,R,,common,Artifact Creature — Treasure Dog,2
+Sokenzan Smelter,R,,uncommon,Creature — Goblin Artificer,4
+Drowsing Tyrannodon,G,,common,Creature — Dinosaur,1
+Master's Rebuke,G,,common,Instant,4
+Scale the Heights,G,,common,Sorcery,1
+Thaumaturge's Familiar,,,common,Artifact Creature — Bird,1
+Scythecat Cub,G,,rare,Creature — Cat,1
+Kodama of the West Tree,G,,mythic,Legendary Creature — Spirit,1
+Run Ashore,U,,common,Instant,1
+Golden-Tail Disciple,W,,common,Enchantment Creature — Fox Monk,1
+Hexgold Hoverwings,W,,uncommon,Artifact — Equipment,2
+Light the Way,W,,common,Instant,2
+Mirran Bardiche,W,,common,Artifact — Equipment,1
+Revitalize,W,,common,Instant,1
+Speakeasy Server,W,,common,Creature — Bird Citizen,1
+Frost Trickster,U,,common,Creature — Bird Wizard,4
+Moon-Circuit Hacker,U,,common,Enchantment Creature — Human Ninja,4
+Moonsnare Specialist,U,,common,Creature — Human Ninja,4
+Network Disruptor,U,,common,Artifact Creature — Moonfolk Rogue,4
+Prosperous Thief,U,,uncommon,Creature — Human Ninja,4
+Towering-Wave Mystic,U,,common,Creature — Merfolk Wizard,1
+Vexing Gull,U,,common,Creature — Bird,1
+Midnight Assassin,B,,common,Creature — Vampire Assassin,1
+Morkrut Necropod,B,,uncommon,Creature — Slug Horror,1
+Virus Beetle,B,,common,Artifact Creature — Insect,4
+Bloodfire Expert,R,,common,Creature — Efreet Monk,1
+Resistance Skywarden,R,,uncommon,Creature — Ogre Rebel,1
+Unstoppable Ogre,R,,common,Artifact Creature — Ogre Warrior,1
+Ancient Greenwarden,G,,mythic,Creature — Elemental,1
+Armored Kincaller,G,,common,Creature — Dinosaur,4
+Heir of the Ancient Fang,G,,common,Creature — Snake Samurai,1
+High-Rise Sawjack,G,,common,Creature — Elf Citizen,3
+Llanowar Visionary,G,,common,Creature — Elf Druid,1
+Oran-Rief Ooze,G,,rare,Creature — Ooze,1
+Orochi Merge-Keeper,G,,uncommon,Creature — Snake Druid,1
+Territorial Scythecat,G,,common,Creature — Cat,1
+Topiary Stomper,G,,rare,Creature — Plant Dinosaur,2
+Warbriar Blessing,G,,common,Enchantment — Aura,1
+Patchwork Automaton,,,uncommon,Artifact Creature — Construct,4
+Branching Evolution,G,,rare,Enchantment,1
+A-Blood Artist,B,,uncommon,Creature — Vampire,1
+Fledgling Dragon,R,,rare,Creature — Dragon,1
+Cyclone Summoner,U,,rare,Creature — Giant Wizard,1
+Mists of Littjara,U,,common,Enchantment — Aura,1
+Draugr Recruiter,B,,common,Creature — Zombie Cleric,2
+Jarl of the Forsaken,B,,common,Creature — Zombie Cleric,1
+Skull Raid,B,,common,Sorcery,1
+Arni Brokenbrow,R,,rare,Legendary Creature — Human Berserker,1
+Calamity Bearer,R,,rare,Creature — Giant Berserker,1
+Fearless Liberator,R,,uncommon,Creature — Dwarf Berserker,1
+Tundra Fumarole,R,,rare,Snow Sorcery,1
+Arachnoform,G,,common,Enchantment — Aura,1
+Boreal Outrider,G,,uncommon,Snow Creature — Elf Warrior,1
+King Harald's Revenge,G,,common,Sorcery,1
+Mammoth Growth,G,,common,Instant,1
+"Vorinclex, Monstrous Raider",G,,mythic,Legendary Creature — Phyrexian Praetor,1
+Skemfar Elderhall,"B,G",,uncommon,Land,2
+A-Skemfar Elderhall,"B,G",,uncommon,Land,2
+Cleaving Reaper,B,,rare,Creature — Angel Berserker,1
+Fairgrounds Trumpeter,G,,uncommon,Creature — Elephant,3
+Blooming Marsh,"B,G",,rare,Land,2
+Concealed Courtyard,"B,W",,rare,Land,1
+Inspiring Vantage,"R,W",,rare,Land,1
+Spirebluff Canal,"R,U",,rare,Land,1
+Raiders' Spoils,B,,uncommon,Enchantment,1
+Retribution of the Ancients,B,,rare,Enchantment,1
+Rotting Mastodon,B,,common,Creature — Zombie Elephant,1
+Shambling Attendants,B,,common,Creature — Zombie,1
+Throttle,B,,common,Instant,1
+Mardu Warshrieker,"B,R,W",,common,Creature — Orc Shaman,1
+Kin-Tree Warden,G,,common,Creature — Human Warrior,1
+Tusked Colossodon,G,,common,Creature — Beast,1
+Ponyback Brigade,"B,R,W",,common,Creature — Goblin Warrior,1
+Rakshasa Vizier,"B,G,U",,rare,Creature — Demon,1
+Warden of the Eye,"R,U,W",,uncommon,Creature — Djinn Wizard,1
+Lens of Clarity,,,common,Artifact,1
+Witness of the Ages,,,uncommon,Artifact Creature — Golem,1
+Cruel Celebrant,"B,W",,uncommon,Creature — Vampire,2
+Rhythm of the Wild,"G,R",,uncommon,Enchantment,1
+Acrobatic Leap,W,,common,Instant,4
+Attentive Sunscribe,W,,common,Artifact Creature — Gnome,2
+Deconstruction Hammer,W,,common,Artifact — Equipment,1
+Fabrication Foundry,W,,rare,Artifact,1
+Family Reunion,W,,common,Instant,1
+Guardian of the Great Door,W,,uncommon,Creature — Angel,3
+Ironpaw Aspirant,W,,common,Creature — Cat Warrior,2
+Oltec Archaeologists,W,,common,Creature — Human Artificer Scout,1
+Oltec Cloud Guard,W,,common,Creature — Human Soldier,2
+Petrify,W,,common,Enchantment — Aura,2
+Sanguine Evangelist,W,,rare,Creature — Vampire Cleric,1
+Thousand Moons Infantry,W,,common,Creature — Human Soldier,3
+Tinker's Tote,W,,common,Artifact,2
+Out of Air,U,,common,Instant,1
+River Herald Scout,U,,common,Creature — Merfolk Scout,2
+Shipwreck Sentry,U,,common,Creature — Human Pirate,1
+Song of Stupefaction,U,,common,Enchantment — Aura,1
+Spyglass Siren,U,,uncommon,Creature — Siren Pirate,1
+Waterwind Scout,U,,common,Creature — Merfolk Scout,4
+Another Chance,B,,common,Instant,4
+Broodrage Mycoid,B,,common,Creature — Fungus,1
+Chupacabra Echo,B,,uncommon,Creature — Beast Horror Spirit,1
+Deep Goblin Skulltaker,B,,common,Creature — Goblin Warrior,1
+Deep-Cavern Bat,B,,uncommon,Creature — Bat,2
+Fanatical Offering,B,,common,Instant,1
+Greedy Freebooter,B,,common,Creature — Human Pirate,2
+Join the Dead,B,,common,Instant,1
+Malicious Eclipse,B,,uncommon,Sorcery,2
+Mephitic Draught,B,,common,Artifact,1
+Ray of Ruin,B,,common,Sorcery,1
+Screaming Phantom,B,,common,Creature — Spirit,2
+Skullcap Snail,B,,common,Creature — Fungus Snail,2
+Starving Revenant,B,,rare,Creature — Spirit Horror,4
+Terror Tide,B,,rare,Sorcery,1
+Ancestors' Aid,R,,common,Instant,1
+Bonehoard Dracosaur,R,,mythic,Creature — Dinosaur Dragon,1
+Brazen Blademaster,R,,common,Creature — Orc Pirate,2
+Burning Sun Cavalry,R,,common,Creature — Human Knight,3
+Calamitous Cave-In,R,,uncommon,Sorcery,1
+Curator of Sun's Creation,R,,uncommon,Creature — Human Artificer,2
+Daring Discovery,R,,common,Sorcery,2
+Dinotomaton,R,,common,Artifact Creature — Dinosaur Gnome,3
+Etali's Favor,R,,common,Enchantment — Aura,3
+Geological Appraiser,R,,uncommon,Creature — Human Artificer,2
+A-Geological Appraiser,R,,uncommon,Creature — Human Artificer,2
+Hit the Mother Lode,R,,rare,Sorcery,1
+Panicked Altisaur,R,,common,Creature — Dinosaur,2
+Plundering Pirate,R,,common,Creature — Orc Pirate,2
+Rampaging Ceratops,R,,uncommon,Creature — Dinosaur,2
+Trumpeting Carnosaur,R,,rare,Creature — Dinosaur,1
+Basking Capybara,G,,common,Creature — Capybara,1
+Cavern Stomper,G,,common,Creature — Dinosaur,2
+Earthshaker Dreadmaw,G,,uncommon,Creature — Dinosaur,2
+"Ghalta, Stampede Tyrant",G,,mythic,Legendary Creature — Elder Dinosaur,1
+Glimpse the Core,G,,uncommon,Sorcery,1
+Huatli's Final Strike,G,,common,Instant,4
+Hulking Raptor,G,,rare,Creature — Dinosaur,1
+In the Presence of Ages,G,,common,Instant,3
+Intrepid Paleontologist,G,,rare,Creature — Human Druid,1
+Ixalli's Lorekeeper,G,,uncommon,Creature — Human Druid,1
+Jadelight Spelunker,G,,rare,Creature — Merfolk Scout,1
+Malamet Battle Glyph,G,,uncommon,Sorcery,1
+Mineshaft Spider,G,,common,Creature — Spider,1
+Nurturing Bristleback,G,,common,Creature — Dinosaur,1
+Pathfinding Axejaw,G,,common,Creature — Dinosaur,3
+Poison Dart Frog,G,,common,Creature — Frog,2
+Pugnacious Hammerskull,G,,rare,Creature — Dinosaur,1
+River Herald Guide,G,,common,Creature — Merfolk Scout,4
+Sentinel of the Nameless City,G,,rare,Creature — Merfolk Warrior Scout,2
+Spelunking,G,,uncommon,Enchantment,1
+Staggering Size,G,,common,Instant,1
+Walk with the Ancestors,G,,common,Sorcery,1
+"Anim Pakal, Thousandth Moon","R,W",,rare,Legendary Creature — Human Soldier,1
+Caparocti Sunborn,"R,W",,uncommon,Legendary Creature — Human Soldier,2
+Deepfathom Echo,"G,U",,rare,Creature — Merfolk Spirit,1
+"Itzquinth, Firstborn of Gishath","G,R",,uncommon,Legendary Creature — Dinosaur,2
+"Saheeli, the Sun's Brilliance","R,U",,mythic,Legendary Creature — Human Artificer,1
+Sovereign Okinec Ahau,"G,W",,mythic,Legendary Creature — Cat Noble,1
+Careening Mine Cart,,,uncommon,Artifact — Vehicle,1
+Roaming Throne,,,rare,Artifact Creature — Golem,3
+Runaway Boulder,,,common,Artifact,1
+Scampering Surveyor,,,uncommon,Artifact Creature — Gnome,1
+Hidden Courtyard,W,,common,Land — Cave,2
+Hidden Nursery,G,,common,Land — Cave,2
+Hidden Volcano,R,,common,Land — Cave,2
+The Battle of Bywater,W,,rare,Sorcery,1
+Bill the Pony,W,,uncommon,Legendary Creature — Horse,1
+Nimble Hobbit,W,,common,Creature — Halfling Peasant,1
+Slip On the Ring,W,,common,Instant,1
+Arwen's Gift,U,,common,Sorcery,1
+Grey Havens Navigator,U,,common,Creature — Elf Pilot,3
+Lost Isle Calling,U,,rare,Enchantment,1
+Nimrodel Watcher,U,,common,Creature — Elf Scout,3
+Gorbag of Minas Morgul,B,,uncommon,Legendary Creature — Orc Soldier,1
+Lobelia Sackville-Baggins,B,,rare,Legendary Creature — Halfling Citizen,1
+Morgul-Knife Wound,B,,common,Enchantment — Aura,1
+"Sauron, the Necromancer",B,,rare,Legendary Creature — Avatar Horror,1
+Shadow of the Enemy,B,,mythic,Sorcery,1
+Gimli's Fury,R,,common,Instant,1
+Oliphaunt,R,,common,Creature — Elephant,1
+Rising of the Day,R,,uncommon,Enchantment,1
+Spiteful Banditry,R,,mythic,Enchantment,1
+Celeborn the Wise,G,,uncommon,Legendary Creature — Elf Noble,2
+Chance-Met Elves,G,,common,Creature — Elf Warrior,4
+Elven Farsight,G,,common,Sorcery,3
+Enraged Huorn,G,,common,Creature — Treefolk,1
+Entish Restoration,G,,uncommon,Instant,1
+Galadhrim Bow,G,,common,Artifact — Equipment,1
+Galadhrim Guide,G,,common,Creature — Elf Scout,3
+"Glorfindel, Dauntless Rescuer",G,,uncommon,Legendary Creature — Elf Noble,1
+Many Partings,G,,common,Sorcery,1
+Revive the Shire,G,,common,Sorcery,1
+Shortcut to Mushrooms,G,,uncommon,Enchantment,1
+"Denethor, Ruling Steward","B,W",,uncommon,Legendary Creature — Human Noble,1
+"Elrond, Master of Healing","G,U",,rare,Legendary Creature — Elf Noble,1
+Flame of Anor,"R,U",,rare,Instant,1
+Gandalf the Grey,"R,U",,rare,Legendary Creature — Avatar Wizard,1
+Mirror of Galadriel,,,uncommon,Legendary Artifact,1
+Great Hall of the Citadel,,,common,Land,1
+Heliod's Pilgrim,W,,common,Creature — Human Cleric,1
+Ajani's Welcome,W,,uncommon,Enchantment,1
+Explosive Apparatus,,,common,Artifact,1
+Mist-Cloaked Herald,U,,common,Creature — Merfolk Warrior,1
+Season of Growth,G,,uncommon,Enchantment,1
+Griffin Aerie,W,,uncommon,Enchantment,1
+Legion's Judgment,W,,common,Sorcery,1
+Light of Promise,W,,uncommon,Enchantment — Aura,1
+Secure the Scene,W,,common,Sorcery,1
+Eliminate,B,,uncommon,Instant,1
+Bone Pit Brute,R,,common,Creature — Cyclops,1
+Terror of the Peaks,R,,mythic,Creature — Dragon,1
+Volcanic Salvo,R,,rare,Sorcery,2
+Skyway Sniper,G,,uncommon,Creature — Elf Archer,1
+Indulging Patrician,"B,W",,uncommon,Creature — Vampire Noble,1
+Chrome Replicator,,,uncommon,Artifact Creature — Construct,1
+Sparkhunter Masticore,,,rare,Artifact Creature — Masticore,1
+Lush Oasis,"G,U",,common,Land — Desert,4
+"Tazri, Stalwart Survivor","B,G,R,U,W",,rare,Legendary Creature — Human Warrior,1
+Filter Out,U,,uncommon,Instant,1
+Ayara's Oathsworn,B,,rare,Creature — Human Knight,1
+Markov Baron,B,,uncommon,Creature — Vampire Noble,1
+Kolaghan Warmonger,R,,uncommon,Creature — Ogre Warrior,3
+Reckless Handling,R,,uncommon,Sorcery,2
+"Nissa, Resurgent Animist",G,,mythic,Legendary Creature — Elf Scout,1
+Campus Renovation,"R,W",,uncommon,Sorcery,1
+Feast of the Victorious Dead,"B,W",,uncommon,Enchantment,3
+"Jirina, Dauntless General","B,W",,rare,Legendary Creature — Human Soldier,1
+"Nahiri, Forged in Fury","R,W",,mythic,Legendary Creature — Kor Artificer,1
+"Samut, Vizier of Naktamun","G,R",,mythic,Legendary Creature — Human Warrior Cleric,1
+Snow-Covered Wastes,,,uncommon,Basic Snow Land,1
+"Rusko, Clockmaker","B,U",,uncommon,Legendary Creature — Human Artificer,1
+Echoes of Eternity,,,rare,Kindred Enchantment — Eldrazi,1
+"Ulamog, the Defiler",,,mythic,Legendary Creature — Eldrazi,1
+Hexgold Slith,W,,common,Creature — Slith,1
+Inspired Inventor,W,,common,Creature — Human Artificer,1
+Muster the Departed,W,,uncommon,Enchantment,1
+Rosecot Knight,W,,common,Creature — Human Knight,1
+Solstice Zealot,W,,common,Creature — Rhino Cleric,1
+Thraben Charm,W,,common,Instant,1
+Aether Spike,U,,common,Instant,1
+Emrakul's Messenger,U,,uncommon,Creature — Eldrazi Faerie Rogue,1
+Flare of Denial,U,,rare,Instant,1
+Petrifying Meddler,U,,common,Creature — Eldrazi,1
+Roil Cartographer,U,,uncommon,Creature — Merfolk Rogue,1
+Sage of the Unknowable,U,,common,Creature — Human Wizard,1
+Serum Visionary,U,,common,Creature — Vedalken Wizard,1
+Triton Wavebreaker,U,,uncommon,Enchantment Creature — Merfolk Wizard,1
+Accursed Marauder,B,,common,Creature — Zombie Warrior,1
+Marionette Apprentice,B,,uncommon,Creature — Human Artificer,1
+Quest for the Necropolis,B,,uncommon,Enchantment,1
+Refurbished Familiar,B,,common,Artifact Creature — Zombie Rat,1
+Warren Soultrader,B,,rare,Creature — Zombie Goblin Wizard,1
+Galvanic Discharge,R,,common,Instant,1
+A-Galvanic Discharge,R,,common,Instant,1
+Thriving Skyclaw,R,,common,Creature — Cat Dragon,1
+Evolution Witness,G,,common,Creature — Elf Shaman Mutant,1
+Flare of Cultivation,G,,rare,Sorcery,1
+Gift of the Viper,G,,common,Instant,1
+Horrific Assault,G,,common,Sorcery,1
+"Phlage, Titan of Fire's Fury","R,W",,mythic,Legendary Creature — Elder Giant,1
+Scurry of Gremlins,"R,W",,uncommon,Enchantment,1
+Idol of False Gods,,,uncommon,Kindred Artifact — Eldrazi,1
+Bountiful Landscape,"G,R,U",,common,Land,1
+Contaminated Landscape,"B,U,W",,common,Land,2
+Foreboding Landscape,"B,G,U",,common,Land,2
+Seething Landscape,"B,R,U",,common,Land,1
+Shattered Landscape,"B,R,W",,common,Land,1
+"A-Lier, Disciple of the Drowned",U,,mythic,Legendary Creature — Human Wizard,2
+A-The Meathook Massacre,B,,mythic,Legendary Enchantment,1
+Confirm Suspicions,U,,rare,Instant,1
+Pile On,B,,rare,Instant,1
+Case of the Shattered Pact,,,uncommon,Enchantment — Case,1
+Assemble the Players,W,,rare,Enchantment,1
+Auspicious Arrival,W,,common,Instant,3
+Call a Surprise Witness,W,,uncommon,Sorcery,2
+Case of the Gateway Express,W,,uncommon,Enchantment — Case,1
+Defenestrated Phantom,W,,common,Creature — Spirit,2
+"Delney, Streetwise Lookout",W,,mythic,Legendary Creature — Human Scout,1
+Due Diligence,W,,common,Enchantment — Aura,1
+Forum Familiar,W,,uncommon,Creature — Cat,2
+Griffnaut Tracker,W,,common,Creature — Human Detective,2
+Haazda Vigilante,W,,common,Creature — Giant Soldier,2
+Makeshift Binding,W,,common,Enchantment,2
+Marketwatch Phantom,W,,common,Creature — Spirit Detective,4
+Neighborhood Guardian,W,,uncommon,Creature — Unicorn,2
+No Witnesses,W,,rare,Sorcery,1
+Not on My Watch,W,,uncommon,Instant,1
+Novice Inspector,W,,common,Creature — Human Detective,4
+On the Job,W,,common,Instant,2
+Perimeter Enforcer,W,,uncommon,Creature — Human Detective,2
+Seasoned Consultant,W,,common,Creature — Human Detective,3
+Unyielding Gatekeeper,W,,rare,Creature — Elephant Cleric,1
+Wojek Investigator,W,,rare,Creature — Angel Detective,1
+Agency Outfitter,U,,uncommon,Creature — Sphinx Detective,1
+Behind the Mask,U,,common,Instant,2
+Benthic Criminologists,U,,common,Creature — Merfolk Wizard,1
+Cold Case Cracker,U,,common,Creature — Spirit Detective,4
+Curious Inquiry,U,,uncommon,Enchantment — Aura,1
+Deduce,U,,common,Instant,2
+Dramatic Accusation,U,,common,Enchantment — Aura,1
+Forensic Gadgeteer,U,,rare,Creature — Vedalken Artificer Detective,2
+Furtive Courier,U,,uncommon,Creature — Merfolk Advisor,1
+Hotshot Investigators,U,,common,Creature — Vedalken Detective,3
+Jaded Analyst,U,,common,Creature — Human Detective,4
+Proft's Eidetic Memory,U,,rare,Legendary Enchantment,2
+Projektor Inspector,U,,common,Creature — Human Detective,2
+Steamcore Scholar,U,,rare,Creature — Weird Detective,1
+Cerebral Confiscation,B,,common,Sorcery,2
+Festerleech,B,,uncommon,Creature — Zombie Leech,1
+It Doesn't Add Up,B,,uncommon,Instant,1
+Macabre Reconstruction,B,,common,Sorcery,1
+"Massacre Girl, Known Killer",B,,mythic,Legendary Creature — Human Assassin,1
+Rot Farm Mortipede,B,,common,Creature — Insect,1
+Slimy Dualleech,B,,uncommon,Creature — Leech,2
+Snarling Gorehound,B,,common,Creature — Dog,2
+Soul Enervation,B,,uncommon,Enchantment,1
+Toxin Analysis,B,,common,Instant,1
+Undercity Eliminator,B,,uncommon,Creature — Gorgon Assassin,1
+Bolrac-Clan Basher,R,,uncommon,Creature — Cyclops Warrior,2
+Case of the Crimson Pulse,R,,rare,Enchantment — Case,1
+The Chase Is On,R,,common,Instant,1
+Concealed Weapon,R,,uncommon,Artifact — Equipment,1
+Connecting the Dots,R,,rare,Enchantment,1
+Demand Answers,R,,common,Instant,4
+Expose the Culprit,R,,uncommon,Instant,1
+Frantic Scapegoat,R,,uncommon,Creature — Goat,1
+Gearbane Orangutan,R,,common,Creature — Ape,2
+Goblin Maskmaker,R,,common,Creature — Goblin Citizen,2
+Innocent Bystander,R,,common,Creature — Goblin Citizen,2
+Offender at Large,R,,common,Creature — Giant Rogue,2
+Torch the Witness,R,,uncommon,Sorcery,2
+Airtight Alibi,G,,common,Enchantment — Aura,1
+Archdruid's Charm,G,,rare,Instant,1
+Case of the Locked Hothouse,G,,rare,Enchantment — Case,1
+Case of the Trampled Garden,G,,uncommon,Enchantment — Case,1
+Culvert Ambusher,G,,uncommon,Creature — Wurm Horror,1
+Fanatical Strength,G,,common,Instant,3
+Flourishing Bloom-Kin,G,,uncommon,Creature — Plant Elemental,4
+Hard-Hitting Question,G,,uncommon,Sorcery,1
+Hide in Plain Sight,G,,rare,Sorcery,1
+Loxodon Eavesdropper,G,,common,Creature — Elephant Detective,1
+Nervous Gardener,G,,common,Creature — Dryad,1
+The Pride of Hull Clade,"G,U",,mythic,Legendary Creature — Crocodile Elk Turtle,1
+Rubblebelt Maverick,G,,common,Creature — Human Detective,2
+Slime Against Humanity,G,,common,Sorcery,4
+They Went This Way,G,,common,Sorcery,4
+Topiary Panther,G,,common,Creature — Plant Cat,2
+Tunnel Tipster,G,,common,Creature — Mole Scout,1
+Vengeful Creeper,G,,common,Creature — Plant Elemental,1
+Vitu-Ghazi Inspector,G,,common,Creature — Elf Detective,1
+"Alquist Proft, Master Sleuth","U,W",,mythic,Legendary Creature — Human Detective,2
+"Anzrag, the Quake-Mole","G,R",,mythic,Legendary Creature — Mole God,1
+"Aurelia, the Law Above","R,W",,rare,Legendary Creature — Angel,1
+Blood Spatter Analysis,"B,R",,rare,Enchantment,1
+Break Out,"G,R",,uncommon,Sorcery,1
+Buried in the Garden,"G,W",,uncommon,Enchantment — Aura,1
+Crowd-Control Warden,"G,W",,common,Creature — Centaur Soldier,1
+Deadly Complication,"B,R",,uncommon,Sorcery,1
+Detective's Satchel,"R,U",,uncommon,Artifact,2
+Drag the Canal,"B,U",,rare,Instant,1
+Evidence Examiner,"G,U",,uncommon,Creature — Merfolk Detective,1
+"Ezrim, Agency Chief","U,W",,rare,Legendary Creature — Archon Detective,1
+Granite Witness,"U,W",,common,Artifact Creature — Gargoyle Detective,2
+Ill-Timed Explosion,"R,U",,rare,Sorcery,1
+Insidious Roots,"B,G",,uncommon,Enchantment,2
+Kylox's Voltstrider,"R,U",,mythic,Artifact — Vehicle,1
+Leyline of the Guildpact,"B,G,R,U,W",,rare,Enchantment,1
+No More Lies,"U,W",,uncommon,Instant,1
+Officious Interrogation,"U,W",,rare,Instant,1
+Private Eye,"U,W",,uncommon,Creature — Homunculus Detective,2
+Rakish Scoundrel,"B,G",,common,Creature — Elf Rogue,1
+Riftburst Hellion,"G,R",,common,Creature — Hellion,1
+Rune-Brand Juggler,"B,R",,uncommon,Creature — Human Shaman,2
+Sanguine Savior,"B,W",,common,Creature — Vampire Cleric,2
+Tin Street Gossip,"G,R",,uncommon,Creature — Lizard Advisor,1
+Warleader's Call,"R,W",,rare,Enchantment,1
+Wispdrinker Vampire,"B,W",,uncommon,Creature — Vampire Rogue,2
+Push // Pull,"B,R,W",,uncommon,Sorcery,1
+Gravestone Strider,,,common,Artifact Creature — Golem,3
+Thinking Cap,,,common,Artifact — Equipment,4
+Commercial District,"G,R",,rare,Land — Mountain Forest,1
+Hedge Maze,"G,U",,rare,Land — Forest Island,1
+Lush Portico,"G,W",,rare,Land — Forest Plains,2
+Meticulous Archive,"U,W",,rare,Land — Plains Island,1
+Public Thoroughfare,,,common,Land,2
+Raucous Theater,"B,R",,rare,Land — Swamp Mountain,1
+Shadowy Backstreet,"B,W",,rare,Land — Plains Swamp,1
+Undercity Sewers,"B,U",,rare,Land — Island Swamp,2
+Underground Mortuary,"B,G",,rare,Land — Swamp Forest,2
+"Melek, Reforged Researcher","R,U",,mythic,Legendary Creature — Weird Detective,1
+Aerial Boost,W,,common,Instant,1
+Alabaster Host Intercessor,W,,common,Creature — Phyrexian Samurai,3
+Attentive Skywarden,W,,common,Creature — Phyrexian Kor,1
+Bola Slinger,W,,common,Creature — Cat Soldier,2
+Dusk Legion Duelist,W,,rare,Creature — Vampire Soldier,1
+Enduring Bondwarden,W,,common,Creature — Human Scout,2
+Infected Defector,W,,common,Creature — Phyrexian Knight,3
+Norn's Inquisitor,W,,uncommon,Creature — Phyrexian Knight,2
+Phyrexian Awakening,W,,uncommon,Enchantment,2
+Progenitor Exarch,W,,rare,Creature — Phyrexian Cat Cleric,2
+Sunder the Gateway,W,,common,Sorcery,1
+Swordsworn Cavalier,W,,common,Creature — Human Knight,1
+Zhalfirin Lancer,W,,uncommon,Creature — Human Knight,1
+Astral Wingspan,U,,uncommon,Enchantment — Aura,1
+Chrome Host Seedshark,U,,rare,Creature — Phyrexian Shark,1
+Eyes of Gitaxias,U,,common,Sorcery,4
+Halo-Charged Skaab,U,,common,Creature — Zombie,3
+Meeting of Minds,U,,common,Instant,3
+Bloated Processor,B,,rare,Creature — Phyrexian,1
+Breach the Multiverse,B,,rare,Sorcery,2
+Corrupted Conviction,B,,common,Instant,3
+Deadly Derision,B,,common,Instant,3
+Etched Familiar,B,,common,Artifact Creature — Phyrexian Fox,3
+Etched Host Doombringer,B,,common,Creature — Phyrexian Demon,2
+Final Flourish,B,,common,Instant,3
+Glistening Deluge,B,,uncommon,Sorcery,1
+Grafted Butcher,B,,rare,Creature — Phyrexian Samurai,1
+Ichor Drinker,B,,common,Creature — Phyrexian Vampire,2
+Mirrodin Avenged,B,,common,Instant,1
+Unseal the Necropolis,B,,common,Instant,2
+Vanquish the Weak,B,,common,Instant,3
+Akki Scrapchomper,R,,common,Creature — Phyrexian Goblin,1
+Mirran Banesplitter,R,,common,Artifact — Equipment,1
+Ral's Reinforcements,R,,common,Sorcery,3
+Rampaging Raptor,R,,rare,Creature — Dinosaur,1
+Shivan Branch-Burner,R,,uncommon,Creature — Dragon,2
+Trailblazing Historian,R,,common,Creature — Human Shaman,1
+Volcanic Spite,R,,common,Instant,3
+Cosmic Hunger,G,,common,Instant,4
+Fertilid's Favor,G,,common,Instant,2
+Kami of Whispered Hopes,G,,uncommon,Creature — Spirit,3
+"Ozolith, the Shattered Spire",G,,rare,Legendary Artifact,2
+Ravenous Sailback,G,,uncommon,Creature — Dinosaur,2
+Serpent-Blade Assailant,G,,common,Creature — Elf Warrior,1
+Storm the Seedcore,G,,uncommon,Sorcery,2
+Tribute to the World Tree,G,,rare,Enchantment,1
+Baral and Kari Zev,"R,U",,rare,Legendary Creature — Human,1
+Botanical Brawler,"G,W",,uncommon,Creature — Elemental Warrior,2
+"Glissa, Herald of Predation","B,G",,rare,Legendary Creature — Phyrexian Zombie Elf,1
+Hidetsugu and Kairi,"B,U",,rare,Legendary Creature — Ogre Demon Dragon,1
+Mutagen Connoisseur,"G,U",,uncommon,Creature — Vedalken Mutant,1
+Rankle and Torbran,"B,R",,rare,Legendary Creature — Faerie Dwarf,1
+Sculpted Perfection,"B,W",,uncommon,Enchantment,2
+Stormclaw Rager,"B,R",,uncommon,Creature — Ogre Warrior,2
+Essence of Orthodoxy,W,,rare,Creature — Phyrexian,1
+Seedpod Caretaker,W,,uncommon,Creature — Phyrexian Cleric,2
+Terror of Towashi,B,,rare,Creature — Phyrexian Ogre,1
+Ruins Recluse,G,,uncommon,Creature — Spider,2
+Surrak and Goreclaw,G,,rare,Legendary Creature — Human Bear,1
+"Daxos, Blessed by the Sun",W,,uncommon,Legendary Enchantment Creature — Demigod,1
+"Renata, Called to the Hunt",G,,uncommon,Legendary Enchantment Creature — Demigod,1
+Ancestral Katana,W,,common,Artifact — Equipment,2
+A-Ancestral Katana,W,,common,Artifact — Equipment,2
+Banishing Slash,W,,uncommon,Sorcery,4
+Blade-Blizzard Kitsune,W,,uncommon,Creature — Fox Ninja,2
+Eiganjo Exemplar,W,,common,Enchantment Creature — Human Samurai,4
+A-Eiganjo Exemplar,W,,common,Enchantment Creature — Human Samurai,4
+Go-Shintai of Shared Purpose,W,,uncommon,Legendary Enchantment Creature — Shrine,1
+Lion Sash,W,,rare,Artifact Creature — Equipment Cat,2
+Lucky Offering,W,,common,Sorcery,1
+March of Otherworldly Light,W,,rare,Instant,2
+Mothrider Patrol,W,,common,Creature — Fox Warrior,1
+Selfless Samurai,W,,uncommon,Creature — Fox Samurai,4
+Seven-Tail Mentor,W,,common,Creature — Fox Samurai,3
+Wanderer's Intervention,W,,common,Instant,1
+The Wandering Emperor,W,,mythic,Legendary Planeswalker,2
+Disruption Protocol,U,,common,Instant,1
+Essence Capture,U,,uncommon,Instant,1
+Mirrorshell Crab,U,,common,Artifact Creature — Crab,1
+Mobilizer Mech,U,,uncommon,Artifact — Vehicle,1
+A-Moon-Circuit Hacker,U,,common,Enchantment Creature — Human Ninja,4
+Planar Incision,U,,common,Instant,2
+A-Prosperous Thief,U,,uncommon,Creature — Human Ninja,4
+Short Circuit,U,,common,Enchantment — Aura,2
+Suit Up,U,,common,Instant,1
+Thousand-Faced Shadow,U,,rare,Creature — Human Ninja,2
+A-Thousand-Faced Shadow,U,,rare,Creature — Human Ninja,2
+Assassin's Ink,B,,uncommon,Instant,2
+Biting-Palm Ninja,B,,rare,Creature — Human Ninja,2
+Chainflail Centipede,B,,common,Artifact Creature — Equipment Insect,4
+Dockside Chef,B,,uncommon,Enchantment Creature — Human Citizen,3
+Dokuchi Shadow-Walker,B,,common,Creature — Ogre Ninja,4
+Dokuchi Silencer,B,,uncommon,Creature — Human Ninja,4
+A-Dokuchi Silencer,B,,uncommon,Creature — Human Ninja,4
+Gravelighter,B,,uncommon,Creature — Spirit,4
+Inkrise Infiltrator,B,,common,Creature — Human Ninja,4
+Kaito's Pursuit,B,,common,Sorcery,1
+Kami of Terrible Secrets,B,,common,Creature — Spirit,4
+Leech Gauntlet,B,,uncommon,Artifact Creature — Equipment Leech,1
+March of Wretched Sorrow,B,,rare,Instant,2
+Mukotai Ambusher,B,,common,Artifact Creature — Rat Ninja,4
+Mukotai Soulripper,B,,rare,Artifact — Vehicle,2
+Nezumi Bladeblesser,B,,common,Creature — Rat Samurai,4
+Reckoner's Bargain,B,,common,Instant,1
+Soul Transfer,B,,rare,Sorcery,2
+Twisted Embrace,B,,common,Enchantment — Aura,4
+Akki War Paint,R,,common,Enchantment — Aura,2
+Ambitious Assault,R,,common,Instant,4
+"Atsushi, the Blazing Sky",R,,mythic,Legendary Creature — Dragon Spirit,2
+Dragonspark Reactor,R,,uncommon,Artifact,4
+Experimental Synthesizer,R,,common,Artifact,4
+Gift of Wrath,R,,common,Enchantment — Aura,1
+"Goro-Goro, Disciple of Ryusei",R,,rare,Legendary Creature — Goblin Samurai,2
+Kami's Flare,R,,common,Instant,4
+Rabbit Battery,R,,uncommon,Artifact Creature — Equipment Rabbit,4
+Reinforced Ronin,R,,uncommon,Artifact Creature — Human Samurai,4
+Scrap Welder,R,,rare,Creature — Goblin Artificer,2
+Simian Sling,R,,common,Artifact Creature — Equipment Monkey,1
+Tempered in Solitude,R,,uncommon,Enchantment,4
+Thundering Raiju,R,,rare,Creature — Spirit,1
+Twinshot Sniper,R,,uncommon,Artifact Creature — Goblin Archer,4
+Voltage Surge,R,,common,Instant,4
+Bamboo Grove Archer,G,,common,Enchantment Creature — Snake Archer,1
+Bearer of Memory,G,,common,Enchantment Creature — Human Monk,1
+Blossom Prancer,G,,uncommon,Creature — Spirit,2
+Careful Cultivation,G,,common,Enchantment — Aura,4
+Coiling Stalker,G,,common,Creature — Snake Ninja,2
+Generous Visitor,G,,uncommon,Creature — Spirit,1
+Grafted Growth,G,,common,Enchantment — Aura,1
+Jukai Preserver,G,,common,Enchantment Creature — Human Druid,1
+Tamiyo's Safekeeping,G,,common,Instant,1
+Asari Captain,"R,W",,uncommon,Creature — Human Samurai,4
+A-Asari Captain,"R,W",,uncommon,Creature — Human Samurai,4
+Colossal Skyturtle,"G,U",,uncommon,Enchantment Creature — Turtle,4
+Gloomshrieker,"B,G",,uncommon,Enchantment Creature — Cat Beast,4
+Kaito Shizuki,"B,U",,mythic,Legendary Planeswalker — Kaito,3
+"Kotose, the Silent Spider","B,U",,rare,Legendary Creature — Human Ninja,2
+"Naomi, Pillar of Order","B,W",,uncommon,Legendary Creature — Human Advisor,4
+"Raiyuu, Storm's Edge","R,W",,rare,Legendary Creature — Human Samurai,2
+"A-Raiyuu, Storm's Edge","R,W",,rare,Legendary Creature — Human Samurai,2
+"Risona, Asari Commander","R,W",,rare,Legendary Creature — Human Samurai,2
+Satoru Umezawa,"B,U",,rare,Legendary Creature — Human Ninja,2
+A-Satoru Umezawa,"B,U",,rare,Legendary Creature — Human Ninja,2
+Silver-Fur Master,"B,U",,uncommon,Creature — Rat Ninja,4
+A-Silver-Fur Master,"B,U",,uncommon,Creature — Rat Ninja,4
+Automated Artificer,,,common,Artifact Creature — Artificer,1
+Brute Suit,,,common,Artifact — Vehicle,4
+A-Circuit Mender,,,uncommon,Artifact Creature — Insect,4
+Dramatist's Puppet,,,common,Artifact Creature — Construct,2
+Eater of Virtue,,,rare,Legendary Artifact — Equipment,2
+Ecologist's Terrarium,,,common,Artifact,1
+High-Speed Hoverbike,,,uncommon,Artifact — Vehicle,4
+Network Terminal,,,common,Artifact,1
+Ninja's Kunai,,,common,Artifact — Equipment,1
+Papercraft Decoy,,,common,Artifact Creature — Frog,2
+Searchlight Companion,,,common,Artifact Creature — Drone,4
+Shrine Steward,,,common,Artifact Creature — Construct,2
+Thundersteel Colossus,,,common,Artifact — Vehicle,1
+"Boseiju, Who Endures",G,,rare,Legendary Land,1
+"Otawara, Soaring City",U,,rare,Legendary Land,1
+Roadside Reliquary,,,uncommon,Land,2
+"Takenuma, Abandoned Mire",B,,rare,Legendary Land,1
+Pyromancer's Assault,R,,uncommon,Enchantment,1
+Basilica Shepherd,W,,common,Creature — Phyrexian Angel,1
+Charge of the Mites,W,,common,Instant,1
+Flensing Raptor,W,,common,Creature — Phyrexian Bird,1
+Goldwarden's Helm,W,,common,Artifact — Equipment,1
+Incisor Glider,W,,common,Artifact Creature — Phyrexian Construct,1
+Indoctrination Attendant,W,,common,Creature — Phyrexian Cleric,1
+"Kemba, Kha Enduring",W,,rare,Legendary Creature — Cat Cleric,1
+Leonin Lightbringer,W,,common,Creature — Cat Rebel,2
+Mandible Justiciar,W,,common,Artifact Creature — Phyrexian Cleric,1
+Ossification,W,,uncommon,Enchantment — Aura,2
+Planar Disruption,W,,common,Enchantment — Aura,3
+Skrelv's Hive,W,,rare,Enchantment,1
+Vanish into Eternity,W,,common,Instant,2
+Veil of Assimilation,W,,uncommon,Artifact,1
+Zealot's Conviction,W,,common,Enchantment — Aura,1
+Blue Sun's Twilight,U,,rare,Sorcery,1
+Distorted Curiosity,U,,uncommon,Sorcery,1
+Encroaching Mycosynth,U,,rare,Artifact,1
+Experimental Augury,U,,common,Instant,2
+Eye of Malcator,U,,common,Artifact,1
+Glistener Seer,U,,common,Creature — Phyrexian Advisor,2
+Meldweb Curator,U,,common,Creature — Phyrexian Wizard,2
+Meldweb Strider,U,,common,Artifact — Vehicle,1
+Mercurial Spelldancer,U,,rare,Creature — Phyrexian Rogue,1
+Prologue to Phyresis,U,,common,Instant,2
+Quicksilver Fisher,U,,common,Creature — Phyrexian Drake,1
+Reject Imperfection,U,,uncommon,Instant,1
+"Tekuthal, Inquiry Dominus",U,,mythic,Legendary Creature — Phyrexian Horror,1
+Trawler Drake,U,,uncommon,Creature — Phyrexian Drake,2
+Vivisurgeon's Insight,U,,common,Sorcery,1
+Anoint with Affliction,B,,common,Instant,1
+Archfiend of the Dross,B,,rare,Creature — Phyrexian Demon,1
+Black Sun's Twilight,B,,rare,Instant,2
+Blightbelly Rat,B,,common,Creature — Phyrexian Rat,1
+Bonepicker Skirge,B,,common,Creature — Phyrexian Imp,3
+Feed the Infection,B,,uncommon,Sorcery,1
+"Geth, Thane of Contracts",B,,rare,Legendary Creature — Phyrexian Zombie,1
+Infectious Inquiry,B,,common,Sorcery,1
+Necrogen Communion,B,,uncommon,Enchantment — Aura,1
+Pestilent Syphoner,B,,common,Creature — Phyrexian Insect,1
+Sheoldred's Headcleaver,B,,common,Creature — Phyrexian Warrior,2
+Stinging Hivemaster,B,,common,Creature — Phyrexian Warlock,3
+Testament Bearer,B,,common,Creature — Phyrexian Warrior,3
+"Vraan, Executioner Thane",B,,rare,Legendary Creature — Phyrexian Vampire,1
+All Will Be One,R,,mythic,Enchantment,1
+Barbed Batterfist,R,,common,Artifact — Equipment,3
+Bladegraft Aspirant,R,,common,Creature — Phyrexian Warrior,3
+Blazing Crescendo,R,,common,Instant,2
+Cacophony Scamp,R,,uncommon,Creature — Phyrexian Goblin Warrior,1
+Chimney Rabble,R,,common,Creature — Phyrexian Goblin Warrior,3
+Churning Reservoir,R,,uncommon,Artifact,1
+Dragonwing Glider,R,,rare,Artifact — Equipment,1
+Exuberant Fuseling,R,,uncommon,Creature — Phyrexian Goblin Warrior,1
+Free from Flesh,R,,common,Instant,1
+Furnace Strider,R,,common,Creature — Phyrexian Beast,3
+Gleeful Demolition,R,,uncommon,Sorcery,1
+Hazardous Blast,R,,common,Sorcery,1
+Hexgold Halberd,R,,uncommon,Artifact — Equipment,2
+Kuldotha Cackler,R,,common,Creature — Phyrexian Hyena,2
+Oxidda Finisher,R,,uncommon,Creature — Ogre Rebel,1
+Rebel Salvo,R,,uncommon,Instant,2
+Sawblade Scamp,R,,common,Creature — Phyrexian Beast,1
+Urabrask's Forge,R,,rare,Artifact,1
+Vulshok Splitter,R,,common,Artifact — Equipment,3
+Carnivorous Canopy,G,,common,Sorcery,1
+Conduit of Worlds,G,,rare,Artifact,1
+Copper Longlegs,G,,common,Creature — Phyrexian Spider,1
+Evolved Spinoderm,G,,rare,Creature — Phyrexian Beast,2
+Evolving Adaptive,G,,uncommon,Creature — Phyrexian Warrior,1
+Incubation Sac,G,,uncommon,Artifact,2
+Lattice-Blade Mantis,G,,common,Creature — Phyrexian Insect,2
+Maze's Mantle,G,,common,Enchantment — Aura,1
+Plague Nurse,G,,common,Creature — Phyrexian Cleric,1
+Ruthless Predation,G,,common,Sorcery,1
+Sylvok Battle-Chair,G,,uncommon,Artifact — Equipment,3
+Thirsting Roots,G,,common,Sorcery,1
+Tyrranax Atrocity,G,,common,Creature — Phyrexian Dinosaur,2
+Bladehold War-Whip,"R,W",,uncommon,Artifact — Equipment,2
+Charforger,"B,R",,uncommon,Creature — Phyrexian Beast,2
+"Ezuri, Stalker of Spheres","G,U",,rare,Legendary Creature — Phyrexian Elf Warrior,1
+Glissa Sunslayer,"B,G",,rare,Legendary Creature — Phyrexian Zombie Elf,3
+"Kaito, Dancing Shadow","B,U",,rare,Legendary Planeswalker — Kaito,1
+"Migloz, Maze Crusher","G,R",,rare,Legendary Creature — Phyrexian Beast,1
+Necrogen Rotpriest,"B,G",,uncommon,Creature — Phyrexian Zombie Cleric,2
+Vivisection Evangelist,"B,W",,uncommon,Creature — Phyrexian Cleric,1
+Atraxa's Skitterfang,,,uncommon,Artifact Creature — Phyrexian Insect,1
+Dross Skullbomb,B,,common,Artifact,3
+Dune Mover,,,common,Artifact Creature — Phyrexian Golem,1
+Furnace Skullbomb,R,,common,Artifact,1
+Myr Kinsmith,,,common,Artifact Creature — Myr,1
+Phyrexian Atlas,,,common,Artifact,1
+Prosthetic Injector,,,uncommon,Artifact — Equipment,1
+Sword of Forge and Frontier,,,mythic,Artifact — Equipment,1
+Tablet of Compleation,,,rare,Artifact,1
+The Autonomous Furnace,R,,common,Land — Sphere,2
+Darkslick Shores,"B,U",,rare,Land,1
+The Dross Pits,B,,common,Land — Sphere,1
+"Rhuk, Hexgold Nabber",R,,rare,Legendary Creature — Goblin Rebel,1
+Hallowed Moonlight,W,,rare,Instant,1
+Swift Reckoning,W,,uncommon,Sorcery,1
+Scab-Clan Berserker,R,,rare,Creature — Human Berserker,1
+Possessed Skaab,"B,U",,uncommon,Creature — Zombie,1
+Tenured Inkcaster,B,,uncommon,Creature — Vampire Warlock,1
+Armored Armadillo,W,,common,Creature — Armadillo,1
+Bounding Felidar,W,,uncommon,Creature — Cat Beast Mount,1
+Bovine Intervention,W,,uncommon,Instant,2
+Dust Animus,W,,rare,Creature — Spirit,1
+Final Showdown,W,,mythic,Instant,1
+"Fortune, Loyal Steed",W,,rare,Legendary Creature — Beast Mount,1
+Getaway Glamer,W,,uncommon,Instant,1
+Inventive Wingsmith,W,,common,Creature — Dwarf Artificer,1
+Nurturing Pixie,W,,uncommon,Creature — Faerie Rogue,2
+Outlaw Medic,W,,common,Creature — Human Rogue,3
+Steer Clear,W,,common,Instant,2
+Sterling Supplier,W,,common,Creature — Bird Soldier,1
+Vengeful Townsfolk,W,,common,Creature — Human Citizen,2
+Archmage's Newt,U,,rare,Creature — Salamander Mount,1
+Canyon Crab,U,,uncommon,Creature — Crab,2
+Djinn of Fool's Fall,U,,common,Creature — Djinn,3
+Failed Fording,U,,common,Instant,2
+Geyser Drake,U,,common,Creature — Drake,1
+Harrier Strix,U,,common,Creature — Bird,1
+The Key to the Vault,U,,rare,Legendary Artifact — Equipment,1
+Marauding Sphinx,U,,uncommon,Creature — Sphinx Rogue,1
+Nimble Brigand,U,,uncommon,Creature — Human Rogue,1
+Outlaw Stitcher,U,,uncommon,Creature — Human Warlock,1
+Peerless Ropemaster,U,,common,Creature — Human Rogue,1
+Phantom Interference,U,,common,Instant,1
+Razzle-Dazzler,U,,common,Creature — Human Wizard,2
+Seize the Secrets,U,,common,Sorcery,4
+Spring Splasher,U,,common,Creature — Frog Beast,1
+Stop Cold,U,,common,Enchantment — Aura,1
+This Town Ain't Big Enough,U,,uncommon,Instant,1
+Three Steps Ahead,U,,rare,Instant,2
+Blacksnag Buzzard,B,,common,Creature — Bird,1
+Boneyard Desecrator,B,,common,Creature — Zombie Mercenary,3
+Consuming Ashes,B,,common,Instant,2
+"Kaervek, the Punisher",B,,rare,Legendary Creature — Human Warlock,1
+Nezumi Linkbreaker,B,,common,Creature — Rat Warlock,2
+Rakish Crew,B,,uncommon,Enchantment,2
+Rooftop Assassin,B,,common,Creature — Vampire Assassin,1
+Rush of Dread,B,,rare,Sorcery,1
+Shoot the Sheriff,B,,uncommon,Instant,2
+"Tinybones, the Pickpocket",B,,mythic,Legendary Creature — Skeleton Rogue,1
+Treasure Dredger,B,,uncommon,Creature — Human Rogue,1
+"Vadmir, New Blood",B,,rare,Legendary Creature — Vampire Rogue,2
+Vault Plunderer,B,,common,Creature — Human Rogue,3
+Deadeye Duelist,R,,common,Creature — Human Assassin,4
+Demonic Ruckus,R,,uncommon,Enchantment — Aura,2
+Discerning Peddler,R,,common,Creature — Human Rogue,2
+Great Train Heist,R,,rare,Instant,1
+Hell to Pay,R,,rare,Sorcery,2
+Hellspur Brute,R,,uncommon,Creature — Minotaur Mercenary,1
+Hellspur Posse Boss,R,,rare,Creature — Lizard Rogue,1
+Irascible Wolverine,R,,common,Creature — Wolverine,1
+Iron-Fist Pulverizer,R,,common,Creature — Giant Warrior,1
+"Magda, the Hoardmaster",R,,rare,Legendary Creature — Dwarf Berserker,1
+Mine Raider,R,,common,Creature — Human Rogue,2
+Outlaws' Fury,R,,common,Instant,3
+Quick Draw,R,,common,Instant,1
+Quilled Charger,R,,common,Creature — Porcupine Mount,1
+Reckless Lackey,R,,common,Creature — Goblin Pirate,3
+Rodeo Pyromancers,R,,common,Creature — Human Mercenary,3
+Scorching Shot,R,,uncommon,Sorcery,2
+Take for a Ride,R,,uncommon,Sorcery,1
+Thunder Salvo,R,,common,Instant,3
+Trick Shot,R,,common,Instant,2
+Ankle Biter,G,,common,Creature — Snake,2
+Betrayal at the Vault,G,,uncommon,Instant,2
+Bristlepack Sentry,G,,common,Creature — Plant Wolf,4
+"Bristly Bill, Spine Sower",G,,mythic,Legendary Creature — Plant Druid,2
+Cactarantula,G,,common,Creature — Plant Spider,2
+Colossal Rattlewurm,G,,rare,Creature — Wurm,1
+Drover Grizzly,G,,common,Creature — Bear Mount,2
+Freestrider Commando,G,,common,Creature — Centaur Mercenary,2
+Full Steam Ahead,G,,uncommon,Sorcery,2
+Giant Beaver,G,,common,Creature — Beaver Mount,2
+Gold Rush,G,,uncommon,Instant,3
+Goldvein Hydra,G,,mythic,Creature — Hydra,1
+Hardbristle Bandit,G,,common,Creature — Plant Rogue,2
+Intrepid Stablemaster,G,,uncommon,Creature — Human Scout,2
+Map the Frontier,G,,uncommon,Sorcery,2
+Ornery Tumblewagg,G,,rare,Creature — Brushwagg Mount,2
+Outcaster Greenblade,G,,uncommon,Creature — Human Mercenary,2
+Outcaster Trailblazer,G,,rare,Creature — Human Druid,1
+Railway Brawler,G,,mythic,Creature — Rhino Warrior,2
+Rambling Possum,G,,uncommon,Creature — Possum Mount,1
+Raucous Entertainer,G,,uncommon,Creature — Plant Bard,1
+Reach for the Sky,G,,common,Enchantment — Aura,2
+Rise of the Varmints,G,,uncommon,Sorcery,1
+Spinewoods Armadillo,G,,uncommon,Creature — Armadillo,1
+Throw from the Saddle,G,,common,Sorcery,2
+"Bonny Pall, Clearcutter","G,U",,rare,Legendary Creature — Giant Scout,1
+"Breeches, the Blastmaker","R,U",,rare,Legendary Creature — Goblin Pirate,2
+"Bruse Tarl, Roving Rancher","R,W",,rare,Legendary Creature — Human Warrior,1
+Congregation Gryff,"G,W",,uncommon,Creature — Hippogriff Mount,2
+Form a Posse,"R,W",,uncommon,Sorcery,1
+Honest Rutstein,"B,G",,uncommon,Legendary Creature — Human Warlock,2
+"Jem Lightfoote, Sky Explorer","U,W",,uncommon,Legendary Creature — Human Scout,1
+"Kraum, Violent Cacophony","R,U",,uncommon,Legendary Creature — Zombie Horror,1
+Laughing Jasper Flint,"B,R",,rare,Legendary Creature — Lizard Rogue,1
+Make Your Own Luck,"G,U",,uncommon,Sorcery,1
+"Malcolm, the Eyes","R,U",,rare,Legendary Creature — Siren Pirate,1
+"Oko, the Ringleader","G,U",,mythic,Legendary Planeswalker — Oko,1
+Rakdos Joins Up,"B,R",,rare,Legendary Enchantment,1
+Riku of Many Paths,"G,R,U",,rare,Legendary Creature — Human Wizard,1
+Seraphic Steed,"G,W",,rare,Creature — Unicorn Mount,1
+Slick Sequence,"R,U",,uncommon,Instant,2
+"Vial Smasher, Gleeful Grenadier","B,R",,uncommon,Legendary Creature — Goblin Mercenary,1
+"Vraska, the Silencer","B,G",,mythic,Legendary Creature — Gorgon Assassin,1
+"Wylie Duke, Atiin Hero","G,W",,rare,Legendary Creature — Human Ranger,1
+Bandit's Haul,,,uncommon,Artifact,1
+Gold Pan,,,common,Artifact — Equipment,2
+Oasis Gardener,,,common,Artifact Creature — Scarecrow,1
+Sterling Hound,,,common,Artifact Creature — Dog,1
+Abraded Bluffs,"R,W",,common,Land — Desert,4
+Bristling Backwoods,"G,R",,common,Land — Desert,4
+Creosote Heath,"G,W",,common,Land — Desert,4
+Eroded Canyon,"R,U",,common,Land — Desert,4
+Festering Gulch,"B,G",,common,Land — Desert,1
+Forlorn Flats,"B,W",,common,Land — Desert,4
+Jagged Barrens,"B,R",,common,Land — Desert,4
+Lonely Arroyo,"U,W",,common,Land — Desert,4
+Mirage Mesa,,,common,Land — Desert,3
+Soured Springs,"B,U",,common,Land — Desert,4
+Bucolic Ranch,,,uncommon,Land — Desert,1
+Skewer the Critics,R,,uncommon,Sorcery,1
+Tyrant's Scorn,"B,U",,uncommon,Instant,1
+Boundary Lands Ranger,R,,common,Creature — Human Ranger,1
+Courier's Briefcase,"B,G,R,U,W",,common,Artifact — Treasure,1
+Dark Betrayal,B,,uncommon,Instant,1
+Halo Fountain,W,,mythic,Artifact,2
+Raffine's Informant,W,,common,Creature — Human Wizard,4
+Narset's Reversal,U,,rare,Instant,1
+Antagonize,R,,common,Instant,1
+Lampad of Death's Vigil,B,,common,Enchantment Creature — Nymph,1
+Mogis's Favor,B,,common,Enchantment — Aura,1
+Jewel Thief,G,,common,Creature — Cat Rogue,4
+Prizefight,G,,common,Instant,4
+Skybridge Towers,"U,W",,common,Land,4
+Ironscale Hydra,G,,rare,Creature — Hydra,1
+"Ashiok, Nightmare Muse","B,U",,mythic,Legendary Planeswalker — Ashiok,1
+Brushfire Elemental,"G,R",,uncommon,Creature — Elemental,1
+Cragplate Baloth,G,,rare,Creature — Beast,1
+Dragonsguard Elite,G,,rare,Creature — Human Druid,1
+Exponential Growth,G,,rare,Sorcery,1
+Elemental Expressionist,"R,U",,rare,Creature — Orc Wizard,1
+Elspeth Resplendent,W,,mythic,Legendary Planeswalker — Elspeth,2
+Raffine's Tower,"B,U,W",,rare,Land — Plains Island Swamp,1
+Titan of Industry,G,,mythic,Creature — Elemental,2
+Undercover Operative,U,,rare,Creature — Shapeshifter Rogue,2
+Mysterious Limousine,W,,rare,Artifact — Vehicle,2
+Structural Assault,R,,rare,Sorcery,1
+Extraction Specialist,W,,rare,Creature — Human Rogue,1
+Park Heights Pegasus,"G,W",,rare,Creature — Pegasus,2
+Gala Greeters,G,,rare,Creature — Elf Druid,2
+Tenacious Underdog,B,,rare,Creature — Human Warrior,2
+"Falco Spara, Pactweaver","G,U,W",,mythic,Legendary Creature — Bird Demon,1
+"Ugin, Eye of the Storms",,,mythic,Legendary Planeswalker — Ugin,2
+"Anafenza, Unyielding Lineage",W,,rare,Legendary Creature — Spirit Soldier,2
+Clarion Conqueror,W,,rare,Creature — Dragon,1
+"Elspeth, Storm Slayer",W,,mythic,Legendary Planeswalker — Elspeth,1
+Sage of the Skies,W,,rare,Creature — Human Monk,2
+Smile at Death,W,,mythic,Enchantment,3
+United Battlefront,W,,rare,Sorcery,2
+Voice of Victory,W,,rare,Creature — Human Bard,1
+Ambling Stormshell,U,,rare,Creature — Turtle,2
+Naga Fleshcrafter,U,,rare,Creature — Snake Shapeshifter,2
+Stillness in Motion,U,,rare,Enchantment,1
+"Taigam, Master Opportunist",U,,mythic,Legendary Creature — Human Monk,2
+Winternight Stories,U,,rare,Sorcery,1
+Avenger of the Fallen,B,,rare,Creature — Human Warrior,2
+Rot-Curse Rakshasa,B,,mythic,Creature — Demon,1
+The Sibsig Ceremony,B,,rare,Legendary Enchantment,1
+Cori-Steel Cutter,R,,rare,Artifact — Equipment,1
+Dracogenesis,R,,mythic,Enchantment,2
+Magmatic Hellkite,R,,rare,Creature — Dragon,2
+Stadium Headliner,R,,rare,Creature — Goblin Warrior,3
+Herd Heirloom,G,,rare,Artifact,2
+Lasyd Prowler,G,,rare,Creature — Snake Ranger,1
+Warden of the Grove,G,,rare,Creature — Hydra,1
+All-Out Assault,"B,R,W",,mythic,Enchantment,2
+Awaken the Honored Dead,"B,G,U",,rare,Enchantment — Saga,2
+Barrensteppe Siege,"B,W",,rare,Enchantment,3
+Call the Spirit Dragons,"B,G,R,U,W",,mythic,Enchantment,2
+Dragonback Assault,"G,R,U",,mythic,Enchantment,4
+Eshki Dragonclaw,"G,R,U",,rare,Legendary Creature — Human Warrior,4
+"Felothar, Dawn of the Abzan","B,G,W",,rare,Legendary Creature — Human Warrior,4
+Flamehold Grappler,"R,U,W",,rare,Creature — Human Monk,3
+Frostcliff Siege,"R,U",,rare,Enchantment,1
+Glacierwood Siege,"G,U",,rare,Enchantment,1
+Hollowmurk Siege,"B,G",,rare,Enchantment,2
+Jeskai Revelation,"R,U,W",,mythic,Instant,1
+"Kotis, the Fangkeeper","B,G,U",,rare,Legendary Creature — Zombie Warrior,1
+"Narset, Jeskai Waymaster","R,U,W",,rare,Legendary Creature — Human Monk,1
+"Neriv, Heart of the Storm","B,R,W",,mythic,Legendary Creature — Spirit Dragon,1
+Perennation,"B,G,W",,mythic,Sorcery,1
+Rediscover the Way,"R,U,W",,rare,Enchantment — Saga,2
+Revival of the Ancestors,"B,G,W",,rare,Enchantment — Saga,1
+Roar of Endless Song,"G,R,U",,rare,Enchantment — Saga,1
+Temur Battlecrier,"G,R,U",,rare,Creature — Orc Ranger,1
+"Ureni, the Song Unending","G,R,U",,mythic,Legendary Creature — Spirit Dragon,2
+Windcrag Siege,"R,W",,rare,Enchantment,1
+Ice Out,U,,rare,Instant,3
+Expel the Interlopers,W,,rare,Sorcery,1
+Moonshaker Cavalry,W,,mythic,Creature — Spirit Knight,1
+Regal Bunnicorn,W,,rare,Creature — Rabbit Unicorn,1
+Sleep-Cursed Faerie,U,,rare,Creature — Faerie Wizard,1
+Talion's Messenger,U,,rare,Creature — Faerie Noble,1
+"Ashiok, Wicked Manipulator",B,,mythic,Legendary Planeswalker — Ashiok,1
+Lich-Knights' Conquest,B,,rare,Sorcery,1
+Rankle's Prank,B,,rare,Sorcery,1
+Charming Scoundrel,R,,rare,Creature — Human Rogue,1
+"Goddric, Cloaked Reveler",R,,rare,Legendary Creature — Human Noble,1
+Blossoming Tortoise,G,,mythic,Creature — Turtle,1
+Feral Encounter,G,,rare,Sorcery,1
+Gruff Triplets,G,,rare,Creature — Satyr Warrior,1
+The Huntsman's Redemption,G,,rare,Enchantment — Saga,1
+Thunderous Debut,G,,rare,Sorcery,1
+Agatha of the Vile Cauldron,"G,R",,mythic,Legendary Creature — Human Warlock,1
+The Goose Mother,"G,U",,rare,Legendary Creature — Bird Hydra,2
+"Talion, the Kindly Lord","B,U",,mythic,Legendary Creature — Faerie Noble,1
+Agatha's Soul Cauldron,,,mythic,Legendary Artifact,1
+Restless Vinestalk,"G,U",,rare,Land,1
+Backup Agent,W,,common,Creature — Human Citizen,4
+Ballroom Brawlers,W,,uncommon,Creature — Human Warrior,1
+Celebrity Fencer,W,,common,Creature — Elf Druid,4
+A-Celebrity Fencer,W,,common,Creature — Elf Druid,4
+Citizen's Crowbar,W,,uncommon,Artifact — Equipment,4
+Gathering Throng,W,,common,Creature — Human Citizen,4
+Hold for Ransom,W,,common,Enchantment — Aura,4
+A-Speakeasy Server,W,,common,Creature — Bird Citizen,1
+Brokers Veteran,U,,common,Creature — Human Soldier,1
+Case the Joint,U,,common,Instant,4
+A-Case the Joint,U,,common,Sorcery,4
+Make Disappear,U,,common,Instant,1
+Psychic Pickpocket,U,,uncommon,Creature — Octopus Rogue,2
+Run Out of Town,U,,common,Instant,1
+Demon's Due,B,,common,Instant,1
+A-Demon's Due,B,,common,Instant,1
+A-Midnight Assassin,B,,common,Creature — Vampire Assassin,1
+Revel Ruiner,B,,common,Creature — Octopus Rogue,1
+A-Revel Ruiner,B,,common,Creature — Octopus Rogue,1
+Light 'Em Up,R,,common,Sorcery,1
+Mayhem Patrol,R,,common,Creature — Devil Warrior,1
+Riveteers Initiate,"B,G,R",,common,Creature — Lizard Citizen,1
+A-Riveteers Initiate,"B,G,R",,common,Creature — Lizard Citizen,1
+Unlucky Witness,R,,uncommon,Creature — Human Citizen,1
+Civic Gardener,G,,common,Creature — Human Citizen,2
+Cleanup Crew,G,,uncommon,Creature — Human Citizen,4
+Elegant Entourage,G,,uncommon,Creature — Elf Druid,1
+A-High-Rise Sawjack,G,,common,Creature — Elf Citizen,3
+Luxurious Libation,G,,uncommon,Instant,4
+Social Climber,G,,common,Creature — Human Druid,1
+A-Social Climber,G,,common,Creature — Human Druid,1
+Take to the Streets,G,,uncommon,Sorcery,4
+Celestial Regulator,"U,W",,common,Creature — Angel Advisor,4
+A-Celestial Regulator,"U,W",,common,Creature — Angel Advisor,4
+Civil Servant,"G,W",,common,Creature — Cat Citizen,4
+A-Civil Servant,"G,W",,common,Creature — Cat Citizen,4
+Darling of the Masses,"G,W",,uncommon,Creature — Elf Citizen,4
+Glamorous Outlaw,"B,R,U",,common,Creature — Vampire Rogue,2
+A-Glamorous Outlaw,"B,R,U",,common,Creature — Vampire Rogue,2
+Metropolis Angel,"U,W",,uncommon,Creature — Angel Soldier,4
+A-Metropolis Angel,"U,W",,uncommon,Creature — Angel Soldier,4
+Tainted Indulgence,"B,U",,uncommon,Instant,1
+Paragon of Modernity,,,common,Artifact Creature — Angel Warrior,1
+A-Paragon of Modernity,,,common,Artifact Creature — Angel Warrior,1
+Botanical Plaza,"G,W",,common,Land,4
+Cabaretti Courtyard,,,common,Land,1
+Racers' Ring,"G,R",,common,Land,4
+Tramway Station,"B,R",,common,Land,4
+Waterfront District,"B,U",,common,Land,4
+Agonizing Remorse,B,,uncommon,Sorcery,1
+Introduction to Annihilation,,,common,Sorcery — Lesson,1
+Stonebinder's Familiar,W,,uncommon,Creature — Spirit Dog,1
+Vortex Runner,U,,common,Creature — Human Wizard,2
+Wormhole Serpent,U,,uncommon,Creature — Serpent,2
+Leech Fanatic,B,,common,Creature — Human Warlock,1
+Specter of the Fens,B,,common,Creature — Specter,2
+A-Tenured Inkcaster,B,,uncommon,Creature — Vampire Warlock,1
+Unwilling Ingredient,B,,common,Creature — Frog,2
+Start from Scratch,R,,uncommon,Sorcery — Lesson,1
+Containment Breach,G,,uncommon,Sorcery — Lesson,1
+Scurrid Colony,G,,common,Creature — Squirrel,3
+Tangletrap,G,,common,Instant,1
+Biomathematician,"G,U",,common,Creature — Human Wizard,1
+Elemental Summoning,"R,U",,common,Sorcery — Lesson,1
+Quandrix Apprentice,"G,U",,uncommon,Creature — Human Wizard,1
+Spiteful Squad,"B,W",,common,Creature — Human Warlock,1
+Square Up,"G,U",,common,Instant,1
+Arashin Sunshield,W,,common,Creature — Human Warrior,1
+Bearer of Glory,W,,common,Creature — Human Soldier,3
+Coordinated Maneuver,W,,common,Instant,4
+Dalkovan Packbeasts,W,,uncommon,Creature — Ox,3
+Descendant of Storms,W,,uncommon,Creature — Human Soldier,1
+Dragonback Lancer,W,,common,Creature — Human Soldier,4
+Fortress Kin-Guard,W,,common,Creature — Dog Soldier,4
+Furious Forebear,W,,uncommon,Creature — Spirit Warrior,2
+Lightfoot Technique,W,,common,Instant,4
+Loxodon Battle Priest,W,,uncommon,Creature — Elephant Cleric,1
+Mardu Devotee,"B,R,W",,common,Creature — Human Scout,3
+Osseous Exhale,W,,common,Instant,3
+Poised Practitioner,W,,common,Creature — Human Monk,4
+Rally the Monastery,W,,uncommon,Instant,3
+Rebellious Strike,W,,common,Instant,1
+Salt Road Packbeast,W,,common,Creature — Beast,4
+Starry-Eyed Skyrider,W,,uncommon,Creature — Human Scout,3
+Static Snare,W,,uncommon,Enchantment,2
+Stormplain Detainment,W,,common,Enchantment,3
+Sunpearl Kirin,W,,uncommon,Creature — Kirin,1
+Tempest Hawk,W,,common,Creature — Bird,4
+Wayspeaker Bodyguard,W,,uncommon,Creature — Orc Monk,1
+Agent of Kotis,U,,common,Creature — Human Rogue,2
+Constrictor Sage,U,,uncommon,Creature — Snake Wizard,2
+Dispelling Exhale,U,,common,Instant,2
+Dragonstorm Forecaster,U,,uncommon,Creature — Human Scout,2
+Essence Anchor,U,,uncommon,Artifact,1
+Focus the Mind,U,,common,Instant,3
+Fresh Start,U,,uncommon,Enchantment — Aura,2
+Highspire Bell-Ringer,U,,common,Creature — Djinn Monk,1
+Humbling Elder,U,,common,Creature — Human Monk,3
+Iceridge Serpent,U,,common,Creature — Serpent,2
+Kishla Trawlers,U,,uncommon,Creature — Human Citizen,2
+Ringing Strike Mastery,U,,common,Enchantment — Aura,4
+Riverwalk Technique,U,,common,Instant,2
+Roiling Dragonstorm,U,,uncommon,Enchantment,1
+Sibsig Appraiser,U,,common,Creature — Zombie Advisor,4
+Snowmelt Stag,U,,common,Creature — Elemental Elk,4
+Spectral Denial,U,,uncommon,Instant,2
+Temur Devotee,"G,R,U",,common,Creature — Human Druid,1
+Unending Whisper,U,,common,Sorcery,4
+Veteran Ice Climber,U,,uncommon,Creature — Human Scout,2
+Wingblade Disciple,U,,uncommon,Creature — Human Monk,1
+Wingspan Stride,U,,common,Enchantment — Aura,4
+Abzan Devotee,"B,G,W",,common,Creature — Dog Cleric,3
+Adorned Crocodile,B,,common,Creature — Crocodile,1
+Aggressive Negotiations,B,,common,Sorcery,3
+Alchemist's Assistant,B,,uncommon,Creature — Monkey,1
+Alesha's Legacy,B,,common,Instant,4
+Caustic Exhale,B,,common,Instant,4
+Corroding Dragonstorm,B,,uncommon,Enchantment,1
+Cruel Truths,B,,common,Instant,4
+Delta Bloodflies,B,,common,Creature — Insect,3
+Desperate Measures,B,,uncommon,Instant,1
+Dragon's Prey,B,,common,Instant,4
+Kin-Tree Nurturer,B,,common,Creature — Human Druid,2
+Nightblade Brigade,B,,common,Creature — Goblin Soldier,4
+Salt Road Skirmish,B,,uncommon,Sorcery,1
+Sandskitter Outrider,B,,common,Creature — Goblin Soldier,4
+Strategic Betrayal,B,,uncommon,Sorcery,4
+Unburied Earthcarver,B,,common,Creature — Human Warrior,3
+Unrooted Ancestor,B,,uncommon,Creature — Spirit Cleric,1
+Venerated Stormsinger,B,,uncommon,Creature — Orc Cleric,1
+Wail of War,B,,uncommon,Instant,1
+Worthy Cost,B,,common,Sorcery,4
+Yathan Tombguard,B,,uncommon,Creature — Human Warrior,1
+Breaching Dragonstorm,R,,uncommon,Enchantment,2
+Devoted Duelist,R,,common,Creature — Goblin Monk,4
+Fire-Rim Form,R,,common,Enchantment — Aura,4
+Fleeting Effigy,R,,uncommon,Creature — Elemental,4
+Iridescent Tiger,"B,G,R,U,W",,uncommon,Creature — Cat,2
+Jeskai Devotee,"R,U,W",,common,Creature — Orc Monk,4
+Meticulous Artisan,R,,common,Creature — Djinn Artificer,4
+Molten Exhale,R,,common,Sorcery,2
+Narset's Rebuke,"R,U,W",,common,Instant,2
+Overwhelming Surge,R,,uncommon,Instant,1
+Rescue Leopard,R,,common,Creature — Cat,3
+Reverberating Summons,R,,uncommon,Enchantment,1
+Seize Opportunity,R,,common,Instant,4
+Shock Brigade,R,,common,Creature — Goblin Soldier,4
+Summit Intimidator,R,,common,Creature — Yeti,2
+Underfoot Underdogs,R,,common,Creature — Goblin Warrior,4
+Unsparing Boltcaster,R,,uncommon,Creature — Ogre Wizard,1
+War Effort,R,,uncommon,Enchantment,2
+Wild Ride,R,,common,Sorcery,3
+Zurgo's Vanguard,R,,uncommon,Creature — Dog Soldier,1
+Ainok Wayfarer,G,,common,Creature — Dog Scout,1
+Champion of Dusan,G,,common,Creature — Human Warrior,3
+Dragon Sniper,G,,uncommon,Creature — Human Archer,1
+Dusyut Earthcarver,G,,common,Creature — Elephant Druid,4
+Encroaching Dragonstorm,G,,uncommon,Enchantment,1
+Formation Breaker,G,,uncommon,Creature — Beast,2
+Heritage Reclamation,G,,common,Instant,3
+Inspirited Vanguard,G,,uncommon,Creature — Human Soldier,1
+Knockout Maneuver,G,,uncommon,Sorcery,1
+Krotiq Nestguard,G,,common,Creature — Insect,2
+Piercing Exhale,G,,common,Instant,4
+Rite of Renewal,G,,uncommon,Sorcery,2
+Roamer's Routine,G,,common,Sorcery,2
+Sage of the Fang,G,,uncommon,Creature — Human Druid,2
+Sagu Pummeler,G,,common,Creature — Beast,3
+Sarkhan's Resolve,G,,common,Instant,2
+Sultai Devotee,"B,G,U",,common,Creature — Zombie Snake Druid,3
+Synchronized Charge,G,,uncommon,Sorcery,1
+Trade Route Envoy,G,,common,Creature — Dog Soldier,1
+Undergrowth Leopard,G,,common,Creature — Cat,4
+Armament Dragon,"B,G,W",,uncommon,Creature — Dragon,1
+Auroral Procession,"G,U",,uncommon,Instant,3
+Bone-Cairn Butcher,"B,R,W",,uncommon,Creature — Demon,3
+Cori Mountain Stalwart,"R,W",,uncommon,Creature — Human Monk,2
+Dragonclaw Strike,"G,R,U",,uncommon,Sorcery,3
+Effortless Master,"R,U",,uncommon,Creature — Orc Monk,2
+Frontline Rush,"R,W",,uncommon,Instant,2
+Glacial Dragonhunt,"R,U",,uncommon,Sorcery,1
+Gurmag Nightwatch,"B,G,U",,common,Creature — Human Ranger,4
+Host of the Hereafter,"B,G",,uncommon,Creature — Zombie Warlock,1
+Jeskai Brushmaster,"R,U,W",,uncommon,Creature — Orc Monk,1
+Jeskai Shrinekeeper,"R,U,W",,uncommon,Creature — Dragon,1
+Karakyk Guardian,"G,R,U",,uncommon,Creature — Dragon,1
+Kheru Goldkeeper,"B,G,U",,uncommon,Creature — Dragon,2
+Kin-Tree Severance,"B,G,W",,uncommon,Instant,2
+Kishla Skimmer,"G,U",,uncommon,Creature — Bird Scout,1
+Lie in Wait,"B,G,U",,uncommon,Sorcery,1
+Mammoth Bellow,"G,R,U",,uncommon,Sorcery,2
+Marshal of the Lost,"B,W",,uncommon,Creature — Orc Warrior,2
+Monastery Messenger,"R,U,W",,common,Creature — Bird Scout,4
+Reigning Victor,"B,R,W",,common,Creature — Orc Warrior,4
+Reputable Merchant,"B,G,W",,common,Creature — Human Citizen,4
+Skirmish Rhino,"B,G,W",,uncommon,Creature — Rhino,2
+Stalwart Successor,"B,G",,uncommon,Creature — Human Warrior,2
+Temur Tawnyback,"G,R,U",,common,Creature — Beast,2
+Boulderborn Dragon,,,common,Artifact Creature — Dragon,4
+Dragonstorm Globe,,,common,Artifact,4
+Embermouth Sentinel,,,common,Artifact Creature — Chimera,3
+Jade-Cast Sentinel,,,common,Artifact Creature — Ape Snake,4
+Jeskai Monument,"R,U,W",,uncommon,Artifact,2
+Mardu Monument,"B,R,W",,uncommon,Artifact,1
+Sultai Monument,"B,G,U",,uncommon,Artifact,2
+Watcher of the Wayside,,,common,Artifact Creature — Golem,4
+Glimpse of Freedom,U,,uncommon,Instant,1
+Shoal Kraken,U,,uncommon,Creature — Kraken,1
+Final Death,B,,common,Instant,1
+Grim Physician,B,,common,Creature — Zombie,1
+Skophos Warleader,R,,common,Creature — Minotaur Warrior,1
+Moss Viper,G,,common,Creature — Snake,1
+Setessan Petitioner,G,,uncommon,Creature — Human Druid,1
+Acolyte of Affliction,"B,G",,uncommon,Creature — Human Cleric,1
+A-Dreamshackle Geist,U,,rare,Creature — Spirit,1
+A-Skull Skaab,"B,U",,uncommon,Creature — Zombie,1
+Archon's Glory,W,,common,Instant,2
+Charmed Clothier,W,,common,Creature — Faerie Advisor,1
+Cooped Up,W,,common,Enchantment — Aura,2
+Eerie Interference,W,,uncommon,Instant,1
+Moment of Valor,W,,common,Instant,2
+Plunge into Winter,W,,common,Instant,1
+The Princess Takes Flight,W,,uncommon,Enchantment — Saga,1
+Protective Parents,W,,common,Creature — Human Peasant,1
+Return Triumphant,W,,common,Sorcery,1
+Slumbering Keepguard,W,,common,Creature — Human Knight,1
+Solitary Sanctuary,W,,uncommon,Enchantment,1
+Stockpiling Celebrant,W,,common,Creature — Dwarf Knight,2
+Tuinvale Guide,W,,common,Creature — Faerie Scout,2
+Unassuming Sage,W,,common,Creature — Human Peasant Wizard,1
+Bitter Chill,U,,uncommon,Enchantment — Aura,2
+Freeze in Place,U,,common,Sorcery,2
+Living Lectern,U,,common,Artifact Creature — Construct,1
+Merfolk Coralsmith,U,,common,Creature — Merfolk,1
+Misleading Motes,U,,common,Instant,1
+Snaremaster Sprite,U,,common,Creature — Faerie Wizard,2
+Spell Stutter,U,,common,Instant,2
+Stormkeld Prowler,U,,common,Creature — Human Rogue,1
+Tenacious Tomeseeker,U,,uncommon,Creature — Human Knight,1
+Barrow Naughty,B,,common,Creature — Faerie,2
+Eriette's Whisper,B,,common,Sorcery,1
+Faerie Dreamthief,B,,uncommon,Creature — Faerie Warlock,1
+Faerie Fencing,B,,uncommon,Instant,4
+Feed the Cauldron,B,,common,Instant,3
+Mintstrosity,B,,common,Creature — Horror,3
+Rat Out,B,,common,Instant,1
+Scream Puff,B,,common,Creature — Horror,2
+Sugar Rush,B,,common,Instant,2
+Sweettooth Witch,B,,common,Creature — Human Warlock,3
+Taken by Nightmares,B,,uncommon,Instant,2
+Twisted Sewer-Witch,B,,uncommon,Creature — Human Warlock,1
+Wicked Visitor,B,,common,Creature — Nightmare,1
+Flick a Coin,R,,common,Instant,2
+Frantic Firebolt,R,,common,Instant,1
+Harried Spearguard,R,,common,Creature — Human Soldier,1
+Kindled Heroism,R,,common,Instant,1
+Stonesplitter Bolt,R,,uncommon,Instant,1
+Bestial Bloodline,G,,common,Enchantment — Aura,1
+Curse of the Werefox,G,,common,Sorcery,1
+Hamlet Glutton,G,,common,Creature — Giant,1
+Leaping Ambush,G,,common,Instant,2
+Redtooth Genealogist,G,,common,Creature — Elf Advisor,1
+Return from the Wilds,G,,common,Sorcery,2
+Rootrider Faun,G,,common,Creature — Satyr Scout,3
+Royal Treatment,G,,uncommon,Instant,1
+Skybeast Tracker,G,,common,Creature — Giant Archer,1
+Spider Food,G,,common,Sorcery,3
+Territorial Witchstalker,G,,common,Creature — Wolf,1
+Welcome to Sweettooth,G,,uncommon,Enchantment — Saga,1
+"Greta, Sweettooth Scourge","B,G",,uncommon,Legendary Creature — Human Warrior,1
+"Johann, Apprentice Sorcerer","R,U",,uncommon,Legendary Creature — Human Wizard,3
+"Obyra, Dreaming Duelist","B,U",,uncommon,Legendary Creature — Faerie Warrior,2
+"Syr Armont, the Redeemer","G,W",,uncommon,Legendary Creature — Human Knight,1
+"Totentanz, Swarm Piper","B,R",,uncommon,Legendary Creature — Human Warlock Bard,1
+Eriette's Tempting Apple,,,uncommon,Legendary Artifact — Food,1
+Edgewall Inn,,,uncommon,Land,1
+Faerie Slumber Party,U,,rare,Sorcery,1
+Experimental Confectioner,B,,uncommon,Creature — Human Peasant,2
+Provisions Merchant,G,,uncommon,Creature — Beast Peasant,2
+Wildwood Mentor,G,,rare,Creature — Treefolk,1
+Pool Resources,U,,uncommon,Instant,1
+Sanguine Soothsayer,B,,rare,Creature — Bat Cleric,1
+Tasteful Offering,B,,uncommon,Sorcery,1
+Cindercone Smite,R,,uncommon,Sorcery,1
+Fountainport Charmer,G,,uncommon,Creature — Frog Bard,1
+Traverse Valley,G,,uncommon,Sorcery,1
+"Euru, Acorn Scrounger","B,G",,mythic,Legendary Creature — Squirrel Soldier,1
+Resourceful Collector,"G,R",,rare,Creature — Raccoon Druid,1
+By Elspeth's Command,W,,rare,Enchantment,1
+Norn's Disassembly,W,,rare,Enchantment,1
+Tawnos Endures,W,,uncommon,Instant,1
+Hurkyl's Prodigy,U,,uncommon,Creature — Human Soldier,2
+Piece It Together,U,,uncommon,Sorcery,2
+Lonely End,B,,uncommon,Instant,1
+Fallaji Antiquarian,R,,rare,Creature — Human Artificer,1
+Melt Through,R,,uncommon,Instant,2
+Tomakul Phoenix,R,,rare,Creature — Phoenix,1
+Foundry Groundbreaker,G,,rare,Creature — Human Artificer,1
+Sylvan Smite,G,,uncommon,Instant,2
+Perilous Iteration,"G,R",,uncommon,Sorcery,2
+"Richlau, Headmaster","U,W",,mythic,Legendary Creature — Human Advisor,1
+Gixian Recycler,B,,rare,Artifact Creature — Phyrexian Horror,1
+Patchplate Resolute,W,,uncommon,Artifact Creature — Soldier,2
+Deviant Skytech,U,,uncommon,Enchantment,1
+Trackhand Trainer,U,,rare,Creature — Merfolk,1
+Bail Out,B,,uncommon,Instant,2
+Speedbrood Stalker,B,,mythic,Creature — Insect Assassin,1
+Unforgiving Overtake,B,,uncommon,Sorcery,1
+Fuel Tank Feaster,G,,uncommon,Creature — Ooze Druid,2
+Great Fang Chroniclers,G,,uncommon,Creature — Ape Druid,1
+Quickbeast Amulet,"G,W",,rare,Artifact — Equipment,1
+Rising Chicane,,,uncommon,Artifact Land,1
+Benalish Knight-Counselor,W,,uncommon,Creature — Human Knight,2
+Pull of the Mist Moon,"U,W",,uncommon,Enchantment,1
+Vesuvan Mist,"B,U",,uncommon,Instant,2
+Darigaaz's Whelp,"B,R",,uncommon,Creature — Dragon,1
+Diminished Returner,B,,uncommon,Creature — Phyrexian Skeleton,2
+"Reezug, the Bonecobbler",B,,mythic,Legendary Creature — Spirit Artificer,1
+Ghitu Embercoiler,R,,rare,Creature — Human Wizard,1
+Marwyn's Kindred,G,,mythic,Sorcery,1
+Vinesoul Spider,G,,uncommon,Creature — Elemental Spider,1
+Wandering Treefolk,G,,uncommon,Creature — Treefolk,1
+"Arvad, Weatherlight Smuggler","B,W",,rare,Legendary Creature — Vampire Knight,1
+Protean War Engine,"R,W",,mythic,Artifact — Vehicle,1
+Housemeld,U,,uncommon,Sorcery,1
+Replicating Terror,B,,uncommon,Instant,1
+Eager Flameguide,R,,uncommon,Enchantment Creature — Raccoon Glimmer,2
+Wary Zone Guard,G,,uncommon,Creature — Human Survivor,1
+Enduring Friendship,"R,U",,rare,Enchantment Creature — Otter Glimmer,1
+Fear of Change,"G,U",,uncommon,Enchantment Creature — Nightmare,1
+Gilded Ambusher,"B,R",,rare,Enchantment Creature — Lizard Glimmer,1
+Golden Sidekick,"B,W",,uncommon,Enchantment Creature — Bat Glimmer,2
+Mischievous Lookout,"B,W",,rare,Enchantment Creature — Rat Glimmer,1
+Landlore Navigator,U,,uncommon,Creature — Orc Pirate,1
+Dusk's Landing,B,,uncommon,Sorcery,1
+"Kamachal, Ship's Mascot",R,,rare,Legendary Creature — Dinosaur Pirate,1
+Pirate's Landing,R,,uncommon,Sorcery,2
+Scalespeaker Shepherd,G,,rare,Creature — Human Druid,1
+High Marshal Arguel,"B,W",,rare,Legendary Creature — Vampire Knight,1
+Reflection Net,"U,W",,uncommon,Artifact,2
+Scrutiny of the Guildpact,W,,uncommon,Enchantment,1
+Lurking Spinecrawler,B,,uncommon,Creature — Horror,1
+Case of the Market Melee,R,,uncommon,Enchantment — Case,1
+Shove Aside,R,,uncommon,Sorcery,1
+Rampaging Ursaguana,G,,rare,Creature — Bear Lizard Mutant,2
+Relics of the Rubblebelt,G,,rare,Sorcery,1
+Sproutwatch Dryad,G,,rare,Creature — Dryad,1
+Woodland Investigation,G,,uncommon,Sorcery,1
+Dragonfly Pilot,W,,uncommon,Creature — Fox Pilot,1
+Fragment Reality,W,,rare,Instant,1
+Experimental Pilot,U,,uncommon,Creature — Human Pilot,4
+Painful Bond,B,,uncommon,Instant,2
+Consuming Oni,B,,mythic,Creature — Ogre Demon,1
+Artillery Enthusiast,R,,uncommon,Creature — Goblin Artificer,2
+Foundry Beetle,R,,rare,Artifact Creature — Equipment Insect,1
+Molten Impact,R,,rare,Sorcery,1
+Kami of Bamboo Groves,G,,uncommon,Enchantment Creature — Spirit,1
+Boseiju Pathlighter,G,,rare,Creature — Human Rogue,1
+Kemba's Outfitter,W,,uncommon,Creature — Cat Artificer,3
+March Toward Perfection,B,,uncommon,Sorcery,2
+Hexgold Sledge,R,,uncommon,Artifact — Equipment,3
+Spawning Pod,G,,rare,Artifact,1
+Bladehold Cleaver,"R,W",,rare,Artifact — Equipment,1
+Contagion Dispenser,"G,U",,rare,Artifact,1
+Ichor Aberration,"B,U",,rare,Creature — Phyrexian Horror,1
+Mephidross Slime,"B,G",,uncommon,Creature — Phyrexian Ooze,3
+Resolute Rejection,W,,uncommon,Instant,1
+Thieving Aven,U,,uncommon,Creature — Bird Rogue,2
+"Rankle, Pitiless Trickster",B,,mythic,Legendary Creature — Faerie Rogue,1
+Impetuous Lootmonger,R,,uncommon,Creature — Human Rogue,1
+Switchgrass Grazer,R,,uncommon,Creature — Horse Mount,1
+Blooming Cactusfolk,G,,rare,Creature — Plant Druid,1
+Cathartic Operation,"B,U",,uncommon,Instant,2
+Intruder's Inquisition,"B,R",,uncommon,Sorcery,1
+"Nashi, Illusion Gadgeteer","B,G,U",,rare,Legendary Creature — Rat Rogue,1
+Triumphant Getaway,"B,R,U",,rare,Enchantment,1
+Celestial Vault,W,,uncommon,Artifact,2
+Choice of Fortunes,U,,uncommon,Sorcery,1
+Big Spender,R,,uncommon,Creature — Devil Citizen,1
+Pass the Torch,R,,rare,Instant,1
+Giant Regrowth,G,,uncommon,Instant,1
+Bank Job,"B,R",,rare,Enchantment,1
+Rope Line Attendant,"G,W",,rare,Creature — Cat Citizen,1
+Waystone's Guidance,W,,uncommon,Enchantment,4
+Ureni's Counsel,"R,U",,uncommon,Sorcery,1
+Draconic Fealty,B,,uncommon,Sorcery,1
+Runeblade Raiser,B,,uncommon,Creature — Human Warrior,2
+Dragonblood Twins,R,,uncommon,Creature — Human Monk,1
+Dragonsoul Prodigy,R,,rare,Creature — Human Monk,1
+Stormforged Armor,R,,rare,Legendary Artifact — Equipment,1
+Amber-Plate Ainok,G,,uncommon,Creature — Dog Mercenary,1
+Call the Crash,"B,G,W",,rare,Sorcery,1
+Dalkovan Outrider,"B,R",,rare,Creature — Orc Warrior,1
+Illuminating Lash,"R,U",,uncommon,Sorcery,1
+Paths of Tuinvale,U,,uncommon,Instant,1
+Talion's Throneguard,U,,rare,Creature — Faerie Wizard,1
+Draconic Debut,R,,uncommon,Sorcery,2
+Victory of the Pyrohammer,R,,rare,Enchantment — Saga,1
+Outfitted Jouster,"B,R",,rare,Creature — Human Knight,1
+Third Little Pig,"B,G",,uncommon,Creature — Boar,1
+Kabira Outrider,W,,common,Creature — Human Warrior,1
+Kor Blademaster,W,,uncommon,Creature — Kor Warrior,1
+Field Research,U,,common,Sorcery,3
+Glacial Grasp,U,,common,Instant,1
+Zulaport Duelist,U,,common,Creature — Human Rogue,1
+Oblivion's Hunger,B,,common,Instant,3
+Teeterpeak Ambusher,R,,common,Creature — Goblin Warrior,4
+Thundering Rebuke,R,,uncommon,Sorcery,3
+Dauntless Survivor,G,,common,Creature — Human Warrior,4
+A-Gnarlid Colony,G,,common,Creature — Beast,4
+Might of Murasa,G,,common,Instant,4
+Murasa Brute,G,,common,Creature — Troll Warrior,3
+A-Oran-Rief Ooze,G,,rare,Creature — Ooze,1
+Reclaim the Wastes,G,,common,Sorcery,1
+Turntimber Ascetic,G,,common,Creature — Giant Cleric,1
+Veteran Adventurer,G,,uncommon,Creature — Human,1
+Spare Supplies,,,common,Artifact,1
+Emeria's Call,,,,,1
+Beyeen Veil,,,,,1
+Silundi Vision,,,,,1
+"Egon, God of Death",,,,,1
+"Plargg, Dean of Chaos",,,,,1
+Lunarch Veteran,,,,,4
+Shady Traveler,,,,,1
+Fangblade Brigand,,,,,3
+Reckless Stormseeker,,,,,2
+Smoldering Egg,,,,,2
+Spellrune Painter,,,,,4
+Tavern Ruffian,,,,,1
+Village Watch,,,,,3
+Burly Breaker,,,,,2
+Deathbonnet Sprout,,,,,4
+Outland Liberator,,,,,4
+"Arlinn, the Pack's Hope",,,,,2
+Kessig Naturalist,,,,,4
+"Tovolar, Dire Overlord",,,,,2
+Twinblade Geist,,,,,3
+Wedding Announcement,,,,,2
+Lantern Bearer,,,,,4
+Bloodsworn Squire,,,,,3
+Desperate Farmer,,,,,1
+Voldaren Bloodcaster,,,,,2
+Volatile Arsonist,,,,,1
+Howlpack Piper,,,,,2
+Weaver of Blossoms,,,,,4
+Child of the Pack,,,,,4
+Befriending the Moths,,,,,1
+Era of Enlightenment,,,,,1
+Michiko's Reign of Truth,,,,,4
+The Restoration of Eiganjo,,,,,2
+Behold the Unspeakable,,,,,2
+The Modern Age,,,,,4
+Life of Toshiro Umezawa,,,,,1
+The Long Reach of Night,,,,,2
+Kumano Faces Kakkazan,,,,,4
+The Shattered States Era,,,,,1
+Azusa's Many Journeys,,,,,4
+Boseiju Reaches Skyward,,,,,4
+Jugan Defends the Temple,,,,,1
+Hidetsugu Consumes All,,,,,1
+A-Hullbreaker Horror,,,,,2
+Phyrexian Dragon Engine,,,,,1
+"Mishra, Claimed by Gix",,,,,1
+Pyretic Prankster,,,,,1
+Urabrask,,,,,1
+Invasion of Zendikar,,,,,2
+Invasion of New Phyrexia,,,,,1
+Dunedain Blade,,,,,1
+Lothlorien Lookout,,,,,2
+Arwen Undomiel,,,,,2
+A-Lantern Bearer,,,,,4
+Kindly Stranger,,,,,1
+Aquatic Alchemist,,,,,2
+Beluna's Gatekeeper,,,,,2
+Picklock Prankster,,,,,2
+Vantress Transmuter,,,,,1
+Virtue of Knowledge,,,,,1
+Fell Horseman,,,,,1
+Gumdrop Poisoner,,,,,1
+Grabby Giant,,,,,1
+Hearth Elemental,,,,,1
+Ratcatcher Trainee,,,,,2
+Two-Headed Hunter,,,,,1
+Beanstalk Wurm,,,,,2
+Bramble Familiar,,,,,1
+Hollow Scavenger,,,,,2
+Virtue of Strength,,,,,1
+Callous Sell-Sword,,,,,1
+Frolicking Familiar,,,,,1
+Gingerbread Hunter,,,,,1
+Mosswood Dreadknight,,,,,1
+Picnic Ruiner,,,,,1
+Questing Druid,,,,,1
+Scalding Viper,,,,,1
+Spellscorn Coven,,,,,2
+Twining Twins,,,,,1
+Thousand Moons Smithy,,,,,1
+Inverted Iceberg,,,,,1
+Tarrian's Journal,,,,,1
+Growing Rites of Itlimoc,,,,,2
+Twists and Turns,,,,,1
+Bartolome del Presidio,,,,,1
+Sunbird Standard,,,,,3
+Steady Tortoise,,,,,1
+"Ajani, Nacatl Pariah",,,,,1
+Hydroelectric Specimen,,,,,1
+Legion Leadership,,,,,1
+Strength of the Harvest,,,,,1
+Akoum Warrior,,,,,1
+Riling Dawnbreaker,,,,,3
+Dirgur Island Dragon,,,,,4
+Feral Deathgorger,,,,,3
+Scavenger Regent,,,,,2
+Stormshriek Feral,,,,,4
+Bloomvine Regent,,,,,3
+Sagu Wildling,,,,,4
+Disruptive Stormbrood,,,,,1
+Purging Stormbrood,,,,,2
+Runescale Stormbrood,,,,,1
+Twinmaw Stormbrood,,,,,2
+Whirlwing Stormbrood,,,,,2

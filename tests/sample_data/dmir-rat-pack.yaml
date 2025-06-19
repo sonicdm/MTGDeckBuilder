@@ -1,0 +1,71 @@
+deck:
+  name: Standard BU Rat-Bat Midrange
+  colors: [B, U]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: [standard]
+  owned_cards_only: true
+  color_match_mode: subset
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: linear
+    curve_slope: moderate
+
+card_constraints:
+  exclude_keywords: []
+  rarity_boost:
+    common: 0
+    uncommon: 0
+    rare: 1
+    mythic: 2
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["/Rat(?:s)?(?=$|\\s)/", "Bat", "Menace", "Flying"]
+    priority_text:
+      - "whenever a creature dies"
+      - "discard a card"
+      - "draw a card"
+  removal:
+    target: 8
+    priority_text:
+      - "destroy target"
+      - "counter target"
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 4
+    prefer: ["Shipwreck Marsh", "Darkslick Shores"]
+    avoid: []
+  balance:
+    adjust_by_mana_symbols: true
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal"]
+  allow_less_than_target: false
+
+scoring_rules:
+  priority_text:
+    "/Rat(?:s)?(?=$|\\s)/": 6
+    "bat": 2
+    "menace": 2
+    "flying": 1
+    "mill": 2
+    "whenever you discard": 3
+    "draw a card": 2
+    "whenever a creature dies": 3
+    "faerie": -2
+  rarity_bonus:
+    common: 0
+    uncommon: 0
+    rare: 1
+    mythic: 2
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+  min_score_to_flag: 6

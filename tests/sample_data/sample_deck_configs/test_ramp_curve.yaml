@@ -1,0 +1,37 @@
+deck:
+  name: "Ramp Curve Test"
+  colors: ["G"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  legalities: ["modern"]
+  mana_curve:
+    min: 1
+    max: 6
+    curve_shape: "linear"
+    curve_slope: "up"
+
+categories:
+  ramp:
+    target: 12
+    priority_text: ["add {g}", "search your library for a land"]
+    preferred_keywords: ["landfall"]
+
+  threats:
+    target: 12
+    priority_text: ["creature"]
+    preferred_keywords: ["trample", "hexproof"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "fight"]
+
+card_constraints:
+  preferred_keywords: ["landfall", "trample", "hexproof"]
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 8
+    prefer: ["add {g}", "enters untapped"]
+    avoid: ["enters tapped unless"] 

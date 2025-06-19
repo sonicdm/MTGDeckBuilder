@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from mtg_deck_builder.db.repository import CardRepository, InventoryRepository, CardDB
-from mtg_deck_builder.db.models import Base
+from mtg_deck_builder.db.repository import CardRepository, InventoryRepository
+from mtg_deck_builder.db.models import Base, CardDB
 from mtg_deck_builder.models.deck import Deck
 
 

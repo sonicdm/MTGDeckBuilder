@@ -1,125 +1,115 @@
+# mtg_deckbuilder_ui/utils/ui_helpers.py
+
 """
 ui_helpers.py
 
 Provides common UI utility functions for the MTG Deckbuilder application.
 These functions help standardize operations like:
-- Listing files with specific extensions
-- Refreshing dropdowns
-- File loading/saving operations with proper path handling
+- UI component visibility and state management
+- Tab switching and navigation
 - Common UI feedback patterns
+- Value type conversion and validation
 """
 import os
 import gradio as gr
 import logging
+from pathlib import Path
+from typing import List, Any, Optional
+from mtg_deckbuilder_ui.app_config import app_config
+from mtg_deckbuilder_ui.utils.file_utils import (
+    get_full_path,
+    ensure_extension,
+    list_files_by_extension,
+    refresh_dropdown,
+    get_config_path,
+    list_config_files,
+    list_inventory_files,
+)
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
-def list_files_by_extension(directory, extensions):
-    """
-    List all files in a directory with specified extensions.
+
+def _to_int(val: Any, default: int = 0) -> int:
+    """Convert a value to integer, handling various input types.
 
     Args:
-        directory (str): The directory to search
-        extensions (list): List of file extensions to include (e.g. ['.txt', '.yaml'])
+        val: Value to convert
+        default: Default value if conversion fails
 
     Returns:
-        list: List of filenames that match the extensions
+        Integer value
     """
-    if not os.path.exists(directory):
-        logger.warning(f"Directory does not exist: {directory}")
-        return []
-
-    try:
-        return [
-            f for f in os.listdir(directory)
-            if any(f.lower().endswith(ext.lower()) for ext in extensions)
-        ]
-    except Exception as e:
-        logger.error(f"Error listing files in {directory}: {e}")
-        return []
-
-def refresh_dropdown(dropdown_component, directory, extensions):
-    """
-    Refresh a dropdown component with files from the specified directory.
-
-    Args:
-        dropdown_component (gr.Dropdown): The Gradio dropdown component to update
-        directory (str): Directory to scan for files
-        extensions (list): List of file extensions to include
-
-    Returns:
-        gr.update: Gradio update object for the dropdown
-    """
-    files = list_files_by_extension(directory, extensions)
-    return gr.update(choices=files)
-
-def get_full_path(directory, filename):
-    """
-    Get the full path to a file, ensuring it exists in the specified directory.
-
-    Args:
-        directory (str): Base directory
-        filename (str): Filename or relative path
-
-    Returns:
-        str: Full path to the file
-    """
-    if not filename:
-        return None
-
-    return os.path.join(directory, filename)
-
-def ensure_extension(filename, default_extension):
-    """
-    Ensure a filename has the specified extension.
-
-    Args:
-        filename (str): The filename to check
-        default_extension (str): Extension to add if missing (include the dot, e.g. '.txt')
-
-    Returns:
-        str: Filename with extension
-    """
-    if not filename.lower().endswith(default_extension.lower()):
-        return f"{filename}{default_extension}"
-    return filename
-
-def _to_int(val, default=0):
     try:
         if val is None:
             return default
         # Gradio Number or numpy types
-        if hasattr(val, 'item'):
+        if hasattr(val, "item"):
             return int(val.item())
         return int(val)
     except Exception:
         return default
 
-def _to_float(val, default=0.0):
+
+def _to_float(val: Any, default: float = 0.0) -> float:
+    """Convert a value to float, handling various input types.
+
+    Args:
+        val: Value to convert
+        default: Default value if conversion fails
+
+    Returns:
+        Float value
+    """
     try:
         if val is None:
             return default
-        if hasattr(val, 'item'):
+        if hasattr(val, "item"):
             return float(val.item())
         return float(val)
     except Exception:
         return default
 
-def _get_value(val, default=None):
-    # If val is a Gradio component, get its .value, else return val
-    if hasattr(val, 'value'):
+
+def _get_value(val: Any, default: Any = None) -> Any:
+    """Get value from a Gradio component or return the value directly.
+
+    Args:
+        val: Value or Gradio component
+        default: Default value if None
+
+    Returns:
+        The value
+    """
+    if hasattr(val, "value"):
         return val.value if val.value is not None else default
     return val if val is not None else default
 
-def gradio_log_and_return(status_message, deck_obj=None):
-    import gradio as gr
-    # This helper can be reused for any Gradio callback that needs to log and return a status and deck object
+
+def gradio_log_and_return(status_message: str, deck_obj: Any = None) -> tuple:
+    """Helper for Gradio callbacks that need to log and return a status and deck object.
+
+    Args:
+        status_message: Message to display
+        deck_obj: Optional deck object to return
+
+    Returns:
+        Tuple of (status update, deck object)
+    """
     return gr.update(value=status_message), deck_obj
 
-def validate_tab_names(tab_names):
-    """
-    Validate that all tab names are unique and non-empty strings.
+
+def validate_tab_names(tab_names: List[str]) -> bool:
+    """Validate that all tab names are unique and non-empty strings.
+
+    Args:
+        tab_names: List of tab names to validate
+
+    Returns:
+        True if valid
+
+    Raises:
+        ValueError: If tab names are invalid
     """
     if not isinstance(tab_names, (list, tuple)):
         raise ValueError("Tab names must be a list or tuple.")
@@ -132,14 +122,22 @@ def validate_tab_names(tab_names):
         seen.add(name)
     return True
 
+
 class TabSwitcher:
-    """
-    Robust tab switching mechanism for Gradio apps.
+    """Robust tab switching mechanism for Gradio apps.
+
     Usage:
         switcher = TabSwitcher(["Tab1", "Tab2", ...])
         switcher.render()
     """
-    def __init__(self, tab_names, default=None):
+
+    def __init__(self, tab_names: List[str], default: Optional[str] = None):
+        """Initialize the tab switcher.
+
+        Args:
+            tab_names: List of tab names
+            default: Default tab name (uses first tab if not specified)
+        """
         validate_tab_names(tab_names)
         self.tab_names = tab_names
         self.default = default if default in tab_names else tab_names[0]
@@ -147,40 +145,83 @@ class TabSwitcher:
         self._tab_buttons = []
         self._tab_callbacks = {}
 
-    def on_tab(self, tab_name, callback):
+    def on_tab(self, tab_name: str, callback: callable) -> None:
+        """Register a callback for a specific tab.
+
+        Args:
+            tab_name: Name of the tab
+            callback: Function to call when tab is selected
+        """
         if tab_name not in self.tab_names:
             raise ValueError(f"Tab '{tab_name}' not in tab_names")
         self._tab_callbacks[tab_name] = callback
 
-    def switch_to(self, tab_name):
-        """
-        Returns a function suitable for use as a Gradio event handler to switch to the given tab.
-        Usage: my_button.click(tab_switcher.switch_to("Tab2"), outputs=..., inputs=[...])
+    def switch_to(self, tab_name: str) -> callable:
+        """Returns a function suitable for use as a Gradio event handler.
+
+        Args:
+            tab_name: Name of the tab to switch to
+
+        Returns:
+            Function that can be used as a Gradio event handler
         """
         if tab_name not in self.tab_names:
             raise ValueError(f"Tab '{tab_name}' not in tab_names")
+
         def _switch(*args, **kwargs):
             self._tab_state.value = tab_name
             if tab_name in self._tab_callbacks:
                 return self._tab_callbacks[tab_name]()
             return None
+
         return _switch
 
-    def render(self):
+    def render(self) -> tuple:
+        """Render the tab switcher UI components.
+
+        Returns:
+            Tuple of (tab content column, tab state)
+        """
         with gr.Row():
             for name in self.tab_names:
-                btn = gr.Button(name, elem_id=f"tab-btn-{name}", variant="secondary" if name != self.default else "primary")
+                btn = gr.Button(
+                    name,
+                    elem_id=f"tab-btn-{name}",
+                    variant="secondary" if name != self.default else "primary",
+                )
                 self._tab_buttons.append(btn)
         tab_content = gr.Column(visible=True)
 
-        def switch_tab(tab_name, _):
+        def switch_tab(tab_name: str, _: Any) -> Any:
             self._tab_state.value = tab_name
-            # Only render the callback for the active tab
             if tab_name in self._tab_callbacks:
                 return self._tab_callbacks[tab_name]()
             return None
 
         # Wire up each button to update the state and content
         for btn, name in zip(self._tab_buttons, self.tab_names):
-            btn.click(lambda n=name: (n, self._tab_state), outputs=tab_content, inputs=[self._tab_state], fn=lambda n, _: switch_tab(n, _))
+            btn.click(
+                lambda n=name: (n, self._tab_state),
+                outputs=tab_content,
+                inputs=[self._tab_state],
+                fn=lambda n, _: switch_tab(n, _),
+            )
         return tab_content, self._tab_state
+
+
+def hide_component() -> gr.update:
+    """Return a gr.update to hide a component.
+
+    Returns:
+        Gradio update object to hide component
+    """
+    return gr.update(visible=False)
+
+
+def show_component() -> gr.update:
+    """Return a gr.update to show a component.
+
+    Returns:
+        Gradio update object to show component
+    """
+    return gr.update(visible=True)

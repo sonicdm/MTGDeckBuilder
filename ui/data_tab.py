@@ -1,7 +1,7 @@
 # ui/data_tab.py
 
 import gradio as gr
-import logic.data_logic as logic  # your separate logic file
+import mtg_deckbuilder_ui.logic.data_logic as logic
 
 # Updated CSS to make refresh buttons even smaller
 SMALL_BUTTON_CSS = """

@@ -1,8 +1,8 @@
 # mtg_deckbuilder_ui/ui/themes.py
 
 import gradio as gr
-from gradio.themes.utils import fonts
 import os
+
 
 def create_custom_theme(css_path="static/styles.css", enable_dark_mode=True):
     """

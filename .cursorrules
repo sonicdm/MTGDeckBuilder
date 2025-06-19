@@ -1,0 +1,208 @@
+---
+description: Python best practices and patterns for modern software development with Flask and SQLite
+globs: **/*.py, src/**/*.py, tests/**/*.py
+---
+
+# Python Best Practices
+
+## Project Structure
+- Store requirements in `requirements.txt` or `pyproject.toml`
+- Place static files in `static/` directory
+- tests are in `tests/` at the project root
+
+## Code Style
+- Follow Black code formatting
+- Use isort for import sorting
+- Follow PEP 8 naming conventions:
+  - snake_case for functions and variables
+  - PascalCase for classes
+  - UPPER_CASE for constants
+- Maximum line length of 88 characters (Black default)
+- Use absolute imports over relative imports
+- avoide getattr and hasattr whenever possible.
+
+## Type Hints
+- Use type hints for all function parameters and returns
+- Import types from `typing` module
+- Use `Optional[Type]` instead of `Type | None`
+- Use `TypeVar` for generic types
+- Define custom types in `types.py`
+- Use `Protocol` for duck typing
+
+## Database
+- Use SQLAlchemy ORM
+- Implement database migrations with Alembic
+- Use proper connection pooling
+- Define models in separate modules
+- Implement proper relationships
+- Use proper indexing strategies
+
+## Testing
+- Use pytest for testing
+- Write tests for all routes
+- Use pytest-cov for coverage
+- Implement proper fixtures
+- Use proper mocking with pytest-mock
+- Test all error scenarios
+
+## Performance
+- Implement database query optimization
+- Use proper connection pooling
+- Implement proper pagination
+- Use background tasks for heavy operations
+- Monitor application performance
+
+## Error Handling
+- Create custom exception classes
+- Use proper try-except blocks
+- Implement proper logging
+- Return proper error responses
+- Handle edge cases properly
+- Use proper error messages
+
+## Documentation
+- Use Google-style docstrings
+- Document all public APIs
+- Keep README.md updated
+- Use proper inline comments
+- Generate API documentation
+- Document environment setup
+
+## Development Workflow
+- Use virtual environments (venv)
+- Implement pre-commit hooks
+- Use proper Git workflow
+- Follow semantic versioning
+- Use proper CI/CD practices
+- Implement proper logging
+
+## Dependencies
+- Pin dependency versions
+- Use requirements.txt for production
+- Separate dev dependencies
+- Use proper package versions
+- Regularly update dependencies
+- Check for security vulnerabilities
+
+
+# Project Goals
+## Database Interface
+- All database models are defined in `mtg_deck_builder/db/models.py`
+- Core models include:
+  - CardDB: Base card information and relationships
+  - CardPrintingDB: Specific printings and their attributes
+  - CardSetDB: Set information and metadata
+
+- Repository pattern is the main interface:
+  - CardRepository: Primary interface for card queries and filtering
+  - InventoryRepository: Manages card ownership and quantities
+  - All database access should go through repositories
+  - Repositories handle caching and query optimization
+
+- Database operations flow:
+  1. Connect using SQLAlchemy engine and session management
+  2. Access data through repository interfaces
+  3. Use models to query and manipulate data
+  4. Handle transactions with proper commit/rollback
+  5. Close connections appropriately
+
+- Key model relationships:
+  - Card -> Printings (one-to-many)
+  - Printing -> Set (many-to-one)
+  - Card -> Newest Printing (one-to-one)
+
+- Follow these practices:
+  - Use repository interfaces instead of direct model access
+  - Use SQLAlchemy ORM for all database operations
+  - Implement proper connection pooling
+  - Handle migrations with Alembic
+  - Keep models in sync with schema
+  - Use appropriate indexes
+  - Implement proper error handling
+
+
+## YAML Configs
+- All YAML templating must abide the schema in `/README.yaml.md`
+- All YAML configs must be turned into a `DeckConfig` before being used anywhere. 
+- All UI forms for configs must be converted into a DeckConfig.
+
+## YAML Deck Builder
+- All deck building must follow a consistent pipeline:
+  1. Parse and validate YAML config into `DeckConfig`
+  2. Initialize `DeckBuildContext` to track state
+  3. Select priority cards first (if specified)
+  4. Fill categories based on `CategoryDefinition` rules
+  5. Add mana base according to `ManaBaseMeta`
+  6. Apply fallback strategies if needed
+
+- Must use `DeckBuildContext` for tracking:
+  - Selected cards with ContextCard wrappers
+  - Reasons and sources for card selections
+  - Operation logs and unmet conditions
+  - Category and scoring metadata
+  - Export functionality for summaries
+
+- Category rules must use `CategoryDefinition` with:
+  - Target card count
+  - Preferred keywords to match
+  - Preferred card types (with optional weights)
+  - Priority text patterns (plain text or /regex/)
+  - Basic type priorities
+
+- Card scoring must use `ScoringRulesMeta` for:
+  - Keyword abilities and actions
+  - Card text pattern matches
+  - Type bonuses (basic, sub, super types)
+  - Rarity bonuses
+  - Mana cost penalties
+  - Color requirements
+
+- Mana base must use `ManaBaseMeta` for:
+  - Total land count
+  - Special lands requirements
+  - Color balance requirements
+
+- Fallback strategies must use `FallbackStrategyMeta` for:
+  - Whether to fill with any available cards
+  - Priority order for filling categories
+  - Whether categories can have fewer cards than target
+
+- All deck building operations must:
+  - Use DeckConfig for configuration validation
+  - Track context through `DeckBuildContext`
+  - Log decisions and unmet conditions
+  - Respect card constraints (rarity, CMC, etc.)
+  - Handle inventory limitations
+  - Support callback hooks for custom logic
+  - Provide detailed build summaries via context export
+
+
+## UI Guidelines
+- Use Gradio 5.32.1 for interface components:
+  - Define interfaces using gr.Interface or gr.Blocks
+  - Implement proper component validation
+  - Use appropriate input/output components
+  - Handle errors through Gradio's error system
+
+- Follow consistent interface structure:
+  - Organize components logically
+  - Use tabs for different sections
+  - Create reusable component groups
+  - Maintain clean layout with proper spacing
+  - Separate logic from display whenever possible. 
+
+- Implement proper user feedback:
+  - Use gr.Info() for success messages
+  - Display gr.Error() for validation failures
+  - Show progress bars for long operations
+  - Implement clear status indicators
+  - Provide interactive feedback
+
+- Deck builder UI must:
+  - Use gr.Code() for YAML input with syntax highlighting
+  - Implement real-time YAML validation
+  - Use gr.File() for deck file uploads
+  - Show build progress with gr.Progress()
+  - Display results in formatted gr.Dataframe()
+  - Enable deck export through gr.File() downloads
+  - Use gr.JSON() for detailed build metadata

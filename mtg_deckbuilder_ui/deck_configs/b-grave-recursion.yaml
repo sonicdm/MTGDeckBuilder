@@ -1,0 +1,57 @@
+deck:
+  name: "Mono-Black GY Recursion"
+  colors: ["B"]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["standard"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 5
+  key_cards:
+    weighting_rules:
+      priority_text:
+        /return.*graveyard.*battlefield/: 4    # ← favors Reassembling Skeleton, Nullpriest
+        /destroy target creature/: 3           # ← clean removal
+        /target creature.*-.*-/: 2
+        graveyard: 3
+        return: 3
+        dies: 2
+        draw: 2
+        destroy: 3
+        damage: 2
+        "from your graveyard to the battlefield": 3
+      rarity_bonus:
+        rare: 2
+        mythic: 3
+      mana_penalty:
+        threshold: 4
+        penalty_per_point: 1
+      min_score_to_flag: 5
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["lifelink", "menace"]
+    priority_text: ["return", "dies", "mill"]
+  removal:
+    target: 8
+    priority_text: ["destroy", "exile", "sacrifice"]
+  card_draw:
+    target: 4
+    priority_text: ["draw", "mill"]
+  graveyard_synergy:
+    target: 6
+    priority_text: ["graveyard", "return", "reanimate"]
+
+card_constraints:
+  avoid_cards_with_text:
+    - "can't block"
+    - "lose the game"
+
+priority_cards:
+  - name: "Gix's Command"
+    min_copies: 1
+  - name: "Massacre Girl, Known Killer"
+    min_copies: 1

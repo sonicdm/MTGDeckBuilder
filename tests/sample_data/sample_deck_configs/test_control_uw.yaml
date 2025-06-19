@@ -1,0 +1,102 @@
+deck:
+  name: "UW Control Flat Curve"
+  colors: ["W", "U"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["modern"]
+  owned_cards_only: false
+  mana_curve:
+    min: 1
+    max: 6
+    curve_shape: "flat"
+    curve_slope: "flat"
+
+priority_cards:
+  - name: "Counterspell"
+    min_copies: 4
+  - name: "Path to Exile"
+    min_copies: 4
+  - name: "Teferi, Time Raveler"
+    min_copies: 2
+
+mana_base:
+  land_count: 26
+  special_lands:
+    count: 6
+    prefer: ["add {w}", "add {u}", "enters untapped"]
+    avoid: ["enters tapped unless"]
+
+categories:
+  counterspells:
+    target: 8
+    priority_text: ["counter target", "can't be countered"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "exile target", "damage"]
+
+  card_draw:
+    target: 8
+    priority_text: ["draw a card", "look at the top", "scry"]
+
+  sweepers:
+    target: 4
+    priority_text: ["destroy all", "exile all", "damage to each"]
+
+  win_conditions:
+    target: 4
+    preferred_keywords: ["flying", "hexproof"]
+    priority_text: ["when this creature attacks", "when this creature enters"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["haste", "menace"]
+
+scoring_rules:
+  keyword_abilities:
+    flying: 2
+    hexproof: 2
+    vigilance: 1
+    flash: 2
+
+  keyword_actions:
+    counter: 3
+    exile: 2
+    scry: 1
+    draw: 2
+
+  text_matches:
+    "counter target": 3
+    "destroy target": 2
+    "exile target": 2
+    "draw a card": 2
+    "scry": 1
+
+  type_bonus:
+    basic_types:
+      instant: 2
+      sorcery: 1
+    sub_types:
+      wizard: 1
+      angel: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 4
+    penalty_per_point: 1
+
+  min_score_to_flag: 5
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["counterspells", "removal", "card_draw"]
+  allow_less_than_target: false

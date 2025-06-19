@@ -1,0 +1,14 @@
+deck:
+  # Missing name
+  colors: ["R"]
+  size: 60
+  max_card_copies: 4
+  legalities: ["modern"]
+
+categories:
+  creatures:
+    target: 20
+    priority_text: ["creature"]
+
+mana_base:
+  land_count: 20 

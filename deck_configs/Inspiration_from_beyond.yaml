@@ -1,0 +1,125 @@
+deck:
+  name: "Gravetide Recall"
+  colors: ["U", "B"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["alchemy"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 7
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Crow of Dark Tidings"
+    min_copies: 2
+  - name: "Zombify"
+    min_copies: 1
+  - name: "Rise of the Dark Realms"
+    min_copies: 1
+  - name: "Opt"
+    min_copies: 4
+  - name: "Dismal Backwater"
+    min_copies: 2
+  - name: "Inspiration from Beyond"
+    min_copies: 1
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer: ["add {u}", "add {b}"]
+    avoid: ["/enters tapped unless/", "vehicle", "mount", "pilot"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 20
+    preferred_keywords: ["exploit", "flying", "menace", "deathtouch"]
+    priority_text: ["/enters.*graveyard/", "/dies/", "/return.*creature/", "/mill/", "/zombie/"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 6
+    priority_text: ["/destroy.*creature/", "/-\\d+\\/-\\d+/", "/target.*sacrifices/", "/exile.*creature/"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  card_draw:
+    target: 4
+    priority_text: ["/draw.*card/", "/surveil/", "/mill.*card/", "/when.*dies/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "creature"]
+
+  buffs:
+    target: 2
+    priority_text: ["/\\+\\d+\\/\\+\\d+/", "/until end of turn/", "/return.*graveyard/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+
+  utility:
+    target: 2
+    priority_text: ["/treasure/", "/scry/", "/graveyard.*to.*hand/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["lifelink", "hexproof", "defender"]
+
+scoring_rules:
+  keyword_abilities:
+    flying: 2
+    menace: 1
+    exploit: 2
+    deathtouch: 1
+    hexproof: -5
+
+  keyword_actions:
+    mill: 3
+    surveil: 2
+    return: 3
+    exile: 2
+    scry: 1
+    create: 1
+
+  ability_words:
+    exploit: 2
+    morbid: 1
+    delirium: 1
+
+  text_matches:
+    "/graveyard/": 4
+    "/return.*creature/": 3
+    "/when.*dies/": 2
+    "/zombie/": 2
+    "/mill/": 2
+
+  type_bonus:
+    basic_types:
+      creature: 2
+    sub_types:
+      zombie: 2
+      horror: 1
+      wizard: 1
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+
+  min_score_to_flag: 6
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "card_draw"]
+  allow_less_than_target: false

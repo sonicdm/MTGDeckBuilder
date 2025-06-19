@@ -1,0 +1,36 @@
+deck:
+  name: "Budget Low Test"
+  colors: ["R"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  legalities: ["modern"]
+  budget: "low"
+
+categories:
+  creatures:
+    target: 20
+    priority_text: ["creature"]
+    preferred_keywords: ["haste", "first strike"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "damage"]
+
+card_constraints:
+  rarity_boost:
+    common: 2
+    uncommon: 1
+    rare: 0
+    mythic: 0
+  preferred_keywords: ["haste", "first strike"]
+
+scoring_rules:
+  rarity_bonus:
+    common: 2
+    uncommon: 1
+    rare: 0
+    mythic: 0
+
+mana_base:
+  land_count: 20 

@@ -22,3 +22,7 @@ def get_sample_data_dir() -> str:
 
 def get_sample_data_path(filename: str) -> str:
     return os.path.join(get_sample_data_dir(), filename)
+
+# DummyCard, DummyRepo, and DummyInventoryRepo classes were here
+# They have been moved to tests/fixtures.py
+

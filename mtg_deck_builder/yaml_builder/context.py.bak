@@ -1,0 +1,395 @@
+from typing import TYPE_CHECKING, List, Dict, Any, Optional, Set, Tuple, Union, Callable, TypeVar, cast
+from datetime import datetime
+import logging
+from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
+from mtg_deck_builder.models.deck import Deck
+from mtg_deck_builder.models.deck_config import DeckConfig
+from mtg_deck_builder.db.repository import SummaryCardRepository
+from mtg_deck_builder.yaml_builder.types import CallbackDict
+if TYPE_CHECKING:
+    from mtg_deck_builder.yaml_builder.helpers import LandStub
+
+logger = logging.getLogger(__name__)
+
+class LandStub:
+    """Stub for basic land cards that don't exist in the database."""
+    
+    def __init__(self, name: str, color: str):
+        self.name = name
+        self.color = color
+        self.type = f"Basic Land — {name}"
+        self.color_identity = [color]
+        self.converted_mana_cost = 0
+        self.mana_cost = ""
+        self.oracle_text = ""
+        self.keywords = []
+        self.rarity = "common"
+        self.set_code = "core"
+        self.collector_number = "1"
+        self.is_foil = False
+        
+        # Set all foil variants to False
+        for attr in ['is_foil_etched', 'is_foil_alt', 'is_foil_showcase', 'is_foil_borderless', 
+                    'is_foil_double_sided', 'is_foil_oversized', 'is_foil_textured', 'is_foil_holo']:
+            setattr(self, attr, False)
+            
+    @property
+    def basic_type(self) -> str:
+        """Get the basic type of the land."""
+        return "Land"
+        
+    def matches_type(self, type_string: str) -> bool:
+        """Check if the land matches a type string."""
+        return type_string.lower() in self.type.lower()
+        
+    def is_basic_land(self) -> bool:
+        """Check if this is a basic land."""
+        return True
+
+class ContextCard:
+    """Wrapper for a card with build context metadata."""
+    
+    def __init__(
+        self,
+        card: Union[MTGJSONSummaryCard, 'LandStub'],
+        reason: str,
+        source: str,
+        quantity: int = 1
+    ):
+        self.card = card
+        self.reason = reason
+        self.source = source
+        self.quantity = quantity
+        self.replaced_at: Optional[str] = None
+        
+    @property
+    def name(self) -> str:
+        """Get the card name."""
+        return str(self.card.name)
+        
+    def mark_replaced(self, replacement_name: str) -> None:
+        """Mark this card as replaced by another card."""
+        self.replaced_at = replacement_name
+        
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary representation."""
+        return {
+            "name": self.name,
+            "reason": self.reason,
+            "source": self.source,
+            "quantity": self.quantity,
+            "replaced_at": self.replaced_at
+        }
+    
+    @property
+    def colors(self) -> List[str]:
+        """
+        Returns the list of colors for this card.
+
+        Returns:
+            List[str]: List of color strings.
+        """
+        # Defensive: handle None or non-iterable .colors
+        colors = getattr(self.card, "colors", None)
+        if colors is None:
+            return []
+        if isinstance(colors, str):
+            return [colors]
+        try:
+            return list(colors)
+        except TypeError:
+            return []
+    
+    def __repr__(self) -> str:
+        """
+        Returns a string representation of the ContextCard.
+
+        Returns:
+            str: String representation.
+        """
+        status = "replaced" if self.replaced_at else "active"
+        return (
+            f"<ContextCard name={self.name} status={status} "
+            f"quantity={self.quantity}>"
+        )
+
+class DeckBuildContext:
+    """Context for tracking deck building process."""
+    
+    def __init__(
+        self,
+        config: DeckConfig,
+        summary_repo: SummaryCardRepository,
+    ):
+        self.config = config
+        self.summary_repo = summary_repo
+        self.cards: List[ContextCard] = []
+        self.operations: List[str] = []
+        self.unmet_conditions: List[str] = []
+        self.name = config.deck.name or "Unnamed Deck"
+        self.deck = Deck(name=self.name)
+        self.meta: Dict[str, Any] = {}
+        
+    def add_card(
+        self,
+        card: Union[MTGJSONSummaryCard, 'LandStub'],
+        reason: str,
+        source: str,
+        quantity: int = 1
+    ) -> bool:
+        """Add a card to the deck.
+        
+        Args:
+            card: Card to add
+            reason: Reason for adding the card
+            source: Source of the card (e.g. 'priority', 'category', 'mana_base')
+            quantity: Number of copies to add
+            
+        Returns:
+            bool: True if card was added, False otherwise
+        """
+        try:
+            # Add to deck
+            self.deck.insert_card(card, quantity)
+            
+            # Create context card
+            context_card = ContextCard(
+                card=card,
+                reason=reason,
+                source=source,
+                quantity=quantity
+            )
+            
+            # Add to tracking
+            self.cards.append(context_card)
+            
+            # Log operation
+            self.log(f"Added {quantity}x {card.name} ({reason})")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error adding card {card.name}: {e}")
+            return False
+            
+    def replace_card(self, old_name: str, new_card: MTGJSONSummaryCard, reason: str, quantity: int = 1) -> bool:
+        """Replace a card in the deck with a new one.
+        
+        Args:
+            old_name: Name of card to replace
+            new_card: New card to add
+            reason: Why the replacement was made
+            quantity: Number of copies to add (default: 1)
+            
+        Returns:
+            bool: True if replacement was successful
+        """
+        # Find and mark the old card as replaced
+        for i, card in enumerate(self.cards):
+            if card.name == old_name:
+                card.mark_replaced(str(new_card.name))
+                self.cards.pop(i)
+                
+                # Add the new card
+                self.add_card(new_card, f"replacement: {reason}", "replacement", quantity)
+                
+                return True
+                
+        return False
+        
+    def get_total_cards(self) -> int:
+        """Get total number of cards in the deck (including quantities)."""
+        return sum(card.quantity for card in self.cards)
+        
+    def get_card_quantity(self, card_name: str) -> int:
+        """Get the quantity of a specific card in the deck."""
+        for card in self.cards:
+            if card.name == card_name:
+                return card.quantity
+        return 0
+        
+    def log(self, msg: str) -> None:
+        """Record an operation or decision in the build log."""
+        timestamp = datetime.now().isoformat()
+        self.operations.append(f"{timestamp}: {msg}")
+        
+    def record_unmet_condition(self, condition: str) -> None:
+        """Record a failed constraint or unmet rule."""
+        self.unmet_conditions.append(condition)
+        self.log(f"Unmet condition: {condition}")
+        
+    def get_card_names(self) -> List[str]:
+        """Get list of card names in the deck."""
+        return [c.name for c in self.cards]
+        
+    def get_active_cards(self) -> List[ContextCard]:
+        """Get list of cards that haven't been replaced."""
+        return [c for c in self.cards if not c.replaced_at]
+        
+    def get_replaced_cards(self) -> List[ContextCard]:
+        """Get list of cards that were replaced."""
+        return [c for c in self.cards if c.replaced_at]
+        
+    def get_cards_by_source(self, source: str) -> List[ContextCard]:
+        """Get all cards added by a specific source."""
+        return [c for c in self.cards if c.source == source]
+        
+    def get_cards_by_reason(self, reason_pattern: str) -> List[ContextCard]:
+        """Get all cards matching a reason pattern."""
+        return [c for c in self.cards if reason_pattern in c.reason]
+        
+    def export_summary(self) -> Dict[str, Any]:
+        """Get serializable summary of the deck build process."""
+        return {
+            "name": self.name,
+            "cards": [c.to_dict() for c in self.cards],
+            "replaced_cards": [c.to_dict() for c in self.get_replaced_cards()],
+            "stats": {
+                "start_time": datetime.now(),
+                "cards_added": self.get_total_cards(),
+                "cards_replaced": len(self.get_replaced_cards()),
+                "unmet_conditions": len(self.unmet_conditions),
+                "category_fills": {},
+                "source_counts": {},
+                "replacement_reasons": {}
+            },
+            "unmet_conditions": self.unmet_conditions,
+            "logs": self.operations,
+            "meta": {
+                "scoring_rules": self.config.scoring_rules or {},
+                "categories": self.config.categories or {},
+                "card_constraints": self.config.card_constraints or {},
+                "mana_base": self.config.mana_base or {},
+                "mana_curve": self.config.deck.mana_curve or {},
+                "fallback_strategy": self.config.fallback_strategy or ""
+            },
+            "total_cards": self.get_total_cards()
+        }
+        
+    def clear(self) -> None:
+        """Reset the build context."""
+        self.cards.clear()
+        self.operations.clear()
+        self.unmet_conditions.clear()
+        self.deck = Deck(name=self.name)
+        
+    def get_color_counts(self) -> Dict[str, int]:
+        """Get counts of each color in the deck, counting each unique card once."""
+        color_counts = {}
+        for card in self.cards:
+            if not card.card:
+                continue
+            for color in card.card.color_identity:
+                color_counts[color] = color_counts.get(color, 0) + 1
+        return color_counts
+        
+    def log_card_counts(self, label: str) -> None:
+        """Log total cards, unique cards, and color counts with a label."""
+        total = self.get_total_cards()
+        unique = len(self.cards)
+        color_counts = self.get_color_counts()
+        self.log(f"[{label}] Total cards: {total}, Unique: {unique}, Color counts: {color_counts}")
+
+class BuildContext:
+    """Context for deck building process."""
+    
+    def __init__(
+        self,
+        deck_config: DeckConfig,
+        summary_repo: SummaryCardRepository,
+        callbacks: Optional[CallbackDict] = None,
+        deck_build_context: Optional[DeckBuildContext] = None,
+    ):
+        self.deck_config = deck_config
+        self.summary_repo = summary_repo
+        self.callbacks = callbacks or {}
+        self.deck_build_context = deck_build_context or DeckBuildContext(
+            config=deck_config,
+            summary_repo=summary_repo
+        )
+        
+    def add_card(
+        self,
+        card: Union[MTGJSONSummaryCard, 'LandStub'],
+        reason: str,
+        source: str,
+        quantity: int = 1
+    ) -> bool:
+        """Add a card to the deck.
+        
+        Args:
+            card: Card to add
+            reason: Reason for adding the card
+            source: Source of the card (e.g. 'priority', 'category', 'mana_base')
+            quantity: Number of copies to add
+            
+        Returns:
+            bool: True if card was added, False otherwise
+        """
+        return self.deck_build_context.add_card(card, reason, source, quantity)
+        
+    def replace_card(self, old_name: str, new_card: MTGJSONSummaryCard, reason: str, quantity: int = 1) -> bool:
+        """Replace a card in the deck with a new one.
+        
+        Args:
+            old_name: Name of card to replace
+            new_card: New card to add
+            reason: Why the replacement was made
+            quantity: Number of copies to add (default: 1)
+            
+        Returns:
+            bool: True if replacement was successful
+        """
+        return self.deck_build_context.replace_card(old_name, new_card, reason, quantity)
+        
+    def get_total_cards(self) -> int:
+        """Get total number of cards in the deck (including quantities)."""
+        return self.deck_build_context.get_total_cards()
+        
+    def get_card_quantity(self, card_name: str) -> int:
+        """Get the quantity of a specific card in the deck."""
+        return self.deck_build_context.get_card_quantity(card_name)
+        
+    def log(self, msg: str) -> None:
+        """Record an operation or decision in the build log."""
+        self.deck_build_context.log(msg)
+        
+    def record_unmet_condition(self, condition: str) -> None:
+        """Record a failed constraint or unmet rule."""
+        self.deck_build_context.record_unmet_condition(condition)
+        
+    def get_card_names(self) -> List[str]:
+        """Get list of card names in the deck."""
+        return self.deck_build_context.get_card_names()
+        
+    def get_active_cards(self) -> List[ContextCard]:
+        """Get list of cards that haven't been replaced."""
+        return self.deck_build_context.get_active_cards()
+        
+    def get_replaced_cards(self) -> List[ContextCard]:
+        """Get list of cards that were replaced."""
+        return self.deck_build_context.get_replaced_cards()
+        
+    def get_cards_by_source(self, source: str) -> List[ContextCard]:
+        """Get all cards added by a specific source."""
+        return self.deck_build_context.get_cards_by_source(source)
+        
+    def get_cards_by_reason(self, reason_pattern: str) -> List[ContextCard]:
+        """Get all cards matching a reason pattern."""
+        return self.deck_build_context.get_cards_by_reason(reason_pattern)
+        
+    def export_summary(self) -> Dict[str, Any]:
+        """Get serializable summary of the deck build process."""
+        return self.deck_build_context.export_summary()
+        
+    def clear(self) -> None:
+        """Reset the build context."""
+        self.deck_build_context.clear()
+        
+    def get_color_counts(self) -> Dict[str, int]:
+        """Get counts of each color in the deck, counting each unique card once."""
+        return self.deck_build_context.get_color_counts()
+        
+    def log_card_counts(self, label: str) -> None:
+        """Log total cards, unique cards, and color counts with a label."""
+        self.deck_build_context.log_card_counts(label) 

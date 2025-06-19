@@ -1,0 +1,33 @@
+deck:
+  name: "Prefer vs Exclude Test"
+  colors: ["R"]
+  color_match_mode: "exact"
+  size: 60
+  max_card_copies: 4
+  legalities: ["modern"]
+
+categories:
+  creatures:
+    target: 20
+    priority_text: ["creature"]
+    preferred_keywords: ["haste", "first strike"]
+    exclude_keywords: ["defender"]
+    prefer_tags: ["aggressive", "fast"]
+    must_not_include_tags: ["defensive"]
+
+  removal:
+    target: 8
+    priority_text: ["destroy target", "damage"]
+    preferred_keywords: ["instant"]
+    exclude_keywords: ["gain life"]
+    prefer_tags: ["direct"]
+    must_not_include_tags: ["healing"]
+
+card_constraints:
+  preferred_keywords: ["haste", "first strike", "instant"]
+  exclude_keywords: ["defender", "gain life"]
+  prefer_tags: ["aggressive", "fast", "direct"]
+  must_not_include_tags: ["defensive", "healing"]
+
+mana_base:
+  land_count: 20 

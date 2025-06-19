@@ -1,0 +1,115 @@
+deck:
+  name: "Dimir Reclaimer"
+  colors: ["U", "B"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["alchemy"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Inspiration from Beyond"
+    min_copies: 1
+  - name: "Zombify"
+    min_copies: 1
+  - name: "Crow of Dark Tidings"
+    min_copies: 2
+
+mana_base:
+  land_count: 24
+  special_lands: 
+    count: 6
+    prefer: ["add {u}", "add {b}", "/gain*.?life/", "/deal.*opponent/"]
+    avoid: ["control a vehicle", "unless you control"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 24
+    preferred_keywords: ["flying", "deathtouch", "mill", "reanimate"]
+    priority_text: ["when this dies", "enters the battlefield from a graveyard"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 7
+    priority_text: ["destroy", "exile", "/-x/-x/", "counter target"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+
+  card_draw:
+    target: 4
+    priority_text: ["draw a card", "scry", "loot", "when this dies"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  buffs:
+    target: 2
+    priority_text: ["+1/+1", "/return .*? creature/", "until end of turn"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  utility:
+    target: 3
+    priority_text: ["treasure", "mill", "/return .*? creature/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["lifelink", "defender", "hexproof"]
+
+scoring_rules:
+  keyword_abilities:
+    flying: 1
+    menace: 2
+    hexproof: -5
+    deathtouch: 1
+    ward: 1
+
+  keyword_actions:
+    scry: 1
+    mill: 3
+    exile: 2
+    create: 2
+
+  ability_words:
+    exploit: 2
+    investigate: 2
+    disturb: 1
+
+  text_matches:
+    "mill two cards": 2
+    "return target creature card": 3
+    "when this creature dies": 1
+    "/zombie/": 2
+
+  type_bonus:
+    basic_types:
+      creature: 2
+    sub_types:
+      zombie: 3
+      horror: 2
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+
+  min_score_to_flag: 6
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "card_draw"]
+  allow_less_than_target: false

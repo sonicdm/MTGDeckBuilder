@@ -1,0 +1,118 @@
+deck:
+  name: "Cobra Kai: No Mercy"
+  colors: ["B", "R"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["standard"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 4
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Bloodthirsty Adversary"
+    min_copies: 2
+  - name: "Falkenrath Pit Fighter"
+    min_copies: 2
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer: ["add {r}", "add {b}", "fixing"]
+    avoid: ["enters tapped unless"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 26
+    preferred_keywords: ["haste", "menace", "first strike", "double strike"]
+    priority_text: ["when this creature attacks", "sacrifice a creature", "/strike/"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 6
+    priority_text: ["damage", "destroy", "/-x/-x/", "sacrifice another creature"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+
+  card_draw:
+    target: 2
+    priority_text: ["draw a card", "loot", "when this dies"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  buffs:
+    target: 4
+    priority_text: ["+x/+0", "until end of turn", "double strike"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  utility:
+    target: 2
+    priority_text: ["treasure", "scry", "return target creature card"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+  exclude_keywords: ["defender", "hexproof", "lifelink"]
+
+scoring_rules:
+  keyword_abilities:
+    haste: 2
+    menace: 2
+    double strike: 3
+    deathtouch: 1
+    flying: 1
+    hexproof: -5
+
+  keyword_actions:
+    scry: 1
+    fight: 2
+    exile: 3
+    create: 2
+
+  ability_words:
+    raid: 2
+    spectacle: 2
+
+  text_matches:
+    "mobilize": 3
+    "create a 1/1": 2
+    "when this creature attacks": 2
+    "+x/+0": 2
+    "sacrifice a creature": 2
+    "damage": 3
+    "double strike": 2
+    "/warrior/": 1
+    "strike": 1
+
+  type_bonus:
+    basic_types:
+      creature: 2
+    sub_types:
+      warrior: 2
+      human: 1
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 4
+    penalty_per_point: 1
+
+  min_score_to_flag: 6
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "buffs"]
+  allow_less_than_target: false
