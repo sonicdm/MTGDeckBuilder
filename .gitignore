@@ -5,6 +5,12 @@ __pycache__/
 
 # C extensions
 *.so
+# IDE files
+.vscode/
+.idea/
+.cursor/
+.cursorrules
+.cursorignore
 
 # Distribution / packaging
 .Python
@@ -55,6 +61,7 @@ mtg_deckbuilder_ui/ui.bak/
 !pyproject.toml
 !pytest.ini
 !Meta.json
+*.zip
 *.db
 *.sqlite
 *.sqlite3
