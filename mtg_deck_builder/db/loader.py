@@ -57,6 +57,10 @@ def load_inventory(session: Session, inventory_path: str) -> None:
         logger.error(f"Inventory file not found: {inventory_path}")
         return
 
+    # Wipe all inventory before import
+    session.query(InventoryItemDB).delete()
+    session.commit()
+
     with open(inventory_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
@@ -71,6 +75,5 @@ def load_inventory(session: Session, inventory_path: str) -> None:
             logger.warning(f"Invalid quantity in inventory file: {line.strip()}")
             continue
 
-        session.merge(InventoryItemDB(card_name=name, quantity=quantity, is_infinite=(name in {"Plains", "Island", "Swamp", "Mountain", "Forest"})))
-
+        session.merge(InventoryItemDB(card_name=name, quantity=quantity))
     session.commit()

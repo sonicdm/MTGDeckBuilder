@@ -74,6 +74,7 @@ class DeckMeta(BaseModel):
         allow_colorless: Whether colorless cards are allowed.
         legalities: List of legal formats.
         owned_cards_only: Restrict to owned cards.
+        commander: Optional commander for Commander format.
         mana_curve: Mana curve configuration.
     """
     name: Optional[str] = None
@@ -84,6 +85,7 @@ class DeckMeta(BaseModel):
     allow_colorless: bool = True
     legalities: List[str] = Field(default_factory=list)
     owned_cards_only: bool = True
+    commander: Optional[str] = None
     mana_curve: ManaCurveMeta = Field(default_factory=ManaCurveMeta)
 
     def model_dump(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
@@ -362,3 +364,8 @@ class DeckConfig(BaseModel):
     def allow_colorless(self) -> bool:
         """Get whether colorless cards are allowed."""
         return self.deck.allow_colorless
+
+    @property
+    def commander(self) -> Optional[str]:
+        """Get the commander of the deck."""
+        return self.deck.commander

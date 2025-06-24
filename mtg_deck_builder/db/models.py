@@ -866,13 +866,12 @@ class ImportLog(Base):
 
 class InventoryItemDB(Base):
     """
-    Represents an inventory item for a card, tracking quantity and infinite status.
+    Represents an inventory item for a card, tracking quantity.
     """
     __tablename__ = "inventory_items"
     
     card_name: Mapped[str] = mapped_column(String, primary_key=True)
     quantity: Mapped[int] = mapped_column(Integer, default=1)
-    is_infinite: Mapped[bool] = mapped_column(Boolean, default=False)
 
     def __repr__(self) -> str:
         return f"<InventoryItemDB(card='{self.card_name}', qty={self.quantity})>"

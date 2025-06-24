@@ -18,6 +18,7 @@ deck:
   allow_colorless: true
   legalities: ["alchemy"]
   owned_cards_only: true
+  commander: "Alesha, Who Smiles at Death"  # Optional: Commander for Commander format
   mana_curve:
     min: 1
     max: 5

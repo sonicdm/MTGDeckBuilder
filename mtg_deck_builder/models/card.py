@@ -37,14 +37,14 @@ class SetModel(BaseModel):
     # Add any other relevant fields...
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CardLegalityModel(BaseModel):
     uuid: str
     format: Optional[str]
     legality: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CardIdentifierModel(BaseModel):
     uuid: str
@@ -58,7 +58,7 @@ class CardIdentifierModel(BaseModel):
     scryfallOracleId: Optional[str]
     tcgplayerProductId: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CardPurchaseUrlModel(BaseModel):
     uuid: str
@@ -67,14 +67,14 @@ class CardPurchaseUrlModel(BaseModel):
     cardmarket: Optional[str]
     tcgplayer: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CardRulingModel(BaseModel):
     uuid: str
     date: Optional[str]
     text: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CardForeignDataModel(BaseModel):
     uuid: str
@@ -85,7 +85,7 @@ class CardForeignDataModel(BaseModel):
     text: Optional[str]
     type: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # --- Main Printing Model ---
 class Printing(BaseModel):
@@ -193,7 +193,7 @@ class Printing(BaseModel):
         return parse_text_dict(v)
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     def __repr__(self) -> str:
         return f"<Printing(name={self.name!r}, setCode={self.setCode!r})>"
@@ -202,7 +202,7 @@ class InventoryItem(BaseModel):
     name: str
     quantity: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class SummaryCard(BaseModel):
     name: str = ""
@@ -233,7 +233,6 @@ class SummaryCard(BaseModel):
 
     class Config:
         from_attributes = True
-        orm_mode = True
     
     def __repr__(self):
         return f"<SummaryCard(name={self.name!r}, color_identity={self.color_identity!r}, type={self.type!r})>"

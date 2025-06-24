@@ -14,6 +14,7 @@ from typing import Dict, Optional, Union, Callable, Any
 import json
 import time
 
+from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
 from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_yaml
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.repository import SummaryCardRepository
@@ -198,6 +199,7 @@ class DeckBuilder:
         """Build a deck from YAML configuration."""
         try:
             with get_session(db_url=f"sqlite:///{self.paths.db_path}") as session:
+                load_inventory_items(str(self.paths.inventory), session)
                 card_repo = SummaryCardRepository(session=session)
                 print(f"Total Cards in Repository: {len(card_repo.get_all_cards())}")
                 # inventory_repo = InventoryRepository(session)

@@ -437,15 +437,52 @@ class CardRepository(BaseRepository):
         Returns:
             List of matching MTGJSONCard objects
         """
+        logger = logging.getLogger(__name__)
+        logger.debug(f"Starting in-memory filtering with {len(cards)} cards")
         filtered = cards
+        if min_quantity > 0:
+            filtered = [c for c in filtered if getattr(c, 'quantity', 0) >= min_quantity]
+            logger.debug(f"Count after min_quantity: {len(filtered)}")
+        # Filter by type_query
+        if type_query:
+            logger.debug(f"In-memory: Filtering by type_query: {type_query}")
+            if filtered:
+                sample = filtered[0]
+                logger.debug(f"Sample types value: {sample}")
 
-        # Apply filters
+            if isinstance(type_query, list):
+                filtered = [card for card in filtered if any(card.matches_type(t) for t in type_query)]
+                logger.debug(f"Count after type_query list: {len(filtered)}")
+            else:
+                filtered = [c for c in filtered if c.matches_type(type_query)]
+                logger.debug(f"Count after type_query single: {len(filtered)}")
+
+            if not filtered:
+                all_types = set()   
+                for card in cards:
+                    all_types.update(card.types_list)
+                logger.debug(f"All types in memory: {sorted(all_types)}")
+                land_cards = [c for c in cards if 'Land' in c.types_list]
+                logger.debug(f"Found {len(land_cards)} land cards in memory")
+                if land_cards:
+                    logger.debug(f"Sample land card types: {land_cards[0].types_list}")
+
+        # Filter by name
         if name_query:
-            filtered = [c for c in filtered if isinstance(c.name, str) and name_query.lower() in c.name.lower()]
+            filtered = [c for c in filtered if name_query.lower() in c.name.lower()]
+            logger.debug(f"Count after name_query: {len(filtered)}")
+
+        # Filter by text
         if text_query:
-            filtered = [c for c in filtered if isinstance(getattr(c, 'text', None), str) and text_query.lower() in c.text.lower()]
+            filtered = [c for c in filtered if text_query.lower() in c.text.lower()]
+            logger.debug(f"Count after text_query: {len(filtered)}")
+
+        # Filter by rarity
         if rarity:
             filtered = [c for c in filtered if isinstance(getattr(c, 'rarity', None), str) and c.rarity == rarity]
+            logger.debug(f"Count after rarity: {len(filtered)}")
+
+        # Filter by basic type
         if basic_type:
             logger.debug(f"Applying basic_type filter: {basic_type}")
             if isinstance(basic_type, str):
@@ -498,31 +535,13 @@ class CardRepository(BaseRepository):
             elif color_mode == "any":
                 filtered = [c for c in filtered if set(c.color_identity_list) & set(color_identity)]
 
-        # Legalities filtering
+        # Filter by legalities
         if legal_in:
-            if isinstance(legal_in, str):
-                legal_in = [legal_in]
-            logger.debug(f"Filtering by legalities: {legal_in}")
-            before = len(filtered)
-            
-            # Debug a sample card's legalities
-            if filtered:
-                sample = filtered[0]
-                logger.debug(f"Sample card legalities: {getattr(sample, 'legalities', None)}")
-            
             filtered = [
                 c for c in filtered
-                if isinstance(getattr(c, 'legalities', None), (dict, str)) and (
-                    # Handle both dict and string JSON formats
-                    (isinstance(c.legalities, dict) and any(
-                        c.legalities.get(fmt, '').lower() == 'legal' for fmt in legal_in
-                    )) or
-                    (isinstance(c.legalities, str) and any(
-                        f'"{fmt}":"legal"' in c.legalities.lower() for fmt in legal_in
-                    ))
-                )
+                if c.is_legal_in(legal_in)
             ]
-            logger.debug(f"Cards after legalities filter: {len(filtered)} (before: {before})")
+            logger.debug(f"Count after legalities: {len(filtered)}")
 
         # Inventory quantity filtering
         if min_quantity > 0:
@@ -740,6 +759,8 @@ class SummaryCardRepository(BaseRepository):
                 keyword_multi=keyword_multi,
                 type_query=type_query,
                 color_identity=color_identity,
+                color_mode=color_mode,
+                legal_in=legal_in,
                 add_where=add_where,
                 exclude_type=exclude_type,
                 names_in=names_in,
@@ -823,7 +844,7 @@ class SummaryCardRepository(BaseRepository):
         logger.debug(f"Starting in-memory filtering with {len(cards)} cards")
         filtered = cards
         if min_quantity > 0:
-            filtered = [c for c in filtered if c.quantity >= min_quantity]
+            filtered = [c for c in filtered if getattr(c, 'quantity', 0) >= min_quantity]
             logger.debug(f"Count after min_quantity: {len(filtered)}")
         # Filter by type_query
         if type_query:
@@ -915,7 +936,7 @@ class SummaryCardRepository(BaseRepository):
         if legal_in:
             filtered = [
                 c for c in filtered
-                if any(legal.lower() in (getattr(c, 'legalities', '') or '').lower() for legal in legal_in)
+                if c.is_legal_in(legal_in)
             ]
             logger.debug(f"Count after legalities: {len(filtered)}")
 
@@ -953,9 +974,19 @@ class SummaryCardRepository(BaseRepository):
         """Filter cards using SQL queries."""
         logger = logging.getLogger(__name__)
         
-        # Initialize base query
-        base_query = self.session.query(MTGJSONSummaryCard)
-        logger.debug("Starting SQLAlchemy query for summary cards")
+        # Initialize base query with eager loading of inventory_item
+        from sqlalchemy.orm import joinedload
+        base_query = self.session.query(MTGJSONSummaryCard).options(
+            joinedload(MTGJSONSummaryCard.inventory_item)
+        )
+        logger.debug("Starting SQLAlchemy query for summary cards with eager loading")
+
+        # Handle min_quantity filter by joining with inventory table
+        if min_quantity > 0:
+            from mtg_deck_builder.db.mtgjson_models.inventory import InventoryItem
+            base_query = base_query.join(InventoryItem, InventoryItem.card_name == MTGJSONSummaryCard.name)
+            base_query = base_query.filter(InventoryItem.quantity >= min_quantity)
+            logger.debug(f"SQL: Joined with inventory and filtered for quantity >= {min_quantity}")
 
         # Log initial query state
         initial_count = base_query.count()
@@ -1170,10 +1201,11 @@ class SummaryCardRepository(BaseRepository):
                 logger.debug(f"Cards after post-query colorless filter: {len(cards)} (before: {before})")
 
         # Inventory quantity filtering (in-memory only)
-        if min_quantity > 0:
-            before = len(cards)
-            cards = [c for c in cards if getattr(c, 'owned_qty', 0) >= min_quantity]
-            logger.debug(f"Cards after min_quantity filter: {len(cards)} (before: {before})")
+        # Note: min_quantity is now handled in SQL with inventory join above
+        # if min_quantity > 0:
+        #     before = len(cards)
+        #     cards = [c for c in cards if getattr(c, 'owned_qty', 0) >= min_quantity]
+        #     logger.debug(f"Cards after min_quantity filter: {len(cards)} (before: {before})")
 
         logger.debug(f"Returning {len(cards)} cards after all filters (SQL)")
         return cards

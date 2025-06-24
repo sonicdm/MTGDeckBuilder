@@ -66,10 +66,17 @@ class DeckAnalyzer:
     def deck_color_identity(self) -> Set[str]:
         color_set = set()
         for card in self.deck.cards.values():
-            if getattr(card, "colors", None):
-                color_set.update(card.colors)
+            # First try to get colors from the colors field
+            colors = getattr(card, "colors", None)
+            if colors and isinstance(colors, (list, tuple)):
+                color_set.update(colors)
             else:
-                color_set.add("C")
+                # If colors is empty, try color_identity (for dual lands)
+                color_identity = getattr(card, "color_identity", None)
+                if color_identity and isinstance(color_identity, (list, tuple)):
+                    color_set.update(color_identity)
+                else:
+                    color_set.add("C")
         if len(color_set) > 1 and "C" in color_set:
             color_set.remove("C")
         return color_set
@@ -77,19 +84,29 @@ class DeckAnalyzer:
     def color_balance(self) -> Dict[str, int]:
         color_counts: Dict[str, int] = {}
         for card in self.deck.cards.values():
-            qty = getattr(card, "owned_qty", 1)
-            if getattr(card, "colors", None):
-                for col in card.colors:
+            qty = self.deck.get_quantity(card.name)
+            
+            # First try to get colors from the colors field
+            colors = getattr(card, "colors", None)
+            if colors and isinstance(colors, (list, tuple)):
+                for col in colors:
                     color_counts[col] = color_counts.get(col, 0) + qty
             else:
-                color_counts["C"] = color_counts.get("C", 0) + qty
+                # If colors is empty, try color_identity (for dual lands)
+                color_identity = getattr(card, "color_identity", None)
+                if color_identity and isinstance(color_identity, (list, tuple)):
+                    for col in color_identity:
+                        color_counts[col] = color_counts.get(col, 0) + qty
+                else:
+                    # If both are empty, count as colorless
+                    color_counts["C"] = color_counts.get("C", 0) + qty
         return color_counts
 
     def count_mana_ramp(self) -> int:
         ramp_count = 0
         for card in self.deck.cards.values():
             text = (getattr(card, "text", "") or "").lower()
-            qty = getattr(card, "owned_qty", 1)
+            qty = self.deck.get_quantity(card.name)
             if any(phrase in text for phrase in [
                 "search your library for a land", "add {", "add one mana", "add two mana",
                 "add three mana", "create a treasure", "create a powerstone", "create one mana",
@@ -114,39 +131,42 @@ class DeckAnalyzer:
             for t in card_types:
                 # Only count if t is a string
                 if isinstance(t, str):
-                    type_counts[t] += self.deck.get_quantity(t)
+                    type_counts[t] += self.deck.get_quantity(card.name)
         return type_counts
 
     def synergy_score(self) -> float:
         if not self.deck.cards:
             return 0.0
         creature_types = set()
-        for card in self.deck.cards.values():
-            if card.matches_type("creature"):
-                type_line = getattr(card, "type", "").lower()
-                if " - " in type_line:
-                    subtypes = type_line.split(" - ")[1].split()
-                    for t in subtypes:
-                        if t in self._ALL_CREATURE_TYPES:
-                            creature_types.add(t)
+        if self._ALL_CREATURE_TYPES:
+            for card in self.deck.cards.values():
+                if card.matches_type("creature"):
+                    type_line = getattr(card, "type", "").lower()
+                    if " - " in type_line:
+                        subtypes = type_line.split(" - ")[1].split()
+                        for t in subtypes:
+                            if t in self._ALL_CREATURE_TYPES:
+                                creature_types.add(t)
         type_synergy_count = 0
         for card in self.deck.cards.values():
             text = (getattr(card, "text", "") or "").lower()
             for creature_type in creature_types:
                 if creature_type in text:
-                    type_synergy_count += getattr(card, "owned_qty", 1)
+                    type_synergy_count += self.deck.get_quantity(card.name)
         keywords = {}
-        for card in self.deck.cards.values():
-            text = (getattr(card, "text", "") or "").lower()
-            for keyword in self._ALL_KEYWORDS:
-                if keyword in text:
-                    keywords[keyword] = keywords.get(keyword, 0) + getattr(card, "owned_qty", 1)
+        if self._ALL_KEYWORDS:
+            for card in self.deck.cards.values():
+                text = (getattr(card, "text", "") or "").lower()
+                for keyword in self._ALL_KEYWORDS:
+                    if keyword in text:
+                        keywords[keyword] = keywords.get(keyword, 0) + self.deck.get_quantity(card.name)
         keyword_synergy_count = 0
-        for card in self.deck.cards.values():
-            text = (getattr(card, "text", "") or "").lower()
-            for keyword, count in keywords.items():
-                if count > 1 and keyword in text and f"with {keyword}" in text:
-                    keyword_synergy_count += getattr(card, "owned_qty", 1)
+        if self._ALL_KEYWORDS:
+            for card in self.deck.cards.values():
+                text = (getattr(card, "text", "") or "").lower()
+                for keyword, count in keywords.items():
+                    if count > 1 and keyword in text and f"with {keyword}" in text:
+                        keyword_synergy_count += self.deck.get_quantity(card.name)
         total_cards = self.deck.size()
         synergy_percentage = (type_synergy_count + keyword_synergy_count) / total_cards if total_cards else 0.0
         return min(10.0, synergy_percentage * 10)
@@ -173,7 +193,7 @@ class DeckAnalyzer:
                 continue
             cmc = getattr(card, "converted_mana_cost", 0) or 0
             cmc = 7 if cmc >= 7 else cmc
-            cmc_counts[cmc] = cmc_counts.get(cmc, 0) + getattr(card, "owned_qty", 1)
+            cmc_counts[cmc] = cmc_counts.get(cmc, 0) + self.deck.get_quantity(card.name)
         return cmc_counts
 
     def power_toughness_curve(self) -> dict:
@@ -184,19 +204,21 @@ class DeckAnalyzer:
                     power = float(getattr(card, "power", 0) or 0)
                     toughness = float(getattr(card, "toughness", 0) or 0)
                     key = (power, toughness)
-                    pt_counts[key] = pt_counts.get(key, 0) + getattr(card, "owned_qty", 1)
+                    pt_counts[key] = pt_counts.get(key, 0) + self.deck.get_quantity(card.name)
                 except Exception:
                     continue
         return pt_counts
 
     def keyword_summary(self) -> Dict[str, int]:
         keywords = self._ALL_KEYWORDS
+        if not keywords:
+            return {}
         summary = {k: 0 for k in keywords}
         for card in self.deck.cards.values():
             text = (getattr(card, "text", "") or "").lower()
             for k in keywords:
                 if k in text:
-                    summary[k] += getattr(card, "owned_qty", 1)
+                    summary[k] += self.deck.get_quantity(card.name)
         return {k: v for k, v in summary.items() if v > 0}
 
     def count_keywords(self, keyword: str) -> int:
@@ -205,7 +227,7 @@ class DeckAnalyzer:
         for card in self.deck.cards.values():
             text = (getattr(card, "text", "") or "").lower()
             if keyword in text:
-                count += getattr(card, "owned_qty", 1)
+                count += self.deck.get_quantity(card.name)
         return count
 
     def _stringify_keys(self, d: Dict[Any, Any]) -> Dict[str, Any]:
@@ -227,7 +249,7 @@ class DeckAnalyzer:
         rarity_breakdown = {}
         for card in self.deck.cards.values():
             rarity = getattr(card, "rarity", "Common")
-            rarity_breakdown[rarity] = rarity_breakdown.get(rarity, 0) + getattr(card, "owned_qty", 1)
+            rarity_breakdown[rarity] = rarity_breakdown.get(rarity, 0) + self.deck.get_quantity(card.name)
         keyword_counts = self.keyword_summary()
         frequent_keywords = []
         if keyword_counts:
