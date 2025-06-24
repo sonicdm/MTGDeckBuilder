@@ -244,6 +244,6 @@ class Deck:
             if card:
                 cards_dict[card.name] = card
         
-        deck._cards = cards_dict
+        deck.cards = cards_dict
         return deck
 

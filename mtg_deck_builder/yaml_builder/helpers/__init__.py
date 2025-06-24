@@ -26,7 +26,7 @@ from .deck_building import (
 )
 from .fallback import _handle_fallback_strategy
 from .mana_curve import generate_target_curve
-from .validation import _check_color_identity, _check_legalities, _check_ownership
+from .validation import _check_color_identity, _check_ownership
 
 __all__ = [
     "score_card",
@@ -43,6 +43,5 @@ __all__ = [
     "_handle_fallback_strategy",
     "generate_target_curve",
     "_check_color_identity",
-    "_check_legalities",
     "_check_ownership",
 ]

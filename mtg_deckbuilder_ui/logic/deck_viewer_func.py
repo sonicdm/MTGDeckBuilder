@@ -397,24 +397,78 @@ def on_load_deck(
         return tuple(gr.update() for _ in range(12))
 
 
-def on_import_arena(arena_text: str) -> Tuple[gr.update, gr.update]:
+def on_import_arena(arena_text: str, selected_columns: List[str]) -> Tuple[gr.update, gr.update]:
     """Handle Arena deck import.
 
     Args:
         arena_text: Text content from Arena export
+        selected_columns: List of columns to display
 
     Returns:
-        Tuple[gr.update, gr.update]: Updates for status and deck components
+        Tuple[gr.update, gr.update]: Updates for card table and deck state
     """
     try:
-        if not arena_text:
+        if not arena_text or not arena_text.strip():
             return gr.update(value="No text provided"), gr.update()
 
-        # TODO: Implement Arena import
-        return gr.update(value="Arena import not implemented yet"), gr.update()
+        # Import the Arena modules
+        from mtg_deck_builder.utils.arena_parser import validate_arena_import
+        from mtg_deck_builder.utils.arena_deck_creator import create_deck_from_arena_import
+        from mtg_deck_builder.models.deck_exporter import DeckExporter
+        
+        # Validate the Arena import first
+        is_valid, errors = validate_arena_import(arena_text)
+        if not is_valid:
+            error_msg = "Arena import validation failed:\n" + "\n".join(errors)
+            logger.warning(error_msg)
+            return gr.update(value=error_msg), gr.update()
+        
+        # Create deck from Arena import
+        deck = create_deck_from_arena_import(arena_text, "Imported Arena Deck")
+        if not deck:
+            error_msg = "Failed to create deck from Arena import. Check that all cards exist in the database."
+            logger.error(error_msg)
+            return gr.update(value=error_msg), gr.update()
+        
+        # Create DataFrame for display using DeckExporter
+        exporter = DeckExporter(deck)
+        df = exporter.to_dataframe()
+        
+        # Filter columns if specified
+        if selected_columns:
+            # Map column names to match the exporter's format
+            column_mapping = {
+                "name": "Name",
+                "type": "Card Type", 
+                "mana_cost": "Mana Cost",
+                "cmc": "Converted Mana Cost",
+                "colors": "Colors",
+                "rarity": "Rarity",
+                "quantity": "Quantity",
+                "power": "Power",
+                "toughness": "Toughness",
+                "text": "Text"
+            }
+            available_columns = [column_mapping.get(col, col) for col in selected_columns]
+            available_columns = [col for col in available_columns if col in df.columns]
+            if available_columns:
+                df = df[available_columns]
+        
+        # Create deck state for saving
+        deck_state = {
+            "name": deck.name,
+            "cards": deck.to_dict(),
+            "config": None  # Arena imports don't have config
+        }
+        
+        logger.info(f"Successfully imported Arena deck: {deck.name} with {len(df)} cards")
+        
+        return gr.update(value=df), gr.update(value=deck_state)
+        
     except Exception as e:
-        logger.error(f"Error importing Arena deck: {e}")
-        return gr.update(value=f"Error: {str(e)}"), gr.update()
+        error_msg = f"Error importing Arena deck: {str(e)}"
+        logger.error(error_msg, exc_info=True)
+        return gr.update(value=error_msg), gr.update()
 
 
 def export_arena(deck_data: Dict[str, Any]) -> str:
@@ -427,8 +481,24 @@ def export_arena(deck_data: Dict[str, Any]) -> str:
         Arena format string
     """
     try:
-        # TODO: Implement Arena export
-        return "Arena export not implemented yet"
+        if not deck_data:
+            return "No deck data provided"
+        
+        # Import the Arena exporter
+        from mtg_deck_builder.models.deck_exporter import DeckExporter
+        
+        # Create deck from data if needed
+        if isinstance(deck_data, dict) and "cards" in deck_data:
+            # This is already deck data, create exporter
+            deck = Deck.from_dict(deck_data, session=None)  # We don't need session for export
+            exporter = DeckExporter(deck)
+        else:
+            return "Invalid deck data format"
+        
+        # Export to Arena format
+        arena_export = exporter.mtg_arena_import()
+        return arena_export
+        
     except Exception as e:
-        logger.error(f"Error exporting to Arena: {e}")
+        logger.error(f"Error exporting to Arena: {e}", exc_info=True)
         return f"Error: {str(e)}"

@@ -87,21 +87,28 @@ def build_deck_from_config(
         logger.info("[BuildPhase] Step 4: Computing mana symbol distribution")
         _compute_mana_symbols(build_context)
         
-        # Step 5: Calculate available slots for non-land cards
+        # Step 5: Calculate available slots for non-land cards (after priority cards)
+        current_cards = build_context.deck_build_context.get_total_cards() if build_context.deck_build_context else 0
         if build_context.mana_base and hasattr(build_context.mana_base, 'land_count'):
             target_lands = build_context.mana_base.land_count
-            available_slots = deck_config.deck.size - target_lands
+            available_slots = deck_config.deck.size - target_lands - current_cards
         else:
             target_lands = 0
-            available_slots = deck_config.deck.size
+            available_slots = deck_config.deck.size - current_cards
             
+        logger.info(f"Available slots for categories: {available_slots} (deck size: {deck_config.deck.size}, target lands: {target_lands}, current cards: {current_cards})")
+        
         # Step 6: Fill category roles with available slots
         logger.info("[BuildPhase] Step 6: Filling category roles")
         if build_context.deck_build_context:
             logger.info(f"Before categories: {build_context.deck_build_context.get_total_cards()} cards")
         _fill_categories(build_context, available_slots)
         if build_context.deck_build_context:
-            logger.info(f"After categories: {build_context.deck_build_context.get_total_cards()} cards")
+            logger.info(
+                f"After categories: {build_context.deck_build_context.get_total_cards()} cards"
+            )
+            # Recompute mana symbols based on filled categories
+            _compute_mana_symbols(build_context)
 
         # Step 7: Add special lands
         logger.info("[BuildPhase] Step 7: Adding special lands")
@@ -110,7 +117,11 @@ def build_deck_from_config(
         if build_context.mana_base and build_context.mana_base.special_lands:
             _handle_special_lands(build_context)
         if build_context.deck_build_context:
-            logger.info(f"After special lands: {build_context.deck_build_context.get_total_cards()} cards")
+            logger.info(
+                f"After special lands: {build_context.deck_build_context.get_total_cards()} cards"
+            )
+            # Recompute mana symbols after special lands (no mana cost but updates context)
+            _compute_mana_symbols(build_context)
             
         # Step 8: Add basic lands
         logger.info("[BuildPhase] Step 8: Adding basic lands")

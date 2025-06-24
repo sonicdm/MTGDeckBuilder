@@ -60,8 +60,6 @@ def test_load_inventory_valid(tmp_path):
     names = {i.card_name for i in items}
     assert "Lightning Bolt" in names
     assert "Plains" in names
-    plains = [i for i in items if i.card_name == "Plains"][0]
-    assert plains.is_infinite is True
     session.close()
 
 def test_load_inventory_missing_file(tmp_path, capsys):

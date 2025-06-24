@@ -126,6 +126,10 @@ def _fill_categories(build_context: BuildContext, available_slots: int) -> None:
             card = scored_card.card
             if card.name in context.used_cards:
                 continue
+                
+            # Skip land cards for all categories (lands are handled by mana base)
+            if hasattr(card, "types") and "Land" in (card.types or []):
+                continue
             for card_type, weight in card_category_weights.items():
                 if card.matches_type(card_type):
                     scored_card.increase_score(
@@ -192,10 +196,12 @@ def _fill_categories(build_context: BuildContext, available_slots: int) -> None:
                     deck_config.deck.max_card_copies,  # Max copies per card
                     category.target - added_count,  # Remaining category target
                     category_free_slots,  # Available deck slots
+                    getattr(scored_card.card, 'quantity', 0),  # Quantity owned - use owned_qty for consistency
                 )
 
             if max_copies > 0:
                 # Add the card
+                logging.debug(f"Adding card: {scored_card.card.name} (score: {scored_card.score:.1f}) QTY OWNED: {scored_card.card.quantity}")
                 success = context.add_card(
                     scored_card.card,
                     f"Category: {category_name} (score: {scored_card.score:.1f})",

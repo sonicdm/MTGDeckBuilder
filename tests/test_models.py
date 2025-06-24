@@ -36,11 +36,10 @@ def test_card_db_properties():
 
 def test_inventory_item_db():
     session = setup_in_memory_db()
-    inv = InventoryItemDB(card_name='Test Card', quantity=3, is_infinite=True)
+    inv = InventoryItemDB(card_name='Test Card', quantity=3)
     session.add(inv)
     session.commit()
     item = session.query(InventoryItemDB).first()
     assert item.card_name == 'Test Card'
     assert item.quantity == 3
-    assert item.is_infinite
 

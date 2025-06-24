@@ -231,28 +231,6 @@ def _check_color_identity(
         return card_colors.issuperset(deck_colors)
 
 
-def _check_legalities(
-    card: MTGJSONSummaryCard,
-    legalities: List[str],
-) -> bool:
-    """Check if a card is legal in all specified formats.
-
-    Args:
-        card: Card to check
-        legalities: List of formats to check legality in
-
-    Returns:
-        True if card is legal in all specified formats
-    """
-    card_legalities = getattr(card, "legalities", {}) or {}
-    if not card_legalities:
-        return False
-    for format_name in legalities:
-        if card_legalities.get(format_name, None) != "Legal":
-            return False
-    return True
-
-
 def _check_ownership(
     card: MTGJSONSummaryCard,
 ) -> bool:

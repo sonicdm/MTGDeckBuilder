@@ -67,10 +67,12 @@ mtg_deckbuilder_ui/ui.bak/
 *.sqlite3
 MTG_json_files/
 data/
-db/
-inventory/
 inventory_files/
 generated_decks/
 logs/
 temp_test_config_dir/
 config.bak/
+alembic.ini
+inventory_export.csv
+alembic/
+db/schema.pdf

@@ -64,6 +64,14 @@ class LandStub:
     def is_basic_land(self) -> bool:
         """Check if this is a basic land."""
         return True
+    def is_land(self) -> bool:
+        """Check if this is a land."""
+        return True
+    
+    @property
+    def types(self) -> List[str]:
+        """Get the types of the land."""
+        return ["Land"]
 
 @dataclass
 class ContextCard:
@@ -156,8 +164,28 @@ class DeckBuildContext:
         """
         # Check if card is already in deck
         card_name = str(getattr(card, 'name', ''))
-        if not card_name or card_name in self.used_cards:
+        if not card_name:
             return False
+            
+        # Check singleton rule (except for basic lands)
+        is_basic_land = getattr(card, 'is_basic_land', lambda: False)()
+        if not is_basic_land and card_name in self.used_cards:
+            return False
+            
+        # For basic lands, allow multiple copies even in singleton formats
+        if is_basic_land:
+            existing_card = None
+            for context_card in self.cards:
+                if context_card.name == card_name:
+                    existing_card = context_card
+                    break
+            
+            if existing_card:
+                # Increment quantity of existing basic land
+                existing_card.quantity += quantity
+                self.deck.insert_card(card, quantity)
+                self.log(f"Incremented {card_name} quantity to {existing_card.quantity} ({reason})")
+                return True
             
         # Create context card
         context_card = ContextCard(
@@ -172,7 +200,8 @@ class DeckBuildContext:
         
         # Add to context
         self.cards.append(context_card)
-        self.used_cards.add(card_name)
+        if not is_basic_land:
+            self.used_cards.add(card_name)
         
         # Log operation
         self.log(f"Added {quantity}x {card_name} ({reason})")
@@ -284,8 +313,30 @@ class DeckBuildContext:
         """Add a land card to the deck."""
         # Check if card is already in deck
         card_name = str(getattr(card, 'name', ''))
-        if not card_name or card_name in self.used_cards:
+        if not card_name:
             return False
+            
+        # For basic lands, allow multiple copies even in singleton formats
+        is_basic_land = getattr(card, 'is_basic_land', lambda: False)()
+        if is_basic_land:
+            # Basic lands can have multiple copies
+            existing_card = None
+            for context_card in self.cards:
+                if context_card.name == card_name:
+                    existing_card = context_card
+                    break
+            
+            if existing_card:
+                # Increment quantity of existing basic land
+                existing_card.quantity += quantity
+                self.deck.insert_card(card, quantity)
+                self.land_count += quantity
+                self.log(f"Incremented {card_name} quantity to {existing_card.quantity} ({reason})")
+                return True
+        else:
+            # Non-basic lands follow singleton rule
+            if card_name in self.used_cards:
+                return False
             
         # Create context card
         context_card = ContextCard(
@@ -300,7 +351,8 @@ class DeckBuildContext:
         
         # Add to context
         self.cards.append(context_card)
-        self.used_cards.add(card_name)
+        if not is_basic_land:
+            self.used_cards.add(card_name)
         
         # Update land count
         self.land_count += quantity
@@ -313,7 +365,19 @@ class DeckBuildContext:
         
     def get_land_count(self) -> int:
         """Get the number of land cards in the deck."""
-        return self.land_count
+        # Count lands by checking actual card types, not just the tracked count
+        land_count = 0
+        for card in self.cards:
+            # Check if it's a land by using the appropriate method/attribute
+            try:
+                if hasattr(card.card, 'matches_type') and card.card.is_land():
+                    land_count += card.quantity
+                elif hasattr(card.card, 'types') and 'Land' in (card.card.types or []):
+                    land_count += card.quantity
+            except (AttributeError, TypeError):
+                # Skip cards that don't have the expected attributes
+                continue
+        return land_count
     
     def get_land_cards(self) -> List[ContextCard]:
         """Get the land cards in the deck."""

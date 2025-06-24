@@ -84,6 +84,8 @@ def import_inventory_file(
     """
     if db_path is None:
         db_path = app_config.get("Paths", "database")
+        if db_path is None:
+            db_path = ""
     engine = create_engine(f"sqlite:///{db_path}")
 
     # Ensure tables exist before trying to import
@@ -91,6 +93,10 @@ def import_inventory_file(
 
     Session = sessionmaker(bind=engine)
     session = Session()
+
+    # Wipe all inventory before import
+    session.query(InventoryItemDB).delete()
+    session.commit()
 
     def run():
         print(
@@ -141,7 +147,7 @@ def import_inventory_file(
                         session.add(card_db)
                     card_db_objs[card_name] = card_db
                 inventory_data.append(
-                    {"card_name": card_name, "quantity": qty, "is_infinite": False}
+                    {"card_name": card_name, "quantity": qty}
                 )
                 if progress_callback and total_lines > 0 and idx % 100 == 0:
                     progress_callback(
@@ -175,8 +181,7 @@ def import_inventory_file(
             inv_objs = [
                 InventoryItemDB(
                     card_name=item["card_name"],
-                    quantity=item["quantity"],
-                    is_infinite=item["is_infinite"],
+                    quantity=item["quantity"]
                 )
                 for item in inventory_data
             ]

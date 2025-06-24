@@ -20,7 +20,7 @@ def populate_sample_data(session):
     card1.printings.append(printing1)
     session.add_all([set1, card1, printing1])
     session.commit()
-    inv = InventoryItemDB(card_name='Test Card', quantity=2, is_infinite=False)
+    inv = InventoryItemDB(card_name='Test Card', quantity=2)
     session.add(inv)
     session.commit()
 
@@ -187,7 +187,7 @@ def setup_filterable_cards(session):
         session.add(printing)
 
         # Add inventory items as well
-        inv = InventoryItemDB(card_name=card_data['name'], quantity=3, is_infinite=False)
+        inv = InventoryItemDB(card_name=card_data['name'], quantity=3)
         session.add(inv)
 
     session.commit()
@@ -401,7 +401,7 @@ def test_min_quantity_filter():
     session.add(limited_printing)
 
     # Add inventory item with only 1 copy
-    inv = InventoryItemDB(card_name='Limited Card', quantity=1, is_infinite=False)
+    inv = InventoryItemDB(card_name='Limited Card', quantity=1)
     session.add(inv)
     session.commit()
 
