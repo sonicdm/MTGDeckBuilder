@@ -6,7 +6,8 @@
 import logging
 
 # Local application imports
-from mtg_deck_builder.db import CardRepository, get_session
+from mtg_deck_builder.db.repository import SummaryCardRepository
+from mtg_deck_builder.db import get_session
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 def load_library():
     """Load all cards from the library."""
     with get_session() as session:
-        card_repo = CardRepository(session=session)
+        card_repo = SummaryCardRepository(session=session)
         return card_repo.get_all_cards()
 
 

@@ -1,23 +1,23 @@
 # mtg_deckbuilder_ui/ui/ui_objects.py
 
-from typing import Dict, Any, Optional, List, Union, Type, get_type_hints, Callable
+from typing import Dict, Any, Optional, List, Union, Type, get_type_hints, Callable, cast
 import gradio as gr
+import gradio.components as grc
 import re
 import yaml
 from mtg_deck_builder.models.deck_config import DeckConfig
 from abc import ABC, abstractmethod
 
-
 class UIBase(ABC):
     @abstractmethod
-    def get_components(self) -> Dict[str, gr.components.Component]:
+    def get_components(self) -> Dict[str, grc.Component]:
         """
         Return a dictionary of all components in this UI object.
         Should be overridden by subclasses.
         """
         raise NotImplementedError
 
-    def get_component_map(self) -> Dict[str, gr.components.Component]:
+    def get_component_map(self) -> Dict[str, grc.Component]:
         """
         Alias for get_components for compatibility.
         """
@@ -38,20 +38,20 @@ class UIElement(UIBase):
     """
 
     def __init__(
-        self, name: str, component_factory: Callable[[], gr.components.Component]
+        self, name: str, component_factory: Callable[[], grc.Component]
     ):
         self.name = name
         self._component_factory = component_factory
-        self._component = None
+        self._component: Optional[grc.Component] = None
         self.sanitizers: List[Callable[[Any], Any]] = []
 
-    def get_component(self) -> gr.components.Component:
+    def get_component(self) -> Optional[grc.Component]:
         return self._component
 
     def get_name(self) -> str:
         return self.name
 
-    def set_state(self, value: Any) -> gr.update:
+    def set_state(self, value: Any) -> Dict[str, Any]:
         """
         Return a Gradio update object for setting the component's value in a callback.
         """
@@ -160,11 +160,27 @@ class UIElement(UIBase):
 
         self.add_sanitizer(sanitize_regex)
 
-    def get_components(self) -> Dict[str, gr.components.Component]:
+    def get_components(self) -> Dict[str, grc.Component]:
         """
         Return a dictionary of all components in this element.
         """
-        return {self.get_name(): self.get_component()}
+        component = self.get_component()
+        if component:
+            return {self.get_name(): component}
+        return {}
+
+    @property
+    def component(self) -> grc.Component:
+        """Direct access to the underlying Gradio component (after render)."""
+        if self._component is None:
+            raise AttributeError("Component has not been rendered yet.")
+        return cast(grc.Component, self._component)
+
+    def __getattr__(self, item):
+        # Proxy attribute access to the underlying Gradio component
+        if self._component is not None:
+            return getattr(self._component, item)
+        raise AttributeError(f"'UIElement' has no attribute '{item}' and no component is rendered yet.")
 
 
 class UIContainer(UIBase):
@@ -209,7 +225,7 @@ class UIContainer(UIBase):
         else:
             raise ValueError(f"Unsupported layout type: {self.layout_type}")
 
-    def get_components(self) -> Dict[str, gr.components.Component]:
+    def get_components(self) -> Dict[str, grc.Component]:
         """
         Return a dictionary of all components in this container.
         """
@@ -242,18 +258,20 @@ class UISection(UIBase):
     def get_element(self, name: str) -> Optional[UIElement]:
         return self.elements.get(name)
 
-    def get_components(self) -> Dict[str, gr.components.Component]:
+    def get_components(self) -> Dict[str, grc.Component]:
         """
         Return a dictionary of all components in this section.
         """
         components = {}
-        if self.layout:
-            components.update(self.layout.get_components())
-
         for element in self.elements.values():
             components.update(element.get_components())
-
         return components
+
+    def get_elements(self) -> Dict[str, "UIElement"]:
+        """
+        Return a dictionary of all UIElements in this section.
+        """
+        return self.elements.copy()
 
     def get_state(self, values: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -265,7 +283,7 @@ class UISection(UIBase):
             if k in self.elements
         }
 
-    def set_state(self, state: Dict[str, Any]) -> Dict[str, gr.update]:
+    def set_state(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """
         Returns Gradio update objects for components in this section.
         """
@@ -306,8 +324,13 @@ class UITab(UIBase):
     Represents a Gradio tab composed of multiple UISections.
     """
 
-    def __init__(self, tab_name: str):
+    def __init__(
+        self,
+        tab_name: str,
+        on_render_wiring: Optional[Callable[["UITab"], None]] = None,
+    ):
         self.tab_name = tab_name
+        self.on_render_wiring = on_render_wiring
         self.sections: Dict[str, UISection] = {}
         self.validators: Dict[str, Callable[[Any], bool]] = {}
         self.error_messages: Dict[str, str] = {}
@@ -330,7 +353,7 @@ class UITab(UIBase):
                 return section.elements[name]
         return None
 
-    def get_components(self) -> Dict[str, gr.components.Component]:
+    def get_components(self) -> Dict[str, grc.Component]:
         """
         Flatten all components from all sections for easy wiring.
         """
@@ -338,6 +361,15 @@ class UITab(UIBase):
         for section in self.sections.values():
             components.update(section.get_components())
         return components
+
+    def get_elements(self) -> Dict[str, "UIElement"]:
+        """
+        Return a dictionary of all UIElements in this tab.
+        """
+        elements = {}
+        for section in self.sections.values():
+            elements.update(section.get_elements())
+        return elements
 
     def get_state(self, inputs: Dict[str, Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
         """
@@ -354,7 +386,7 @@ class UITab(UIBase):
 
     def set_state(
         self, state: Dict[str, Dict[str, Any]]
-    ) -> Dict[str, Dict[str, gr.update]]:
+    ) -> Dict[str, Dict[str, Any]]:
         """
         Return update objects for all sections given a nested state dict.
 
@@ -364,7 +396,7 @@ class UITab(UIBase):
         Returns:
             A dictionary mapping section names to their update dictionaries.
         """
-        updates: Dict[str, Dict[str, gr.update]] = {}
+        updates: Dict[str, Dict[str, Any]] = {}
         for name, values in state.items():
             section = self.sections.get(name)
             if section is not None:
@@ -431,18 +463,20 @@ class UITab(UIBase):
         Returns:
             Sanitized values dictionary
         """
-        sanitized = {}
+        sanitized_values = {}
         for name, value in values.items():
             element = self.get_element(name)
             if element and hasattr(element, "sanitize"):
-                sanitized[name] = element.sanitize(value)
+                sanitized_values[name] = element.sanitize(value)
             else:
-                sanitized[name] = value
-        return sanitized
+                sanitized_values[name] = value
+        return sanitized_values
 
     def render(self):
-        """
-        Render all UISection components in this tab.
-        """
-        for section in self.sections.values():
-            section.render()
+        """Render all sections in the tab and wire events."""
+        with gr.TabItem(label=self.tab_name):
+            for section in self.sections.values():
+                section.render()
+
+            if self.on_render_wiring:
+                self.on_render_wiring(self)

@@ -13,7 +13,7 @@ These functions help standardize operations like:
 import os
 import logging
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
 import gradio as gr
 from mtg_deckbuilder_ui.app_config import app_config
 
@@ -21,7 +21,7 @@ from mtg_deckbuilder_ui.app_config import app_config
 logger = logging.getLogger(__name__)
 
 
-def get_full_path(directory: str, filename: str) -> Optional[str]:
+def get_full_path(directory: Union[str, Path], filename: Union[str, Path]) -> Optional[Path]:
     """Get the full path to a file, ensuring it exists in the specified directory.
 
     Args:
@@ -38,7 +38,7 @@ def get_full_path(directory: str, filename: str) -> Optional[str]:
     return directory / filename
 
 
-def ensure_extension(filename: str, default_extension: str) -> str:
+def ensure_extension(filename: Union[str, Path], default_extension: str) -> Union[str, Path]:
     """Ensure a filename has the specified extension.
 
     Args:
@@ -48,12 +48,12 @@ def ensure_extension(filename: str, default_extension: str) -> str:
     Returns:
         Filename with extension
     """
-    if not filename.lower().endswith(default_extension.lower()):
+    if not str(filename).lower().endswith(default_extension.lower()):
         return f"{filename}{default_extension}"
     return filename
 
 
-def list_files_by_extension(directory: str, extensions: List[str]) -> List[str]:
+def list_files_by_extension(directory: Union[str, Path], extensions: List[str]) -> List[Union[str, Path]]:
     """List all files in a directory with specified extensions.
 
     Args:
@@ -63,15 +63,15 @@ def list_files_by_extension(directory: str, extensions: List[str]) -> List[str]:
     Returns:
         List of filenames that match the extensions
     """
-    if not os.path.exists(directory):
+    if not Path(directory).exists():
         logger.warning(f"Directory does not exist: {directory}")
         return []
 
     try:
         return [
             f
-            for f in os.listdir(directory)
-            if any(f.lower().endswith(ext.lower()) for ext in extensions)
+            for f in Path(directory).iterdir()
+            if any(str(f).lower().endswith(ext.lower()) for ext in extensions)
         ]
     except Exception as e:
         logger.error(f"Error listing files in {directory}: {e}")
@@ -79,7 +79,7 @@ def list_files_by_extension(directory: str, extensions: List[str]) -> List[str]:
 
 
 def refresh_dropdown(
-    dropdown: gr.Dropdown, directory: str, extensions: List[str]
+    dropdown: gr.Dropdown, directory: Union[str, Path], extensions: List[str]
 ) -> gr.update:
     """Refresh a dropdown with files from a directory.
 
@@ -95,7 +95,7 @@ def refresh_dropdown(
     return gr.update(choices=files)
 
 
-def import_inventory_file(filename: str) -> List[str]:
+def import_inventory_file(filename: Union[str, Path]) -> List[str]:
     """Import card inventory from a text file.
 
     Args:
@@ -104,14 +104,14 @@ def import_inventory_file(filename: str) -> List[str]:
     Returns:
         List of card names from the inventory file
     """
-    inventory_path = app_config.get_path("inventory") / filename
+    inventory_path = Path(app_config.get_path("inventory_dir")) / filename
 
     if not inventory_path.exists():
         logger.error(f"Inventory file not found: {inventory_path}")
         return []
 
     try:
-        with open(inventory_path, "r", encoding="utf-8") as f:
+        with inventory_path.open("r", encoding="utf-8") as f:
             # Read lines and strip whitespace
             cards = [line.strip() for line in f.readlines()]
             # Filter out empty lines and comments
@@ -123,7 +123,7 @@ def import_inventory_file(filename: str) -> List[str]:
         return []
 
 
-def save_inventory_file(filename: str, cards: List[str]) -> bool:
+def save_inventory_file(filename: Union[str, Path], cards: List[str]) -> bool:
     """Save card inventory to a text file.
 
     Args:
@@ -133,10 +133,10 @@ def save_inventory_file(filename: str, cards: List[str]) -> bool:
     Returns:
         True if successful, False otherwise
     """
-    inventory_path = app_config.get_path("inventory") / filename
+    inventory_path = Path(app_config.get_path("inventory_dir")) / filename
 
     try:
-        with open(inventory_path, "w", encoding="utf-8") as f:
+        with inventory_path.open("w", encoding="utf-8") as f:
             for card in cards:
                 f.write(f"{card}\n")
         logger.info(f"Saved {len(cards)} cards to {filename}")
@@ -146,7 +146,7 @@ def save_inventory_file(filename: str, cards: List[str]) -> bool:
         return False
 
 
-def get_config_path(filename: str) -> Path:
+def get_config_path(filename: Union[str, Path]) -> Path:
     """Get full path to a config file in the deck configs directory.
 
     Args:
@@ -155,22 +155,41 @@ def get_config_path(filename: str) -> Path:
     Returns:
         Full path to the config file
     """
-    return app_config.get_path("decks") / filename
+    return Path(app_config.get_path("deck_configs_dir")) / filename
 
 
-def list_config_files() -> List[str]:
+def list_config_files() -> List[Union[str, Path]]:
     """List all config files in the deck configs directory.
 
     Returns:
         List of config filenames
     """
-    return list_files_by_extension(str(app_config.get_path("decks")), [".yaml", ".yml"])
+    return list_files_by_extension(Path(app_config.get_path("deck_configs_dir")), [".yaml", ".yml"])
 
 
-def list_inventory_files() -> List[str]:
-    """List all inventory files in the inventory directory.
+def get_inventory_path(filename: str) -> Path:
+    """Gets the full path for an inventory file."""
+    inventory_path = Path(app_config.get_path("inventory_dir")) / filename
+    return inventory_path
 
-    Returns:
-        List of inventory filenames
-    """
-    return list_files_by_extension(str(app_config.get_path("inventory")), [".txt"])
+
+def load_inventory_file(filename: str) -> list[str]:
+    """Load inventory file content."""
+    inventory_path = get_inventory_path(filename)
+    with open(inventory_path, "r") as f:
+        return f.readlines()
+
+
+def get_deck_path(filename: str) -> Path:
+    """Gets the full path for a deck file."""
+    return Path(app_config.get_path("deck_outputs_dir")) / filename
+
+
+def get_deck_files() -> list[Path]:
+    """Returns a list of all deck files."""
+    return list_files_by_extension(Path(app_config.get_path("deck_outputs_dir")), [".yaml", ".yml"])
+
+
+def get_inventory_files() -> list[Path]:
+    """Returns a list of all inventory files."""
+    return list_files_by_extension(Path(app_config.get_path("inventory_dir")), [".txt"])

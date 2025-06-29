@@ -23,7 +23,6 @@ from mtg_deckbuilder_ui.utils.file_utils import (
     refresh_dropdown,
     get_config_path,
     list_config_files,
-    list_inventory_files,
 )
 
 # Set up logging

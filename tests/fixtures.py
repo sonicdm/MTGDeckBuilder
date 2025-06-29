@@ -3,6 +3,7 @@
 import os
 import tempfile
 import pytest
+from pathlib import Path
 from mtg_deck_builder.db.bootstrap import bootstrap
 from mtg_deck_builder.db import get_session
 
@@ -64,13 +65,13 @@ def create_dummy_db():
     db_url = f"sqlite:///{db_path}"
 
     # Paths to sample data
-    sample_data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "sample_data", "sample_allprintings.json"))
-    sample_inventory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "sample_data", "sample_inventory.txt"))
+    sample_data_path = Path(__file__).parent / "sample_data" / "sample_allprintings.json"
+    sample_inventory_path = Path(__file__).parent / "sample_data" / "sample_inventory.txt"
 
     # Bootstrap the DB
     bootstrap(
-        json_path=sample_data_path,
-        inventory_path=sample_inventory_path,
+        json_path=str(sample_data_path),
+        inventory_path=str(sample_inventory_path),
         db_url=db_url,
         use_tqdm=False
     )
@@ -81,6 +82,6 @@ def create_dummy_db():
 
     # Cleanup
     try:
-        os.remove(db_path)
+        Path(db_path).unlink()
     except Exception:
         pass

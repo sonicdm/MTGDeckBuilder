@@ -846,24 +846,6 @@ class CardSetDB(Base):
     def __str__(self) -> str:
         return f"{self.name} ({self.code})"
 
-class ImportLog(Base):
-    """
-    Tracks import operations for card data files.
-    """
-    __tablename__ = 'import_log'
-    
-    id: Mapped[int] = mapped_column(
-        Integer, primary_key=True, autoincrement=True
-    )
-    json_path: Mapped[str] = mapped_column(
-        String, nullable=False, index=True, unique=True
-    )
-    meta_date: Mapped[DateTime] = mapped_column(DateTime, nullable=False)
-    mtime: Mapped[Float] = mapped_column(Float, nullable=False)
-
-    def __repr__(self) -> str:
-        return f"<ImportLog(path='{self.json_path}', date='{self.meta_date}')>"
-
 class InventoryItemDB(Base):
     """
     Represents an inventory item for a card, tracking quantity.

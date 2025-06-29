@@ -1,12 +1,10 @@
 import threading
 import argparse
 import gradio as gr
+import gradio.themes as themes
 import uvicorn
 from pathlib import Path
-from mtg_deckbuilder_ui.utils.file_utils import (
-    list_files_by_extension,
-    import_inventory_file
-)
+from typing import Optional
 
 from mtg_deckbuilder_ui.app_config import app_config
 from mtg_deckbuilder_ui.utils.logging_config import setup_logging
@@ -40,11 +38,9 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("asyncio").setLevel(logging.WARNING)
 
 # --- Unicode fix for Windows console ---
-
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8")
-    sys.stderr.reconfigure(encoding="utf-8")
-
+for stream in (sys.stdout, sys.stderr):
+    if hasattr(stream, "reconfigure"):
+        stream.reconfigure(encoding="utf-8")  # type: ignore
 
 # Initialize logging first
 logger = setup_logging(app_config)
@@ -54,7 +50,12 @@ parser = argparse.ArgumentParser(description="MTG Deckbuilder UI")
 parser.add_argument(
     "--ignore-json-updates",
     action="store_true",
-    help="Ignore updates to the JSON data files",
+    help="Ignore updates to the databasefiles",
+)
+parser.add_argument(
+    "--force-update",
+    action="store_true",
+    help="Force update the database schema",
 )
 parser.add_argument(
     "--debug",
@@ -62,7 +63,8 @@ parser.add_argument(
     help="Enable debug logging")
 args, _ = parser.parse_known_args()
 ignore_json_updates = args.ignore_json_updates
-
+force_update = args.force_update
+force_update = True
 # Set debug log level if requested
 if args.debug:
     logger.info("Debug logging enabled")
@@ -76,44 +78,15 @@ def sync_progress_callback(progress: float, message: str) -> None:
 
 
 logger.info("Starting startup initialization...")
-sync_result = startup_init(ignore_json_updates=ignore_json_updates)
-sync_status = format_sync_result(
-    sync_result) if sync_result else "No sync performed"
-
-# --- Bootstrap DB with current inventory file on startup ---
-if not app_config.get_path("inventory_dir"):
-    logger.error(
-        "No inventory_files path set in config. "
-        "Skipping inventory DB bootstrap."
-    )
-    inventory_files = []
+sync_result = startup_init(ignore_database_updates=ignore_json_updates, force_update=force_update)
+if sync_result:
+    sync_status = format_sync_result(sync_result)
 else:
-    inventory_files = list_files_by_extension(app_config.get_path("inventory_dir"), [".txt"])
+    sync_status = "No sync performed (skipped or not needed)"
 
-last_inventory = app_config.get_last_loaded_inventory()
-selected_inventory = None
-if last_inventory and last_inventory in inventory_files:
-    selected_inventory = last_inventory
-    logger.info(
-        f"Bootstrapping DB with last loaded inventory: {selected_inventory}")
-elif inventory_files:
-    selected_inventory = inventory_files[0]
-    logger.info(
-        "Bootstrapping DB with first available inventory: {}".format(
-            selected_inventory
-        )
-    )
-else:
-    logger.warning("No inventory files found to bootstrap DB.")
-
-# if selected_inventory and app_config.get_path("inventory_dir"):
-#     inventory_path = str(Path(app_config.get_path("inventory_dir")) / selected_inventory)
-#     logger.info(f"Importing inventory file at startup: {inventory_path}")
-#     # Synchronously import inventory to ensure DB is ready before UI loads
-#     thread = import_inventory_file(inventory_path)
-#     # Wait for import to finish (optional, can be removed for async)
-#     thread.join()
-#     logger.info("Inventory import at startup complete.")
+# Note: Database initialization is now handled by the sync process
+# which downloads the SQLite file and builds summary cards
+logger.info("Startup initialization complete.")
 
 # FastAPI static file serving (optional, for downloading)
 app = FastAPI()
@@ -141,7 +114,7 @@ def reload_app(request: Request):
     return JSONResponse({"status": "reloading"})
 
 
-def load_css(css_path: str = None) -> str:
+def load_css(css_path: Optional[str] = None) -> str:
     if css_path is None:
         css_path = str(Path(__file__).parent / "static" / "styles.css")
     try:
@@ -154,7 +127,7 @@ def load_css(css_path: str = None) -> str:
 
 def create_app():
     """Create and configure the Gradio application."""
-    with gr.Blocks(theme=gr.themes.Default(), css=load_css()) as app:
+    with gr.Blocks(theme=themes.Default(), css=load_css()) as app:
         gr.Markdown("# MTG Deckbuilder")
         with gr.Tabs():
             with gr.TabItem("Deck Builder"):
@@ -183,7 +156,7 @@ if __name__ == "__main__":
     # Create and launch the app
     app = create_app()
     app.launch(
-        server_name=app_config.SERVER_HOST,
-        server_port=app_config.SERVER_PORT,
-        share=app_config.SHARE_APP
+        server_name="127.0.0.1",
+        server_port=7860,
+        share=False
     )

@@ -105,21 +105,14 @@ def list_yaml_files():
 def save_yaml_config(yaml_file: str, content: str) -> str:
     """Save YAML configuration to a file."""
     try:
-        # Validate YAML
-        yaml.safe_load(content)
-
-        if not yaml_file or not yaml_file.strip():
-            raise ValueError("No file name specified.")
-
-        yaml_file = yaml_file.strip()
+        ensure_config_dir()
         if not (
             yaml_file.lower().endswith(".yaml") or yaml_file.lower().endswith(".yml")
         ):
             yaml_file += ".yaml"
 
-        file_path = os.path.join(app_config.get_path("deck_configs_dir"), yaml_file)
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(content)
+        file_path = Path(app_config.get_path("deck_configs_dir")) / yaml_file
+        file_path.write_text(content, encoding="utf-8")
         return f"✅ Config saved to {yaml_file}"
     except Exception as e:
         return f"❌ Error: {str(e)}"
@@ -128,9 +121,8 @@ def save_yaml_config(yaml_file: str, content: str) -> str:
 def load_yaml_config_file(filename: str) -> str:
     """Load YAML configuration from a file."""
     try:
-        file_path = os.path.join(app_config.get_path("deck_configs_dir"), filename)
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
+        file_path = Path(app_config.get_path("deck_configs_dir")) / filename
+        return file_path.read_text(encoding="utf-8")
     except Exception as e:
         return f"❌ Error loading config: {str(e)}"
 

@@ -31,10 +31,15 @@ def create_inventory_list_section() -> UISection:
         inventory_list = UIElement(
             "inventory_manager_list",
             lambda: gr.Dropdown(
-                inventory_files, value=default_inventory, label="Select Inventory"
+                [str(f) for f in inventory_files],
+                value=str(default_inventory) if default_inventory else None,
+                label="Select Inventory",
             ),
         )
         refresh_btn = UIElement("inventory_manager_refresh", lambda: gr.Button("🔄"))
+
+        section.add_element(inventory_list)
+        section.add_element(refresh_btn)
 
         # Layout
         layout = UIContainer("row", children=[inventory_list, refresh_btn])
@@ -56,6 +61,8 @@ def create_inventory_editor_section() -> UISection:
                 label="Inventory",
             ),
         )
+
+        section.add_element(inventory_table)
 
         # Layout
         layout = UIContainer("column", children=[inventory_table])
@@ -81,6 +88,10 @@ def create_inventory_controls_section() -> UISection:
             "inventory_manager_status",
             lambda: gr.Textbox(label="Status", interactive=False),
         )
+
+        section.add_element(filename)
+        section.add_element(save_btn)
+        section.add_element(status_msg)
 
         # Layout
         layout = UIContainer("row", children=[filename, save_btn, status_msg])

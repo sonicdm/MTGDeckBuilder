@@ -10,7 +10,8 @@ import gradio as gr
 
 # Local application imports
 from mtg_deckbuilder_ui.ui.ui_objects import UISection, UIElement, UIContainer
-from mtg_deckbuilder_ui.utils.file_utils import list_files_by_extension, get_full_path
+from mtg_deckbuilder_ui.utils.file_utils import list_files_by_extension
+from mtg_deckbuilder_ui.app_config import app_config
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -18,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 def get_config_dir():
     """Get the config directory path."""
-    return get_full_path("deck_configs")
+    return app_config.get_path("deck_configs_dir")
 
 
 def get_config_files(config_dir):
@@ -35,9 +36,12 @@ def create_config_list_section() -> UISection:
         # Config list
         config_list = UIElement(
             "config_manager_list",
-            lambda: gr.Dropdown(config_files, label="Select Config"),
+            lambda: gr.Dropdown([str(f) for f in config_files], label="Select Config"),
         )
         refresh_btn = UIElement("config_manager_refresh", lambda: gr.Button("🔄"))
+
+        section.add_element(config_list)
+        section.add_element(refresh_btn)
 
         # Layout
         layout = UIContainer("row", children=[config_list, refresh_btn])
@@ -53,6 +57,8 @@ def create_config_editor_section() -> UISection:
             "config_manager_yaml",
             lambda: gr.Code(language="yaml", label="YAML Content"),
         )
+
+        section.add_element(yaml_editor)
 
         # Layout
         layout = UIContainer("column", children=[yaml_editor])
@@ -76,6 +82,10 @@ def create_config_controls_section() -> UISection:
             "config_manager_status",
             lambda: gr.Textbox(label="Status", interactive=False),
         )
+
+        section.add_element(filename)
+        section.add_element(save_btn)
+        section.add_element(status_msg)
 
         # Layout
         layout = UIContainer("row", children=[filename, save_btn, status_msg])

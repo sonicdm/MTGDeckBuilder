@@ -1,26 +1,19 @@
-"""
-Build summary cards from MTGJSON database.
-
-This module provides functionality to build summary cards from the raw MTGJSON data
-and add them to the same database for efficient querying.
-"""
-
 from collections import defaultdict
 import json
 import logging
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker, joinedload
-from sqlalchemy import create_engine, func, desc, and_
+from sqlalchemy import create_engine
 from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONCard, MTGJSONSet, MTGJSONCardLegality, MTGJSONSummaryCard
 from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
 from mtg_deck_builder.db.setup import setup_database
 from tqdm import tqdm
-
+# setup debug logging
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 BATCH_SIZE = 10000
 
 def safe_list_field(value):
-    """Safely convert a value to a list, handling various input formats."""
     if value is None:
         return []
     if isinstance(value, list):
@@ -40,7 +33,6 @@ def safe_list_field(value):
     return []
 
 def legalities_to_dict(legality_obj):
-    """Convert a legality object to a dictionary."""
     if not legality_obj:
         return {}
     return {
@@ -51,10 +43,6 @@ def legalities_to_dict(legality_obj):
 
 def build_summary_cards(mtgjson_db_path: Path):
     """Build summary cards from the MTGJSON database and add them to the same database.
-    
-    This function reads the raw MTGJSON card data and creates summary cards that
-    aggregate information across all printings of each card. The summary cards
-    are stored in the same database for efficient querying.
     
     Args:
         mtgjson_db_path: Path to the MTGJSON SQLite database (contains raw data and will contain summary cards)
@@ -74,48 +62,50 @@ def build_summary_cards(mtgjson_db_path: Path):
         session.query(MTGJSONSummaryCard).delete()
         session.commit()
 
-        # CTE to rank printings by release date and aggregate set codes
-        ranked_printings_cte = session.query(
-            MTGJSONCard.uuid,
-            MTGJSONCard.name,
-            func.row_number().over(
-                partition_by=MTGJSONCard.name,
-                order_by=desc(MTGJSONSet.releaseDate)
-            ).label('rn'),
-            func.group_concat(MTGJSONCard.setCode).label('all_set_codes')
-        ).join(
-            MTGJSONSet, MTGJSONCard.setCode == MTGJSONSet.code
-        ).group_by(MTGJSONCard.name).cte('ranked_printings')
+        # Get all unique card names
+        logger.info("Getting all unique card names")
+        card_names = session.query(MTGJSONCard.name).distinct().all()
+        print(f"Found {len(card_names)} unique card names")
+        card_names = [name[0] for name in card_names]
 
-        # Query to get the latest printing for each card using the CTE
-        latest_printings_query = session.query(
-            MTGJSONCard,
-            ranked_printings_cte.c.all_set_codes
-        ).join(
-            ranked_printings_cte,
-            and_(
-                MTGJSONCard.uuid == ranked_printings_cte.c.uuid,
-                ranked_printings_cte.c.rn == 1
-            )
-        ).options(
+        # Query all cards with eager loading for set and legalities
+        logger.info("Querying all cards with eager loading for set and legalities")
+        cards = session.query(MTGJSONCard).options(
+            joinedload(MTGJSONCard.set),
             joinedload(MTGJSONCard.legalities)
-        )
+        ).all()
 
-        logger.info("Fetching latest printings for all cards...")
-        latest_printings = latest_printings_query.all()
-        logger.info(f"Found {len(latest_printings)} unique cards to process.")
+        logger.info(f"Found {len(cards)} card printings with set and legalities eagerly loaded")
+
+        # Organize cards by name
+        cards_by_name = defaultdict(list)
+        for card in cards:
+            cards_by_name[card.name].append(card)
+
+        logger.info(f"Organized into {len(cards_by_name)} unique cards")
 
         # Process cards in batches
-        total_cards = len(latest_printings)
+        total_cards = len(card_names)
         with tqdm(total=total_cards, desc="Processing cards", unit="card") as pbar:
             for i in range(0, total_cards, BATCH_SIZE):
-                batch_printings = latest_printings[i:i + BATCH_SIZE]
+                batch_names = card_names[i:i + BATCH_SIZE]
                 summary_cards = []
 
-                for newest_printing, all_set_codes in batch_printings:
+                for name in batch_names:
+                    card_printings = cards_by_name[name]
+                    if not card_printings:
+                        continue
+
+                    # Sort by release date to get newest printing
+                    newest_printing = max(
+                        card_printings,
+                        key=lambda c: c.set.releaseDate if c.set and c.set.releaseDate else ''
+                    )
+                    printing_set_codes = [c.setCode for c in card_printings]
+
                     try:
                         summary_card = MTGJSONSummaryCard(
-                            name=newest_printing.name,
+                            name=name,
                             set_code=newest_printing.setCode,
                             rarity=newest_printing.rarity,
                             type=newest_printing.type,
@@ -127,7 +117,7 @@ def build_summary_cards(mtgjson_db_path: Path):
                             text=newest_printing.text,
                             flavor_text=newest_printing.flavorText,
                             artist=newest_printing.artist,
-                            printing_set_codes=all_set_codes.split(','),
+                            printing_set_codes=printing_set_codes,
                             color_identity=safe_list_field(newest_printing.colorIdentity),
                             colors=safe_list_field(newest_printing.colors),
                             supertypes=safe_list_field(newest_printing.supertypes),
@@ -136,16 +126,17 @@ def build_summary_cards(mtgjson_db_path: Path):
                             legalities=legalities_to_dict(newest_printing.legalities),
                             types=safe_list_field(newest_printing.types)
                         )
-                        summary_cards.append(summary_card)
                     except Exception as e:
-                        logger.error(f"Error processing card {newest_printing.name}: {e}")
+                        logger.error(f"Error processing card {name}: {e}")
                         continue
-                
+                    summary_cards.append(summary_card)
+                    pbar.update(1)
+
                 # Bulk insert the batch
-                if summary_cards:
-                    session.bulk_save_objects(summary_cards)
-                    session.commit()
-                pbar.update(len(summary_cards))
+                session.bulk_save_objects(summary_cards)
+                session.commit()
+                
+                # print(f"Processed batch of {len(summary_cards)} cards")
 
     except Exception as e:
         session.rollback()

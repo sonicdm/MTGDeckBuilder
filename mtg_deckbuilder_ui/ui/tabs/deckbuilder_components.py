@@ -37,7 +37,7 @@ def create_config_section() -> UISection:
         # Config selection
         config_select = UIElement(
             "deckbuilder_config_select",
-            lambda: gr.Dropdown(config_files, label="Select Configuration"),
+            lambda: gr.Dropdown([str(f) for f in config_files], label="Select Configuration"),
         )
         refresh_btn = UIElement("deckbuilder_config_refresh", lambda: gr.Button("🔄"))
         load_btn = UIElement("deckbuilder_config_load", lambda: gr.Button("Load"))
@@ -51,6 +51,13 @@ def create_config_section() -> UISection:
             "deckbuilder_config_filename",
             lambda: gr.Textbox(label="Configuration Name"),
         )
+
+        # Add elements to section
+        section.add_element(config_select)
+        section.add_element(refresh_btn)
+        section.add_element(load_btn)
+        section.add_element(yaml_content)
+        section.add_element(file_name_box)
 
         # Layout
         layout = UIContainer(
@@ -78,6 +85,11 @@ def create_inventory_section() -> UISection:
         )
         load_btn = UIElement("deckbuilder_inventory_load", lambda: gr.Button("Load"))
 
+        # Add elements to section
+        section.add_element(inventory_select)
+        section.add_element(refresh_btn)
+        section.add_element(load_btn)
+
         # Layout
         layout = UIContainer("row", children=[inventory_select, refresh_btn, load_btn])
         section.set_layout(layout)
@@ -92,6 +104,9 @@ def create_deck_section() -> UISection:
             "deckbuilder_deck_list", lambda: gr.Dataframe(label="Deck Cards")
         )
 
+        # Add elements to section
+        section.add_element(deck_list)
+
         # Layout
         layout = UIContainer("column", children=[deck_list])
         section.set_layout(layout)
@@ -102,17 +117,22 @@ def create_controls_section() -> UISection:
     """Create the controls section."""
     with UISection("deckbuilder_controls", "Deck Builder Controls") as section:
         # Build button
-        build_btn = UIElement("deckbuilder_build", lambda: gr.Button("Build Deck"))
+        build_btn = UIElement("build_btn", lambda: gr.Button("Build Deck"))
 
         # Send to viewer button
         send_to_viewer_btn = UIElement(
-            "deckbuilder_send_to_viewer", lambda: gr.Button("Send to Deck Viewer")
+            "send_to_viewer_btn", lambda: gr.Button("Send to Deck Viewer")
         )
 
         # Status message
         status_msg = UIElement(
             "deckbuilder_status", lambda: gr.Textbox(label="Status", interactive=False)
         )
+
+        # Add elements to section
+        section.add_element(build_btn)
+        section.add_element(send_to_viewer_btn)
+        section.add_element(status_msg)
 
         # Layout
         layout = UIContainer(
@@ -280,6 +300,29 @@ def create_output_section() -> UISection:
         build_status = UIElement(
             "build_status", lambda: gr.Textbox(label="Status", interactive=False)
         )
+        
+        # Validation options
+        format_choices = [
+            "standard", "alchemy", "brawl", "commander", "explorer", 
+            "historic", "limited", "modern", "pioneer", "vintage", "legacy"
+        ]
+        validate_format = UIElement(
+            "validate_format",
+            lambda: gr.Dropdown(
+                choices=format_choices,
+                value="standard",
+                label="Validate Against Format"
+            ),
+        )
+        validate_owned_only = UIElement(
+            "validate_owned_only",
+            lambda: gr.Checkbox(
+                label="Only allow owned cards in validation",
+                value=False
+            ),
+        )
+        
+        # Results display
         card_table = UIElement(
             "card_table",
             lambda: gr.DataFrame(headers=["Name", "Cost", "Type", "Pow/Tgh", "Text"]),
@@ -289,23 +332,72 @@ def create_output_section() -> UISection:
         arena_export = UIElement(
             "arena_export", lambda: gr.Textbox(label="Arena Export")
         )
+        
+        # Validation results
+        validation_summary = UIElement(
+            "validation_summary",
+            lambda: gr.Markdown(
+                label="Validation Summary",
+                value="No validation performed yet."
+            ),
+        )
+        card_status_table = UIElement(
+            "card_status_table",
+            lambda: gr.Dataframe(
+                headers=["Qty", "Name", "Status", "Reason", "Owned"],
+                datatype=["str", "str", "str", "str", "str"],
+                label="Card Status Report",
+                interactive=False
+            ),
+        )
+        deck_analysis = UIElement(
+            "deck_analysis",
+            lambda: gr.Markdown(
+                label="Deck Analysis",
+                value="No analysis available."
+            ),
+        )
+        
+        # Action buttons
         deck_state = UIElement("deck_state", lambda: gr.State())
         copy_btn = UIElement("copy_btn", lambda: gr.Button("Copy to Clipboard"))
         send_to_viewer_btn = UIElement(
             "send_to_viewer_btn", lambda: gr.Button("Send to Deck Viewer")
         )
 
+        # Add elements to section
+        section.add_element(build_btn)
+        section.add_element(build_status)
+        section.add_element(validate_format)
+        section.add_element(validate_owned_only)
+        section.add_element(card_table)
+        section.add_element(deck_info)
+        section.add_element(deck_stats)
+        section.add_element(arena_export)
+        section.add_element(validation_summary)
+        section.add_element(card_status_table)
+        section.add_element(deck_analysis)
+        section.add_element(deck_state)
+        section.add_element(copy_btn)
+        section.add_element(send_to_viewer_btn)
+
         layout = UIContainer(
             "group",
             children=[
-                build_btn,
-                build_status,
+                # Build controls
+                UIContainer("row", children=[build_btn, build_status]),
+                # Validation options
+                UIContainer("row", children=[validate_format, validate_owned_only]),
+                # Results
                 card_table,
-                deck_info,
-                deck_stats,
+                UIContainer("row", children=[deck_info, deck_stats]),
                 arena_export,
-                copy_btn,
-                send_to_viewer_btn,
+                # Validation results
+                UIContainer("row", children=[validation_summary, deck_analysis]),
+                card_status_table,
+                # Action buttons
+                UIContainer("row", children=[copy_btn, send_to_viewer_btn]),
+                deck_state,
             ],
         )
         section.set_layout(layout)

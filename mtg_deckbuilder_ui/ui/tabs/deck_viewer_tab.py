@@ -19,11 +19,13 @@ from mtg_deckbuilder_ui.logic.deck_viewer_func import (
     update_card_display,
     update_card_table_columns,
 )
+from mtg_deckbuilder_ui.logic.deck_validation_func import validate_and_import_arena
 from mtg_deckbuilder_ui.ui.ui_objects import UITab
 from mtg_deckbuilder_ui.ui.tabs.deck_viewer_components import (
     create_deck_viewer_controls_section,
     create_deck_viewer_display_section,
     create_deck_viewer_table_section,
+    create_deck_validation_section,
 )
 
 # Set up logger
@@ -38,11 +40,13 @@ def create_deck_viewer_tab() -> UITab:
     controls_section = create_deck_viewer_controls_section()
     display_section = create_deck_viewer_display_section()
     table_section = create_deck_viewer_table_section()
+    validation_section = create_deck_validation_section()
 
     # Add sections to tab
     tab.add_section(controls_section)
     tab.add_section(display_section)
     tab.add_section(table_section)
+    tab.add_section(validation_section)
 
     # Get components for wiring
     components = tab.get_component_map()
@@ -85,11 +89,23 @@ def create_deck_viewer_tab() -> UITab:
         outputs=[components["save_status"], components["deck_select"]],
     )
 
-    # Wire up Arena import
+    # Wire up enhanced Arena import with validation
     components["import_btn"].click(
-        on_import_arena,
-        inputs=[components["arena_import"], components["card_table_columns"]],
-        outputs=[components["card_table"], components["deck_state"]],
+        validate_and_import_arena,
+        inputs=[
+            components["arena_import"],
+            components["format_select"],
+            components["inventory_file"],
+            components["owned_only"],
+            components["card_table_columns"],
+        ],
+        outputs=[
+            components["validation_summary"],
+            components["card_status_table"],
+            components["deck_analysis"],
+            components["deck_state"],
+            components["import_status"],
+        ],
     )
 
     # Wire up Arena export

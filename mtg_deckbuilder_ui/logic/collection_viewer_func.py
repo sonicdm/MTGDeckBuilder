@@ -7,10 +7,11 @@ import csv
 import json
 import gradio as gr
 import pandas as pd
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple, Any, Optional
 from mtg_deck_builder.db import get_session
-from mtg_deck_builder.db.bootstrap import bootstrap_inventory
 from mtg_deck_builder.db.repository import CardRepository
+from mtg_deck_builder.db.models import CardDB, InventoryItemDB
+from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
 from mtg_deckbuilder_ui.app_config import app_config
 from mtg_deckbuilder_ui.utils.ui_helpers import list_files_by_extension
 from mtg_deckbuilder_ui.utils.logging_config import get_logger
@@ -101,11 +102,13 @@ def get_collection_df(
             logger.debug(f"Sample card from cards: {cards[0]}")
         inventory_map = {}
         if inventory_file and inventory_dir:
-            from mtg_deck_builder.db.repository import InventoryRepository
-
-            with get_session() as session:
-                inventory_repo = InventoryRepository(session)
-                bootstrap_inventory(inventory_file, inventory_repo)
+            # Load inventory using load_inventory_items
+            try:
+                with get_session() as session:
+                    load_inventory_items(inventory_file, session)
+                    logger.debug(f"Inventory loaded from {inventory_file}")
+            except Exception as e:
+                logger.warning(f"Failed to load inventory from {inventory_file}: {e}")
 
         logger.debug(
             "Calling filter_cards with: "

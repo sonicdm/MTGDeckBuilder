@@ -1,7 +1,6 @@
 from sqlalchemy import Column, String, Integer, Float, Text, Boolean, ForeignKey, ForeignKeyConstraint, JSON, Date
 from sqlalchemy.orm import relationship, foreign, Mapped, mapped_column
 
-from mtg_deck_builder.db import get_session
 from .base import MTGJSONBase
 from .sets import MTGJSONSet
 import ast
@@ -264,9 +263,37 @@ class MTGJSONCardPurchaseUrl(MTGJSONBase):
 
 class MTGJSONSummaryCard(MTGJSONBase):
     """
-    A model that represents a card as a summary of its printings.
-    It is based off of the newest printing of the card.
+    Represents a summary view of a Magic: The Gathering card, aggregating data across all printings.
+
+    This model is based on the newest printing of the card and is used for high-level queries and deck building.
+    
+    Attributes:
+        name: The card's name (primary key).
+        set_code: The set code of the newest printing.
+        rarity: Rarity of the newest printing.
+        type: Full type line (e.g., "Creature — Elf Druid").
+        mana_cost: Mana cost string (e.g., "{1}{G}").
+        converted_mana_cost: Numeric mana value.
+        power, toughness, loyalty: Stats for creatures/planeswalkers.
+        text: Oracle text of the newest printing.
+        flavor_text: Flavor text, if present.
+        artist: Artist of the newest printing.
+        printing_set_codes: List of all set codes this card has been printed in.
+        color_identity: List of color identity symbols (e.g., ["G", "U"]).
+        colors: List of colors in the card's casting cost.
+        types, supertypes, subtypes: Lists of type line components.
+        keywords: List of keyword abilities.
+        legalities: Dictionary of format legalities.
+
+    Relationships:
+        printings: List of all MTGJSONCard printings for this card name.
+        inventory_item: Linked InventoryItem for owned quantity (if present).
+
+    Usage:
+        - Use the 'owned_qty' property to get the owned quantity (from inventory if available) this will prefer the db value if available.
+        - Use this model for deck building, filtering, and summary queries.
     """
+    
     __tablename__ = "summary_cards"
     name: Mapped[str] = mapped_column(String, primary_key=True)
     set_code: Mapped[Optional[str]] = mapped_column(String)
@@ -301,6 +328,7 @@ class MTGJSONSummaryCard(MTGJSONBase):
         uselist=False,
         viewonly=True
     )
+    _owned_qty: int = 0
 
     def __repr__(self):
         return f"<MTGJSONSummaryCard(name={self.name!r}, color_identity={self.color_identity!r}, type={self.type!r})>"
@@ -449,10 +477,23 @@ class MTGJSONSummaryCard(MTGJSONBase):
         return bool(query_keywords.intersection(card_keywords))
 
     @property
-    def owned_qty(self):
-        "For backwards compatibility"
-        return self.quantity
-    
+    def owned_qty(self) -> int:
+        """
+        A session aware property to get the owned quantity of the card.
+        Always get from db if possible, otherwise use the _owned_qty.
+        """
+        # Always get from db if possible, otherwise use the _owned_qty.
+        quantity_value = getattr(self, "quantity", None)
+        try:
+            if isinstance(quantity_value, int):
+                return quantity_value
+            elif quantity_value is not None:
+                return int(quantity_value)
+        except Exception:
+            pass
+        # Fallback to _owned_qty if present, else 0
+        return getattr(self, "_owned_qty", 0) or 0
+
     def is_basic_land(self):
         """
         Determine if the card is a basic land.

@@ -4,35 +4,34 @@ import gradio as gr
 from mtg_deckbuilder_ui.ui.ui_objects import UISection, UIElement, UIContainer
 from mtg_deckbuilder_ui.app_config import app_config
 from mtg_deckbuilder_ui.utils.ui_helpers import list_files_by_extension
-import os
+from pathlib import Path
 import json
 
 
-def get_inventory_files():
-    inventory_dir = app_config.get_path("inventory_dir", fallback="inventory_files")
-    if not os.path.exists(inventory_dir):
-        os.makedirs(inventory_dir, exist_ok=True)
-    return list_files_by_extension(inventory_dir, [".txt"])
+def get_inventory_file_choices():
+    inventory_dir = app_config.get_path("inventory_dir")
+    inventory_path = Path(inventory_dir)
+    if not inventory_path.exists():
+        inventory_path.mkdir(parents=True, exist_ok=True)
+    files = list_files_by_extension(inventory_path, [".txt"])
+    return [str(f) for f in files]  # Convert Path objects to strings for UI
 
 
 def get_card_data():
-    keywords_path = app_config.get_path("keywords_json")
-    cardtypes_path = app_config.get_path("cardtypes_json")
+    keywords_path = Path(app_config.get_path("keywords"))
+    cardtypes_path = Path(app_config.get_path("cardtypes"))
 
     mtg_keywords = set()
     card_types = set()
     card_subtypes = set()
     try:
         with open(keywords_path, "r", encoding="utf-8") as f:
-            keywords_json = json.load(f)
-        keywords_data = keywords_json.get("data", {})
-        for k in ["abilityWords", "keywordAbilities", "keywordActions"]:
-            mtg_keywords.update(keywords_data.get(k, []))
+            keywords = json.load(f).get("data", {}).keys()
+        mtg_keywords.update(keywords)
     except Exception:
         pass
     try:
-        with open(cardtypes_path, "r", encoding="utf-8") as f:
-            cardtypes_json = json.load(f)
+        cardtypes_json = json.loads(cardtypes_path.read_text(encoding="utf-8"))
         cardtypes_data = cardtypes_json.get("data", {})
         card_types.update([k.capitalize() for k in cardtypes_data.keys()])
         for v in cardtypes_data.values():
@@ -60,7 +59,7 @@ def get_card_data():
 
 def create_inventory_and_load_section() -> UISection:
     with UISection("inventory_and_load", "Inventory and Loading") as section:
-        inventory_files = get_inventory_files()
+        inventory_files = get_inventory_file_choices()
         default_inventory = inventory_files[0] if inventory_files else None
 
         inventory_dropdown = UIElement(

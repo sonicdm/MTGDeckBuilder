@@ -1,28 +1,30 @@
 # Decklist display, Arena export, and stats for mtg_deckbuilder_ui
 
 import gradio as gr
-import os
+from pathlib import Path
+import pandas as pd
+from mtg_deckbuilder_ui.logic.deckbuilder_func import build_deck
 
 
-CONFIG_PRESETS_DIR = "config/presets"
-USER_UPLOADS_DIR = "data/user_uploads"
+CONFIG_PRESETS_DIR = Path("config/presets")
+USER_UPLOADS_DIR = Path("data/user_uploads")
 
 
 def list_yaml_presets():
     return [
-        f
-        for f in os.listdir(CONFIG_PRESETS_DIR)
-        if f.endswith(".yaml") or f.endswith(".yml")
+        f.name
+        for f in CONFIG_PRESETS_DIR.iterdir()
+        if f.suffix.lower() in [".yaml", ".yml"]
     ]
 
 
 def list_user_inventories():
-    if not os.path.exists(USER_UPLOADS_DIR):
-        os.makedirs(USER_UPLOADS_DIR)
+    if not USER_UPLOADS_DIR.exists():
+        USER_UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
     return [
-        f
-        for f in os.listdir(USER_UPLOADS_DIR)
-        if f.endswith(".txt") or f.endswith(".csv")
+        f.name
+        for f in USER_UPLOADS_DIR.iterdir()
+        if f.suffix.lower() in [".txt", ".csv"]
     ]
 
 
@@ -84,10 +86,10 @@ def deck_output_tab():
         def handle_inventory_upload(uploaded_file):
             if uploaded_file is None:
                 return gr.update(), list_user_inventories()
-            dest = os.path.join(USER_UPLOADS_DIR, os.path.basename(uploaded_file.name))
+            dest = USER_UPLOADS_DIR / uploaded_file.name
             with open(dest, "wb") as f:
                 f.write(uploaded_file.read())
-            return os.path.basename(uploaded_file.name), list_user_inventories()
+            return uploaded_file.name, list_user_inventories()
 
         # Run deck build and format outputs
         def run_deckbuilder(config_file, inventory_file):
@@ -97,69 +99,30 @@ def deck_output_tab():
                     pd.DataFrame(),
                     "",
                 )
-            config_path = os.path.join(CONFIG_PRESETS_DIR, config_file)
-            inventory_path = os.path.join(USER_UPLOADS_DIR, inventory_file)
-            result = build_deck(config_path, inventory_path)
-            if not result or "deck" not in result:
+            config_path = CONFIG_PRESETS_DIR / config_file
+            inventory_path = USER_UPLOADS_DIR / inventory_file
+            
+            # Load config from file
+            try:
+                with open(config_path, 'r') as f:
+                    yaml_content = f.read()
+            except Exception as e:
+                return f"Error reading config file: {e}", pd.DataFrame(), ""
+            
+            # Build deck using the validation function which returns proper format
+            from mtg_deckbuilder_ui.logic.deckbuilder_func import build_deck_with_validation
+            result = build_deck_with_validation(yaml_content)
+            
+            if not result:
                 return "Deck build failed.", pd.DataFrame(), ""
-            deck = result["deck"]
-            stats = result.get("stats", {})
-            arena_str = result.get("arena_export", "")
-
-            # Deck info/stats
-            info_lines = [
-                f"Deck Name: {deck.get('name', '')}",
-                f"Total Cards: {stats.get('total_cards', '')}",
-                f"Average Mana Value: {stats.get('avg_mana_value', '')}",
-                f"Color Balance: {stats.get('color_balance', '')}",
-                f"Type Counts: {stats.get('type_counts', '')}",
-                f"Ramp Count: {stats.get('ramp_count', '')}",
-                f"Lands: {stats.get('lands', '')}",
-            ]
-            info_str = "\n".join(info_lines)
-
-            # Card table
-            card_rows = []
-            for card in deck.get("cards", []):
-                pt = (
-                    f"{card.get('power','')}/{card.get('toughness','')}"
-                    if card.get("power") or card.get("toughness")
-                    else ""
-                )
-                legalities = ", ".join(
-                    f"{fmt}:{stat}" for fmt, stat in card.get("legalities", {}).items()
-                )
-                card_rows.append(
-                    [
-                        card.get("name", ""),
-                        card.get("type", ""),
-                        card.get("rarity", ""),
-                        legalities,
-                        card.get("cmc", ""),
-                        card.get("cost", ""),
-                        ", ".join(card.get("colors", [])),
-                        pt,
-                        card.get("qty", 1),
-                        card.get("text", ""),
-                    ]
-                )
-            df = pd.DataFrame(
-                card_rows,
-                columns=[
-                    "Name",
-                    "Type",
-                    "Rarity",
-                    "Legalities",
-                    "CMC",
-                    "Cost",
-                    "Colors",
-                    "Power/Toughness",
-                    "Qty",
-                    "Card Text",
-                ],
-            )
-
-            return info_str, df, arena_str
+            
+            # Extract results from tuple
+            card_table, deck_info, deck_stats, arena_export, validation_summary, card_status_table, deck_analysis, deck_state, build_status = result
+            
+            # Combine deck info and stats
+            info_str = f"{deck_info}\n{deck_stats}"
+            
+            return info_str, card_table, arena_export
 
         with gr.Row():
             with gr.Column():

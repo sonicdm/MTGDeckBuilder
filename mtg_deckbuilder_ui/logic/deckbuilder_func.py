@@ -9,15 +9,13 @@ import gradio as gr
 import pandas as pd
 
 # Local application imports
-from mtg_deck_builder import (
-    Deck,
-    DeckConfig,
-    CardRepository,
-    InventoryRepository,
-    get_session,
-    build_deck_from_config,
-)
+from mtg_deck_builder.models.deck import Deck
+from mtg_deck_builder.models.deck_config import DeckConfig
+from mtg_deck_builder.db.repository import CardRepository, SummaryCardRepository
+from mtg_deck_builder.db import get_session
+from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_config
 from mtg_deckbuilder_ui.logic.deck_progress_callbacks import get_deck_builder_callbacks
+from mtg_deckbuilder_ui.logic.deck_validation_func import validate_and_analyze_generated_deck
 from mtg_deckbuilder_ui.ui.config_sync import extract_config_from_ui
 
 logger = logging.getLogger(__name__)
@@ -37,84 +35,159 @@ def build_deck(
     """
     try:
         # Get database session
-        session = get_session()
+        with get_session() as session:
+            # Initialize repositories
+            summary_repo = SummaryCardRepository(session)
 
-        # Initialize repositories
-        card_repo = CardRepository(session)
-        inventory_repo = InventoryRepository(session)
+            # Get callbacks for tracking progress
+            callbacks = get_deck_builder_callbacks(status_update_fn)
 
-        # Get callbacks for tracking progress
-        callbacks = get_deck_builder_callbacks(status_update_fn)
+            # Build the deck
+            deck = build_deck_from_config(
+                deck_config=config,
+                summary_repo=summary_repo,
+                callbacks=callbacks,
+            )
 
-        # Build the deck
-        deck = build_deck_from_config(
-            deck_config=config,
-            card_repo=card_repo,
-            inventory_repo=inventory_repo,
-            callbacks=callbacks,
-        )
+            if deck is None:
+                return None, "Failed to build deck"
 
-        if deck is None:
-            return None, "Failed to build deck"
-
-        # Check for warnings
-        warnings = []
-        if deck.unmet_conditions:
-            warnings.append("Unmet conditions:")
-            for condition in deck.unmet_conditions:
-                warnings.append(f"- {condition}")
-
-        if deck.warnings:
-            warnings.append("Warnings:")
-            for warning in deck.warnings:
-                warnings.append(f"- {warning}")
-
-        status = "\n".join(warnings) if warnings else "Deck built successfully"
-        return deck, status
+            status = "Deck built successfully"
+            return deck, status
 
     except Exception as e:
         logger.error("[build_deck] Error building deck: %r", e, exc_info=True)
         return None, f"Error building deck: {str(e)}"
-    finally:
-        session.close()
 
 
-def run_deckbuilder_from_ui(ui_state: Dict[str, Any]) -> Dict[str, Any]:
-    """Run the deck builder from UI state.
+def build_deck_with_validation(
+    yaml_content: str,
+    validate_format: str = "standard",
+    validate_owned_only: bool = False,
+) -> Tuple[
+    pd.DataFrame,  # card_table
+    str,  # deck_info
+    str,  # deck_stats
+    str,  # arena_export
+    str,  # validation_summary
+    pd.DataFrame,  # card_status_table
+    str,  # deck_analysis
+    Dict,  # deck_state
+    str,  # build_status
+]:
+    """Build a deck from YAML content with validation.
 
     Args:
-        ui_state: Dictionary containing UI component values
+        yaml_content: YAML configuration string
+        validate_format: Format to validate against
+        validate_owned_only: Whether to only allow owned cards
 
     Returns:
-        Dict containing status and deck data
+        Tuple of output components for the UI
     """
     try:
-        # Extract DeckConfig from UI state
-        config = extract_config_from_ui(ui_state)
-
+        # Parse YAML into DeckConfig
+        config = DeckConfig.from_yaml(yaml_content)
+        
         # Build the deck
         deck, status = build_deck(config)
-
+        
         if deck is None:
-            return {"status": "error", "message": status, "deck": None}
+            # Return empty results on failure
+            empty_df = pd.DataFrame(columns=["Name", "Cost", "Type", "Pow/Tgh", "Text"])
+            empty_status_df = pd.DataFrame(columns=["Qty", "Name", "Status", "Reason", "Owned"])
+            return (
+                empty_df,  # card_table
+                "Build failed",  # deck_info
+                "No stats available",  # deck_stats
+                "",  # arena_export
+                f"Build failed: {status}",  # validation_summary
+                empty_status_df,  # card_status_table
+                "No analysis available",  # deck_analysis
+                {},  # deck_state
+                status,  # build_status
+            )
 
         # Convert deck to dataframe for display
         deck_data = []
-        for card in deck.cards:
-            deck_data.append(
-                {
-                    "Name": card.name,
-                    "Type": card.type_line,
-                    "Mana Cost": card.mana_cost,
-                    "Quantity": card.quantity,
-                }
-            )
-
-        return {"status": "success", "message": status, "deck": pd.DataFrame(deck_data)}
-
+        for card_name, card in deck.cards.items():
+            quantity = deck.get_quantity(card_name)
+            deck_data.append({
+                "Name": card.name,
+                "Cost": getattr(card, 'mana_cost', '') or "",
+                "Type": getattr(card, 'type_line', '') or "",
+                "Pow/Tgh": f"{getattr(card, 'power', '') or ''}/{getattr(card, 'toughness', '') or ''}" if getattr(card, 'power', None) or getattr(card, 'toughness', None) else "",
+                "Text": getattr(card, 'oracle_text', '') or "",
+            })
+        
+        card_table = pd.DataFrame(deck_data)
+        
+        # Generate deck info and stats
+        deck_info = f"Deck: {deck.name}\nSize: {deck.size()} cards"
+        
+        # Calculate basic stats
+        total_cards = deck.size()
+        land_count = sum(1 for card in deck.cards.values() if "Land" in (getattr(card, 'type_line', '') or ""))
+        creature_count = sum(1 for card in deck.cards.values() if "Creature" in (getattr(card, 'type_line', '') or ""))
+        spell_count = total_cards - land_count
+        
+        deck_stats = f"Total: {total_cards} | Lands: {land_count} | Creatures: {creature_count} | Spells: {spell_count}"
+        
+        # Generate Arena export
+        arena_export = "\n".join([f"{deck.get_quantity(card_name)} {card.name}" for card_name, card in deck.cards.items()])
+        
+        # Validate the deck
+        validation_updates = validate_and_analyze_generated_deck(
+            deck=deck,
+            format_name=validate_format,
+            owned_only=validate_owned_only,
+        )
+        
+        # Extract validation results from gr.update objects
+        validation_summary = validation_updates[0].value if validation_updates[0].value else "No validation performed"
+        card_status_table = validation_updates[1].value if validation_updates[1].value is not None else pd.DataFrame(columns=["Qty", "Name", "Status", "Reason", "Owned"])
+        deck_analysis = validation_updates[2].value if validation_updates[2].value else "No analysis available"
+        
+        # Create deck state for other components
+        deck_state = {
+            "deck": deck,
+            "validation_result": validation_updates,
+            "card_table": card_table,
+        }
+        
+        build_status = "Deck built and validated successfully"
+        
+        return (
+            card_table,
+            deck_info,
+            deck_stats,
+            arena_export,
+            validation_summary,
+            card_status_table,
+            deck_analysis,
+            deck_state,
+            build_status,
+        )
+        
     except Exception as e:
-        logger.error("[run_deckbuilder_from_ui] Error: %r", e, exc_info=True)
-        return {"status": "error", "message": f"Error: {str(e)}", "deck": None}
+        logger.error("[build_deck_with_validation] Error: %r", e, exc_info=True)
+        error_msg = f"Error building deck: {str(e)}"
+        
+        # Return empty results on error
+        empty_df = pd.DataFrame(columns=["Name", "Cost", "Type", "Pow/Tgh", "Text"])
+        empty_status_df = pd.DataFrame(columns=["Qty", "Name", "Status", "Reason", "Owned"])
+        
+        return (
+            empty_df,  # card_table
+            "Build failed",  # deck_info
+            "No stats available",  # deck_stats
+            "",  # arena_export
+            error_msg,  # validation_summary
+            empty_status_df,  # card_status_table
+            "No analysis available",  # deck_analysis
+            {},  # deck_state
+            error_msg,  # build_status
+        )
 
 
 def on_inventory_selected(inventory_path: str) -> str:
@@ -128,21 +201,15 @@ def on_inventory_selected(inventory_path: str) -> str:
     """
     try:
         # Get database session
-        session = get_session()
-
-        # Initialize inventory repository
-        inventory_repo = InventoryRepository(session)
-
-        # Load inventory
-        inventory_repo.load_inventory(inventory_path)
-
-        return f"Inventory loaded from {inventory_path}"
+        with get_session() as session:
+            # Load inventory using load_inventory_items
+            from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+            load_inventory_items(inventory_path, session)
+            return f"Inventory loaded from {inventory_path}"
 
     except Exception as e:
         logger.error("[on_inventory_selected] Error: %r", e, exc_info=True)
         return f"Error loading inventory: {str(e)}"
-    finally:
-        session.close()
 
 
 def update_card_table_columns(columns: List[str]) -> gr.update:

@@ -1,7 +1,7 @@
 # mtg_deckbuilder_ui/ui/themes.py
 
 import gradio as gr
-import os
+from pathlib import Path
 
 
 def create_custom_theme(css_path="static/styles.css", enable_dark_mode=True):
@@ -18,10 +18,10 @@ def create_custom_theme(css_path="static/styles.css", enable_dark_mode=True):
     )
 
     # Inject global CSS
-    if os.path.exists(css_path):
+    css_file = Path(css_path)
+    if css_file.exists():
         try:
-            with open(css_path, "r") as f:
-                base_theme.styles += "\n" + f.read()
+            base_theme.styles += "\n" + css_file.read_text()
             print(f"[theme] Injected custom CSS from {css_path}")
         except Exception as e:
             print(f"[theme] Failed to load CSS from {css_path}: {e}")

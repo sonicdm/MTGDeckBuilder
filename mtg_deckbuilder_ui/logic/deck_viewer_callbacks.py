@@ -1,6 +1,7 @@
 # mtg_deckbuilder_ui/logic/deck_viewer_callbacks.py
 
 import gradio as gr
+from pathlib import Path
 from mtg_deckbuilder_ui.utils.ui_helpers import list_files_by_extension
 from mtg_deckbuilder_ui.utils.plot_utils import (
     plot_mana_curve,
@@ -15,17 +16,17 @@ from mtg_deckbuilder_ui.logic.deck_viewer_func import (
     on_import_arena as do_on_import_arena,
     export_arena,
 )
-import os
 
 
 def get_deck_dir():
-    deck_dir = os.path.join(os.path.dirname(__file__), "..", "..", "generated_decks")
-    return os.path.abspath(deck_dir)
+    deck_dir = Path(__file__).parent.parent.parent / "generated_decks"
+    return deck_dir.absolute()
 
 
 def get_deck_files(deck_dir):
-    os.makedirs(deck_dir, exist_ok=True)
-    return list_files_by_extension(deck_dir, [".json"])
+    deck_path = Path(deck_dir)
+    deck_path.mkdir(exist_ok=True)
+    return list_files_by_extension(deck_path, [".json"])
 
 
 def on_load_deck(

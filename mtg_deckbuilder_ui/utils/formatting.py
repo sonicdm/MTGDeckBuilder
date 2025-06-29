@@ -32,15 +32,15 @@ def format_sync_result(result: dict) -> str:
 
     # Build update info
     update_info = []
-    if updates["meta"]:
+    if updates.get("meta", False):
         update_info.append("• Meta.json updated")
-    if updates["allprintings"]:
-        update_info.append("• AllPrintings.json updated")
-    if updates["keywords"]:
+    if updates.get("sqlite", False):
+        update_info.append("• AllPrintings.sqlite updated")
+    if updates.get("keywords", False):
         update_info.append("• Keywords.json updated")
-    if updates["cardtypes"]:
+    if updates.get("cardtypes", False):
         update_info.append("• CardTypes.json updated")
-    if updates["database"]:
+    if updates.get("database", False):
         update_info.append("• Database rebuilt")
 
     # Build error info
