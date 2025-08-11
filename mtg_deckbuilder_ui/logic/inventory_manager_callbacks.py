@@ -10,7 +10,6 @@ from mtg_deckbuilder_ui.utils.file_utils import (
 from mtg_deckbuilder_ui.utils.ui_helpers import get_full_path, ensure_extension
 from mtg_deckbuilder_ui.app_config import app_config
 from mtg_deckbuilder_ui.utils.logging_config import get_logger
-from typing import Optional
 
 logger = get_logger(__name__)
 
@@ -47,7 +46,7 @@ def load_inventory(selected_file, inventory_dir):
         
         # Load inventory into database
         from mtg_deck_builder.db import get_session
-        from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+        from mtg_deck_builder.db.inventory import load_inventory_items
         
         with get_session() as session:
             load_inventory_items(str(file_path), session)

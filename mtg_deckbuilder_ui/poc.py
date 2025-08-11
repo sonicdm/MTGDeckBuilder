@@ -4,7 +4,8 @@ import gradio as gr
 import yaml
 from pathlib import Path
 from typing import Optional, Dict, Any
-from mtg_deck_builder.db.repository import CardRepository, InventoryRepository
+
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.models.deck import Deck
 from mtg_deck_builder.models.deck_analyzer import DeckAnalyzer
 from mtg_deck_builder.models.deck_exporter import DeckExporter
@@ -142,14 +143,12 @@ def build_deck_from_yaml_config(yaml_content: str) -> tuple[Optional[Deck], str]
         session = Session()
 
         # Create repositories
-        card_repo = CardRepository(session)
-        inventory_repo = InventoryRepository(session)
+        card_repo = SummaryCardRepository(session)
 
         # Build deck
         deck = build_deck_from_yaml(
             yaml_data,  # Pass the parsed YAML data directly
-            card_repo=card_repo,
-            inventory_repo=inventory_repo,
+            summary_repo=card_repo,
         )
 
         if deck is None:

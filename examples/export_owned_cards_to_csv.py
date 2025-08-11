@@ -2,7 +2,7 @@ import csv
 import os
 
 from mtg_deck_builder.db.bootstrap import bootstrap
-from mtg_deck_builder.db.repository import InventoryRepository, CardRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.db.setup import setup_database
 
 
@@ -14,12 +14,11 @@ def export_owned_cards_to_csv(db_url, output_csv):
     engine = setup_database(db_url)
     Session = sessionmaker(bind=engine)
     session = Session()
-    card_repo = CardRepository(session=session)
-    inventory_repo = InventoryRepository(session)
-    owned_cards = inventory_repo.get_owned_cards()
-    owned_repo = card_repo.get_owned_cards_by_inventory(inventory_repo.get_owned_cards())
+    card_repo = SummaryCardRepository(session=session)
+    # Get cards with inventory quantity >= 1
+    owned_repo = card_repo.filter_by_inventory_quantity(min_quantity=1)
     # filter by color identity
-    ub_repo = owned_repo.filter_cards(color_identity=["U", "B", "R"], color_mode="subset", legal_in="alchemy")
+    ub_repo = owned_repo.filter_cards(color_identity=["U", "B", "R"], color_mode="subset", legal_in=["alchemy"])
     # export repo to csv
 
     with open(output_csv, mode='w', newline='', encoding='utf-8') as csvfile:

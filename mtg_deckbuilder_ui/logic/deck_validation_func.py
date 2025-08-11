@@ -9,11 +9,10 @@ This module integrates the validation logic from validate_arena_import.py into t
 
 import logging
 from typing import Dict, List, Tuple, Optional, Any
-from collections import defaultdict
 import gradio as gr
 import pandas as pd
 
-from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+from mtg_deck_builder.db.inventory import load_inventory_items
 from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
 from mtg_deck_builder.utils.arena_parser import parse_arena_export
 from mtg_deck_builder.db import get_session

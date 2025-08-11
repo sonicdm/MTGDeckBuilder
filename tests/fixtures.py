@@ -4,8 +4,6 @@ import os
 import tempfile
 import pytest
 from pathlib import Path
-from mtg_deck_builder.db.bootstrap import bootstrap
-from mtg_deck_builder.db import get_session
 
 class DummyCard:
     def __init__(self, name, colors=None, owned_qty=1, rarity=None, legalities=None, text=None, converted_mana_cost=0, type=None, power=None, toughness=None):
@@ -53,35 +51,121 @@ class DummyInventoryRepo:
     def __init__(self):
         pass
 
-@pytest.fixture(scope="session")
-def create_dummy_db():
-    """
-    Pytest fixture to create a temporary SQLite DB loaded with sample data and inventory.
-    Yields a SQLAlchemy session for use in tests.
-    """
-    # Create a temp file for the SQLite DB
-    db_fd, db_path = tempfile.mkstemp(suffix=".db")
-    os.close(db_fd)
-    db_url = f"sqlite:///{db_path}"
+# Card model fixtures
+@pytest.fixture
+def sample_printing_data():
+    """Sample printing data for testing."""
+    return {
+        "uuid": "test-uuid-123",
+        "name": "Lightning Bolt",
+        "setCode": "LEA",
+        "artist": "Christopher Rush",
+        "artistIds": [],
+        "attractionLights": [],
+        "availability": [],
+        "boosterTypes": [],
+        "borderColor": "black",
+        "cardParts": [],
+        "colorIdentity": [],
+        "colorIndicator": [],
+        "colors": ["R"],
+        "defense": None,
+        "duelDeck": None,
+        "edhrecRank": None,
+        "edhrecSaltiness": None,
+        "faceConvertedManaCost": None,
+        "faceFlavorName": None,
+        "faceManaValue": None,
+        "faceName": None,
+        "finishes": [],
+        "flavorName": None,
+        "flavorText": "The sparkmage shrieked, calling on the rage of the storms...",
+        "frameEffects": [],
+        "frameVersion": "2015",
+        "hand": None,
+        "hasAlternativeDeckLimit": None,
+        "hasContentWarning": None,
+        "hasFoil": None,
+        "hasNonFoil": None,
+        "isAlternative": None,
+        "isFullArt": None,
+        "isFunny": None,
+        "isGameChanger": None,
+        "isOnlineOnly": None,
+        "isOversized": None,
+        "isPromo": None,
+        "isRebalanced": None,
+        "isReprint": None,
+        "isReserved": None,
+        "isStarter": None,
+        "isStorySpotlight": None,
+        "isTextless": None,
+        "isTimeshifted": None,
+        "keywords": ["damage"],
+        "language": "English",
+        "layout": "normal",
+        "leadershipSkills": {},
+        "life": None,
+        "loyalty": None,
+        "manaCost": "{R}",
+        "manaValue": 1.0,
+        "number": "74",
+        "originalPrintings": [],
+        "originalReleaseDate": None,
+        "originalText": None,
+        "originalType": None,
+        "otherFaceIds": [],
+        "power": None,
+        "printings": [],
+        "promoTypes": [],
+        "rarity": "Common",
+        "rebalancedPrintings": [],
+        "relatedCards": [],
+        "securityStamp": None,
+        "side": None,
+        "signature": None,
+        "sourceProducts": [],
+        "subsets": [],
+        "supertypes": [],
+        "subtypes": [],
+        "text": "Lightning Bolt deals 3 damage to any target.",
+        "toughness": None,
+        "type": "Instant",
+        "types": ["Instant"],
+        "variations": [],
+        "watermark": None
+    }
 
-    # Paths to sample data
-    sample_data_path = Path(__file__).parent / "sample_data" / "sample_allprintings.json"
-    sample_inventory_path = Path(__file__).parent / "sample_data" / "sample_inventory.txt"
+@pytest.fixture
+def sample_summary_card_data():
+    """Sample summary card data for testing."""
+    return {
+        "name": "Lightning Bolt",
+        "set_code": "LEA",
+        "rarity": "Common",
+        "type": "Instant",
+        "mana_cost": "{R}",
+        "converted_mana_cost": 1.0,
+        "power": "",
+        "toughness": "",
+        "loyalty": "",
+        "text": "Lightning Bolt deals 3 damage to any target.",
+        "flavor_text": "The sparkmage shrieked, calling on the rage of the storms...",
+        "artist": "Christopher Rush",
+        "printing_set_codes": ["LEA", "LEB", "2ED"],
+        "color_identity": ["R"],
+        "colors": ["R"],
+        "types": ["Instant"],
+        "supertypes": [],
+        "subtypes": [],
+        "keywords": ["damage"],
+        "legalities": {"standard": "legal", "modern": "legal"}
+    }
 
-    # Bootstrap the DB
-    bootstrap(
-        json_path=str(sample_data_path),
-        inventory_path=str(sample_inventory_path),
-        db_url=db_url,
-        use_tqdm=False
-    )
-
-    # Yield a session
-    with get_session(db_url) as session:
-        yield session
-
-    # Cleanup
-    try:
-        Path(db_path).unlink()
-    except Exception:
-        pass
+@pytest.fixture
+def sample_inventory_item_data():
+    """Sample inventory item data for testing."""
+    return {
+        "name": "Lightning Bolt",
+        "quantity": 4
+    }

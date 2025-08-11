@@ -12,7 +12,7 @@ Adjust the file paths below to match your environment and data files.
 """
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.bootstrap import bootstrap
-from mtg_deck_builder.db.repository import CardRepository, InventoryRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_yaml
 
 # 1. Set up file paths (edit these as needed for your setup)
@@ -30,14 +30,13 @@ bootstrap(all_printings_path, inventory_path, db_url, use_tqdm=True)
 # 3. Set up a SQLAlchemy session for database access
 print("Setting up database session...")
 with get_session(db_url) as session:
-    # 4. Create repository objects for cards and inventory
-    card_repo = CardRepository(session=session)
-    inventory_repo = InventoryRepository(session)
+    # 4. Create repository objects for cards
+    card_repo = SummaryCardRepository(session=session)
 
     # 5. Build a deck from the YAML template
     #    This uses your deck builder logic to select cards and quantities based on the YAML config.
     print("Building deck from YAML template...")
-    deck = build_deck_from_yaml(yaml_path, card_repo=card_repo, inventory_repo=inventory_repo)
+    deck = build_deck_from_yaml(yaml_path, summary_repo=card_repo)
     if deck is None:
         print("Deck build failed: build_deck_from_yaml returned None.")
         exit(1)

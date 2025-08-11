@@ -1,14 +1,9 @@
-from sqlalchemy import Column, String, Integer, Float, Text, Boolean, ForeignKey, ForeignKeyConstraint, JSON, Date
-from sqlalchemy.orm import relationship, foreign, Mapped, mapped_column
+from sqlalchemy import Column, String, Integer, Float, Text, Boolean, ForeignKey, JSON, Date
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from .base import MTGJSONBase
-from .sets import MTGJSONSet
-import ast
-from typing import List, Optional, Dict, Any, Union, cast
-from sqlalchemy.ext.declarative import declared_attr
+from typing import List, Optional, Dict, Union
 import json
-from mtg_deck_builder.db.models import InventoryItemDB
-from mtg_deck_builder.db.mtgjson_models.inventory import InventoryItem
 from mtg_deck_builder.models.card import SummaryCard, InventoryItem
 
 class MTGJSONCard(MTGJSONBase):
@@ -128,12 +123,6 @@ class MTGJSONCard(MTGJSONBase):
         back_populates="printings",
         primaryjoin="MTGJSONCard.name==MTGJSONSummaryCard.name",
         foreign_keys=[name]
-    )
-    inventory = relationship(
-        "InventoryItem",
-        back_populates="card",
-        primaryjoin="foreign(InventoryItem.card_name)==MTGJSONCard.name",
-        uselist=False
     )
 
     def __repr__(self):

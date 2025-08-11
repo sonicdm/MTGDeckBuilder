@@ -1,40 +1,43 @@
 """
-Script to force update the database schema.
-This will drop and recreate all tables, so use with caution!
+Script to update the database schema.
+This will create any missing tables, but won't drop existing data.
 """
 
 import logging
-from mtg_deck_builder.db.setup import force_update_schema
-from mtg_deck_builder.db.bootstrap import bootstrap
-import os
-import sys
+from pathlib import Path
+from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
 
-def main():
+logger = logging.getLogger(__name__)
+
+def update_schema(db_path: Path):
+    """Update database schema."""
+    from sqlalchemy import create_engine
+    
+    db_url = f"sqlite:///{db_path}"
+    engine = create_engine(db_url)
+    
+    # Create all tables
+    MTGJSONBase.metadata.create_all(engine)
+    
+    logger.info(f"Schema updated for {db_path}")
+    
+    return engine
+
+if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
     
-    # Get the database URL from environment or use default
-    db_url = os.getenv('MTG_DB_URL', 'sqlite:///cards.db')
-    
-    # Get the JSON data path from environment or use default
-    json_path = os.getenv('MTG_JSON_PATH', 'data/cards.json')
-    
-    if not os.path.exists(json_path):
-        logging.error(f"JSON data file not found: {json_path}")
-        sys.exit(1)
+    # Use default database path
+    db_path = Path("AllPrintings.sqlite")
     
     try:
-        # Force update the schema
+        # Update the schema
         logging.info("Updating database schema...")
-        force_update_schema(db_url)
-        
-        # Re-bootstrap the database with card data
-        logging.info("Re-bootstrapping database with card data...")
-        bootstrap(json_path, db_url=db_url)
+        update_schema(db_path)
         
         logging.info("Database schema update complete!")
     except Exception as e:
         logging.error(f"Error updating database schema: {e}")
-        sys.exit(1)
+        exit(1)
 
  

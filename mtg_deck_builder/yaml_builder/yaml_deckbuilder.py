@@ -21,7 +21,7 @@ import traceback
 import yaml
 
 from mtg_deck_builder.db import get_session
-from mtg_deck_builder.db.repository import SummaryCardRepository, CardRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.models.deck import Deck
 from mtg_deck_builder.models.deck_config import DeckConfig
 from mtg_deck_builder.yaml_builder.deck_build_classes import BuildContext, DeckBuildContext

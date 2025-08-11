@@ -10,7 +10,7 @@ import gradio as gr
 from mtg_deckbuilder_ui.ui.ui_objects import UISection, UIElement, UIContainer
 # from mtg_deckbuilder_ui.logic.library_viewer_callbacks import filter_library
 from mtg_deck_builder.db import get_session
-from mtg_deck_builder.db.repository import CardRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ def create_library_viewer_tab() -> UISection:
 def load_library():
     """Load all cards from the library."""
     with get_session() as session:
-        card_repo = CardRepository(session=session)
+        card_repo = SummaryCardRepository(session=session)
         return card_repo.get_all_cards()
 
 

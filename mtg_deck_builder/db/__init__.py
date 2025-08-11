@@ -1,74 +1,65 @@
-"""Database package for MTG Deck Builder."""
+"""Database initialization and session management."""
 
 from contextlib import contextmanager
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
-from mtg_deck_builder.db.setup import setup_database
-import json
 from pathlib import Path
-from typing import Generator, Any, Optional
+from typing import Optional
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.pool import StaticPool
+
+from mtg_deck_builder.db.repository import SummaryCardRepository
+from mtg_deck_builder.db.inventory import InventoryItem
 from mtg_deck_builder.models.card_meta import load_card_types, load_keywords, CardTypesData, KeywordsData
 
+# paths relative to this file
+KEYWORDS_PATH = Path(__file__).parent / "Keywords.json"
+CARD_TYPES_PATH = Path(__file__).parent / "CardTypes.json"
+
+
+def get_engine(database_url: str = "sqlite:///AllPrintings.sqlite"):
+    """Create SQLAlchemy engine with optimized settings."""
+    return create_engine(
+        database_url,
+        poolclass=StaticPool,
+        connect_args={"check_same_thread": False},
+        echo=False,
+    )
+
+
 @contextmanager
-def get_session(
-    db_url: str = "sqlite:///data/mtgjson/AllPrintings.sqlite",
-    engine_args: Optional[dict[str, Any]] = None
-) -> Generator[Any, None, None]:
-    """Context manager for SQLAlchemy session with optional custom engine
-    arguments.
-
-    Args:
-        db_url: SQLAlchemy database URL.
-        engine_args: Arguments to pass to create_engine (e.g., connect_args).
-
-    Yields:
-        SQLAlchemy session object.
-    """
-    engine_args = engine_args or {}
-
-    # Optimize SQLite for fastest possible operations
-    if db_url.startswith("sqlite"):
-        # Use in-memory DB if specified, else file-based
-        if ":memory:" in db_url:
-            engine_args.setdefault("connect_args", {}).update(
-                {"check_same_thread": False}
-            )
-        # Use NullPool for fastest connections (no pooling)
-        engine_args.setdefault("poolclass", NullPool)
-
-    engine = create_engine(db_url, **engine_args)
-    Session = sessionmaker(bind=engine)
-    session = Session()
+def get_session(engine=None, db_url: Optional[str] = None):
+    """Get database session as a context manager."""
+    if engine is None:
+        if db_url is None:
+            engine = get_engine()
+        else:
+            engine = get_engine(db_url)
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    session = SessionLocal()
     try:
         yield session
     finally:
         session.close()
 
 
-def get_keywords() -> KeywordsData:
-    """Load keywords from JSON file.
-
-    Returns:
-        Dictionary of keywords data.
-    """
-    keywords = json.load(open(Path(__file__).parent / "Keywords.json"))
-    return KeywordsData.model_validate(keywords)
+def get_card_types(card_types_json_path: Path = CARD_TYPES_PATH) -> CardTypesData:
+    """Get card types from JSON file using card_meta utilities."""
+    return load_card_types(card_types_json_path)
 
 
-def get_card_types() -> CardTypesData:
-    """Load card types from JSON file.
-
-    Returns:
-        Dictionary of card type data.
-    """
-    card_types = json.load(open(Path(__file__).parent / "CardTypes.json"))
-    return CardTypesData.model_validate(card_types)
+def get_keywords(keywords_json_path: Path = KEYWORDS_PATH) -> KeywordsData:
+    """Get keywords from JSON file using card_meta utilities."""
+    return load_keywords(keywords_json_path)
 
 
 __all__ = [
-    'get_session',
-    'get_keywords',
-    'get_card_types',
-    'setup_database',
+    "get_engine", 
+    "get_session", 
+    "SummaryCardRepository", 
+    "get_card_types", 
+    "get_keywords",
+    "InventoryItem",
+    "CardTypesData",
+    "KeywordsData"
 ]

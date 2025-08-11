@@ -12,16 +12,16 @@ from pathlib import Path
 import sys
 from typing import Dict, Optional, Union, Callable, Any
 import json
-import time
 
-from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+from mtg_deck_builder.db.inventory import load_inventory_items
 from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_yaml
-from mtg_deck_builder.db import get_session
+from mtg_deck_builder.db import get_session, InventoryItem
 from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.models.deck import Deck
-from mtg_deck_builder.models.deck_config import DeckConfig
 from mtg_deck_builder.models.deck_analyzer import DeckAnalyzer as DeckAnalyzerBase
 from mtg_deck_builder.models.deck_exporter import DeckExporter
+from mtg_deck_builder.db.setup import setup_database
+from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
 
 try:
     import pyperclip
@@ -133,21 +133,6 @@ class DeckBuilder:
         self.paths = paths
         self.logger = logger
 
-    def setup_database(self) -> None:
-        """Ensure database exists and is bootstrapped."""
-        # Ensure parent directory exists
-        self.paths.db_path.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            bootstrap(
-                json_path=str(self.paths.all_printings),
-                inventory_path=str(self.paths.inventory),
-                db_url=f"sqlite:///{self.paths.db_path}",
-                use_tqdm=True
-            )
-            self.logger.info("Database bootstrapped successfully")
-        except Exception as e:
-            raise RuntimeError(f"Failed to bootstrap database: {e}")
-
     def setup_callbacks(self) -> Dict[str, Callable]:
         """Set up callback functions for deck building process."""
         def log_callback(**kwargs: Any) -> None:
@@ -198,6 +183,9 @@ class DeckBuilder:
     def build_deck(self, yaml_path: str) -> Optional[Deck]:
         """Build a deck from YAML configuration."""
         try:
+            # Ensure database tables exist
+            setup_database(f"sqlite:///{self.paths.db_path}", base=MTGJSONBase)
+            
             with get_session(db_url=f"sqlite:///{self.paths.db_path}") as session:
                 load_inventory_items(str(self.paths.inventory), session)
                 card_repo = SummaryCardRepository(session=session)
@@ -279,7 +267,6 @@ def main() -> None:
     
     try:
         builder = DeckBuilder(paths, logger)
-        # builder.setup_database()
         
         yaml_path = builder.get_yaml_path(args.yaml)
         logger.info(f"Using YAML config: {yaml_path}")

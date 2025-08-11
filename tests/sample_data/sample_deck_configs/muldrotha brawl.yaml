@@ -1,0 +1,144 @@
+deck:
+  name: "Muldrotha Historic Brawl"
+  colors: ["B", "G", "U"]
+  color_match_mode: "subset"
+  size: 100
+  max_card_copies: 1
+  allow_colorless: true
+  legalities: ["brawl"]
+  owned_cards_only: true
+  commander: "Muldrotha, the Gravetide"
+  mana_curve:
+    min: 1
+    max: 6
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Muldrotha, the Gravetide"
+    min_copies: 1
+
+mana_base:
+  land_count: 37
+  special_lands:
+    count: 7
+    prefer: ["/add.*(b|g|u)/", "/any color/"]
+    avoid: ["/enters tapped/", "/loses life/"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 22
+    preferred_keywords: ["deathtouch", "reach", "exploit", "persist", "undying", "afterlife", "evoke", "fabricate", "mutate", "unearth"]
+    priority_text: ["/mill/", "/return.*graveyard/", "/from your graveyard/", "/dies/", "/leaves the battlefield/"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 10
+    priority_text: ["/destroy/", "/exile/", "/fight/", "/sacrifice/", "/regenerate/", "/counter target spell/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+
+  card_draw:
+    target: 9
+    priority_text: ["/draw a card/", "/investigate/", "/connive/", "/whenever .* enters/", "/dies.*draw/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  buffs:
+    target: 6
+    priority_text: ["/proliferate/", "/support/", "/bolster/", "/adapt/", "/+\\d+\\/+\\d+/", "/until end of turn/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  utility:
+    target: 6
+    priority_text: ["/explore/", "/surveil/", "/populate/", "/flashback/", "/escape/", "/clash/", "/flicker/", "/untap/", "/hexproof/"]
+    preferred_basic_type_priority: ["instant", "sorcery", "enchantment", "creature"]
+
+  ramp:
+    target: 10
+    priority_text: ["/add.*commander.*color/", "/add.*mana.*any color/", "/basic land/", "/search.*library.*land/", "/ramp/", "/mana dork/"]
+    preferred_basic_type_priority: ["artifact", "creature"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+
+  exclude_keywords: ["defender", "hexproof", "lifelink"]
+
+scoring_rules:
+  keyword_abilities:
+    deathtouch: 2
+    reach: 2
+    exploit: 2
+    persist: 2
+    undying: 2
+    afterlife: 2
+    evoke: 2
+    fabricate: 2
+    mutate: 2
+    unearth: 2
+    flash: 1
+    menace: 1
+    trample: 1
+    flying: 1
+    vigilance: 1
+    indestructible: 1
+
+  keyword_actions:
+    proliferate: 2
+    investigate: 2
+    adapt: 2
+    scry: 1
+    surveil: 1
+    fight: 2
+    exile: 2
+    create: 1
+
+  ability_words:
+    landfall: 1
+    revolt: 1
+    raid: 1
+    constellation: 1
+
+  text_matches:
+    "/mill/": 1
+    "/return.*graveyard/": 2
+    "/from your graveyard/": 2
+    "/draw a card/": 2
+    "/destroy/": 2
+    "/exile/": 2
+    "/fight/": 2
+    "/explore/": 1
+    "/surveil/": 1
+    "/populate/": 1
+    "/add.*mana/": 2
+    "/ramp/": 2
+
+  type_bonus:
+    basic_types:
+      creature: 2
+      artifact: 1
+      land: 1
+    sub_types:
+      wizard: 1
+      druid: 1
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 6
+    penalty_per_point: 1
+
+  min_score_to_flag: 7
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "ramp"]
+  allow_less_than_target: false

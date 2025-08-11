@@ -8,13 +8,13 @@ This module defines the UI components and layout for viewing the card library.
 """
 
 import gradio as gr
-from mtg_deck_builder.db.repository import CardRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.db import get_session
 
 
 def load_library():
     with get_session() as session:
-        card_repo = CardRepository(session=session)
+        card_repo = SummaryCardRepository(session=session)
         return card_repo.get_all_cards()
 
 

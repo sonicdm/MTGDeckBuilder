@@ -25,16 +25,14 @@ Usage:
     )
 """
 
-import os
-import json
 import threading
 import logging
 from typing import Callable, Optional, Dict, List
 from pathlib import Path
-from sqlalchemy import create_engine, inspect, func
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy import create_engine, inspect
+from sqlalchemy.orm import sessionmaker
 from mtg_deck_builder.db.models import Base
-from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+from mtg_deck_builder.db.inventory import load_inventory_items
 from mtg_deckbuilder_ui.app_config import app_config
 
 logger = logging.getLogger(__name__)

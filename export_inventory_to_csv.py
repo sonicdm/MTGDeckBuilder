@@ -9,11 +9,9 @@ including color identity, legalities, text, types, and other useful fields.
 import csv
 import logging
 import sys
-from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.repository import SummaryCardRepository
-from mtg_deck_builder.db.mtgjson_models.inventory import InventoryItem
 from mtg_deck_builder.models.card import SummaryCard
 
 # Set up logging

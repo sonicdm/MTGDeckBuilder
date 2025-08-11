@@ -1,0 +1,103 @@
+deck:
+  name: "Quality Fallback Example"
+  colors: ["R", "G"]
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+
+categories:
+  creatures:
+    target: 20
+    preferred_keywords: ["haste", "trample", "first strike"]
+    priority_text: ["enters the battlefield with a +1/+1 counter", "when ~ enters the battlefield"]
+    preferred_basic_type_priority: ["Creature"]
+  
+  removal:
+    target: 8
+    preferred_keywords: ["destroy", "damage"]
+    priority_text: ["destroy target", "deal damage to target", "fight target"]
+    preferred_basic_type_priority: ["Instant", "Sorcery"]
+  
+  ramp:
+    target: 6
+    preferred_keywords: ["mana", "land"]
+    priority_text: ["add {", "search your library for a land"]
+    preferred_basic_type_priority: ["Sorcery", "Instant"]
+
+scoring_rules:
+  # Emergency-safe cards with high static scores
+  text_matches:
+    "enters the battlefield with a +1/+1 counter": 8
+    "haste": 6
+    "fight target": 7
+    "destroy target": 6
+    "deal damage to target": 5
+    "add {": 4
+    "search your library for a land": 5
+    # Tap land patterns - prefer good ones, avoid bad ones
+    "add {r} and {g}": 3
+    "you gain 1 life": 2
+    "scry 1": 2
+    "enters tapped unless": -2
+    "unless you control": -1
+    "unless you pay": -1
+  
+  # Keyword abilities
+  keyword_abilities:
+    "haste": 3
+    "trample": 2
+    "first strike": 2
+    "vigilance": 1
+    "reach": 1
+    "hexproof": 2
+    "indestructible": 3
+  
+  # Type bonuses
+  type_bonus:
+    basic_types:
+      "Creature": 2
+      "Instant": 3
+      "Sorcery": 2
+      "Enchantment": 1
+      "Land": 1
+  
+  # Rarity bonuses
+  rarity_bonus:
+    "rare": 2
+    "mythic": 3
+  
+  # Mana cost penalties
+  mana_penalty:
+    threshold: 4
+    penalty_per_point: 1
+  
+  # Minimum score threshold for fallback/emergency fill
+  min_score_to_flag: 4
+
+fallback_strategy:
+  fill_with_any: false  # Force quality selection
+  fill_priority: ["creatures", "removal", "ramp"]
+  allow_less_than_target: false
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 4  # Will be dynamically adjusted based on colors
+    prefer: 
+      - "Command Tower"
+      - "Exotic Orchard" 
+      - "Terramorphic Expanse"
+      - "Evolving Wilds"
+      - "Fabled Passage"
+      - "Prismatic Vista"
+    avoid: 
+      - "Maze of Ith"
+      - "Guildgate"
+      - "enters tapped unless"
+      - "unless you control"
+
+priority_cards:
+  - name: "Lightning Bolt"
+    min_copies: 4
+  - name: "Llanowar Elves"
+    min_copies: 4 

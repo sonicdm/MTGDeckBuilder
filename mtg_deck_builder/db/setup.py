@@ -5,20 +5,27 @@ This module provides functions to initialize the database and ensure all require
 It is safe to call setup_database multiple times; it will not drop or overwrite existing data.
 """
 
-import sqlalchemy.engine
-from sqlalchemy import create_engine, inspect
-from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
 import logging
 from collections import defaultdict
 import json
 from pathlib import Path
+
+import sqlalchemy.engine
+from sqlalchemy import create_engine, inspect, func, desc, and_
 from sqlalchemy.orm import sessionmaker, joinedload
 from tqdm import tqdm
-from sqlalchemy import func, desc, and_
+
+from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
 
 __all__ = ["setup_database", "force_update_schema"]
 
-def force_update_schema(db_url: str, poolclass=None, connect_args=None, base=MTGJSONBase) -> sqlalchemy.engine.Engine:
+
+def force_update_schema(
+    db_url: str, 
+    poolclass=None, 
+    connect_args=None, 
+    base=MTGJSONBase
+) -> sqlalchemy.engine.Engine:
     """
     Forces a complete update of the database schema by dropping and recreating all tables.
     WARNING: This will delete all data in the database.
@@ -31,7 +38,9 @@ def force_update_schema(db_url: str, poolclass=None, connect_args=None, base=MTG
     Returns:
         sqlalchemy.engine.Engine: The SQLAlchemy engine connected to the database.
     """
-    logging.warning("Force updating database schema - this will delete all existing data!")
+    logging.warning(
+        "Force updating database schema - this will delete all existing data!"
+    )
     
     if poolclass and connect_args:
         engine = create_engine(db_url, poolclass=poolclass, connect_args=connect_args)
@@ -47,7 +56,13 @@ def force_update_schema(db_url: str, poolclass=None, connect_args=None, base=MTG
     base.metadata.create_all(engine)
     return engine
 
-def setup_database(db_url: str, base=MTGJSONBase, poolclass=None, connect_args=None) -> sqlalchemy.engine.Engine:
+
+def setup_database(
+    db_url: str, 
+    base=MTGJSONBase, 
+    poolclass=None, 
+    connect_args=None
+) -> sqlalchemy.engine.Engine:
     """
     Ensures all tables exist in the database specified by db_url.
 
@@ -129,7 +144,8 @@ def build_summary_cards_from_mtgjson(mtgjson_db_path: Path):
     Args:
         mtgjson_db_path: Path to the MTGJSON SQLite database (contains raw data and will contain summary cards)
     """
-    from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONCard, MTGJSONSet, MTGJSONSummaryCard
+    from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONCard, MTGJSONSummaryCard
+    from mtg_deck_builder.db.mtgjson_models.sets import MTGJSONSet
     
     # Convert path to SQLite URL
     db_url = f"sqlite:///{mtgjson_db_path}"

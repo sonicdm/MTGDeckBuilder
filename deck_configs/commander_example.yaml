@@ -1,0 +1,97 @@
+deck:
+  name: "Alesha, Who Smiles at Death - Mardu Aggro"
+  commander: "Alesha, Who Smiles at Death"  # This will auto-set colors to WBR
+  size: 60  # Will be overridden to 100 for Commander
+  max_card_copies: 4  # Will be overridden to 1 for Commander
+  allow_colorless: true
+  legalities: ["commander"]
+  owned_cards_only: false  # Set to true if you want to restrict to owned cards
+  mana_curve:
+    min: 1
+    max: 7
+    curve_shape: "bell"
+    curve_slope: "down"
+
+mana_base:
+  land_count: 37  # Standard for Commander
+  special_lands:
+    count: 5
+    prefer: ["Command Tower", "Path of Ancestry", "Exotic Orchard"]
+    avoid: ["Maze of Ith"]
+
+categories:
+  removal:
+    target: 8
+    preferred_keywords: ["destroy", "exile", "damage"]
+    preferred_basic_type_priority: ["Instant", "Sorcery"]
+    priority_text: ["destroy target", "exile target", "damage to target"]
+  
+  ramp:
+    target: 8
+    preferred_keywords: ["mana", "land", "treasure"]
+    preferred_basic_type_priority: ["Artifact", "Sorcery"]
+    priority_text: ["add {", "search your library for a land"]
+  
+  card_draw:
+    target: 6
+    preferred_keywords: ["draw", "loot", "rummage"]
+    preferred_basic_type_priority: ["Instant", "Sorcery", "Enchantment"]
+    priority_text: ["draw a card", "draw cards", "loot", "rummage"]
+  
+  protection:
+    target: 4
+    preferred_keywords: ["hexproof", "indestructible", "protection"]
+    preferred_basic_type_priority: ["Instant", "Enchantment"]
+    priority_text: ["hexproof", "indestructible", "protection from"]
+
+priority_cards:
+  - name: "Sol Ring"
+    min_copies: 1
+  - name: "Command Tower"
+    min_copies: 1
+  - name: "Path of Ancestry"
+    min_copies: 1
+
+scoring_rules:
+  keyword_abilities:
+    haste: 3
+    first_strike: 2
+    double_strike: 4
+    menace: 2
+    deathtouch: 2
+    lifelink: 2
+    vigilance: 1
+  
+  keyword_actions:
+    draw: 2
+    destroy: 3
+    exile: 3
+    damage: 2
+  
+  text_matches:
+    "when ~ enters the battlefield": 2
+    "when ~ attacks": 2
+    "when ~ dies": 2
+  
+  type_bonus:
+    basic_types:
+      Creature: 1
+      Instant: 2
+      Sorcery: 1
+      Enchantment: 1
+      Artifact: 1
+  
+  rarity_bonus:
+    common: 0
+    uncommon: 1
+    rare: 2
+    mythic: 3
+  
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["removal", "ramp", "card_draw", "protection"]
+  allow_less_than_target: true 

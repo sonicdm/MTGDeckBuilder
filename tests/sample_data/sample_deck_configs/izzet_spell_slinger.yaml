@@ -1,0 +1,113 @@
+deck:
+  name: "Izzet Spellslinger"
+  colors: ["U", "R"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["alchemy"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 5
+    curve_shape: "bell"
+    curve_slope: "down"
+
+priority_cards:
+  - name: "Young Pyromancer"
+    min_copies: 2
+  - name: "Galvanic Iteration"
+    min_copies: 2
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer: ["add {u}", "add {r}", "any color", "scry"]
+    avoid: ["enters tapped unless"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  creatures:
+    target: 14
+    preferred_keywords: ["prowess", "flying"]
+    priority_text: ["when you cast", "noncreature spell", "draw a card"]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  removal:
+    target: 8
+    priority_text: ["damage", "burn", "destroy target creature", "counter target"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  card_draw:
+    target: 6
+    priority_text: ["draw a card", "scry", "exile the top"]
+    preferred_basic_type_priority: ["instant", "sorcery", "creature"]
+
+  buffs:
+    target: 4
+    priority_text: ["+x/+0", "until end of turn", "double strike"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  utility:
+    target: 4
+    priority_text: ["copy target spell", "treasure", "return target"]
+    preferred_basic_type_priority: ["instant", "sorcery", "artifact"]
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 3
+    mythic: 2
+
+  exclude_keywords: ["defender", "lifelink", "hexproof"]
+
+scoring_rules:
+  keyword_abilities:
+    flying: 1
+    prowess: 2
+    hexproof: -5
+    haste: 1
+
+  keyword_actions:
+    scry: 2
+    exile: 2
+    draw: 2
+    copy: 3
+
+  ability_words:
+    instant: 1
+    raid: 1
+
+  text_matches:
+    "noncreature spell": 3
+    "copy target": 2
+    "draw a card": 2
+    "/prowess/": 2
+
+  type_bonus:
+    basic_types:
+      creature: 2
+      instant: 2
+      sorcery: 2
+    sub_types:
+      wizard: 2
+    super_types:
+      legendary: 1
+
+  rarity_bonus:
+    rare: 2
+    mythic: 1
+
+  mana_penalty:
+    threshold: 5
+    penalty_per_point: 1
+
+  min_score_to_flag: 5
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["creatures", "removal", "card_draw"]
+  allow_less_than_target: false

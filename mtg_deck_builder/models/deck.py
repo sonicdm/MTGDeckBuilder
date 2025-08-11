@@ -1,5 +1,5 @@
 import random
-from typing import List, Dict, Optional, Set, Tuple, Any, Union, TYPE_CHECKING
+from typing import List, Dict, Optional, Set, Tuple, Any, Union, TYPE_CHECKING, Mapping, cast, MutableMapping
 from pathlib import Path
 import pandas as pd
 import json
@@ -12,7 +12,7 @@ from mtg_deck_builder.yaml_builder.types import LandStub
 from mtg_deck_builder.models.card_meta import load_card_types, load_keywords
 if TYPE_CHECKING:
     from mtg_deck_builder.models.card_meta import CardTypesData, KeywordsData
-    from mtg_deck_builder.db.repository import CardRepository, SummaryCardRepository
+    from mtg_deck_builder.db.repository import SummaryCardRepository
     from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
 
 logger = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ class Deck:
         self.session: Optional[Session] = session
         self.name: str = name
         self.config: Optional[DeckConfig] = config  # Placeholder for DeckConfig, if needed
-        self.cards: Dict[str, Union['MTGJSONSummaryCard', 'LandStub']] = {}
+        self.cards: MutableMapping[str, Union['LandStub', 'MTGJSONSummaryCard']] = {}
         self.inventory: Dict[str, int] = {}
         logger.debug(f"Deck constructor called with cards type: {type(cards)}")
         if isinstance(cards, dict):
@@ -51,17 +51,17 @@ class Deck:
                 logger.debug(f"First card type: {type(cards[0])}")
                 logger.debug(f"First card: {cards[0]}")
         if cards is None:
-            self._cards = {}
-            self._inventory = {}
+            self.cards = {}
+            self.inventory = {}
         elif isinstance(cards, dict):
-            self._cards = cards
-            self._inventory = {name: 1 for name in cards.keys()}
+            self.cards = cast(MutableMapping[str, Union['LandStub', 'MTGJSONSummaryCard']], cards)
+            self.inventory = {name: 1 for name in cards.keys()}
         elif isinstance(cards, list):
-            self._cards = {card.name: card for card in cards}
-            self._inventory = {card.name: 1 for card in cards}
+            self.cards = cast(MutableMapping[str, Union['LandStub', 'MTGJSONSummaryCard']], {card.name: card for card in cards})
+            self.inventory = {card.name: 1 for card in cards}
         else:
             raise ValueError("cards must be a dict or a list of CardDB")
-        logger.debug(f"Deck initialized with {len(self._cards)} cards: {list(self._cards.keys())}")
+        logger.debug(f"Deck initialized with {len(self.cards)} cards: {list(self.cards.keys())}")
 
     @property
     def keywords(self) -> 'KeywordsData':
@@ -77,7 +77,7 @@ class Deck:
         """
         Returns an informative string representation of the deck.
         """
-        num_unique_cards = len(self._cards)
+        num_unique_cards = len(self.cards)
         total_cards = self.size()
         return f"<Deck(name='{self.name}', unique_cards={num_unique_cards}, total_cards={total_cards})>"
 
@@ -104,7 +104,7 @@ class Deck:
         inventory = {str(card.name): 1 for card in selected}
         deck_config = DeckConfig(deck=DeckMeta(name=name, size=limit))
         deck = cls(cards=cards_dict, session=repo.session, config=deck_config, name=name)
-        deck._inventory = inventory
+        deck.inventory = inventory
         return deck
 
     def insert_card(self, card: Union['MTGJSONSummaryCard', 'LandStub'], quantity: int = 1) -> None:
@@ -162,7 +162,18 @@ class Deck:
         Return a list of cards that match a specific type (case-insensitive substring match).
         """
         type_match = type_match.lower()
-        return [card for card in self.cards.values() if type_match in (getattr(card, "types", "") or "").lower()]
+        matching_cards = []
+        for card in self.cards.values():
+            card_types = getattr(card, "types", [])
+            if isinstance(card_types, list):
+                # Handle types as a list
+                type_str = " ".join(card_types).lower()
+            else:
+                # Handle types as a string
+                type_str = str(card_types or "").lower()
+            if type_match in type_str:
+                matching_cards.append(card)
+        return matching_cards
 
     def search_cards(self, text: str) -> List['MTGJSONSummaryCard']:
         """
@@ -231,7 +242,7 @@ class Deck:
         Returns:
             Deck: A new Deck instance with the data from the dictionary
         """
-        from mtg_deck_builder.db.models import CardDB
+        from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
         
         # Create deck instance
         deck = cls()
@@ -240,7 +251,7 @@ class Deck:
         # Load cards from database using card_name
         cards_dict = {}
         for card_data in data['cards'].values():
-            card = session.query(CardDB).get(card_data['name'])
+            card = session.query(MTGJSONSummaryCard).filter_by(name=card_data['name']).first()
             if card:
                 cards_dict[card.name] = card
         

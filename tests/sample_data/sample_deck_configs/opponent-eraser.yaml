@@ -1,0 +1,118 @@
+deck:
+  name: "Opponent Eraser"
+  colors: ["B", "R"]
+  color_match_mode: "subset"
+  size: 60
+  max_card_copies: 4
+  allow_colorless: true
+  legalities: ["standard"]
+  owned_cards_only: true
+  mana_curve:
+    min: 1
+    max: 6
+    curve_shape: "linear"
+    curve_slope: "flat"
+
+priority_cards: []
+
+mana_base:
+  land_count: 24
+  special_lands:
+    count: 6
+    prefer: ["add {b}", "add {r}"]
+    avoid: ["enters tapped unless"]
+  balance:
+    adjust_by_mana_symbols: true
+
+categories:
+  removal:
+    target: 30
+    priority_text: [
+      "destroy target creature an opponent controls",
+      "exile target creature an opponent controls",
+      "damage to target creature",
+      "target creature you don't control",
+      "/-x/-x/"
+    ]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  creatures:
+    target: 6
+    preferred_keywords: ["deathtouch"]
+    priority_text: [
+      "when this enters",
+      "when this dies",
+      "destroy target creature an opponent controls",
+      "fight target creature you don't control"
+    ]
+    preferred_basic_type_priority: ["creature", "planeswalker"]
+
+  utility:
+    target: 2
+    priority_text: ["scry", "draw", "treasure"]
+    preferred_basic_type_priority: ["instant", "sorcery", "artifact"]
+
+  card_draw:
+    target: 2
+    priority_text: ["draw a card", "when this dies", "exile the top"]
+    preferred_basic_type_priority: ["instant", "sorcery"]
+
+  buffs:
+    target: 0
+
+card_constraints:
+  rarity_boost:
+    common: 1
+    uncommon: 2
+    rare: 2
+    mythic: 1
+
+  exclude_keywords: ["defender", "lifelink", "hexproof", "indestructible", "each creature", "sacrifice a creature"]
+
+scoring_rules:
+  keyword_abilities:
+    deathtouch: 2
+    menace: 1
+    hexproof: -5
+    indestructible: -5
+    flying: -2
+
+  keyword_actions:
+    fight: 3
+    exile: 4
+    destroy: 5
+
+  ability_words:
+    raid: 1
+
+  text_matches:
+    "destroy target creature an opponent controls": 6
+    "exile target creature an opponent controls": 6
+    "damage to target creature": 4
+    "/-x/-x/": 3
+    "target creature you don't control": 5
+    "when this dies": 1
+
+  type_bonus:
+    basic_types:
+      instant: 4
+      sorcery: 3
+    sub_types:
+      wizard: 1
+    super_types:
+      legendary: 0
+
+  rarity_bonus:
+    rare: 1
+    mythic: 1
+
+  mana_penalty:
+    threshold: 6
+    penalty_per_point: 1
+
+  min_score_to_flag: 8
+
+fallback_strategy:
+  fill_with_any: true
+  fill_priority: ["removal", "card_draw", "utility"]
+  allow_less_than_target: false

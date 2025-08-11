@@ -2,7 +2,7 @@
 
 # Standard library imports
 import logging
-from typing import Dict, List, Optional, Tuple, Union, Any
+from typing import Dict, List, Optional, Tuple
 
 # Third-party imports
 import gradio as gr
@@ -11,12 +11,11 @@ import pandas as pd
 # Local application imports
 from mtg_deck_builder.models.deck import Deck
 from mtg_deck_builder.models.deck_config import DeckConfig
-from mtg_deck_builder.db.repository import CardRepository, SummaryCardRepository
+from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.yaml_builder.yaml_deckbuilder import build_deck_from_config
 from mtg_deckbuilder_ui.logic.deck_progress_callbacks import get_deck_builder_callbacks
 from mtg_deckbuilder_ui.logic.deck_validation_func import validate_and_analyze_generated_deck
-from mtg_deckbuilder_ui.ui.config_sync import extract_config_from_ui
 
 logger = logging.getLogger(__name__)
 
@@ -203,7 +202,7 @@ def on_inventory_selected(inventory_path: str) -> str:
         # Get database session
         with get_session() as session:
             # Load inventory using load_inventory_items
-            from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+            from mtg_deck_builder.db.inventory import load_inventory_items
             load_inventory_items(inventory_path, session)
             return f"Inventory loaded from {inventory_path}"
 

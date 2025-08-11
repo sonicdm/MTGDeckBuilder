@@ -1,12 +1,11 @@
 import random
-from mtg_deck_builder.db.mtgjson_repository import MTGJSONCardRepository
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.repository import SummaryCardRepository
 from mtg_deck_builder.db.setup import setup_database
 from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
-from sqlalchemy import inspect, text
-from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONCard, MTGJSONSummaryCard  # Import MTGJSONCard model        
-from mtg_deck_builder.db.mtgjson_models.inventory import load_inventory_items
+from sqlalchemy import text
+from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard  # Import MTGJSONCard model
+
 # Force update the database schema to match our models
 db_url = "sqlite:///data/mtgjson/AllPrintings.sqlite"
 inventory_file = "inventory_files/card inventory.txt"
