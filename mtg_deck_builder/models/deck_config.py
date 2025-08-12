@@ -21,7 +21,7 @@ Classes:
 """
 import yaml
 from pathlib import Path
-from typing import List, Dict, Optional, Union, Any, ClassVar
+from typing import List, Dict, Optional, Union, Any, ClassVar, Literal
 from pydantic import BaseModel, Field, validator
 
 
@@ -79,14 +79,23 @@ class DeckMeta(BaseModel):
     """
     name: Optional[str] = None
     colors: List[str] = Field(default_factory=list)
-    color_match_mode: str = "subset"  # Options: exact, subset, any
-    size: int = 60
-    max_card_copies: int = 4
+    color_match_mode: Literal["exact", "subset", "any"] = "subset"
+    size: int = Field(60, ge=1, le=250)
+    max_card_copies: int = Field(4, ge=1, le=99)
     allow_colorless: bool = True
     legalities: List[str] = Field(default_factory=list)
     owned_cards_only: bool = True
     commander: Optional[str] = None
     mana_curve: ManaCurveMeta = Field(default_factory=ManaCurveMeta)
+
+    # Normalize colors to uppercase symbols
+    @validator("colors", pre=True, always=True)
+    def _normalize_colors(cls, v: Any) -> List[str]:
+        if v is None:
+            return []
+        if isinstance(v, list):
+            return [str(c).strip().upper() for c in v if str(c).strip()]
+        return [str(v).strip().upper()] if str(v).strip() else []
 
     def model_dump(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
         """

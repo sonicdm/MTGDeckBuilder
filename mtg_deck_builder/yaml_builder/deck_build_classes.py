@@ -2,6 +2,7 @@
 """Classes for deck building process."""
 
 from typing import List, Dict, Optional, Any, Union, Set, Tuple
+import random
 from datetime import datetime
 import logging
 from collections import defaultdict
@@ -136,6 +137,7 @@ class DeckBuildContext:
     meta: Dict[str, Any] = field(default_factory=dict)
     scored_cards: List[tuple[float, MTGJSONSummaryCard]] = field(default_factory=list)
     operations: List[str] = field(default_factory=list)
+    build_log: List[Dict[str, Any]] = field(default_factory=list)
     # empty_slots: int = 0
     land_count: int = 0
     land_cards: List[ContextCard] = field(default_factory=list)
@@ -393,6 +395,7 @@ class BuildContext:
     summary_repo: SummaryCardRepository
     callbacks: Optional[Dict[str, Any]] = None
     deck_build_context: Optional[DeckBuildContext] = None
+    rng: Optional[random.Random] = None
     
     @property
     def config(self) -> DeckConfig:

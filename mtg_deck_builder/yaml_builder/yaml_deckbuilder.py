@@ -19,6 +19,7 @@ import os
 import traceback
 
 import yaml
+import random
 
 from mtg_deck_builder.db import get_session
 from mtg_deck_builder.db.repository import SummaryCardRepository
@@ -72,13 +73,39 @@ def build_deck_from_config(
     )
     
     try:
+        # Seed RNG once per build for determinism
+        seed_value = str(getattr(deck_config, 'seed', None) or deck_config.deck.name or 'mtg-deck-builder')
+        rng = random.Random(seed_value)
         # Step 1: Apply deck-wide filters
         logger.info("[BuildPhase] Step 1: Applying deck-wide filters")
         _filter_summary_repository(build_context)
         
-        # Step 2: Add priority cards
+        # Step 2: Add priority cards (with global copy cap and logging)
         logger.info("[BuildPhase] Step 2: Adding priority cards")
-        _handle_priority_cards(build_context)
+        try:
+            from collections import defaultdict
+            max_copies = int(getattr(deck_config.deck, 'max_card_copies', 4) or 4)
+            copies: Dict[str, int] = defaultdict(int)
+            all_cards = build_context.summary_repo.get_all_cards()
+            name_index = {str(getattr(c, 'name', '')): c for c in all_cards}
+            for p in (deck_config.priority_cards or []):
+                name = str(getattr(p, 'name', '') or '').strip()
+                want = int(getattr(p, 'min_copies', 1) or 1)
+                have = copies[name]
+                add = max(0, min(want, max_copies - have))
+                if add <= 0:
+                    continue
+                card = name_index.get(name)
+                if not card:
+                    if build_context.deck_build_context:
+                        build_context.deck_build_context.build_log.append({"warning": f"priority_missing:{name}"})
+                    continue
+                if build_context.deck_build_context and build_context.deck_build_context.add_card(card, reason="priority_card", source="priority", quantity=add):
+                    copies[name] += add
+                    build_context.deck_build_context.log(f"Added priority {add}x {name}")
+        except Exception:
+            # Fallback to existing handler
+            _handle_priority_cards(build_context)
         
         # Step 3: Apply card constraints
         logger.info("[BuildPhase] Step 3: Applying card constraints")
@@ -223,21 +250,36 @@ def build_deck_from_yaml(
         Deck object if successful, None otherwise
     """
     try:
-        # Load configuration
-        config_dict: Dict[str, Any]
-        if isinstance(yaml_data, str):
-            if os.path.exists(yaml_data):
-                with open(yaml_data, 'r') as f:
-                    config_dict = yaml.safe_load(f)
+        # Load configuration with migration and readable errors
+        def _load_yaml(y: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
+            if isinstance(y, str):
+                if os.path.exists(y):
+                    with open(y, 'r', encoding='utf-8') as f:
+                        data = yaml.safe_load(f)
+                else:
+                    data = yaml.safe_load(y)
             else:
-                config_dict = yaml.safe_load(yaml_data)
-        else:
-            config_dict = yaml_data
-                
-        # Create deck config
-        deck_config = DeckConfig.from_dict(config_dict)
+                data = y
+            if not isinstance(data, dict):
+                raise ValueError("Invalid deck config: YAML root must be a mapping")
+            # migrate legacy keys
+            root_version = str(data.get('version') or '').strip()
+            deck_dict = data.get('deck') or {}
+            if not root_version or root_version == '1.0':
+                if isinstance(deck_dict, dict) and 'color_mode' in deck_dict and 'color_match_mode' not in deck_dict:
+                    deck_dict['color_match_mode'] = deck_dict.pop('color_mode')
+                data['version'] = '1.1'
+                data['deck'] = deck_dict
+            return data
+
+        try:
+            config_dict: Dict[str, Any] = _load_yaml(yaml_data)
+            deck_config = DeckConfig.from_dict(config_dict)
+        except Exception as e:
+            raise ValueError(f"Invalid deck config: {e}")
         
-        # Build deck
+        # Build deck (seeded RNG for determinism)
+        # Create deck and context in build_deck_from_config; but seed RNG here by piggybacking on name/seed
         return build_deck_from_config(deck_config, summary_repo, callbacks, verbose)
         
     except Exception as e:
