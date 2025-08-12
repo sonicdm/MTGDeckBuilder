@@ -36,7 +36,6 @@ class MTGJSONToken(MTGJSONBase):
     manaCost = Column(Text, nullable=True)
     orientation = Column(Text, nullable=True)
     originalText = Column(Text, nullable=True)
-    originalType = Column(Text, nullable=True)
     otherFaceIds = Column(Text, nullable=True)
     power = Column(Text, nullable=True)
     promoTypes = Column(Text, nullable=True)
