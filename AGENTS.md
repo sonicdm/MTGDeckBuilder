@@ -1,250 +1,123 @@
-# AGENTS.md - MTG Deck Builder
+# AGENTS.md - MTG Deck Builder (FastAPI + React)
 
 ## Project Overview
-This is a Magic: The Gathering deck builder application built with Python, Flask, and Gradio. The application allows users to build decks using YAML configuration files, manage card collections, and analyze deck performance.
+A local-first Magic: The Gathering deck builder with a FastAPI backend and a React (Vite) frontend. It builds decks from YAML configurations using the `mtg_deck_builder` library, analyzes results, and manages files under the project `data/` directory.
 
 ## Architecture Guidelines
 
 ### Core Components
-- **Database Layer**: SQLAlchemy ORM with repository pattern
-- **YAML Deck Builder**: Configuration-driven deck building system
-- **Gradio UI**: Web-based interface for deck management
-- **MTGJSON Integration**: Card data synchronization from MTGJSON
+- **Backend (FastAPI)**: REST API for deck building, analysis, file I/O, inventory, and configuration
+- **Frontend (React + Vite)**: Modern UI with tabbed navigation, live YAML editor, deck viewer, and analysis
+- **Database Layer (SQLAlchemy)**: SQLite with repository pattern and MTGJSON-derived models
+- **YAML Deck Builder**: Configuration-driven pipeline with scoring, categories, mana base, and fallback logic
+- **File Safety**: Safe path resolution so all reads/writes are confined to `data/*`
 
 ### Project Structure
 ```
 MTGDecks/
+├── backend/                   # FastAPI app and routers
+│   ├── app.py                 # FastAPI app factory + router mounting
+│   └── routers/               # API endpoints (build, arena import, configs, decks, inventory, snapshots)
+├── frontend/                  # React app (Vite)
+│   ├── src/
+│   │   ├── App.tsx           # Main tabs + orchestration
+│   │   └── panels/           # UI components (BuilderForm, DeckViewer, DeckAnalysis, etc.)
+│   └── vite.config.ts        # Dev server + proxy to FastAPI
 ├── mtg_deck_builder/          # Core deck building logic
-│   ├── db/                    # Database models and repositories
-│   ├── models/                # Data models and business logic
-│   └── yaml_builder/          # YAML configuration processing
-├── mtg_deckbuilder_ui/        # Gradio-based user interface
-│   ├── ui/                    # UI components and layouts
-│   ├── logic/                 # UI callback functions
-│   └── utils/                 # Utility functions
-├── tests/                     # Test suite
-├── deck_configs/              # YAML deck configuration files
-└── requirements.txt           # Python dependencies
+│   ├── db/                    # DB session, repositories, MTGJSON models
+│   ├── models/                # Deck, DeckConfig, analyzers/exporters
+│   └── yaml_builder/          # YAML builder pipeline and helpers
+├── data/                      # Local data root (db, configs, decks, inventory, exports)
+└── tests/                     # pytest suite
 ```
 
 ## Coding Standards
 
 ### Python Best Practices
-- **Code Formatting**: Use Black with 88 character line length
-- **Import Sorting**: Use isort for consistent import organization
-- **Type Hints**: Use type hints for all function parameters and returns
-- **Naming Conventions**:
-  - `snake_case` for functions and variables
-  - `PascalCase` for classes
-  - `UPPER_CASE` for constants
-- **Documentation**: Use Google-style docstrings for all public APIs
+- **Formatting**: Black (88 chars) and isort
+- **Typing**: Full type hints; Pydantic v2 models for API/data contracts
+- **Naming**: `snake_case` for functions/vars, `PascalCase` for classes, `UPPER_CASE` for constants
+- **Docs**: Google-style docstrings for public APIs; concise comments explain “why”
 
-### Database Guidelines
-- **Repository Pattern**: All database access goes through repository interfaces
-- **Models**: Define in `mtg_deck_builder/db/models.py`
-- **Relationships**: Use proper SQLAlchemy relationships
-- **Migrations**: Use Alembic for database schema changes
-- **Connection Management**: Implement proper connection pooling
+### TypeScript/React Style
+- Use function components with hooks
+- Keep components focused; lift state to parents only as needed
+- Prefer explicit prop types and narrow state
+- Keep UI logic separate from data-fetching helpers
+- Co-locate component styles; use CSS variables for themes
 
-### YAML Configuration System
-- **Schema Validation**: All YAML configs must validate against schema in `/README.yaml.md`
-- **DeckConfig Objects**: Convert all YAML configs to `DeckConfig` before use
-- **Context Tracking**: Use `DeckBuildContext` for tracking build state
-- **Category Rules**: Use `CategoryDefinition` for card selection rules
-- **Scoring System**: Use `ScoringRulesMeta` for card evaluation
+## Backend Guidelines (FastAPI)
+- Dependency injection via `Depends` for config and DB URL/session
+- All file I/O must use the safe-path utility and be rooted in `data/`
+- Return structured JSON for deck build results: decklist, analysis, arena export, and optional debug context/logs
+- Log meaningful build steps; expose debug summaries when `debug=true`
+- Keep routers cohesive: `build`, `arena_import`, `configs`, `decks_fs`, `inventory_fs`, `snapshots`
 
-## Development Workflow
+## Database Guidelines (SQLAlchemy)
+- Use the repository pattern for all data access
+- Keep models in sync with schema; prefer relationships over manual joins
+- SQLite for local dev; design queries for correctness first, optimize when needed
+- Migrations via Alembic (planned)
 
-### Testing Strategy
-- **Framework**: Use pytest for all testing
-- **Coverage**: Aim for comprehensive test coverage
-- **Fixtures**: Use pytest fixtures for test data setup
-- **Mocking**: Use pytest-mock for external dependencies
-- **Test Organization**: Group tests by functionality
+## YAML Configuration System
+- Validate YAML to `DeckConfig` before use
+- Use `DeckBuildContext` to track selections, reasons, sources, and logs
+- Categories must track targets; ensure scaling if targets exceed non-land slots
+- Scoring drives selection; fallback fills below threshold when needed
+- Mana base logic adds special lands and basic lands using mana symbol distribution
 
-### Error Handling
-- **Custom Exceptions**: Create specific exception classes
-- **Logging**: Implement proper logging throughout the application
-- **User Feedback**: Use Gradio's error system for UI feedback
-- **Validation**: Validate inputs at all layers
-
-### Performance Considerations
-- **Database Queries**: Optimize with proper indexing and query patterns
-- **Caching**: Implement caching for frequently accessed data
-- **Background Tasks**: Use background processing for heavy operations
-- **Connection Pooling**: Use proper database connection management
-
-## UI Guidelines
-
-### Gradio Components
-- **Version**: Use Gradio 5.32.1
-- **Layout**: Organize components logically with proper spacing
-- **Validation**: Implement real-time validation for user inputs
-- **Feedback**: Use `gr.Info()` and `gr.Error()` for user feedback
-- **Progress**: Show progress bars for long-running operations
-
-### Component Organization
-- **Tabs**: Use tabs for different functional areas
-- **Reusability**: Create reusable component groups
-- **State Management**: Separate logic from display components
-- **Theming**: Use consistent theming throughout the application
-
-## Common Patterns
-
-### Repository Pattern
-```python
-class SampleRepository(BaseRepository):
-    def filter_cards(
-        self,
-        name_query: Optional[str] = None,
-        text_query: Optional[str] = None,
-        rarity: Optional[str] = None,
-        basic_type: Optional[str] = None,
-        type_text: Optional[Union[str, List[str]]] = None,  # Keep for backward compatibility
-        supertype: Optional[str] = None,
-        subtype: Optional[str] = None,
-        keyword_multi: Optional[List[str]] = None,
-        type_query: Optional[Union[str, List[str]]] = None,
-        colors: Optional[List[str]] = None,
-        color_identity: Optional[List[str]] = None,
-        color_mode: str = "subset",
-        legal_in: Optional[List[str]] = None,
-        add_where: Optional[str] = None,
-        exclude_type: Optional[List[str]] = None,
-        names_in: Optional[List[str]] = None,
-        min_quantity: int = 0,
-        allow_colorless: bool = False,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None
-    ) -> 'SampleCardRepository':
-
-    
-```
-
-### YAML Deck Building
-```python
-# 1. Parse and validate YAML config
-deck_config = DeckConfig.from_yaml(yaml_content)
-
-
-# 2. Initialize build context
-deck_build_context = DeckBuildContext(
-    config=deck_config,
-    summary_repo=summary_repo,
-    deck=deck
-)
-build_context = BuildContext(
-    deck_config=deck_config,
-    summary_repo=summary_repo,
-    callbacks=callbacks,
-    deck_build_context=deck_build_context
-)
-
-
-# 3. Build deck using context
-deck_builder = YamlDeckBuilder()
-deck = deck_builder.build_deck(context)
-```
-
-### UI Component Pattern
-```python
-def create_deck_builder_tab():
-    with gr.Tab("Deck Builder"):
-        with gr.Row():
-            yaml_input = gr.Code(label="YAML Configuration")
-            build_button = gr.Button("Build Deck")
-        
-        with gr.Row():
-            deck_output = gr.Dataframe(label="Generated Deck")
-```
-
-## Technology Stack
-
-### Core Dependencies
-- **Python**: 3.8+
-- **Flask**: Web framework
-- **SQLAlchemy**: ORM and database management
-- **Gradio**: UI framework
-- **PyYAML**: YAML processing
-- **pytest**: Testing framework
-
-### Development Tools
-- **Black**: Code formatting
-- **isort**: Import sorting
-- **mypy**: Type checking
-- **pylint**: Code linting
-- **Alembic**: Database migrations
-
-## Troubleshooting
-
-### Common Issues
-1. **Database Connection**: Check connection pooling and session management
-2. **YAML Validation**: Ensure configs match schema requirements
-3. **UI Responsiveness**: Use background tasks for heavy operations
-4. **Memory Usage**: Monitor large dataset processing
-
-### Debugging Tips
-- Use proper logging throughout the application
-- Implement comprehensive error handling
-- Use pytest fixtures for test data
-- Monitor database query performance
-
-## API Guidelines
-
-### RESTful Design
-- Use proper HTTP status codes
-- Implement consistent error responses
-- Use JSON for data exchange
-- Follow REST naming conventions
-
-### Documentation
-- Document all public APIs with docstrings
-- Use type hints for function signatures
-- Provide usage examples
-- Keep README files updated
+## Frontend Guidelines (React + Vite)
+- **Vite Dev Server**: Use `npm run dev`; HMR enabled (proxy to FastAPI for `/api`)
+- **Tabs**: Builder, Deck Viewer, Files, (Inventory as needed)
+- **Builder**: Two-column form + live YAML editor; Build button; collapsible panels; debug log/context display
+- **Deck Viewer**: Deck table with column selector, sorting, hover card preview, reasons/scores, Arena export copy, load/save
+- **Deck Analysis**: Mana curve, type counts, rarity breakdown, color balance (local, no external APIs)
+- **Files Panel**: List/read/write YAML and deck JSON in `data/`
+- **UX**: Dark theme, tooltips, concise help text; avoid external calls unless explicitly enabled
 
 ## Testing Strategy
+- **pytest** for backend and library logic
+- Unit tests for YAML builder, repository filters, analyzers/exporters
+- Sample YAML configs and inventories under `tests/sample_data/`
+- Consider lightweight UI tests for critical flows (optional)
 
-### Test Organization
-- **Unit Tests**: Test individual functions and classes
-- **Integration Tests**: Test component interactions
-- **End-to-End Tests**: Test complete workflows
-- **Performance Tests**: Test system performance under load
+## Error Handling & Logging
+- Use structured logs on the backend; include clear build-phase markers
+- Return `HTTPException` with precise messages on validation failures
+- In the builder, record `unmet_conditions`, `operations`, and `category_summary`
+- Frontend surfaces backend errors and debug information in the UI
 
-### Test Data
-- Use fixtures for consistent test data
-- Mock external dependencies
-- Test edge cases and error conditions
-- Maintain test data in `tests/sample_data/`
+## Performance Considerations
+- Query only necessary columns/relationships for summary cards
+- Cache and reuse repository results when feasible
+- Keep client bundles small; lazy-load heavy UI areas if needed
 
-## Deployment Guidelines
+## Technology Stack
+- **Python**: 3.12+
+- **FastAPI** + **Uvicorn**
+- **SQLAlchemy** + SQLite
+- **Pydantic v2**
+- **React 18** + **TypeScript** + **Vite**
+- **js-yaml** for YAML parsing in UI
 
-### Environment Setup
-- Use virtual environments (venv)
-- Pin dependency versions in requirements.txt
-- Use environment variables for configuration
-- Implement proper logging configuration
+## Troubleshooting
+- HMR works only with `npm run dev` on `http://localhost:5173` (proxy to FastAPI)
+- Ensure venv is 3.12+ and packages installed from `requirements.txt`
+- All app data must live under `data/`; safe-path rejects traversal
+- If matplotlib isn’t installed, plotting helpers are optional and should not break backend imports
 
-### Production Considerations
-- Use proper database connection pooling
-- Implement caching strategies
-- Monitor application performance
-- Set up proper error tracking
+## API Guidelines
+- RESTful endpoints with proper verbs/status codes
+- JSON payloads and responses; Pydantic models where appropriate
+- Consistent error structure; clear validation messages
 
-## Contributing Guidelines
+## Deployment Notes
+- Use `.env` or config files to set data roots/paths if needed
+- Keep `node_modules` and venv out of version control (`.gitignore` updated)
+- Consider building the React app and serving static files via FastAPI in production
 
-### Code Review Process
-- Follow established coding standards
-- Write comprehensive tests
-- Update documentation as needed
-- Use meaningful commit messages
-
-### Git Workflow
-- Use feature branches for development
-- Write descriptive commit messages
-- Keep commits atomic and focused
-- Use proper .gitignore patterns
-
----
-
-**Note**: This document should be updated as the project evolves. Always refer to the latest version for current guidelines and best practices. 
+## Contributing
+- Use feature branches; keep commits small and focused
+- Update docs when changing APIs or user flows
+- Write tests for builder logic and critical routers
+- Follow the style guidelines above for Python and React 
