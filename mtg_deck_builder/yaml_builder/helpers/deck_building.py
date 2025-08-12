@@ -8,6 +8,7 @@ This module provides functions for:
 """
 
 import logging
+from collections import defaultdict
 from typing import Any, Dict, Optional, Union
 
 from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
@@ -32,18 +33,25 @@ def _handle_priority_cards(build_context: BuildContext) -> None:
     if not deck_config.priority_cards:
         return
 
-    for priority in deck_config.priority_cards:
-        card = build_context.summary_repo.find_by_name(priority.name)
-        if not card:
-            logger.warning(f"Priority card not found: {priority.name}")
-            continue
-
-        success = context.add_card(
-            card, "Priority Card", "priority", getattr(priority, "quantity", 1)
+    max_copies = int(getattr(deck_config.deck, "max_card_copies", 4) or 4)
+    copies = defaultdict(int)
+    for p in deck_config.priority_cards:
+        name = (getattr(p, "name", "") or "").strip()
+        want = int(
+            getattr(p, "qty", None)
+            or getattr(p, "quantity", None)
+            or getattr(p, "min_copies", 1)
         )
-
-        if success:
-            logger.debug(f"Added priority card: {priority.name}")
+        have = copies[name]
+        add = max(0, min(want, max_copies - have))
+        if add <= 0:
+            continue
+        card = build_context.summary_repo.find_by_name(name)
+        if not card:
+            build_context.build_log.append({"warning": f"priority_missing:{name}"})
+            continue
+        if context.add_card(card, "Priority Card", "priority", add):
+            copies[name] += add
 
 
 def _handle_basic_lands(
