@@ -14,6 +14,8 @@ deck:
   colors: ["B", "R"]
   color_match_mode: "subset"          # Options: exact, subset, any
   size: 60
+  sideboard_size: 15                   # Optional: defaults via format
+  format: "standard"                   # Optional presets: standard, commander
   max_card_copies: 4
   allow_colorless: true
   legalities: ["alchemy"]
@@ -43,6 +45,7 @@ priority_cards:
 ```yaml
 mana_base:
   land_count: 24
+  color_weights: {B: 3, R: 2}         # Optional explicit basic land ratios
   special_lands:
     count: 6
     prefer: ["add {b}", "add {r}", "any color"]
@@ -62,11 +65,14 @@ categories:
     preferred_keywords: ["haste", "menace", "first strike", "double strike"]
     priority_text: ["when this creature attacks", "sacrifice a creature", "/strike/"]
     preferred_basic_type_priority: ["creature", "planeswalker"]
+    priority: 2
+    weight: 1.2
 
   removal:
     target: 6
     priority_text: ["damage", "destroy", "/-x/-x/", "sacrifice another creature"]
     preferred_basic_type_priority: ["instant", "sorcery", "enchantment"]
+    priority: 3
 
   card_draw:
     target: 2
@@ -149,6 +155,10 @@ scoring_rules:
     penalty_per_point: 1
 
   min_score_to_flag: 6
+  diminishing_returns:
+    haste: 3
+  category_multipliers:
+    removal: 1.1
 ```
 
 > 💡 All keywords are matched from card metadata fields — not just raw rules text. Case is normalized to lowercase.
@@ -171,4 +181,4 @@ fallback_strategy:
 * All keyword matches (`keyword_abilities`, `keyword_actions`, `ability_words`) are based on your structured metadata (e.g., `Keywords.json`).
 * `priority_text` and `text_matches` allow both exact strings and regex (wrapped in `/.../`).
 * All text is compared in `.lower()` form.
-* Scoring is flat additive — no weights or multipliers.
+* Scoring is additive with optional multipliers and diminishing returns.

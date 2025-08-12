@@ -10,6 +10,7 @@ This module provides functions for scoring cards based on various criteria:
 
 import logging
 import re
+from collections import Counter
 from typing import List, Optional, Union, Any
 from mtg_deck_builder.models.deck_config import ScoringRulesMeta
 from mtg_deck_builder.yaml_builder.deck_build_classes import (
@@ -118,7 +119,11 @@ def score_card(
     # Score based on text matches
     if scoring_rules.text_matches:
         for pattern, weight in scoring_rules.text_matches.items():
-            if isinstance(pattern, str) and pattern.startswith("/") and pattern.endswith("/"):
+            if (
+                isinstance(pattern, str)
+                and pattern.startswith("/")
+                and pattern.endswith("/")
+            ):
                 # Handle regex pattern
                 try:
                     if re.search(
@@ -188,5 +193,23 @@ def score_card(
                 source="score_card",
                 reason=f"Mana cost penalty: {cmc}",
             )
+
+    # Apply diminishing returns for keywords
+    if context and scoring_rules.diminishing_returns:
+        existing: Counter[str] = Counter()
+        for ctx_card in context.cards:
+            kws = getattr(ctx_card.card, "keywords", []) or []
+            existing.update([k.lower() for k in kws])
+        card_keywords = [k.lower() for k in (getattr(card, "keywords", []) or [])]
+        for kw, threshold in scoring_rules.diminishing_returns.items():
+            if kw.lower() in card_keywords and existing.get(kw.lower(), 0) >= int(
+                threshold
+            ):
+                excess = existing.get(kw.lower(), 0) - int(threshold) + 1
+                scored_card.increase_score(
+                    score=-excess,
+                    source="score_card",
+                    reason=f"Diminishing return: {kw}",
+                )
 
     return scored_card

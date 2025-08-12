@@ -8,16 +8,11 @@ This module provides functions for:
 """
 
 import logging
-from typing import Any, Dict, Optional, Union
+from typing import Dict, Optional
 
-from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
-from mtg_deck_builder.models.deck import Deck
-from mtg_deck_builder.models.deck_config import PriorityCardEntry
 from mtg_deck_builder.yaml_builder.deck_build_classes import BuildContext, LandStub
-from mtg_deck_builder.yaml_builder.types import ScoredCard
 
 from .fallback import _score_cards_with_quality_filter
-from .validation import _check_color_identity, _check_ownership
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +71,9 @@ def _handle_basic_lands(
         return
 
     mana_symbols = context.meta.get("mana_symbols", {})
+    weights = deck_config.mana_base.color_weights if deck_config.mana_base else {}
+    if weights:
+        mana_symbols = weights
     if not mana_symbols:
         colors = deck_config.deck.colors
         if not colors:
@@ -369,7 +367,7 @@ def _finalize_deck(build_context: BuildContext) -> None:
         else:
             # Need more non-land cards - this shouldn't happen in normal flow
             logger.warning(
-                f"Emergency fill needed but land count is already at target. This indicates a problem in deck building."
+                "Emergency fill needed but land count is already at target. This indicates a problem in deck building."
             )
             # Add basic lands anyway to reach deck size
             colors = deck_config.deck.colors
