@@ -13,6 +13,7 @@ Functions:
 
 import logging
 import os
+import random
 import traceback
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
@@ -69,6 +70,12 @@ def build_deck_from_config(
         deck_build_context=deck_build_context,
     )
 
+    seed = str(
+        getattr(deck_config, "seed", None)
+        or getattr(deck_config.deck, "name", "mtg-deck-builder")
+    )
+    build_context.rng = random.Random(seed)
+
     try:
         # Step 1: Apply deck-wide filters
         logger.info("[BuildPhase] Step 1: Applying deck-wide filters")
@@ -87,20 +94,29 @@ def build_deck_from_config(
         _compute_mana_symbols(build_context)
 
         # Step 5: Calculate available slots for non-land cards (after priority cards)
-        current_cards = (
-            build_context.deck_build_context.get_total_cards()
+        deck_obj = (
+            build_context.deck_build_context.deck
             if build_context.deck_build_context
-            else 0
+            else None
         )
-        if build_context.mana_base and hasattr(build_context.mana_base, "land_count"):
-            target_lands = build_context.mana_base.land_count
-            available_slots = deck_config.deck.size - target_lands - current_cards
-        else:
-            target_lands = 0
-            available_slots = deck_config.deck.size - current_cards
+        size = int(getattr(deck_config.deck, "size", 60) or 60)
+        land_target = getattr(
+            getattr(build_context, "mana_base", None), "land_count", None
+        )
+        if land_target is None:
+            land_target = max(16, min(28, round(size * 0.40)))
 
+        current_nonlands = 0
+        if deck_obj:
+            current_nonlands = sum(
+                int(e.quantity)
+                for e in getattr(build_context.deck_build_context, "cards", [])
+                if "Land" not in getattr(e.card, "type_line", "")
+            )
+        nonland_target = max(0, size - land_target)
+        available_slots = max(0, nonland_target - current_nonlands)
         logger.info(
-            f"Available slots for categories: {available_slots} (deck size: {deck_config.deck.size}, target lands: {target_lands}, current cards: {current_cards})"
+            f"Available slots for categories: {available_slots} (deck size: {size}, target lands: {land_target}, current nonlands: {current_nonlands})"
         )
 
         # Pre-check: category targets vs deck size and available non-land slots
@@ -110,7 +126,6 @@ def build_deck_from_config(
             )
         except Exception:
             total_category_targets = 0
-        non_land_slots = available_slots
         if total_category_targets > deck_config.deck.size:
             logger.warning(
                 f"Category targets ({total_category_targets}) exceed deck size ({deck_config.deck.size}). Targets will be scaled."
@@ -119,13 +134,13 @@ def build_deck_from_config(
                 deck_build_context.record_unmet_condition(
                     f"Category targets exceed deck size: {total_category_targets} > {deck_config.deck.size}"
                 )
-        if total_category_targets > non_land_slots:
+        if total_category_targets > nonland_target:
             logger.warning(
-                f"Category targets ({total_category_targets}) exceed available non-land slots ({non_land_slots}). Targets will be scaled."
+                f"Category targets ({total_category_targets}) exceed available non-land slots ({nonland_target}). Targets will be scaled."
             )
             if deck_build_context:
                 deck_build_context.record_unmet_condition(
-                    f"Targets exceed non-land slots: {total_category_targets} > {non_land_slots}"
+                    f"Targets exceed non-land slots: {total_category_targets} > {nonland_target}"
                 )
 
         # Step 6: Fill category roles with available slots
@@ -228,70 +243,50 @@ def build_deck_from_config(
 
 
 def build_deck_from_yaml(
-    yaml_data: Union[Dict[str, Any], str],
+    yaml_data: Union[Dict[str, Any], str, Path],
     summary_repo: SummaryCardRepository,
     callbacks: Optional[CallbackDict] = None,
     verbose: bool = False,
 ) -> Optional[Deck]:
-    """Build a deck from YAML data.
+    """Build a deck from YAML data."""
 
-    Args:
-        yaml_data: YAML data or path
-        summary_repo: Summary card repository
-        callbacks: Optional callbacks for build stages
-        verbose: Whether to enable detailed logging
-
-    Returns:
-        Deck object if successful, None otherwise
-    """
     try:
-        # Load configuration
-        config_dict: Dict[str, Any]
-        if isinstance(yaml_data, str):
-            if os.path.exists(yaml_data):
-                with open(yaml_data, "r", encoding="utf-8") as f:
-                    config_dict = yaml.safe_load(f)
-            else:
-                config_dict = yaml.safe_load(yaml_data)
+        if isinstance(yaml_data, dict):
+            deck_config = DeckConfig.from_dict(yaml_data)
         else:
-            config_dict = yaml_data
-
-        # Create deck config
-        deck_config = DeckConfig.from_dict(config_dict)
-
-        # Build deck
+            deck_config = load_yaml_config(yaml_data)
         return build_deck_from_config(deck_config, summary_repo, callbacks, verbose)
-
     except Exception as e:
         logger.error(f"Error building deck from YAML: {e}", exc_info=True)
         return None
 
 
-def load_yaml_config(yaml_path: Union[str, Path]) -> DeckConfig:
-    """Load a YAML configuration file into a DeckConfig object.
+def load_yaml_config(yaml_path_or_text: Union[str, Path]) -> DeckConfig:
+    """Load a YAML configuration from a path or YAML string."""
 
-    Args:
-        yaml_path: Path to the YAML configuration file
+    if isinstance(yaml_path_or_text, (str, Path)) and Path(yaml_path_or_text).exists():
+        raw = Path(yaml_path_or_text).read_text(encoding="utf-8")
+    elif isinstance(yaml_path_or_text, (str, Path)):
+        raw = str(yaml_path_or_text)
+    else:
+        raise TypeError("yaml_path_or_text must be a path or YAML string")
 
-    Returns:
-        DeckConfig object initialized with the YAML data
+    try:
+        data = yaml.safe_load(raw)
+    except Exception as e:
+        raise ValueError(f"Invalid deck config: {e}") from e
 
-    Raises:
-        FileNotFoundError: If the YAML file doesn't exist
-        yaml.YAMLError: If the YAML file is invalid
-        ValueError: If the YAML data is invalid for deck configuration
-    """
-    yaml_path = Path(yaml_path)
-    if not yaml_path.exists():
-        raise FileNotFoundError(f"YAML configuration file not found: {yaml_path}")
+    if not isinstance(data, dict):
+        raise ValueError("Invalid deck config: root must be a mapping")
 
-    with open(yaml_path, "r", encoding="utf-8") as f:
-        try:
-            yaml_data = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            raise yaml.YAMLError(f"Invalid YAML in {yaml_path}: {e}")
+    version = str(data.get("version", "1.0"))
+    if version == "1.0":
+        deck = data.get("deck", {})
+        if "color_mode" in deck and "color_match_mode" not in deck:
+            deck["color_match_mode"] = deck.pop("color_mode")
+        data["version"] = "1.1"
 
-    if not isinstance(yaml_data, dict):
-        raise ValueError(f"Invalid YAML data in {yaml_path}: root must be a dictionary")
-
-    return DeckConfig.model_validate(yaml_data)
+    try:
+        return DeckConfig.model_validate(data)
+    except Exception as e:
+        raise ValueError(f"Invalid deck config: {e}") from e
