@@ -3,14 +3,15 @@
 MTGJSON Synchronization Script
 
 This script synchronizes local MTGJSON data with the remote MTGJSON API.
-It handles downloading and updating card data, keywords, and card types,
-and manages the local database accordingly.
+It downloads AllPrintings.sqlite, Keywords.json, CardTypes.json, and Meta.json,
+then builds summary cards for efficient querying. Optionally imports an inventory file.
 
 Usage:
-    python update_mtgjson.py [--force]
+    python update_mtgjson.py [--force] [--inventory <inventory_file>]
 
 Options:
-    --force    Force update even if data appears to be current
+    --force       Force update even if data appears to be current
+    --inventory   Path to inventory file to import after sync
 """
 
 import os
@@ -19,23 +20,13 @@ import json
 import zipfile
 import io
 import logging
+import requests
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, Tuple, Dict, Any, Callable, TextIO
-import requests
+from typing import Optional, Dict, Any, Callable
 from tqdm import tqdm
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import SQLAlchemyError
-import contextlib
-import threading
-from queue import Queue
-import time
-import shutil
 import argparse
-
-from mtg_deck_builder.db.models import ImportLog
-from mtg_deck_builder.db.bootstrap import bootstrap, DatabaseError
+import traceback
 
 # Configure logging
 logging.basicConfig(
@@ -44,416 +35,439 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class MTGJSONError(Exception):
+# Default paths and URLs
+DEFAULT_PATHS = {
+    "meta": "data/mtgjson/meta.json",
+    "allprintings_sqlite": "data/mtgjson/AllPrintings.sqlite",
+    "keywords": "data/mtgjson/keywords.json",
+    "cardtypes": "data/mtgjson/cardtypes.json",
+    "inventory": "data/inventory/inventory.txt",
+}
+
+DEFAULT_URLS = {
+    "meta": "https://mtgjson.com/api/v5/Meta.json",
+    "sqlite": "https://mtgjson.com/api/v5/AllPrintings.sqlite.zip",
+    "keywords": "https://mtgjson.com/api/v5/Keywords.json",
+    "cardtypes": "https://mtgjson.com/api/v5/CardTypes.json",
+}
+
+class MTGJSONSyncError(Exception):
     """Base exception for MTGJSON synchronization errors."""
     pass
 
-class DownloadError(MTGJSONError):
-    """Raised when downloading MTGJSON data fails."""
+class DownloadError(MTGJSONSyncError):
+    """Error during file download."""
     pass
 
-class DatabaseUpdateError(MTGJSONError):
-    """Raised when updating the database fails."""
+class DatabaseUpdateError(MTGJSONSyncError):
+    """Error during database update."""
     pass
 
-class ProgressManager:
-    """Manages progress reporting and output buffering."""
-    
-    def __init__(self, file: TextIO = sys.stdout):
-        self.file = file
-        self.queue = Queue()
-        self.thread = None
-        self._stop = False
-        self.terminal_width = shutil.get_terminal_size().columns
-        
-    def start(self):
-        """Start the progress manager thread."""
-        self.thread = threading.Thread(target=self._process_queue)
-        self.thread.daemon = True
-        self.thread.start()
-        
-    def stop(self):
-        """Stop the progress manager thread."""
-        self._stop = True
-        if self.thread:
-            self.thread.join()
-            
-    def _process_queue(self):
-        """Process messages from the queue."""
-        while not self._stop:
-            try:
-                msg = self.queue.get(timeout=0.1)
-                if msg is None:
-                    continue
-                self.file.write(msg)
-                self.file.flush()
-            except Exception:
-                pass
-                
-    def write(self, msg: str):
-        """Write a message to the output."""
-        self.queue.put(msg)
-        
-    def flush(self):
-        """Flush the output buffer."""
-        self.file.flush()
+def backup_old_sqlite(sqlite_path: Path, meta_date: Optional[datetime] = None) -> None:
+    """Backup an existing SQLite file.
 
-@contextlib.contextmanager
-def buffered_output(file: TextIO = sys.stdout):
-    """Context manager for buffered output."""
-    manager = ProgressManager(file)
-    manager.start()
+    Args:
+        sqlite_path: Path to the SQLite file to backup.
+        meta_date: Optional meta date to include in backup filename.
+    """
+    sqlite_path = Path(sqlite_path)
+    if not sqlite_path.exists():
+        return
+
     try:
-        yield manager
-    finally:
-        manager.stop()
+        if meta_date:
+            safe_meta_date = meta_date.strftime("%Y%m%d")
+            backup_zip = sqlite_path.with_name(sqlite_path.stem + f"_{safe_meta_date}.zip")
+        else:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_zip = sqlite_path.with_name(sqlite_path.stem + f"_{timestamp}.zip")
 
-class MTGJSONSync:
-    """Handles synchronization of MTGJSON data."""
-    
-    def __init__(
-        self,
-        data_dir: str = "data",
-        db_path: str = "cards.db",
-        force_update: bool = False,
-        output: Optional[TextIO] = None,
-        inventory_dir: str = "inventory_files"
-    ):
-        """Initialize MTGJSON synchronization.
-        
-        Args:
-            data_dir: Directory to store MTGJSON data files.
-            db_path: Path to the SQLite database.
-            force_update: Whether to force update even if data appears current.
-            output: Optional output stream for progress reporting.
-        """
-        self.data_dir = Path(data_dir)
-        self.inventory_dir = Path(inventory_dir)
-        self.db_path = Path(db_path)
-        self.force_update = force_update
-        self.output = output or sys.stdout
-        self.terminal_width = shutil.get_terminal_size().columns
-        
-        # Create data directory if it doesn't exist
-        self.data_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Define file paths
-        self.allprintings_path = self.data_dir / "AllPrintings.json"
-        self.meta_path = self.data_dir / "Meta.json"
-        self.keywords_path = self.data_dir / "Keywords.json"
-        self.cardtypes_path = self.data_dir / "CardTypes.json"
-        self.inventory_path = self.inventory_dir / "card inventory.txt"
-        
-        # Define URLs
-        self.meta_url = "https://mtgjson.com/api/v5/Meta.json"
-        self.allprintings_url = "https://mtgjson.com/api/v5/AllPrintings.json.zip"
-        self.keywords_url = "https://mtgjson.com/api/v5/Keywords.json"
-        self.cardtypes_url = "https://mtgjson.com/api/v5/CardTypes.json"
+        # Ensure parent directory exists
+        backup_zip.parent.mkdir(parents=True, exist_ok=True)
 
-    def backup_old_json(self, json_path: Path, meta_date: Optional[datetime] = None) -> None:
-        """Backup an existing JSON file.
-        
-        Args:
-            json_path: Path to the JSON file to backup.
-            meta_date: Optional meta date to include in backup filename.
-        """
-        if not json_path.exists():
-            return
-            
-        try:
-            # Use meta_date in backup filename if provided, else fallback to timestamp
-            if meta_date:
-                # Format date in a way that's safe for filenames
-                safe_meta_date = meta_date.strftime("%Y%m%d")
-                backup_zip = json_path.parent / f"{json_path.stem}_{safe_meta_date}.zip"
-            else:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                backup_zip = json_path.parent / f"{json_path.stem}_{timestamp}.zip"
-                
-            with zipfile.ZipFile(backup_zip, "w", zipfile.ZIP_DEFLATED) as zf:
-                zf.write(json_path, arcname=json_path.name)
-                
-            logger.info(f"Backed up {json_path} to {backup_zip}")
-            
-        except Exception as e:
-            logger.error(f"Failed to backup {json_path}: {e}")
-            raise DownloadError(f"Failed to backup {json_path}") from e
+        with zipfile.ZipFile(str(backup_zip), "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.write(str(sqlite_path), arcname=sqlite_path.name)
 
-    def get_db_last_import_meta_date(self) -> Optional[datetime]:
-        """Get the meta date of the last successful database import.
-        
-        Returns:
-            The meta date of the last import, or None if no import found.
-        """
-        if not self.db_path.exists():
-            return None
-            
-        try:
-            engine = create_engine(f"sqlite:///{self.db_path}")
-            Session = sessionmaker(bind=engine)
-            session = Session()
-            
-            try:
-                latest = session.query(ImportLog).order_by(ImportLog.meta_date.desc()).first()
-                return latest.meta_date if latest else None
-            finally:
-                session.close()
-                
-        except SQLAlchemyError as e:
-            logger.error(f"Failed to query ImportLog: {e}")
-            return None
+        print(f"[mtgjson_sync] Backed up {sqlite_path} to {backup_zip}")
 
-    def download_file(
-        self,
-        url: str,
-        local_path: Path,
-        is_zip: bool = False,
-        progress_callback: Optional[Callable[[float, str], None]] = None
-    ) -> None:
-        """Download a file from a URL.
+    except Exception as e:
+        print(f"[mtgjson_sync] Failed to backup {sqlite_path}: {e}")
+        raise DownloadError(f"Failed to backup {sqlite_path}") from e
+
+def download_file(
+    url: str,
+    local_path: Path,
+    is_zip: bool = False,
+    progress_callback: Optional[Callable[[float, str], None]] = None,
+) -> None:
+    """Download a file from URL to local path.
+
+    Args:
+        url: URL to download from.
+        local_path: Local path to save to.
+        is_zip: Whether the file is a zip archive.
+        progress_callback: Optional callback for progress updates.
+    """
+    try:
+        print(f"[mtgjson_sync] Downloading {url} to {local_path}")
+
+        # Ensure parent directory exists
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+
+        response = requests.get(url, stream=True, timeout=30)
+        response.raise_for_status()
+
+        total_size = int(response.headers.get("content-length", 0))
+        downloaded = 0
         
-        Args:
-            url: URL to download from.
-            local_path: Local path to save the file.
-            is_zip: Whether the file is a zip archive.
-            progress_callback: Optional callback for progress updates.
-            
-        Raises:
-            DownloadError: If download fails.
-        """
-        try:
-            logger.info(f"Downloading {url} to {local_path}")
-            
-            if is_zip:
-                # Download zip file with progress bar
-                r = requests.get(url, stream=True, timeout=60)
-                r.raise_for_status()
-                
-                total_size = int(r.headers.get('content-length', 0))
-                zip_bytes = bytearray()
-                
-                # Calculate width for progress bar
-                desc_width = min(40, self.terminal_width - 50)  # Leave room for progress info
-                
-                with tqdm(
-                    total=total_size,
-                    unit='B',
-                    unit_scale=True,
-                    desc=f'Downloading {local_path.name}',
-                    file=self.output,
-                    miniters=1,
-                    bar_format='{desc:<' + str(desc_width) + '} |{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]',
-                    ncols=self.terminal_width
-                ) as pbar:
-                    for chunk in r.iter_content(chunk_size=8192):
-                        if chunk:
-                            zip_bytes.extend(chunk)
-                            pbar.update(len(chunk))
-                            
-                # Extract specific file from zip
-                with zipfile.ZipFile(io.BytesIO(zip_bytes)) as z:
+        use_tqdm = progress_callback is None
+        progress_bar = None
+        if use_tqdm:
+            progress_bar = tqdm(
+                total=total_size,
+                unit='iB',
+                unit_scale=True,
+                desc=f"Downloading {local_path.name}"
+            )
+
+        if is_zip:
+            # Download zip file and extract the target file
+            zip_bytes = bytearray()
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    zip_bytes.extend(chunk)
+                    downloaded += len(chunk)
+                    if use_tqdm and progress_bar:
+                        progress_bar.update(len(chunk))
+                    elif progress_callback and total_size > 0:
+                        progress = downloaded / total_size
+                        progress_callback(progress, f"Downloading {local_path.name}")
+
+            # Extract the file from zip
+            with zipfile.ZipFile(io.BytesIO(zip_bytes)) as z:
+                for name in z.namelist():
+                    if name.endswith(local_path.name):
+                        with z.open(name) as src, open(local_path, "wb") as dst:
+                            dst.write(src.read())
+                        break
+                else:
+                    # If exact name not found, extract the first .sqlite file
                     for name in z.namelist():
-                        if name.endswith(local_path.name):
+                        if name.endswith('.sqlite'):
                             with z.open(name) as src, open(local_path, "wb") as dst:
                                 dst.write(src.read())
                             break
-            else:
-                # Download regular file
-                r = requests.get(url, timeout=30)
-                r.raise_for_status()
-                local_path.write_bytes(r.content)
-                
-            logger.info(f"Successfully downloaded {local_path}")
-            
-        except requests.RequestException as e:
-            logger.error(f"Failed to download {url}: {e}")
-            raise DownloadError(f"Failed to download {url}") from e
-        except Exception as e:
-            logger.error(f"Failed to save {local_path}: {e}")
-            raise DownloadError(f"Failed to save {local_path}") from e
+        else:
+            # Download file directly
+            with open(local_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if use_tqdm and progress_bar:
+                            progress_bar.update(len(chunk))
+                        elif progress_callback and total_size > 0:
+                            progress = downloaded / total_size
+                            progress_callback(progress, f"Downloading {local_path.name}")
 
-    def update_database(
-        self,
-        meta_date: datetime,
-        progress_callback: Optional[Callable[[float, str], None]] = None
-    ) -> None:
-        """Update the database with new MTGJSON data.
-        
-        Args:
-            meta_date: Meta date of the new data.
-            progress_callback: Optional callback for progress updates.
-            
-        Raises:
-            DatabaseUpdateError: If database update fails.
-        """
+        if progress_bar:
+            progress_bar.close()
+
+        print(f"[mtgjson_sync] Downloaded {local_path} successfully")
+
+    except Exception as e:
+        print(f"[mtgjson_sync] Failed to download {url}: {e}")
+        raise DownloadError(f"Failed to download {url}") from e
+
+def build_summary_cards_from_mtgjson(mtgjson_db_path: Path) -> None:
+    """
+    Build summary cards from the MTGJSON database and add them to the same database.
+    
+    This function reads the raw MTGJSON card data and creates summary cards that
+    aggregate information across all printings of each card. The summary cards
+    are stored in the same database for efficient querying.
+    
+    Args:
+        mtgjson_db_path: Path to the MTGJSON SQLite database (contains raw data and will contain summary cards)
+    """
+    try:
+        from mtg_deck_builder.db.setup import build_summary_cards_from_mtgjson as build_summary
+        build_summary(mtgjson_db_path)
+    except ImportError:
+        print("[mtgjson_sync] Warning: Could not import build_summary_cards_from_mtgjson function.")
+        print("[mtgjson_sync] Summary cards will not be built. The database may not be fully functional.")
+        print("[mtgjson_sync] Make sure the mtg_deck_builder package is properly installed.")
+
+def mtgjson_sync(
+    progress_callback: Optional[Callable[[float, str], None]] = None,
+    force_update: bool = False,
+    inventory_file: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Check and sync MTGJSON data if outdated or missing.
+
+    Args:
+        progress_callback: Optional callback for progress updates.
+        force_update: Whether to force update the database schema.
+    Returns:
+        Dict containing sync results and status.
+    """
+    print("\n[mtgjson_sync] Starting MTGJSON synchronization...")
+    
+    # Convert paths to Path objects
+    paths = {key: Path(path) for key, path in DEFAULT_PATHS.items()}
+    urls = DEFAULT_URLS
+
+    # Initialize result dict
+    result = {
+        "status": "success",
+        "updates": {
+            "meta": False,
+            "sqlite": False,
+            "keywords": False,
+            "cardtypes": False,
+            "database": False,
+            "inventory": False,
+        },
+        "versions": {
+            "local": {"version": "", "date": ""},
+            "remote": {"version": "", "date": ""},
+        },
+        "errors": [],
+    }
+
+    try:
+        # Check local meta data
+        local_version = local_date = ""
+        if paths["meta"].exists():
+            try:
+                with open(paths["meta"], "r", encoding="utf-8") as f:
+                    local_meta = json.load(f)
+                local_version = local_meta.get("meta", {}).get("version", "")
+                local_date = local_meta.get("meta", {}).get("date", "")
+                result["versions"]["local"] = {
+                    "version": local_version,
+                    "date": local_date,
+                }
+                print(
+                    f"[mtgjson_sync] Local meta: version={local_version}, date={local_date}"
+                )
+            except Exception as e:
+                logger.error(
+                    "Failed to read local meta: %s\n%s", e, traceback.format_exc()
+                )
+                result["errors"].append(
+                    f"Failed to read local meta: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+                )
+
+        # Get remote meta data
         try:
-            logger.info("Updating database with new MTGJSON data...")
-            
-            def wrapped_callback(progress: float, message: str):
-                if progress_callback:
-                    progress_callback(progress, message)
-                # Calculate width for progress message
-                desc_width = min(40, self.terminal_width - 20)  # Leave room for percentage
-                message = message[:desc_width].ljust(desc_width)
-                self.output.write(f"\r{message} [{progress:.1%}]")
-                self.output.flush()
-            
-            # Show initial status
-            self.output.write("\nInitializing database update...\n")
-            
-            bootstrap(
-                json_path=str(self.allprintings_path),
-                inventory_path=str(self.inventory_path),
-                db_url=f"sqlite:///{self.db_path}",
-                use_tqdm=True,
-                progress_callback=wrapped_callback
+            print(f"[mtgjson_sync] Fetching remote meta from {urls['meta']}")
+            remote_meta = requests.get(urls["meta"], timeout=10).json()
+            remote_version = remote_meta.get("meta", {}).get("version", "")
+            remote_date = remote_meta.get("meta", {}).get("date", "")
+            result["versions"]["remote"] = {
+                "version": remote_version,
+                "date": remote_date,
+            }
+            print(
+                f"[mtgjson_sync] Remote meta: version={remote_version}, date={remote_date}"
             )
-            
-            # Show completion status
-            self.output.write("\nFinalizing database update...\n")
-            self.output.write("Database update complete\n")
-            logger.info("Database update complete")
-            
-        except DatabaseError as e:
-            logger.error(f"Failed to update database: {e}")
-            raise DatabaseUpdateError("Failed to update database") from e
-
-    def sync(
-        self,
-        progress_callback: Optional[Callable[[float, str], None]] = None
-    ) -> None:
-        """Synchronize MTGJSON data.
-        
-        Args:
-            progress_callback: Optional callback for progress updates.
-            
-        Raises:
-            MTGJSONError: If synchronization fails.
-        """
-        try:
-            with buffered_output(self.output) as output:
-                output.write("Checking MTGJSON data sync status...\n")
-                
-                # Get local meta data
-                local_version = local_date = ""
-                if self.meta_path.exists():
-                    try:
-                        local_meta = json.loads(self.meta_path.read_text(encoding='utf-8'))
-                        local_version = local_meta.get("meta", {}).get("version", "")
-                        local_date = local_meta.get("meta", {}).get("date", "")
-                        output.write(f"Local meta: version={local_version}, date={local_date}\n")
-                    except Exception as e:
-                        logger.error(f"Failed to read local meta: {e}")
-                        local_meta = {}
-
-                # Get database meta date
-                db_meta_date = self.get_db_last_import_meta_date()
-                db_meta_date_str = db_meta_date.strftime("%Y-%m-%d") if db_meta_date else None
-
-                # Get remote meta data
-                try:
-                    remote_meta = requests.get(self.meta_url, timeout=10).json()
-                    remote_version = remote_meta.get("meta", {}).get("version", "")
-                    remote_date = remote_meta.get("meta", {}).get("date", "")
-                    output.write(f"Remote meta: version={remote_version}, date={remote_date}\n")
-                except Exception as e:
-                    logger.error(f"Failed to fetch remote meta: {e}")
-                    raise DownloadError("Failed to fetch remote meta") from e
-
-                # Determine if updates are needed
-                need_main_json_update = (
-                    self.force_update
-                    or not self.allprintings_path.exists()
-                    or not self.meta_path.exists()
-                    or remote_version != local_version
-                    or remote_date != local_date
-                )
-                
-                need_db_update = (
-                    self.force_update
-                    or db_meta_date_str != str(remote_date)
-                    or not self.db_path.exists()
-                )
-
-                # Download and update files if needed
-                if need_main_json_update:
-                    output.write("Update required. Downloading and updating data...\n")
-                    
-                    # Backup existing files
-                    if self.allprintings_path.exists():
-                        self.backup_old_json(
-                            self.allprintings_path,
-                            meta_date=datetime.strptime(local_date, "%Y-%m-%d") if local_date else None
-                        )
-
-                    # Download new files
-                    self.download_file(self.allprintings_url, self.allprintings_path, is_zip=True)
-                    self.meta_path.write_text(json.dumps(remote_meta, indent=2), encoding='utf-8')
-                    
-                    # Always update keywords and card types when main JSON is updated
-                    self.download_file(self.keywords_url, self.keywords_path)
-                    self.download_file(self.cardtypes_url, self.cardtypes_path)
-                    
-                    need_db_update = True
-                else:
-                    output.write("MTGJSON data is up to date\n")
-                    
-                    # Download keywords and card types only if missing
-                    if not self.keywords_path.exists():
-                        self.download_file(self.keywords_url, self.keywords_path)
-                    if not self.cardtypes_path.exists():
-                        self.download_file(self.cardtypes_url, self.cardtypes_path)
-
-                # Update database if needed
-                if need_db_update:
-                    output.write("Database needs update. Rebuilding from local AllPrintings.json...\n")
-                    self.update_database(
-                        meta_date=datetime.strptime(remote_date, "%Y-%m-%d"),
-                        progress_callback=progress_callback
-                    )
-                else:
-                    output.write("Database is up to date\n")
-
         except Exception as e:
-            logger.error(f"Synchronization failed: {e}")
-            raise MTGJSONError("Synchronization failed") from e
+            logger.error(
+                "Failed to fetch remote meta: %s\n%s", e, traceback.format_exc()
+            )
+            result["errors"].append(
+                f"Failed to fetch remote meta: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+            )
+            return result
+
+        # Check if DB needs update
+        db_needs_update = False
+        if paths["allprintings_sqlite"].exists():
+            try:
+                # Use mtg_deck_builder utilities to check if reload is needed
+                from mtg_deck_builder.db.loader import is_reload_needed
+                
+                # Check if the database file is empty or very small (indicating it needs data)
+                db_size = paths["allprintings_sqlite"].stat().st_size
+                if db_size < 1024:  # Less than 1KB, likely empty
+                    db_needs_update = True
+                    print(f"[mtgjson_sync] Database file is small ({db_size} bytes), needs update.")
+                else:
+                    # Use the existing utility to check if reload is needed based on meta files
+                    # We'll create a temporary remote meta file for comparison
+                    temp_remote_meta = paths["meta"].parent / "temp_remote_meta.json"
+                    try:
+                        with open(temp_remote_meta, "w", encoding="utf-8") as f:
+                            json.dump(remote_meta, f, indent=4)
+                        
+                        if is_reload_needed(paths["meta"], temp_remote_meta):
+                            db_needs_update = True
+                            print("[mtgjson_sync] Database reload needed based on meta comparison.")
+                    finally:
+                        # Clean up temporary file
+                        if temp_remote_meta.exists():
+                            temp_remote_meta.unlink()
+                            
+            except Exception as e:
+                logger.error(
+                    "Failed to check database: %s\n%s", e, traceback.format_exc()
+                )
+                result["errors"].append(
+                    f"Failed to check database: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+                )
+                return result
+
+        # Sync AllPrintings.sqlite
+        if not paths["allprintings_sqlite"].exists() or remote_date > local_date or force_update:
+            print("[mtgjson_sync] AllPrintings.sqlite is outdated or missing.")
+            result["updates"]["sqlite"] = True
+            db_needs_update = True  # If we're downloading new SQLite, we need to update DB
+            backup_old_sqlite(
+                paths["allprintings_sqlite"],
+                meta_date=datetime.strptime(remote_date, "%Y-%m-%d"),
+            )
+            download_file(
+                urls["sqlite"],
+                paths["allprintings_sqlite"],
+                is_zip=True,  # SQLite file is zipped
+                progress_callback=progress_callback,
+            )
+        else:
+            print("[mtgjson_sync] AllPrintings.sqlite is up to date.")
+
+        # Sync Keywords.json
+        if not paths["keywords"].exists() or remote_date > local_date:
+            print("[mtgjson_sync] Keywords.json is outdated or missing.")
+            result["updates"]["keywords"] = True
+            download_file(urls["keywords"], paths["keywords"])
+        else:
+            print("[mtgjson_sync] Keywords.json is up to date.")
+
+        # Sync CardTypes.json
+        if not paths["cardtypes"].exists() or remote_date > local_date:
+            print("[mtgjson_sync] CardTypes.json is outdated or missing.")
+            result["updates"]["cardtypes"] = True
+            download_file(urls["cardtypes"], paths["cardtypes"])
+        else:
+            print("[mtgjson_sync] CardTypes.json is up to date.")
+
+        # Update Meta.json after successful downloads
+        if any(result["updates"].values()):
+            print("[mtgjson_sync] Updating local meta file.")
+            result["updates"]["meta"] = True
+            with open(paths["meta"], "w", encoding="utf-8") as f:
+                json.dump(remote_meta, f, indent=4)
+
+        # Update database if needed (build summary cards)
+        if db_needs_update or result["updates"]["sqlite"]:
+            print("[mtgjson_sync] Database update required.")
+            result["updates"]["database"] = True
+            try:
+                # Use mtg_deck_builder utilities for database setup
+                from mtg_deck_builder.db.setup import setup_database
+                from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
+                
+                # Ensure database is properly set up
+                db_url = f"sqlite:///{paths['allprintings_sqlite']}"
+                setup_database(db_url, base=MTGJSONBase)
+                
+                # Build summary cards in the MTGJSON database
+                build_summary_cards_from_mtgjson(mtgjson_db_path=paths['allprintings_sqlite'])
+                if progress_callback:
+                    progress_callback(1.0, "Summary cards built successfully.")
+                print("[mtgjson_sync] Summary cards built successfully.")
+                    
+            except Exception as e:
+                logger.error(
+                    "Failed to build summary cards: %s\n%s", e, traceback.format_exc()
+                )
+                result["errors"].append(
+                    f"Failed to build summary cards: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+                )
+        else:
+            print("[mtgjson_sync] Database is up to date, no update needed.")
+
+        # Import inventory file if provided
+        if inventory_file:
+            print(f"[mtgjson_sync] Importing inventory from {inventory_file}...")
+            result["updates"]["inventory"] = True
+            try:
+                # Use mtg_deck_builder utilities for database operations
+                from mtg_deck_builder.db import get_session
+                from mtg_deck_builder.db.setup import setup_database
+                from mtg_deck_builder.db.mtgjson_models.base import MTGJSONBase
+                from mtg_deck_builder.db.inventory import InventoryItem
+                from import_inventory import load_inventory_items
+                
+                # Ensure database is set up
+                db_url = f"sqlite:///{paths['allprintings_sqlite']}"
+                setup_database(db_url, base=MTGJSONBase)
+                
+                # Import inventory using the standalone function
+                load_inventory_items(inventory_file, str(paths['allprintings_sqlite']))
+                print("[mtgjson_sync] Inventory imported successfully.")
+                if progress_callback:
+                    progress_callback(1.0, "Inventory imported successfully.")
+            except Exception as e:
+                logger.error(
+                    "Failed to import inventory: %s\n%s", e, traceback.format_exc()
+                )
+                result["errors"].append(
+                    f"Failed to import inventory: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+                )
+
+        # Set final status
+        if result["errors"]:
+            result["status"] = "error"
+        elif any(result["updates"].values()):
+            result["status"] = "updated"
+        else:
+            result["status"] = "no_update_needed"
+
+        return result
+
+    except Exception as e:
+        logger.error("Synchronization failed: %s\n%s", e, traceback.format_exc())
+        result["status"] = "error"
+        result["errors"].append(
+            f"Synchronization failed: {type(e).__name__}: {e}\n{traceback.format_exc()}"
+        )
+        return result
 
 def main():
     parser = argparse.ArgumentParser(description="Sync MTGJSON data and update the local database.")
     parser.add_argument("--force", action="store_true", help="Force update even if data is up to date.")
-    parser.add_argument("--data-dir", type=str, default="data", help="Directory for MTGJSON data files.")
-    parser.add_argument("--db-path", type=str, default="cards.db", help="Path to the SQLite database.")
     parser.add_argument("--quiet", action="store_true", help="Suppress progress output.")
-    parser.add_argument("--no-download", action="store_true", help="Skip downloading and only update the database using the existing file.")
+    parser.add_argument("--inventory", help="Path to inventory file to import after sync")
     args = parser.parse_args()
 
-    sync = MTGJSONSync(
-        data_dir=args.data_dir,
-        db_path=args.db_path,
-        force_update=args.force,
-        output=open(os.devnull, 'w') if args.quiet else sys.stdout
-    )
-
-    if args.no_download:
-        if not sync.allprintings_path.exists():
-            print(f"[ERROR] AllPrintings.json not found at {sync.allprintings_path}. Cannot update database without downloading.")
-            exit(1)
-        print("[INFO] --no-download flag set. Skipping download. Updating database using existing AllPrintings.json...")
-        # If --force, always update; else, only update if needed
-        if args.force:
-            sync.update_database(meta_date=None)
-            print("[INFO] Database update complete (forced).")
+    try:
+        print("Starting MTGJSON synchronization...")
+        
+        # Use the standalone mtgjson_sync function
+        result = mtgjson_sync(force_update=args.force, inventory_file=args.inventory)
+        
+        # Display results
+        if result["status"] == "error":
+            print(f"❌ Synchronization failed with errors:")
+            for error in result["errors"]:
+                print(f"   {error}")
+            sys.exit(1)
+        elif result["status"] == "updated":
+            print("✅ Synchronization completed successfully!")
+            if result["updates"]:
+                print("Updates performed:")
+                for key, value in result["updates"].items():
+                    if value:
+                        print(f"   - {key}")
         else:
-            # Check if database is up to date with the file
-            db_meta_date = sync.get_db_last_import_meta_date()
-            # You may want to compare file mtime or meta date here
-            # For now, always update if unsure
-            sync.update_database(meta_date=None)
-            print("[INFO] Database update complete.")
-        return
-
-    # Default behavior: download/check for updates, then update database
-    sync.sync()
+            print("ℹ️  No updates needed - data is already current.")
+            
+    except Exception as e:
+        logger.error(f"Synchronization failed: {e}")
+        print(f"❌ Synchronization failed: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main() 

@@ -19,10 +19,11 @@ Classes:
     DeckConfig: Main configuration class for deck building.
 
 """
+
 import yaml
 from pathlib import Path
-from typing import List, Dict, Optional, Union, Any, ClassVar, Literal
-from pydantic import BaseModel, Field, validator
+from typing import List, Dict, Optional, Union, Any, Literal
+from pydantic import BaseModel, Field, validator, model_validator
 
 
 class PriorityCardEntry(BaseModel):
@@ -33,6 +34,7 @@ class PriorityCardEntry(BaseModel):
         name: Card name.
         min_copies: Minimum copies to include.
     """
+
     name: str
     min_copies: int = 1
 
@@ -47,6 +49,7 @@ class ManaCurveMeta(BaseModel):
         curve_shape: Shape of the curve (bell, linear, flat).
         curve_slope: Slope of the curve (up, down, flat).
     """
+
     min: int = 0
     max: int = 0
     curve_shape: str = "bell"  # Options: bell, linear, flat
@@ -57,9 +60,10 @@ class InventoryMeta(BaseModel):
     """
     Inventory configuration for the deck.
     """
+
     inventory_file: str = ""
     owned_cards_only: bool = True
-    
+
 
 class DeckMeta(BaseModel):
     """
@@ -70,6 +74,8 @@ class DeckMeta(BaseModel):
         colors: List of color codes for the deck.
         color_match_mode: Color identity match mode (exact, subset, any).
         size: Deck size (default 60).
+        sideboard_size: Sideboard size (default 0).
+        format: Optional format preset (e.g., standard, commander).
         max_card_copies: Maximum allowed copies per card.
         allow_colorless: Whether colorless cards are allowed.
         legalities: List of legal formats.
@@ -77,10 +83,13 @@ class DeckMeta(BaseModel):
         commander: Optional commander for Commander format.
         mana_curve: Mana curve configuration.
     """
+
     name: Optional[str] = None
     colors: List[str] = Field(default_factory=list)
     color_match_mode: Literal["exact", "subset", "any"] = "subset"
     size: int = Field(60, ge=1, le=250)
+    sideboard_size: int = Field(0, ge=0, le=250)
+    format: Optional[str] = None
     max_card_copies: int = Field(4, ge=1, le=99)
     allow_colorless: bool = True
     legalities: List[str] = Field(default_factory=list)
@@ -97,6 +106,28 @@ class DeckMeta(BaseModel):
             return [str(c).strip().upper() for c in v if str(c).strip()]
         return [str(v).strip().upper()] if str(v).strip() else []
 
+    @model_validator(mode="after")
+    def _apply_format_defaults(self) -> "DeckMeta":
+        """Apply format-based defaults for deck and sideboard sizes."""
+        fmt_defaults = {
+            "standard": {"size": 60, "sideboard_size": 15},
+            "commander": {"size": 100, "sideboard_size": 0, "max_card_copies": 1},
+        }
+        fmt = (self.format or "").lower()
+        if fmt in fmt_defaults:
+            defaults = fmt_defaults[fmt]
+            if not self.size or self.size == 60:
+                self.size = defaults.get("size", self.size)
+            if not self.sideboard_size:
+                self.sideboard_size = defaults.get(
+                    "sideboard_size", self.sideboard_size
+                )
+            if fmt == "commander" and self.max_card_copies == 4:
+                self.max_card_copies = defaults.get(
+                    "max_card_copies", self.max_card_copies
+                )
+        return self
+
     def model_dump(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
         """
         Dump the model as a dictionary, excluding inventory_file.
@@ -108,8 +139,8 @@ class DeckMeta(BaseModel):
         Returns:
             Model dictionary.
         """
-        exclude = kwargs.pop('exclude', set())
-        exclude = set(exclude) | {'inventory_file'}
+        exclude = kwargs.pop("exclude", set())
+        exclude = set(exclude) | {"inventory_file"}
         return super().model_dump(*args, exclude=exclude, **kwargs)
 
 
@@ -122,11 +153,16 @@ class CategoryDefinition(BaseModel):
         preferred_keywords: Keywords to prioritize.
         priority_text: Text or regex patterns to prioritize.
         preferred_basic_type_priority: List of basic card types to prioritize.
+        priority: Higher values are filled earlier.
+        weight: Multiplier applied to card scores in this category.
     """
+
     target: int = 0
     preferred_keywords: List[str] = Field(default_factory=list)
     priority_text: List[str] = Field(default_factory=list)
     preferred_basic_type_priority: List[str] = Field(default_factory=list)
+    priority: int = 0
+    weight: float = 1.0
 
 
 class RarityBoostMeta(BaseModel):
@@ -139,6 +175,7 @@ class RarityBoostMeta(BaseModel):
         rare: Boost for rare cards.
         mythic: Boost for mythic cards.
     """
+
     common: int = 0
     uncommon: int = 0
     rare: int = 0
@@ -153,6 +190,7 @@ class CardConstraintMeta(BaseModel):
         rarity_boost: Rarity boost configuration.
         exclude_keywords: Keywords to exclude.
     """
+
     rarity_boost: RarityBoostMeta = Field(default_factory=RarityBoostMeta)
     exclude_keywords: List[str] = Field(default_factory=list)
 
@@ -166,6 +204,7 @@ class SpecialLandsMeta(BaseModel):
         prefer: Preferred special lands.
         avoid: Special lands to avoid.
     """
+
     count: int = 0
     prefer: List[str] = Field(default_factory=list)
     avoid: List[str] = Field(default_factory=list)
@@ -179,10 +218,21 @@ class ManaBaseMeta(BaseModel):
         land_count: Total number of lands.
         special_lands: Special lands configuration.
         balance: Mana balance configuration.
+        color_weights: Desired basic land ratios by color.
     """
+
     land_count: int = 24
     special_lands: SpecialLandsMeta = Field(default_factory=SpecialLandsMeta)
-    balance: Dict[str, bool] = Field(default_factory=lambda: {"adjust_by_mana_symbols": True})
+    balance: Dict[str, bool] = Field(
+        default_factory=lambda: {"adjust_by_mana_symbols": True}
+    )
+    color_weights: Dict[str, int] = Field(default_factory=dict)
+
+    @validator("color_weights", pre=True, always=True)
+    def _normalize_color_weights(cls, v: Any) -> Dict[str, int]:
+        if not v:
+            return {}
+        return {str(k).upper(): int(vv) for k, vv in dict(v).items() if str(k).strip()}
 
 
 class ScoringRulesMeta(BaseModel):
@@ -198,15 +248,22 @@ class ScoringRulesMeta(BaseModel):
         rarity_bonus: Rarity to bonus mapping.
         mana_penalty: Mana penalty configuration.
         min_score_to_flag: Minimum score to flag a card.
+        diminishing_returns: Keyword thresholds for diminishing scores.
+        category_multipliers: Per-category score multipliers.
     """
+
     keyword_abilities: Dict[str, int] = Field(default_factory=dict)
     keyword_actions: Dict[str, int] = Field(default_factory=dict)
     ability_words: Dict[str, int] = Field(default_factory=dict)
     text_matches: Dict[str, int] = Field(default_factory=dict)
     type_bonus: Dict[str, Dict[str, int]] = Field(default_factory=dict)
     rarity_bonus: Dict[str, int] = Field(default_factory=dict)
-    mana_penalty: Dict[str, int] = Field(default_factory=lambda: {"threshold": 5, "penalty_per_point": 1})
+    mana_penalty: Dict[str, int] = Field(
+        default_factory=lambda: {"threshold": 5, "penalty_per_point": 1}
+    )
     min_score_to_flag: int = 0
+    diminishing_returns: Dict[str, int] = Field(default_factory=dict)
+    category_multipliers: Dict[str, float] = Field(default_factory=dict)
 
 
 class FallbackStrategyMeta(BaseModel):
@@ -218,6 +275,7 @@ class FallbackStrategyMeta(BaseModel):
         fill_priority: Priority categories for filling.
         allow_less_than_target: Allow fewer cards than target.
     """
+
     fill_with_any: bool = False
     fill_priority: List[str] = Field(default_factory=list)
     allow_less_than_target: bool = False
@@ -236,16 +294,19 @@ class DeckConfig(BaseModel):
         mana_base: Mana base configuration.
         fallback_strategy: Fallback strategy.
     """
+
     deck: DeckMeta
     categories: Dict[str, CategoryDefinition] = Field(default_factory=dict)
     card_constraints: CardConstraintMeta = Field(default_factory=CardConstraintMeta)
     priority_cards: List[PriorityCardEntry] = Field(default_factory=list)
     scoring_rules: ScoringRulesMeta = Field(default_factory=ScoringRulesMeta)
     mana_base: ManaBaseMeta = Field(default_factory=ManaBaseMeta)
-    fallback_strategy: FallbackStrategyMeta = Field(default_factory=FallbackStrategyMeta)
+    fallback_strategy: FallbackStrategyMeta = Field(
+        default_factory=FallbackStrategyMeta
+    )
 
     @classmethod
-    def from_yaml(cls, path_or_str: Union[str, Path]) -> 'DeckConfig':
+    def from_yaml(cls, path_or_str: Union[str, Path]) -> "DeckConfig":
         """
         Create a DeckConfig from a YAML file or string.
 
@@ -262,7 +323,7 @@ class DeckConfig(BaseModel):
         if isinstance(path_or_str, (str, Path)):
             path = Path(path_or_str)
             if path.exists():
-                with open(path, 'r') as f:
+                with open(path, "r") as f:
                     data = yaml.safe_load(f)
             else:
                 raise FileNotFoundError(f"YAML file not found: {path}")
@@ -283,7 +344,7 @@ class DeckConfig(BaseModel):
         data = self.model_dump(exclude_none=True)
         yaml_str = yaml.dump(data, default_flow_style=False)
         if path:
-            with open(path, 'w') as f:
+            with open(path, "w") as f:
                 f.write(yaml_str)
             return None
         return yaml_str
@@ -299,23 +360,24 @@ class DeckConfig(BaseModel):
             JSON string representation of the configuration.
         """
         import json
+
         data = self.model_dump(exclude_none=True)
         json_str = json.dumps(data, indent=2)
         if path:
-            with open(path, 'w', encoding='utf-8') as f:
+            with open(path, "w", encoding="utf-8") as f:
                 f.write(json_str)
         return json_str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'DeckConfig':
+    def from_dict(cls, data: Dict[str, Any]) -> "DeckConfig":
         """Create a DeckConfig from a dictionary.
-        
+
         Args:
             data: Dictionary containing deck configuration
-            
+
         Returns:
             DeckConfig object
-            
+
         Raises:
             ValueError: If data is invalid
         """
@@ -323,52 +385,52 @@ class DeckConfig(BaseModel):
             return cls.model_validate(data)
         except Exception as e:
             raise ValueError(f"Invalid deck configuration: {e}")
-    
+
     @property
     def name(self) -> str:
         """Get the name of the deck."""
         return self.deck.name or ""
-    
+
     @property
     def colors(self) -> List[str]:
         """Get the colors of the deck."""
         return self.deck.colors
-    
+
     @property
     def size(self) -> int:
         """Get the size of the deck."""
         return self.deck.size
-    
+
     @property
     def max_card_copies(self) -> int:
         """Get the maximum number of copies of a card in the deck."""
         return self.deck.max_card_copies
-    
+
     @property
     def mana_curve(self) -> Optional[ManaCurveMeta]:
         """Get the mana curve of the deck."""
         return self.deck.mana_curve
-    
+
     @property
     def legalities(self) -> List[str]:
         """Get the legalities of the deck."""
         return self.deck.legalities
-    
+
     @property
     def owned_cards_only(self) -> bool:
         """Get whether only owned cards are allowed."""
         return self.deck.owned_cards_only
-    
+
     @property
     def color_match_mode(self) -> str:
         """Get the color match mode of the deck."""
         return self.deck.color_match_mode
-    
+
     @property
     def color_identity(self) -> List[str]:
         """Get the color identity of the deck."""
         return self.deck.colors
-        
+
     @property
     def allow_colorless(self) -> bool:
         """Get whether colorless cards are allowed."""

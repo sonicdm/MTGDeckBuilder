@@ -185,16 +185,22 @@ class DeckBuildCategorySummary:
     @property
     def average_score(self) -> float:
         """Get the average score of the scored cards."""
+        if not self.scored_cards:
+            return 0.0
         return sum(card.score for card in self.scored_cards) / len(self.scored_cards)
     
     @property
     def max_score(self) -> float:
         """Get the maximum score of the scored cards."""
+        if not self.scored_cards:
+            return 0.0
         return max(card.score for card in self.scored_cards)
     
     @property
     def min_score(self) -> float:
         """Get the minimum score of the scored cards."""
+        if not self.scored_cards:
+            return 0.0
         return min(card.score for card in self.scored_cards)
     
     def __repr__(self) -> str:

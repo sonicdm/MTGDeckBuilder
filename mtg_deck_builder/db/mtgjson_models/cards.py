@@ -67,7 +67,6 @@ class MTGJSONCard(MTGJSONBase):
     originalPrintings = Column(Text)  # List of original printings
     originalReleaseDate = Column(Text)
     originalText = Column(Text)
-    originalType = Column(Text)
     otherFaceIds = Column(Text)  # List of other face IDs
     power = Column(Text)
     printings = Column(Text)  # List of printings
@@ -172,7 +171,6 @@ class MTGJSONCardLegality(MTGJSONBase):
     brawl = Column(Text, nullable=True)
     commander = Column(Text, nullable=True)
     duel = Column(Text, nullable=True)
-    explorer = Column(Text, nullable=True)
     future = Column(Text, nullable=True)
     gladiator = Column(Text, nullable=True)
     historic = Column(Text, nullable=True)
