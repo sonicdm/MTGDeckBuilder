@@ -14,7 +14,7 @@ setup(
         "pyyaml",
         "tqdm",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.12",
     include_package_data=True,
     entry_points={
         "console_scripts": ["mtg-deckbuilder-ui = mtg_deckbuilder_ui.app:main"]

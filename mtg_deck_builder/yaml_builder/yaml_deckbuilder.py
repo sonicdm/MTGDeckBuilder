@@ -57,7 +57,8 @@ def build_deck_from_config(
     logger.info(f"Deck configuration: colors={deck_config.colors}, size={deck_config.deck.size}, max_copies={deck_config.deck.max_card_copies}")
     
     # Initialize build context
-    deck = Deck(name=deck_config.name)
+    # Attach DeckConfig so downstream (API/UI) can access configuration and context
+    deck = Deck(name=deck_config.name, config=deck_config)
     deck_build_context = DeckBuildContext(
         config=deck_config,
         summary_repo=summary_repo,
@@ -98,6 +99,29 @@ def build_deck_from_config(
             
         logger.info(f"Available slots for categories: {available_slots} (deck size: {deck_config.deck.size}, target lands: {target_lands}, current cards: {current_cards})")
         
+        # Pre-check: category targets vs deck size and available non-land slots
+        try:
+            total_category_targets = sum(cat.target for cat in deck_config.categories.values())
+        except Exception:
+            total_category_targets = 0
+        non_land_slots = available_slots
+        if total_category_targets > deck_config.deck.size:
+            logger.warning(
+                f"Category targets ({total_category_targets}) exceed deck size ({deck_config.deck.size}). Targets will be scaled." 
+            )
+            if deck_build_context:
+                deck_build_context.record_unmet_condition(
+                    f"Category targets exceed deck size: {total_category_targets} > {deck_config.deck.size}"
+                )
+        if total_category_targets > non_land_slots:
+            logger.warning(
+                f"Category targets ({total_category_targets}) exceed available non-land slots ({non_land_slots}). Targets will be scaled."
+            )
+            if deck_build_context:
+                deck_build_context.record_unmet_condition(
+                    f"Targets exceed non-land slots: {total_category_targets} > {non_land_slots}"
+                )
+
         # Step 6: Fill category roles with available slots
         logger.info("[BuildPhase] Step 6: Filling category roles")
         if build_context.deck_build_context:
@@ -165,7 +189,15 @@ def build_deck_from_config(
         if build_context.deck_build_context:
             _log_deck_composition(build_context)
             
-        return build_context.deck_build_context.deck if build_context.deck_build_context else None
+        if build_context.deck_build_context:
+            # Expose build context on the deck instance for debugging/inspection downstream
+            try:
+                setattr(deck, "_build_context", build_context.deck_build_context)
+            except Exception:
+                # Safe fallback; context is only for debug/inspection
+                pass
+            return build_context.deck_build_context.deck
+        return None
         
     except Exception as e:
         logger.error(f"Error building deck: {str(e)}")

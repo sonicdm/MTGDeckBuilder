@@ -26,7 +26,7 @@ mana_base:
 
 categories:
   removal:
-    target: 30
+    target: 26
     priority_text: [
       "destroy target creature an opponent controls",
       "exile target creature an opponent controls",

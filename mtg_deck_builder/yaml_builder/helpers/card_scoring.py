@@ -118,7 +118,7 @@ def score_card(
     # Score based on text matches
     if scoring_rules.text_matches:
         for pattern, weight in scoring_rules.text_matches.items():
-            if pattern.startswith("/") and pattern.endswith("/"):
+            if isinstance(pattern, str) and pattern.startswith("/") and pattern.endswith("/"):
                 # Handle regex pattern
                 try:
                     if re.search(
@@ -133,7 +133,7 @@ def score_card(
                         )
                 except re.error:
                     continue
-            elif pattern.lower() in (getattr(card, "oracle_text", "") or "").lower():
+            elif str(pattern).lower() in (getattr(card, "text", "") or "").lower():
                 scored_card.increase_score(
                     score=int(weight),
                     source="score_card",

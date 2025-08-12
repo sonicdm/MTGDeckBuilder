@@ -149,7 +149,8 @@ class DeckBuildContext:
         card: Union[MTGJSONSummaryCard, LandStub],
         reason: str,
         source: str,
-        quantity: int = 1
+        quantity: int = 1,
+        score: Optional[float] = None,
     ) -> bool:
         """Add a card to the deck.
         
@@ -192,7 +193,8 @@ class DeckBuildContext:
             card=card,
             reason=reason,
             source=source,
-            quantity=quantity
+            quantity=quantity,
+            score=score if score is not None else None,
         )
         
         # Add to deck

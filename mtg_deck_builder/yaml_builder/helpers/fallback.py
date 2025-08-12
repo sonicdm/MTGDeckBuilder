@@ -71,10 +71,17 @@ def _handle_fallback_strategy(build_context: BuildContext) -> None:
         target_lands = build_context.mana_base.land_count
     available_slots = target_size - target_lands
 
-    # Check current non-land card count
-    current_size = context.get_total_cards()
+    # Check current non-land card count (exclude lands)
+    current_non_lands = 0
+    for cc in context.cards:
+        try:
+            if getattr(cc.card, 'is_basic_land', lambda: False)() or getattr(cc.card, 'is_land', lambda: False)():
+                continue
+        except Exception:
+            pass
+        current_non_lands += cc.quantity
     logger.info(
-        f"Fallback strategy: current non-land cards: {current_size}/{available_slots}"
+        f"Fallback strategy: current non-land cards: {current_non_lands}/{available_slots}"
     )
 
     # Calculate total target from categories
@@ -82,23 +89,24 @@ def _handle_fallback_strategy(build_context: BuildContext) -> None:
     logger.info(f"Fallback strategy: category targets total: {total_category_target}")
 
     # Only run fallback if categories are not filled to their targets
-    if current_size >= total_category_target:
+    # Only run fallback if non-land cards are below the category targets
+    if current_non_lands >= total_category_target:
         logger.info(
-            f"Categories are filled to target ({current_size}/{total_category_target}), skipping fallback strategy"
+            f"Categories are filled to target ({current_non_lands}/{total_category_target}), skipping fallback strategy"
         )
         return
 
     # Calculate how many more cards we need to reach category targets
-    remaining_for_categories = total_category_target - current_size
+    remaining_for_categories = total_category_target - current_non_lands
     logger.info(
         f"Fallback strategy: need {remaining_for_categories} more cards to reach category targets"
     )
 
     # Also check if we have room in available slots
-    remaining_slots = available_slots - current_size
+    remaining_slots = available_slots - current_non_lands
     if remaining_slots <= 0:
         logger.warning(
-            f"No slots available for fallback strategy: {current_size}/{available_slots}"
+            f"No slots available for fallback strategy: {current_non_lands}/{available_slots}"
         )
         return
 
@@ -159,13 +167,13 @@ def _handle_fallback_strategy(build_context: BuildContext) -> None:
         f"Fallback strategy added {added_count} cards. Final non-land count: {current_size}/{available_slots}"
     )
 
-    if current_size < total_category_target and not fallback.allow_less_than_target:
+    if current_non_lands + added_count < total_category_target and not fallback.allow_less_than_target:
         logger.warning(
-            f"Could not fill categories to target: {current_size}/{total_category_target}"
+            f"Could not fill categories to target: {current_non_lands + added_count}/{total_category_target}"
         )
-    elif current_size < total_category_target and fallback.allow_less_than_target:
+    elif current_non_lands + added_count < total_category_target and fallback.allow_less_than_target:
         logger.info(
-            f"Categories not fully filled but allow_less_than_target is true: {current_size}/{total_category_target}"
+            f"Categories not fully filled but allow_less_than_target is true: {current_non_lands + added_count}/{total_category_target}"
         )
 
 
