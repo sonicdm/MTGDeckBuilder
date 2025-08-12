@@ -8,14 +8,16 @@ This module provides functions for:
 """
 
 import logging
-from typing import Optional, List, Dict, Any, Union
-from mtg_deck_builder.yaml_builder.deck_build_classes import BuildContext, LandStub
-from mtg_deck_builder.models.deck import Deck
+from typing import Any, Dict, Optional, Union
+
 from mtg_deck_builder.db.mtgjson_models.cards import MTGJSONSummaryCard
+from mtg_deck_builder.models.deck import Deck
 from mtg_deck_builder.models.deck_config import PriorityCardEntry
+from mtg_deck_builder.yaml_builder.deck_build_classes import BuildContext, LandStub
 from mtg_deck_builder.yaml_builder.types import ScoredCard
-from .validation import _check_color_identity, _check_ownership
+
 from .fallback import _score_cards_with_quality_filter
+from .validation import _check_color_identity, _check_ownership
 
 logger = logging.getLogger(__name__)
 
@@ -36,13 +38,24 @@ def _handle_priority_cards(build_context: BuildContext) -> None:
             logger.warning(f"Priority card not found: {priority.name}")
             continue
 
-        success = context.add_card(card, "Priority Card", "priority", getattr(priority, "quantity", 1))
+        success = context.add_card(
+            card, "Priority Card", "priority", getattr(priority, "quantity", 1)
+        )
 
         if success:
             logger.debug(f"Added priority card: {priority.name}")
 
 
-def _handle_basic_lands(build_context: BuildContext) -> None:
+def _handle_basic_lands(
+    build_context: BuildContext, additional_slots: Optional[int] = None
+) -> None:
+    """Add basic lands to the deck.
+
+    Args:
+        build_context: Current build context.
+        additional_slots: If provided, add this many basic lands regardless of
+            the mana base target.
+    """
     if not build_context.deck_build_context:
         return
 
@@ -51,10 +64,13 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
     target_lands = deck_config.mana_base.land_count
     current_size = context.get_total_cards()
     available_slots = deck_config.deck.size - current_size
-    land_target = target_lands - context.get_land_count()
 
-    if available_slots < land_target:
-        land_target = available_slots
+    if additional_slots is not None:
+        land_target = min(additional_slots, available_slots)
+    else:
+        land_target = target_lands - context.get_land_count()
+        if available_slots < land_target:
+            land_target = available_slots
 
     if land_target <= 0:
         return
@@ -70,7 +86,7 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
     if total_symbols == 0:
         return
 
-    land_distribution = {}
+    land_distribution: Dict[str, int] = {}
     remaining_lands = land_target
 
     for color, count in mana_symbols.items():
@@ -107,7 +123,9 @@ def _handle_basic_lands(build_context: BuildContext) -> None:
         if not land_name:
             continue
 
-        land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
+        land = LandStub(
+            name=land_name, color=color, type="Basic Land", color_identity=[color]
+        )
         context.add_land_card(land, f"Basic {land_name}", "basic_land", count)
         total_added += count
         logger.debug(f"Added {count} {land_name} (total added: {total_added})")
@@ -135,7 +153,7 @@ def _handle_special_lands(build_context: BuildContext) -> int:
     # Calculate dynamic special lands count based on deck complexity
     base_count = special_lands_config.count
     color_count = len(deck_config.deck.colors)
-    
+
     # Scale special lands based on color count and deck complexity
     if color_count >= 3:
         # Multi-color decks need more fixing
@@ -146,12 +164,14 @@ def _handle_special_lands(build_context: BuildContext) -> int:
     else:
         # Mono-color decks need minimal fixing
         dynamic_count = min(base_count, 2)
-    
+
     # Cap at reasonable maximum (half of total lands)
     max_special_lands = deck_config.mana_base.land_count // 2
     target_count = min(dynamic_count, max_special_lands)
-    
-    logger.info(f"Special lands: base={base_count}, colors={color_count}, dynamic={dynamic_count}, final={target_count}")
+
+    logger.info(
+        f"Special lands: base={base_count}, colors={color_count}, dynamic={dynamic_count}, final={target_count}"
+    )
 
     if target_count <= 0:
         return 0
@@ -183,12 +203,19 @@ def _handle_special_lands(build_context: BuildContext) -> int:
 
     for score, land, reasons in scored_lands:
         land_name = getattr(land, "name", "")
-        
+
         # Check if land is preferred
-        if any(prefer.lower() in land_name.lower() for prefer in special_lands_config.prefer):
-            preferred_lands.append((score + 2 if score is not None else 2, land, reasons))  # Bonus for preferred
+        if any(
+            prefer.lower() in land_name.lower()
+            for prefer in special_lands_config.prefer
+        ):
+            preferred_lands.append(
+                (score + 2 if score is not None else 2, land, reasons)
+            )  # Bonus for preferred
         # Check if land is avoided
-        elif any(avoid.lower() in land_name.lower() for avoid in special_lands_config.avoid):
+        elif any(
+            avoid.lower() in land_name.lower() for avoid in special_lands_config.avoid
+        ):
             avoided_lands.append((score, land, reasons))
         else:
             neutral_lands.append((score, land, reasons))
@@ -209,7 +236,9 @@ def _handle_special_lands(build_context: BuildContext) -> int:
             for reason in reasons:
                 context.cards[-1].add_reason(reason)
             added_count += 1
-            logger.debug(f"Added special land {land.name} (score: {score:.1f}) - {', '.join(reasons)}")
+            logger.debug(
+                f"Added special land {land.name} (score: {score:.1f}) - {', '.join(reasons)}"
+            )
 
     logger.info(f"Added {added_count}/{target_count} special lands")
     return added_count
@@ -239,34 +268,47 @@ def _finalize_deck(build_context: BuildContext) -> None:
         remaining_slots = target_size - current_size
         current_land_count = context.get_land_count()
         target_land_count = deck_config.mana_base.land_count
-        
+
         # Only add more lands if we're under the target land count
         if current_land_count < target_land_count:
             lands_to_add = min(remaining_slots, target_land_count - current_land_count)
-            logger.info(f"Adding {lands_to_add} more basic lands to reach deck size (land count: {current_land_count}/{target_land_count})")
-            
+            logger.info(
+                f"Adding {lands_to_add} more basic lands to reach deck size (land count: {current_land_count}/{target_land_count})"
+            )
+
             # Distribute lands by color - only use deck colors
             colors = deck_config.deck.colors
             if not colors:
-                logger.warning("No deck colors specified, cannot distribute basic lands")
+                logger.warning(
+                    "No deck colors specified, cannot distribute basic lands"
+                )
                 return
-                
+
             for i in range(lands_to_add):
                 color = colors[i % len(colors)]
                 land_name = {
                     "W": "Plains",
-                    "U": "Island", 
+                    "U": "Island",
                     "B": "Swamp",
                     "R": "Mountain",
                     "G": "Forest",
                 }.get(color)
-                
+
                 if land_name:
-                    land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
-                    context.add_land_card(land, f"Basic {land_name} (fill)", "basic_land", 1)
+                    land = LandStub(
+                        name=land_name,
+                        color=color,
+                        type="Basic Land",
+                        color_identity=[color],
+                    )
+                    context.add_land_card(
+                        land, f"Basic {land_name} (fill)", "basic_land", 1
+                    )
         else:
             # Land count is at target, but deck is still too small - this shouldn't happen in normal flow
-            logger.warning(f"Deck is too small ({current_size}/{target_size}) but land count is at target ({current_land_count}/{target_land_count}). This indicates a problem in deck building.")
+            logger.warning(
+                f"Deck is too small ({current_size}/{target_size}) but land count is at target ({current_land_count}/{target_land_count}). This indicates a problem in deck building."
+            )
             # Don't add more lands - let emergency fill handle this
 
     # Final check - if still too large, remove more cards
@@ -277,60 +319,86 @@ def _finalize_deck(build_context: BuildContext) -> None:
         while context.get_total_cards() > target_size and non_land_cards:
             card = non_land_cards.pop(0)
             context.cards.remove(card)
-    
+
     # If still too small, add more cards (emergency fill)
     final_size = context.get_total_cards()
     if final_size < target_size:
         remaining_slots = target_size - final_size
-        logger.info(f"Emergency fill: adding {remaining_slots} cards to reach target size")
-        
+        logger.info(
+            f"Emergency fill: adding {remaining_slots} cards to reach target size"
+        )
+
         # Check if we need more lands or more non-land cards
         current_land_count = context.get_land_count()
-        target_land_count = deck_config.mana_base.land_count if deck_config.mana_base else 0
-        
+        target_land_count = (
+            deck_config.mana_base.land_count if deck_config.mana_base else 0
+        )
+
         if current_land_count < target_land_count:
             # Need more lands
-            logger.info(f"Emergency fill: adding {remaining_slots} basic lands (land count: {current_land_count}/{target_land_count})")
+            logger.info(
+                f"Emergency fill: adding {remaining_slots} basic lands (land count: {current_land_count}/{target_land_count})"
+            )
             colors = deck_config.deck.colors
             if not colors:
-                logger.warning("No deck colors specified, cannot add basic lands in emergency fill")
+                logger.warning(
+                    "No deck colors specified, cannot add basic lands in emergency fill"
+                )
                 return
-                
+
             for i in range(remaining_slots):
                 color = colors[i % len(colors)]
                 land_name = {
                     "W": "Plains",
-                    "U": "Island", 
+                    "U": "Island",
                     "B": "Swamp",
                     "R": "Mountain",
                     "G": "Forest",
                 }.get(color)
-                
+
                 if land_name:
-                    land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
-                    context.add_land_card(land, f"Basic {land_name} (emergency)", "basic_land", 1)
+                    land = LandStub(
+                        name=land_name,
+                        color=color,
+                        type="Basic Land",
+                        color_identity=[color],
+                    )
+                    context.add_land_card(
+                        land, f"Basic {land_name} (emergency)", "basic_land", 1
+                    )
         else:
             # Need more non-land cards - this shouldn't happen in normal flow
-            logger.warning(f"Emergency fill needed but land count is already at target. This indicates a problem in deck building.")
+            logger.warning(
+                f"Emergency fill needed but land count is already at target. This indicates a problem in deck building."
+            )
             # Add basic lands anyway to reach deck size
             colors = deck_config.deck.colors
             if not colors:
-                logger.warning("No deck colors specified, cannot add basic lands in emergency fill")
+                logger.warning(
+                    "No deck colors specified, cannot add basic lands in emergency fill"
+                )
                 return
-                
+
             for i in range(remaining_slots):
                 color = colors[i % len(colors)]
                 land_name = {
                     "W": "Plains",
-                    "U": "Island", 
+                    "U": "Island",
                     "B": "Swamp",
                     "R": "Mountain",
                     "G": "Forest",
                 }.get(color)
-                
+
                 if land_name:
-                    land = LandStub(name=land_name, color=color, type="Basic Land", color_identity=[color])
-                    context.add_land_card(land, f"Basic {land_name} (emergency)", "basic_land", 1)
+                    land = LandStub(
+                        name=land_name,
+                        color=color,
+                        type="Basic Land",
+                        color_identity=[color],
+                    )
+                    context.add_land_card(
+                        land, f"Basic {land_name} (emergency)", "basic_land", 1
+                    )
 
     # Final verification
     final_size = context.get_total_cards()
@@ -370,79 +438,101 @@ def _filter_summary_repository(build_context: BuildContext) -> None:
     # Handle commander logic
     if deck_config.deck.commander:
         logger.info(f"Commander format detected: {deck_config.deck.commander}")
-        
+
         # Find the commander card
         commander_card = summary_repo.find_by_name(deck_config.deck.commander)
         if commander_card:
             # Set colors from commander's color identity
-            commander_colors = getattr(commander_card, 'color_identity_list', []) or []
+            commander_colors = getattr(commander_card, "color_identity_list", []) or []
             if commander_colors:
                 deck_config.deck.colors = commander_colors
                 logger.info(f"Set deck colors from commander: {commander_colors}")
-            
+
             # Enforce singleton rule (except basic lands)
             deck_config.deck.max_card_copies = 1
             logger.info("Enforced singleton rule for Commander format")
-            
+
             # Determine format based on legalities
             # Check for Standard Brawl first (more specific)
-            is_standard_brawl = any("standardbrawl" in legality.lower() for legality in deck_config.deck.legalities)
+            is_standard_brawl = any(
+                "standardbrawl" in legality.lower()
+                for legality in deck_config.deck.legalities
+            )
             # Check for Historic Brawl (general "brawl" legality)
-            is_historic_brawl = any("brawl" in legality.lower() and "standardbrawl" not in legality.lower() for legality in deck_config.deck.legalities)
-            is_commander = any("commander" in legality.lower() for legality in deck_config.deck.legalities)
-            
+            is_historic_brawl = any(
+                "brawl" in legality.lower() and "standardbrawl" not in legality.lower()
+                for legality in deck_config.deck.legalities
+            )
+            is_commander = any(
+                "commander" in legality.lower()
+                for legality in deck_config.deck.legalities
+            )
+
             if is_standard_brawl:
                 # Standard Brawl is 60 cards
                 deck_config.deck.size = 60
                 logger.info("Set deck size to 60 for Standard Brawl format")
-                
+
                 # Adjust land count for Standard Brawl if not already set appropriately
                 if deck_config.mana_base and deck_config.mana_base.land_count < 20:
                     deck_config.mana_base.land_count = 24  # Standard for Brawl
-                    logger.info(f"Adjusted land count to {deck_config.mana_base.land_count} for Standard Brawl")
-                    
+                    logger.info(
+                        f"Adjusted land count to {deck_config.mana_base.land_count} for Standard Brawl"
+                    )
+
             elif is_historic_brawl:
                 # Historic Brawl is 100 cards
                 deck_config.deck.size = 100
                 logger.info("Set deck size to 100 for Historic Brawl format")
-                
+
                 # Adjust land count for Historic Brawl if not already set appropriately
                 if deck_config.mana_base and deck_config.mana_base.land_count < 30:
                     deck_config.mana_base.land_count = 37  # Standard for Historic Brawl
-                    logger.info(f"Adjusted land count to {deck_config.mana_base.land_count} for Historic Brawl")
-                    
+                    logger.info(
+                        f"Adjusted land count to {deck_config.mana_base.land_count} for Historic Brawl"
+                    )
+
             elif is_commander:
                 # Commander is 100 cards
                 deck_config.deck.size = 100
                 logger.info("Set deck size to 100 for Commander format")
-                
+
                 # Adjust land count for Commander if not already set appropriately
                 if deck_config.mana_base and deck_config.mana_base.land_count < 30:
                     deck_config.mana_base.land_count = 37  # Standard for Commander
-                    logger.info(f"Adjusted land count to {deck_config.mana_base.land_count} for Commander")
+                    logger.info(
+                        f"Adjusted land count to {deck_config.mana_base.land_count} for Commander"
+                    )
             else:
                 # Default to Commander format if no specific format detected
                 deck_config.deck.size = 100
                 logger.info("Set deck size to 100 for Commander format (default)")
-                
+
                 # Adjust land count for Commander if not already set appropriately
                 if deck_config.mana_base and deck_config.mana_base.land_count < 30:
                     deck_config.mana_base.land_count = 37  # Standard for Commander
-                    logger.info(f"Adjusted land count to {deck_config.mana_base.land_count} for Commander")
-            
+                    logger.info(
+                        f"Adjusted land count to {deck_config.mana_base.land_count} for Commander"
+                    )
+
             # Add commander to priority cards if not already present
             commander_in_priority = any(
-                pc.name.lower() == deck_config.deck.commander.lower() 
+                pc.name.lower() == deck_config.deck.commander.lower()
                 for pc in deck_config.priority_cards
             )
             if not commander_in_priority:
                 from mtg_deck_builder.models.deck_config import PriorityCardEntry
+
                 deck_config.priority_cards.append(
                     PriorityCardEntry(name=deck_config.deck.commander, min_copies=1)
                 )
-                logger.info(f"Added commander {deck_config.deck.commander} to priority cards")
+                logger.info(
+                    f"Added commander {deck_config.deck.commander} to priority cards"
+                )
         else:
-            logger.warning(f"Commander {deck_config.deck.commander} not found in database")
+            logger.warning(
+                f"Commander {deck_config.deck.commander} not found in database"
+            )
 
     # Apply deck-wide filters
     filtered_repo = summary_repo.filter_cards(
@@ -450,11 +540,13 @@ def _filter_summary_repository(build_context: BuildContext) -> None:
         color_mode=deck_config.deck.color_match_mode,
         legal_in=deck_config.deck.legalities,
         allow_colorless=deck_config.deck.allow_colorless,
-        min_quantity=1 if deck_config.deck.owned_cards_only else 0
+        min_quantity=1 if deck_config.deck.owned_cards_only else 0,
     )
-    
+
     build_context.summary_repo = filtered_repo
-    logger.info(f"Applied deck-wide filters: {len(filtered_repo.get_all_cards())} cards available")
+    logger.info(
+        f"Applied deck-wide filters: {len(filtered_repo.get_all_cards())} cards available"
+    )
 
 
 def _apply_card_constraints(build_context: BuildContext) -> None:
@@ -482,11 +574,15 @@ def _apply_card_constraints(build_context: BuildContext) -> None:
     for rarity, boost in rarity_mappings:
         if boost <= 0:
             continue
-        
+
         # Find cards of this rarity and boost their scores
-        for i, (score, card) in enumerate(build_context.deck_build_context.scored_cards):
-            if hasattr(card, 'rarity') and card.rarity == rarity:
+        for i, (score, card) in enumerate(
+            build_context.deck_build_context.scored_cards
+        ):
+            if hasattr(card, "rarity") and card.rarity == rarity:
                 build_context.deck_build_context.scored_cards[i] = (score + boost, card)
-                logger.debug(f"Applied rarity boost of {boost} to {card.name} ({rarity})")
+                logger.debug(
+                    f"Applied rarity boost of {boost} to {card.name} ({rarity})"
+                )
 
     logger.info("Applied rarity boost constraints")
